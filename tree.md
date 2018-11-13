@@ -1,5 +1,5 @@
 - [关于中文文档](/index)
-- [Pandas 参考文章](/article/index)
+- Pandas 参考文章
 - [+Pandas 介绍](/intro/index)
     - [Pandas 概要](/intro/home)
     - [关于 Pandas](/intro/about)
