@@ -65,59 +65,46 @@ python3 -m pip install --upgrade pandas==0.23.0
 conda install pandas
 ```
 
-Packages are available for [all supported python versions](http://pandas.pydata.org/pandas-docs/stable/install.html#python-version-support) on Windows, Linux, and MacOS.
+在Windows、Linux和MacOS上，[所有受支持的python版本](http://pandas.pydata.org/pandas-docs/stable/install.html#python-version-support)都可以使用包。
 
-Wheels are also uploaded to [PyPI](https://pypi.org/project/pandas/) and can be installed with
+pands 也被上传到[PyPI](https://pypi.org/project/pandas/)中，并且可以通过以下方式安装：
 
 ```sh
 pip install pandas
 ```
 
-## Quick vignette
+## 快速了解
 
+[Wes McKinney](https://vimeo.com/user10077863) 在 [Vimeo](https://vimeo.com/) 上的 [10分钟 pandas 之旅](https://vimeo.com/59324550) 视频教程
 
+## pandas解决了什么问题？
 
-10-minute tour of pandas from Wes McKinney on Vimeo.
+Python在数据处理和准备方面一直做得很好，但在数据分析和建模方面就没那么好了。熊猫帮助填补了这一空白，使您能够在Python中执行整个数据分析工作流程，而不必切换到更特定于领域的语言，如R。
 
-## What problem does pandas solve?
+与出色的 [IPython](https://ipython.org/) 工具包和其他库相结合，Python中用于进行数据分析的环境在性能、生产率和协作能力方面都是卓越的。
 
-Python has long been great for data munging and preparation, but less so for data analysis and modeling. pandas helps fill this gap, enabling you to carry out your entire data analysis workflow in Python without having to switch to a more domain specific language like R.
+pandas没有在线性和面板回归之外实现重要的建模功能; 为此，请查看 [statsmodels](http://statsmodels.sf.net/) 和[scikit-learn](http://scikit-learn.org/)。为了使Python成为一流的统计建模环境，仍然需要做更多的工作，但我们正朝着这个目标迈进。
 
-Combined with the excellent [IPython](https://ipython.org/) toolkit and other libraries, the environment for doing data analysis in Python excels in performance, productivity, and the ability to collaborate.
+## 我们的用户有什么要说的？
 
-pandas does not implement significant modeling functionality outside of linear and panel regression; for this, look to [statsmodels](http://statsmodels.sf.net/) and [scikit-learn](http://scikit-learn.org/). More work is still needed to make Python a first class statistical modeling environment, but we are well on our way toward that goal.
+- **Roni Israelov**(博士，[AQR资本管理](https://www.aqr.com/)的组合投资经理)：pandas让我们更专注于研究而不是编程。我们发现 pandas 易于学习，易于使用且易于维护。最重要的是，它提高了我们的生产力。
+    ![AQR资本管理 Logo](/static/images/aqr_capital_management_logo.png)
+- **David Himrod**([appNexus](https://www.appnexus.com/)的优化分析总监)：pandas 是一种完美的工具，可以在快速迭代的特殊分析和产品质量代码之间架起一座桥梁。如果你想在一个由工程师、数学家和分析师组成的多学科组织中使用一种工具，那就别再看了。
+    ![AppNexus Logo](/static/images/appnexus_logo.png)
+- **Olivier Pomel**([Datadog](https://www.datadoghq.com/)的CEO)：我们使用pandas处理生产服务器上的时间序列数据。其API的简单性和优雅性以及高容量数据集的高性能使其成为我们的完美选择。
+    ![Datadog Logo](/static/images/datadog_logo.png)
 
-## What do our users have to say?
+## Pandas库的亮点
 
-AQR Capital Management Logo
-Roni Israelov, PhD
-Portfolio Manager
-AQR Capital Management
-“pandas allows us to focus more on research and less on programming. We have found pandas easy to learn, easy to use, and easy to maintain. The bottom line is that it has increased our productivity.”
-
-AppNexus Logo
-David Himrod
-Director of Optimization & Analytics
-AppNexus
-“pandas is the perfect tool for bridging the gap between rapid iterations of ad-hoc analysis and production quality code. If you want one tool to be used across a multi-disciplined organization of engineers, mathematicians and analysts, look no further.”
-
-Datadog Logo
-Olivier Pomel
-CEO
-Datadog
-“We use pandas to process time series data on our production servers. The simplicity and elegance of its API, and its high level of performance for high-volume datasets, made it a perfect choice for us.”
-
-## Library Highlights
-
-- A fast and efficient DataFrame object for data manipulation with integrated indexing;
-- Tools for reading and writing data between in-memory data structures and different formats: CSV and text files, Microsoft Excel, SQL databases, and the fast HDF5 format;
-- Intelligent data alignment and integrated handling of missing data: gain automatic label-based alignment in computations and easily manipulate messy data into an orderly form;
-- Flexible reshaping and pivoting of data sets;
-- Intelligent label-based slicing, fancy indexing, and subsetting of large data sets;
-- Columns can be inserted and deleted from data structures for size mutability;
-- Aggregating or transforming data with a powerful group by engine allowing split-apply-combine operations on data sets;
-- High performance merging and joining of data sets;
-- Hierarchical axis indexing provides an intuitive way of working with high-dimensional data in a lower-dimensional data structure;
-- Time series-functionality: date range generation and frequency conversion, moving window statistics, moving window linear regressions, date shifting and lagging. Even create domain-specific time offsets and join time series without losing data;
-- Highly optimized for performance, with critical code paths written in Cython or C.
-- Python with pandas is in use in a wide variety of academic and commercial domains, including Finance, Neuroscience, Economics, Statistics, Advertising, Web Analytics, and more.
+- 一个快速、高效的DataFrame对象，用于数据操作和综合索引；
+- 用于在内存数据结构和不同格式之间读写数据的工具：CSV和文本文件、Microsoft Excel、SQL数据库和快速HDF 5格式；
+- 智能数据对齐和丢失数据的综合处理：在计算中获得基于标签的自动对齐，并轻松地将凌乱的数据操作为有序的形式；
+- 数据集的灵活调整和旋转；
+- 基于智能标签的切片、花哨的索引和大型数据集的子集；
+- 可以从数据结构中插入和删除列，以实现大小可变；
+- 通过引擎与强大的组聚合或转换数据，允许对数据集进行拆分-应用-组合操作；
+- 数据集的高性能合并和连接；
+- 层次轴索引提供了在低维数据结构中处理高维数据的直观方法；
+- 时间序列-功能：日期范围生成和频率转换、移动窗口统计、移动窗口线性回归、日期转换和滞后。甚至在不丢失数据的情况下创建特定领域的时间偏移和加入时间序列；
+- 对性能进行了高度优化，用Cython或C编写了关键代码路径。
+- Python与Pandas在广泛的学术和商业领域中使用，包括金融，神经科学，经济学，统计学，广告，网络分析，等等。
