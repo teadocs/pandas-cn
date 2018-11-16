@@ -1,0 +1,41 @@
+# 给Pandas贡献
+
+## 目录
+
+- Where to start?
+- Bug reports and enhancement requests
+- Working with the code
+    - Version control, Git, and GitHub
+    - Getting started with Git
+    - Forking
+    - Creating a development environment
+    - Installing a C Compiler
+    - Creating a Python Environment
+    - Creating a Python Environment (pip)
+    - Creating a branch
+- Contributing to the documentation
+    - About the pandas documentation
+    - How to build the pandas documentation
+        - Requirements
+        - Building the documentation
+        - Building master branch documentation
+- Contributing to the code base
+    - Code standards
+        - C (cpplint)
+        - Python (PEP8)
+        - Backwards Compatibility
+    - Testing With Continuous Integration
+    - Test-driven development/code writing
+        - Writing tests
+        - Transitioning to pytest
+        - Using pytest
+    - Running the test suite
+    - Running the performance test suite
+    - Documenting your code
+- Contributing your changes to pandas
+    - Committing your code
+    - Pushing your changes
+    - Review your code
+    - Finally, make the pull request
+    - Updating your pull request
+    - Delete your merged branch (optional)

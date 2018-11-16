@@ -1,6 +1,6 @@
 - [关于中文文档](/index)
 - Pandas 参考文章
-- [+Pandas 介绍](/intro/index)
+- +Pandas 介绍
     - [Pandas 概要](/intro/home)
     - [关于 Pandas](/intro/about)
     - [获取 Pandas](/intro/get_pandas)
@@ -10,8 +10,12 @@
     - [Pandas 各版本特性](/document/whatsnew/index)
         - [v0.23.4](/document/whatsnew/v0.23.4)
     - [Pandas 安装](/document/installation)
-    - [给Pandas贡献](/document/contributing)
-    - [Pandas包概述](/document/contributing)
+    - [给Pandas贡献](/document/contributing/index)
+        - [从哪里开始？](/document/contributing/where_to_start)
+        - [反馈Bug和增加新功能](/document/contributing/bug_reports)
+        - [熟悉代码和工具](/document/contributing/working_with_the_code)
+        - [给文档做贡献](/document/contributing/contributing_docs)
+    - [Pandas包概述](/document/overview)
     - [10分钟入门Pandas](/document/10min)
     - [Pandas 教程](/document/tutorials)
     - [Pandas 操作指引](/document/tutorials)
