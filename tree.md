@@ -15,6 +15,7 @@
         - [反馈Bug和增加新功能](/document/contributing/bug_reports)
         - [熟悉代码和工具](/document/contributing/working_with_the_code)
         - [给文档做贡献](/document/contributing/contributing_docs)
+        - [给代码做贡献](/document/contributing/contributing_code)
     - [Pandas包概述](/document/overview)
     - [10分钟入门Pandas](/document/10min)
     - [Pandas 教程](/document/tutorials)

@@ -2,7 +2,7 @@
 
 Contributing to the documentation benefits everyone who uses pandas. We encourage you to help us improve the documentation, and you don’t have to be an expert on pandas to do so! In fact, there are sections of the docs that are worse off after being written by experts. If something in the docs doesn’t make sense to you, updating the relevant section after you figure it out is a great way to ensure it will help the next person.
 
-Documentation:
+目录:
 
 - About the pandas documentation
 - How to build the pandas documentation
