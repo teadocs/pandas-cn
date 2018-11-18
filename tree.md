@@ -16,6 +16,7 @@
         - [熟悉代码和工具](/document/contributing/working_with_the_code)
         - [给文档做贡献](/document/contributing/contributing_docs)
         - [给代码做贡献](/document/contributing/contributing_code)
+        - [将你的更改贡献给Pandas](/document/contributing/contributing_changes)
     - [Pandas包概述](/document/overview)
     - [10分钟入门Pandas](/document/10min)
     - [Pandas 教程](/document/tutorials)
