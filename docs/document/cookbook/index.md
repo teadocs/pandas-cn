@@ -1,4 +1,4 @@
-# Pandas 操作指引(Cookbook)
+# Pandas 指南(Cookbook)
 
 This is a repository for short and sweet examples and links for useful pandas recipes. We encourage users to add to this documentation.
 
