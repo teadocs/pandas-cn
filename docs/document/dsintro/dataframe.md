@@ -434,14 +434,17 @@ For Python 3.6 and later, the expression creating A refers to the “new” valu
 
 The basics of indexing are as follows:
 
-Operation	Syntax	Result
-Select column	df[col]	Series
-Select row by label	df.loc[label]	Series
-Select row by integer location	df.iloc[loc]	Series
-Slice rows	df[5:10]	DataFrame
-Select rows by boolean vector	df[bool_vec]	DataFrame
+Operation | Syntax | Result
+---|---|---
+Select column | df[col] | Series
+Select row by label | df.loc[label] | Series
+Select row by integer location | df.iloc[loc] | Series
+Slice rows | df[5:10] | DataFrame
+Select rows by boolean vector | df[bool_vec] | DataFrame
+
 Row selection, for example, returns a Series whose index is the columns of the DataFrame:
 
+```python
 In [80]: df.loc['b']
 Out[80]: 
 one              2
@@ -459,11 +462,15 @@ flag         True
 foo           bar
 one_trunc     NaN
 Name: c, dtype: object
+```
+
 For a more exhaustive treatment of sophisticated label-based indexing and slicing, see the section on indexing. We will address the fundamentals of reindexing / conforming to new sets of labels in the section on reindexing.
 
-Data alignment and arithmetic
-Data alignment between DataFrame objects automatically align on both the columns and the index (row labels). Again, the resulting object will have the union of the column and row labels.
+## Data alignment and arithmetic
 
+Data alignment between DataFrame objects automatically align on **both the columns and the index (row labels)**. Again, the resulting object will have the union of the column and row labels.
+
+```python
 In [82]: df = pd.DataFrame(np.random.randn(10, 4), columns=['A', 'B', 'C', 'D'])
 
 In [83]: df2 = pd.DataFrame(np.random.randn(7, 3), columns=['A', 'B', 'C'])
@@ -481,8 +488,11 @@ Out[84]:
 7     NaN     NaN     NaN NaN
 8     NaN     NaN     NaN NaN
 9     NaN     NaN     NaN NaN
-When doing an operation between DataFrame and Series, the default behavior is to align the Series index on the DataFrame columns, thus broadcasting row-wise. For example:
+```
 
+When doing an operation between DataFrame and Series, the default behavior is to align the Series **index** on the DataFrame **columns**, thus [broadcasting](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html) row-wise. For example:
+
+```python
 In [85]: df - df.iloc[0]
 Out[85]: 
         A       B       C       D
@@ -496,8 +506,11 @@ Out[85]:
 7 -0.7439  0.4110 -0.9296 -0.2824
 8 -1.1949  1.3207  0.2382 -1.4826
 9  2.2938  1.8562  0.7733 -1.4465
+```
+
 In the special case of working with time series data, and the DataFrame index also contains dates, the broadcasting will be column-wise:
 
+```python
 In [86]: index = pd.date_range('1/1/2000', periods=8)
 
 In [87]: df = pd.DataFrame(np.random.randn(8, 3), index=index, columns=list('ABC'))
@@ -540,15 +553,25 @@ Out[90]:
 2000-01-08                  NaN ...                  NaN NaN NaN NaN  
 
 [8 rows x 11 columns]
-Warning
+```
+
+### !Warning
+
+```python
 df - df['A']
+```
+
 is now deprecated and will be removed in a future release. The preferred way to replicate this behavior is
 
+```python
 df.sub(df['A'], axis=0)
+```
+
 For explicit control over the matching and broadcasting behavior, see the section on flexible binary operations.
 
 Operations with scalars are just as you would expect:
 
+```python
 In [91]: df * 5 + 2
 Out[91]: 
                  A       B       C
@@ -584,8 +607,11 @@ Out[93]:
 2000-01-06   0.0265  0.0006  8.2769e-03
 2000-01-07  22.5795  3.5212  8.2903e-01
 2000-01-08   4.5774  9.2332  4.6683e-01
+```
+
 Boolean operators work as well:
 
+```python
 In [94]: df1 = pd.DataFrame({'a' : [1, 0, 1], 'b' : [0, 1, 1] }, dtype=bool)
 
 In [95]: df2 = pd.DataFrame({'a' : [0, 1, 1], 'b' : [1, 1, 0] }, dtype=bool)
@@ -617,9 +643,13 @@ Out[99]:
 0  False   True
 1   True  False
 2  False  False
-Transposing
-To transpose, access the T attribute (also the transpose function), similar to an ndarray:
+```
 
+## Transposing
+
+To transpose, access the ``T`` attribute (also the ``transpose`` function), similar to an ndarray:
+
+```python
 # only show the first 5 rows
 In [100]: df[:5].T
 Out[100]: 
@@ -627,9 +657,13 @@ Out[100]:
 A     -1.2268     -0.7277      0.6958     -1.1103     -0.7323
 B      0.7698     -0.1213      0.3417     -0.6200      0.6877
 C     -1.2812     -0.0979      0.9597      0.1497      0.1764
-DataFrame interoperability with NumPy functions
+```
+
+## DataFrame interoperability with NumPy functions
+
 Elementwise NumPy ufuncs (log, exp, sqrt, …) and various other NumPy functions can be used with no issues on DataFrame, assuming the data within are numeric:
 
+```python
 In [101]: np.exp(df)
 Out[101]: 
                  A       B       C
@@ -652,25 +686,35 @@ array([[-1.2268,  0.7698, -1.2812],
        [ 0.4033, -0.155 ,  0.3016],
        [-2.1799, -1.3698, -0.9542],
        [ 1.4627, -1.7432, -0.8266]])
+```
+
 The dot method on DataFrame implements matrix multiplication:
 
+```python
 In [103]: df.T.dot(df)
 Out[103]: 
          A       B       C
 A  11.3419 -0.0598  3.0080
 B  -0.0598  6.5206  2.0833
 C   3.0080  2.0833  4.3105
+```
+
 Similarly, the dot method on Series implements dot product:
 
+```python
 In [104]: s1 = pd.Series(np.arange(5,10))
 
 In [105]: s1.dot(s1)
 Out[105]: 255
+```
+
 DataFrame is not intended to be a drop-in replacement for ndarray as its indexing semantics are quite different in places from a matrix.
 
-Console display
-Very large DataFrames will be truncated to display them in the console. You can also get a summary using info(). (Here I am reading a CSV version of the baseball dataset from the plyr R package):
+## Console display
 
+Very large DataFrames will be truncated to display them in the console. You can also get a summary using [info()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.info.html#pandas.DataFrame.info). (Here I am reading a CSV version of the **baseball** dataset from the **plyr** R package):
+
+```python
 In [106]: baseball = pd.read_csv('data/baseball.csv')
 
 In [107]: print(baseball)
@@ -712,8 +756,11 @@ sf        100 non-null float64
 gidp      100 non-null float64
 dtypes: float64(9), int64(11), object(3)
 memory usage: 18.0+ KB
-However, using to_string will return a string representation of the DataFrame in tabular form, though it won’t always fit the console width:
+```
 
+However, using ``to_string`` will return a string representation of the DataFrame in tabular form, though it won’t always fit the console width:
+
+```python
 In [109]: print(baseball.iloc[-20:, :12].to_string())
        id     player  year  stint team  lg    g   ab   r    h  X2b  X3b
 80  89474  finlest01  2007      1  COL  NL   43   94   9   17    3    0
@@ -736,16 +783,22 @@ In [109]: print(baseball.iloc[-20:, :12].to_string())
 97  89530  ausmubr01  2007      1  HOU  NL  117  349  38   82   16    3
 98  89533   aloumo01  2007      1  NYN  NL   87  328  51  112   19    1
 99  89534  alomasa02  2007      1  NYN  NL    8   22   1    3    1    0
+```
+
 Wide DataFrames will be printed across multiple rows by default:
 
+```python
 In [110]: pd.DataFrame(np.random.randn(3, 12))
 Out[110]: 
          0         1         2         3         4         5         6         7         8         9         10        11
 0 -0.345352  1.314232  0.690579  0.995761  2.396780  0.014871  3.357427 -0.317441 -1.236269  0.896171 -0.487602 -0.082240
 1 -2.182937  0.380396  0.084844  0.432390  1.519970 -0.493662  0.600178  0.274230  0.132885 -0.023688  2.410179  1.450520
 2  0.206053 -0.251905 -2.213588  1.063327  1.266143  0.299368 -0.863838  0.408204 -1.048089 -0.025747 -0.988387  0.094055
+```
+
 You can change how much to print on a single row by setting the display.width option:
 
+```python
 In [111]: pd.set_option('display.width', 40) # default is 80
 
 In [112]: pd.DataFrame(np.random.randn(3, 12))
@@ -754,8 +807,11 @@ Out[112]:
 0  1.262731  1.289997  0.082423 -0.055758  0.536580 -0.489682  0.369374 -0.034571 -2.484478 -0.281461  0.030711  0.109121
 1  1.126203 -0.977349  1.474071 -0.064034 -1.282782  0.781836 -1.071357  0.441153  2.353925  0.583787  0.221471 -0.744471
 2  0.758527  1.729689 -0.964980 -0.845696 -1.340896  1.846883 -1.328865  1.682706 -1.717693  0.888782  0.228440  0.901805
+```
+
 You can adjust the max width of the individual columns by setting display.max_colwidth
 
+```python
 In [113]: datafile={'filename': ['filename_01','filename_02'],
    .....:           'path': ["media/user_name/storage/folder_01/filename_01",
    .....:                    "media/user_name/storage/folder_02/filename_02"]}
@@ -776,11 +832,15 @@ Out[117]:
       filename                                           path
 0  filename_01  media/user_name/storage/folder_01/filename_01
 1  filename_02  media/user_name/storage/folder_02/filename_02
+```
+
 You can also disable this feature via the expand_frame_repr option. This will print the table in one block.
 
-DataFrame column attribute access and IPython completion
+## DataFrame column attribute access and IPython completion
+
 If a DataFrame column label is a valid Python variable name, the column can be accessed like an attribute:
 
+```python
 In [118]: df = pd.DataFrame({'foo1' : np.random.randn(5),
    .....:                    'foo2' : np.random.randn(5)})
    .....: 
@@ -802,7 +862,11 @@ Out[120]:
 3   -1.066969
 4   -0.303421
 Name: foo1, dtype: float64
-The columns are also connected to the IPython completion mechanism so they can be tab-completed:
+```
 
+The columns are also connected to the [IPython](http://ipython.org/) completion mechanism so they can be tab-completed:
+
+```python
 In [5]: df.fo<TAB>
 df.foo1  df.foo2
+```
