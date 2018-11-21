@@ -301,8 +301,9 @@ d  NaN  NaN  False  bar        NaN
 
 ## Assigning New Columns in Method Chains
 
-Inspired by dplyr’s mutate verb, DataFrame has an assign() method that allows you to easily create new columns that are potentially derived from existing columns.
+Inspired by [dplyr’s](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html#mutate) ``mutate`` verb, DataFrame has an [assign()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.assign.html#pandas.DataFrame.assign) method that allows you to easily create new columns that are potentially derived from existing columns.
 
+```python
 In [71]: iris = pd.read_csv('data/iris.data')
 
 In [72]: iris.head()
@@ -324,8 +325,11 @@ Out[73]:
 2          4.7         3.2          1.3         0.2  Iris-setosa       0.6809
 3          4.6         3.1          1.5         0.2  Iris-setosa       0.6739
 4          5.0         3.6          1.4         0.2  Iris-setosa       0.7200
+```
+
 In the example above, we inserted a precomputed value. We can also pass in a function of one argument to be evaluated on the DataFrame being assigned to.
 
+```python
 In [74]: iris.assign(sepal_ratio = lambda x: (x['SepalWidth'] /
    ....:                                      x['SepalLength'])).head()
    ....: 
@@ -336,25 +340,32 @@ Out[74]:
 2          4.7         3.2          1.3         0.2  Iris-setosa       0.6809
 3          4.6         3.1          1.5         0.2  Iris-setosa       0.6739
 4          5.0         3.6          1.4         0.2  Iris-setosa       0.7200
-assign always returns a copy of the data, leaving the original DataFrame untouched.
+```
 
-Passing a callable, as opposed to an actual value to be inserted, is useful when you don’t have a reference to the DataFrame at hand. This is common when using assign in a chain of operations. For example, we can limit the DataFrame to just those observations with a Sepal Length greater than 5, calculate the ratio, and plot:
+assign **always** returns a copy of the data, leaving the original DataFrame untouched.
 
+Passing a callable, as opposed to an actual value to be inserted, is useful when you don’t have a reference to the DataFrame at hand. This is common when using ``assign`` in a chain of operations. For example, we can limit the DataFrame to just those observations with a Sepal Length greater than 5, calculate the ratio, and plot:
+
+```python
 In [75]: (iris.query('SepalLength > 5')
    ....:      .assign(SepalRatio = lambda x: x.SepalWidth / x.SepalLength,
    ....:              PetalRatio = lambda x: x.PetalWidth / x.PetalLength)
    ....:      .plot(kind='scatter', x='SepalRatio', y='PetalRatio'))
    ....: 
 Out[75]: <matplotlib.axes._subplots.AxesSubplot at 0x7f210fb001d0>
-_images/basics_assign.png
+```
+
+![散点图](/static/images/basics_assign.png)
+
 Since a function is passed in, the function is computed on the DataFrame being assigned to. Importantly, this is the DataFrame that’s been filtered to those rows with sepal length greater than 5. The filtering happens first, and then the ratio calculations. This is an example where we didn’t have a reference to the filtered DataFrame available.
 
-The function signature for assign is simply **kwargs. The keys are the column names for the new fields, and the values are either a value to be inserted (for example, a Series or NumPy array), or a function of one argument to be called on the DataFrame. A copy of the original DataFrame is returned, with the new values inserted.
+The function signature for ``assign`` is simply ****kwargs**. The keys are the column names for the new fields, and the values are either a value to be inserted (for example, a ``Series`` or NumPy array), or a function of one argument to be called on the ``DataFrame``. A copy of the original DataFrame is returned, with the new values inserted.
 
-Changed in version 0.23.0.
+*Changed in version 0.23.0*.
 
-Starting with Python 3.6 the order of **kwargs is preserved. This allows for dependent assignment, where an expression later in **kwargs can refer to a column created earlier in the same assign().
+Starting with Python 3.6 the order of ****kwargs** is preserved. This allows for dependent assignment, where an expression later in ****kwargs** can refer to a column created earlier in the same [assign()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.assign.html#pandas.DataFrame.assign).
 
+```python
 In [76]: dfa = pd.DataFrame({"A": [1, 2, 3],
    ....:                     "B": [4, 5, 6]})
    ....: 
@@ -367,10 +378,13 @@ Out[77]:
 0  1  4  5   6
 1  2  5  7   9
 2  3  6  9  12
-In the second expression, x['C'] will refer to the newly created column, that’s equal to dfa['A'] + dfa['B'].
+```
+
+In the second expression, ``x['C']`` will refer to the newly created column, that’s equal to ``dfa['A'] + dfa['B']``.
 
 To write code compatible with all versions of Python, split the assignment in two.
 
+```python
 In [78]: dependent = pd.DataFrame({"A": [1, 1, 1]})
 
 In [79]: (dependent.assign(A=lambda x: x['A'] + 1)
@@ -381,29 +395,43 @@ Out[79]:
 0  2  4
 1  2  4
 2  2  4
-Warning Dependent assignment maybe subtly change the behavior of your code between Python 3.6 and older versions of Python.
+```
+
+### !Warning
+
+Dependent assignment maybe subtly change the behavior of your code between Python 3.6 and older versions of Python.
 If you wish write code that supports versions of python before and after 3.6, you’ll need to take care when passing assign expressions that
 
-Updating an existing column
-Referring to the newly updated column in the same assign
+- Updating an existing column
+- Referring to the newly updated column in the same assign
 For example, we’ll update column “A” and then refer to it when creating “B”.
 
+```python
 >>> dependent = pd.DataFrame({"A": [1, 1, 1]})
 >>> dependent.assign(A=lambda x: x["A"] + 1,
                      B=lambda x: x["A"] + 2)
+```
+
 For Python 3.5 and earlier the expression creating B refers to the “old” value of A, [1, 1, 1]. The output is then
 
+```python
    A  B
 0  2  3
 1  2  3
 2  2  3
+```
+
 For Python 3.6 and later, the expression creating A refers to the “new” value of A, [2, 2, 2], which results in
 
+```python
    A  B
 0  2  4
 1  2  4
 2  2  4
-Indexing / Selection
+```
+
+## Indexing / Selection
+
 The basics of indexing are as follows:
 
 Operation	Syntax	Result
