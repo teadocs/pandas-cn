@@ -42,6 +42,8 @@
     - [Pandas 基本功能](/document/basics/index)
         - [Head 和 Tail](/document/basics/head_and_tail)
         - [属性和原始ndarray(s)](/document/basics/attributes_and_rawndarrays)
+        - [加速操作](/document/basics/accelerated_operations)
+        - [灵活的二进制操作](/document/basics/flexible_binary_operations)
     - [Pandas 处理文本字符串](/document/text)
     - [Pandas 选项和设置](/document/options)
     - [Pandas 索引和数据选择器](/document/indexing)
