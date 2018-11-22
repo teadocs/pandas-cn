@@ -28,7 +28,7 @@ Reading a file that is compressed but not by ``gzip/bz2`` (the native compressed
 
 [Write a multi-row index CSV without writing duplicates](http://stackoverflow.com/questions/17349574/pandas-write-multiindex-rows-with-to-csv)
 
-## Reading multiple files to create a single DataFrame
+### Reading multiple files to create a single DataFrame
 
 The best way to combine multiple files into a single DataFrame is to read the individual frames one by one, put all of the individual frames into a list, and then combine the frames in the list using pd.concat():
 
@@ -55,7 +55,7 @@ In [164]: result = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
 
 Finally, this strategy will work with the other pd.read_*(...) functions described in the io docs.
 
-## Parsing date components in multi-columns
+### Parsing date components in multi-columns
 
 Parsing date components in multi-columns is faster with a format
 
@@ -92,7 +92,7 @@ In [36]: %timeit pd.to_datetime(ds)
 1 loops, best of 3: 488 ms per loop
 ```
 
-## Skip row between header and data
+### Skip row between header and data
 
 ```python
 In [165]: data = """;;;;
@@ -118,7 +118,7 @@ In [165]: data = """;;;;
    .....: 
 ```
 
-## Option 1: pass rows explicitly to skiprows
+### Option 1: pass rows explicitly to skiprows
 
 ```python
 In [166]: pd.read_csv(StringIO(data), sep=';', skiprows=[11,12],
@@ -135,7 +135,7 @@ date
 1990-01-01 05:00:00      21      11      12      13
 ```
 
-## Option 2: read column names and then data
+### Option 2: read column names and then data
 
 ```python
 In [167]: pd.read_csv(StringIO(data), sep=';', header=10, nrows=10).columns
