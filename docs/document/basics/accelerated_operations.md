@@ -7,6 +7,7 @@ These libraries are especially useful when dealing with large data sets, and pro
 Here is a sample (using 100 column x 100,000 row ``DataFrames``):
 
 Operation | 0.11.0 (ms) | Prior Version (ms) | Ratio to Prior
+---|---|---|---
 df1 > df2 | 13.32 | 125.35 | 0.1063
 df1 * df2 | 21.71 | 36.63 | 0.5928
 df1 + df2 | 22.04 | 36.50 | 0.6039
