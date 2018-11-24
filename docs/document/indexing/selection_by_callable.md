@@ -1,0 +1,89 @@
+# 按可调用性选择
+
+*New in version 0.18.1*.
+
+``.loc``, ``.iloc``, and also ``[]`` indexing can accept a callable as indexer. The ``callable`` must be a function with one argument (the calling Series, DataFrame or Panel) and that returns valid output for indexing.
+
+```python
+In [88]: df1 = pd.DataFrame(np.random.randn(6, 4),
+   ....:                    index=list('abcdef'),
+   ....:                    columns=list('ABCD'))
+   ....: 
+
+In [89]: df1
+Out[89]: 
+          A         B         C         D
+a -0.023688  2.410179  1.450520  0.206053
+b -0.251905 -2.213588  1.063327  1.266143
+c  0.299368 -0.863838  0.408204 -1.048089
+d -0.025747 -0.988387  0.094055  1.262731
+e  1.289997  0.082423 -0.055758  0.536580
+f -0.489682  0.369374 -0.034571 -2.484478
+
+In [90]: df1.loc[lambda df: df.A > 0, :]
+Out[90]: 
+          A         B         C         D
+c  0.299368 -0.863838  0.408204 -1.048089
+e  1.289997  0.082423 -0.055758  0.536580
+
+In [91]: df1.loc[:, lambda df: ['A', 'B']]
+Out[91]: 
+          A         B
+a -0.023688  2.410179
+b -0.251905 -2.213588
+c  0.299368 -0.863838
+d -0.025747 -0.988387
+e  1.289997  0.082423
+f -0.489682  0.369374
+
+In [92]: df1.iloc[:, lambda df: [0, 1]]
+Out[92]: 
+          A         B
+a -0.023688  2.410179
+b -0.251905 -2.213588
+c  0.299368 -0.863838
+d -0.025747 -0.988387
+e  1.289997  0.082423
+f -0.489682  0.369374
+
+In [93]: df1[lambda df: df.columns[0]]
+Out[93]: 
+a   -0.023688
+b   -0.251905
+c    0.299368
+d   -0.025747
+e    1.289997
+f   -0.489682
+Name: A, dtype: float64
+```
+
+You can use callable indexing in Series.
+
+```python
+In [94]: df1.A.loc[lambda s: s > 0]
+Out[94]: 
+c    0.299368
+e    1.289997
+Name: A, dtype: float64
+```
+
+Using these methods / indexers, you can chain data selection operations without using temporary variable.
+
+```python
+In [95]: bb = pd.read_csv('data/baseball.csv', index_col='id')
+
+In [96]: (bb.groupby(['year', 'team']).sum()
+   ....:    .loc[lambda df: df.r > 100])
+   ....: 
+Out[96]: 
+           stint    g    ab    r    h  X2b  X3b  hr    rbi    sb   cs   bb     so   ibb   hbp    sh    sf  gidp
+year team                                                                                                      
+2007 CIN       6  379   745  101  203   35    2  36  125.0  10.0  1.0  105  127.0  14.0   1.0   1.0  15.0  18.0
+     DET       5  301  1062  162  283   54    4  37  144.0  24.0  7.0   97  176.0   3.0  10.0   4.0   8.0  28.0
+     HOU       4  311   926  109  218   47    6  14   77.0  10.0  4.0   60  212.0   3.0   9.0  16.0   6.0  17.0
+     LAN      11  413  1021  153  293   61    3  36  154.0   7.0  5.0  114  141.0   8.0   9.0   3.0   8.0  29.0
+     NYN      13  622  1854  240  509  101    3  61  243.0  22.0  4.0  174  310.0  24.0  23.0  18.0  15.0  48.0
+     SFN       5  482  1305  198  337   67    6  40  171.0  26.0  7.0  235  188.0  51.0   8.0  16.0   6.0  41.0
+     TEX       2  198   729  115  200   40    4  28  115.0  21.0  4.0   73  140.0   4.0   5.0   2.0   8.0  16.0
+     TOR       4  459  1408  187  378   96    2  58  223.0   4.0  2.0  190  265.0  16.0  12.0   4.0  16.0  38.0
+```
