@@ -14,7 +14,7 @@ module.exports = {
         dir: "", 
         title: "Pandas官方中文文档",
         headHtml: `
-        <meta name="description" content="pandas是一个开源的，BSD许可的库，为Python编程语言提供高性能，易于使用的数据结构和数据分析工具。" />
+        <meta name="description" content="这里是pandas的官方中文文档，本文档100%翻译覆盖所有的包括API、教程、下载、安装、进阶等所有的知识点，pandas是一个开源的，BSD许可的库，为Python编程语言提供高性能，易于使用的数据结构和数据分析工具。" />
         <meta name="keywords" content="pandas中文文档,pandas中文api,pandas中文手册,pandas教程,pandas下载安装,pandas" />
         <link rel="shortcut icon" href="/static/favicon.ico"/>
         `,
