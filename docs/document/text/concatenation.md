@@ -1,10 +1,10 @@
 # 并列
 
-There are several ways to concatenate a ``Series`` or ``Index``, either with itself or others, all based on [cat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat), resp. ``Index.str.cat``.
+Pandas提供了不同的方法将序列或索引与他们自己或者其他的对象进行拼接，所有的方法都是基于各自的[cat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat)。 ``Index.str.cat``。
 
-## Concatenating a single Series into a string
+## 将单个序列拼接为一个完整字符串
 
-The content of a ``Series`` (or ``Index``) can be concatenated:
+序列或索引的内容可以进行拼接：
 
 ```python
 In [41]: s = pd.Series(['a', 'b', 'c', 'd'])
@@ -13,14 +13,14 @@ In [42]: s.str.cat(sep=',')
 Out[42]: 'a,b,c,d'
 ```
 
-If not specified, the keyword ``sep`` for the separator defaults to the empty string, ``sep=''``:
+如果没有额外声明，``sep`` 即分隔符默认为空字串，即``sep=''``：
 
 ```python
 In [43]: s.str.cat()
 Out[43]: 'abcd'
 ```
 
-By default, missing values are ignored. Using ``na_rep``, they can be given a representation:
+默认情况下，缺失值会被忽略。使用``na_rep``参数，可以对缺失值进行赋值：
 
 ```python
 In [44]: t = pd.Series(['a', 'b', np.nan, 'd'])
@@ -32,9 +32,9 @@ In [46]: t.str.cat(sep=',', na_rep='-')
 Out[46]: 'a,b,-,d'
 ```
 
-## Concatenating a Series and something list-like into a Series
+## 拼接序列和其他类列表型对象为新的序列
 
-The first argument to [cat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat) can be a list-like object, provided that it matches the length of the calling ``Series`` (or ``Index``).
+[cat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat) 的第一个参数为类列表对象，但必须要确保长度与序列或索引相同.
 
 ```python
 In [47]: s.str.cat(['A', 'B', 'C', 'D'])
@@ -46,7 +46,7 @@ Out[47]:
 dtype: object
 ```
 
-Missing values on either side will result in missing values in the result as well, unless ``na_rep`` is specified:
+任何一端的缺失值都会导致之中结果为缺失值，除非使用``na_rep``：
 
 ```python
 In [48]: s.str.cat(t)
@@ -66,11 +66,11 @@ Out[49]:
 dtype: object
 ```
 
-## Concatenating a Series and something array-like into a Series
+## 拼接序列与类数组对象为新的序列
 
 *New in version 0.23.0*.
 
-The parameter ``others`` can also be two-dimensional. In this case, the number or rows must match the lengths of the calling ``Series`` (or ``Index``).
+``others`` 参数可以是二维的。此时，行数需要与序列或索引的长度相同。
 
 ```python
 In [50]: d = pd.concat([t, s], axis=1)
@@ -100,11 +100,11 @@ Out[53]:
 dtype: object
 ```
 
-## Concatenating a Series and an indexed object into a Series, with alignment
+## 对齐拼接序列与带索引的对象成为新的序列
 
 *New in version 0.23.0*.
 
-For concatenation with a ``Series`` or ``DataFrame``, it is possible to align the indexes before concatenation by setting the ``join-keyword``.
+对于拼接序列或者数据表，我们可以使用 ``join``关键字来对齐索引。
 
 ```python
 In [54]: u = pd.Series(['b', 'd', 'a', 'c'], index=[1, 3, 0, 2])
@@ -145,11 +145,11 @@ dtype: object
 <div class="warning-warp">
 <b>警告</b>
 <p>
-If the <code>join</code> keyword is not passed, the method <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat">cat()</a> will currently fall back to the behavior before version 0.23.0 (i.e. no alignment), but a <code>FutureWarning</code> will be raised if any of the involved indexes differ, since this default will change to <code>join='left'</code> in a future version.
+如果不使用  <code>join</code> 关键字，<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat">cat()</a>方法将会滚回到0.23.0版之前，即（无对齐）模式。但如果任何的索引不一致时，将会抛出一个<code>FutureWarning</code> 警告，因为在未来的版本中，默认行为将改为<code>join='left'</code> 。
 </p>
 </div>
 
-The usual options are available for ``join`` (one of ``'left'``, ``'outer'``, ``'inner'``, ``'right'``). In particular, alignment also means that the different lengths do not need to coincide anymore. 
+``join`` 的选项为（``'left'``, ``'outer'``, ``'inner'``, ``'right'``）中的一个。特别的，对齐操作使得两个对象可以是不同的长度。
 
 ```python
 In [59]: v = pd.Series(['z', 'a', 'b', 'd', 'e'], index=[-1, 0, 1, 3, 4])
@@ -190,7 +190,7 @@ Out[63]:
 dtype: object
 ```
 
-The same alignment can be used when ``others`` is a ``DataFrame``:
+当``others``是一个数据表时，也可以执行相同的对齐操作：
 
 ```python
 In [64]: f = d.loc[[3, 2, 1, 0], :]
@@ -220,9 +220,9 @@ Out[67]:
 dtype: object
 ```
 
-## Concatenating a Series and many objects into a Series
+## 将一个序列与多个对象拼接为一个新的序列
 
-All one-dimensional list-likes can be arbitrarily combined in a list-like container (including iterators, dict-views, etc.):
+所有的一维，类列表对象都可以任意组合进一个类列表的容器（包括迭代器，dict-视图等）：
 
 ```python
 In [68]: s
@@ -250,7 +250,7 @@ Out[70]:
 dtype: object
 ```
 
-All elements must match in length to the calling ``Series`` (or Index), except those having an index if ``join`` is not None:
+所有的元素必须与序列或索引有相同的长度，除了那些有索引的，且``join``不为None的对象：
 
 ```python
 In [71]: v
@@ -273,7 +273,7 @@ Out[72]:
 dtype: object
 ```
 
-If using ``join='right'`` on a list of ``others`` that contains different indexes, the union of these indexes will be used as the basis for the final concatenation:
+如果在一个包含不同的索引的``others``列表上使用``join='right'``，所有索引的并集将会被作为最终拼接的基础：
 
 ```python
 In [73]: u.loc[[3]]
