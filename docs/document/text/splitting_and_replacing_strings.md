@@ -1,6 +1,6 @@
 # 拆分和替换字符串
 
-Methods like ``split`` return a Series of lists:
+类似``split``的方法返回一个列表类型的序列：
 
 ```python
 In [15]: s2 = pd.Series(['a_b_c', 'c_d_e', np.nan, 'f_g_h'])
@@ -14,7 +14,7 @@ Out[16]:
 dtype: object
 ```
 
-Elements in the split lists can be accessed using ``get`` or ``[]`` notation:
+切分后的列表中的元素可以通过 ``get`` 方法或者 ``[]`` 方法进行读取：
 
 ```python
 In [17]: s2.str.split('_').str.get(1)
@@ -34,7 +34,7 @@ Out[18]:
 dtype: object
 ```
 
-It is easy to expand this to return a DataFrame using ``expand``.
+使用``expand``方法可以轻易地将这种返回展开为一个数据表.
 
 ```python
 In [19]: s2.str.split('_', expand=True)
@@ -46,7 +46,7 @@ Out[19]:
 3    f    g    h
 ```
 
-It is also possible to limit the number of splits:
+同样，我们也可以限制切分的次数：
 
 ```python
 In [20]: s2.str.split('_', expand=True, n=1)
@@ -58,7 +58,7 @@ Out[20]:
 3    f  g_h
 ```
 
-``rsplit`` is similar to ``split`` except it works in the reverse direction, i.e., from the end of the string to the beginning of the string:
+``rsplit``与``split``相似，不同的是，这个切分的方向是反的。即，从字串的尾端向首段切分：
 
 ```python
 In [21]: s2.str.rsplit('_', expand=True, n=1)
@@ -70,7 +70,7 @@ Out[21]:
 3  f_g    h
 ```
 
-``replace`` by default replaces [regular expressions](https://docs.python.org/3/library/re.html):
+``replace`` 方法默认使用 [正则表达式](https://docs.python.org/3/library/re.html):
 
 ```python
 In [22]: s3 = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca',
@@ -106,7 +106,7 @@ Out[24]:
 dtype: object
 ```
 
-Some caution must be taken to keep regular expressions in mind! For example, the following code will cause trouble because of the regular expression meaning of $:
+一定要实时记得，是正则表达式，因此要格外小心。例如，因为正则表达式中的‘$’符号,下列代码将会导致一些麻烦：
 
 ```python
 # Consider the following badly formatted financial data
@@ -139,7 +139,7 @@ dtype: object
 
 *New in version 0.23.0*.
 
-If you do want literal replacement of a string (equivalent to [str.replace()](https://docs.python.org/3/library/stdtypes.html#str.replace)), you can set the optional regex parameter to ``False``, rather than escaping each character. In this case both pat and repl must be strings:
+如果你只是向单纯地替换字符(（等价于python中的[str.replace()](https://docs.python.org/3/library/stdtypes.html#str.replace)), ，你可以将可选参数 ``regex`` 设置为 ``False``，而不是傻傻地转义所有符号。这种情况下，``pat`` 和 ``repl`` 就都将作为普通字符对待：
 
 ```python
 # These lines are equivalent
@@ -160,7 +160,7 @@ dtype: object
 
 *New in version 0.20.0*.
 
-The ``replace`` method can also take a callable as replacement. It is called on every ``pat`` using [re.sub()](https://docs.python.org/3/library/re.html#re.sub). The callable should expect one positional argument (a regex object) and return a string.
+``replace`` 方法也可以传入一个可调用对象作为替换值。它针对每一个 ``pat`` 通过 [re.sub()](https://docs.python.org/3/library/re.html#re.sub)来调用。可调用对象应只具有一个形参（一个正则表达式对象）并且返回一个字符串。
 
 ```python
 # Reverse every lowercase alphabetic word
@@ -189,7 +189,7 @@ dtype: object
 
 *New in version 0.20.0*.
 
-The ``replace`` method also accepts a compiled regular expression object from [re.compile()](https://docs.python.org/3/library/re.html#re.compile) as a pattern. All flags should be included in the compiled regular expression object.
+ ``replace`` 方法也可以接受一个来自 [re.compile()](https://docs.python.org/3/library/re.html#re.compile) 编译过的正则表达式对象，来做为``表达式``。所有的标记都应该被包含在这个已经编译好的正则表达式对象中。
 
 ```python
 In [37]: import re
@@ -211,7 +211,7 @@ Out[39]:
 dtype: object
 ```
 
-Including a ``flags`` argument when calling ``replace`` with a compiled regular expression object will raise a ``ValueError``.
+如果在已经使用编译的正则对象中继续传入``flags`` 参数，并进行替换，将会导致``ValueError``.
 
 ```python
 In [40]: s3.str.replace(regex_pat, 'XX-XX ', flags=re.IGNORECASE)
