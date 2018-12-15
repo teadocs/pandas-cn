@@ -1,17 +1,17 @@
 # 提取子字符串
 
-## Extract first match in each subject (extract)
+## 提取第一个匹配的对象  (extract)
 
 <div class="warning-warp">
 <b>警告</b>
 <p>
-In version 0.18.0, <code>extract</code> gained the <code>expand</code> argument. When <code>expand=False</code> it returns a <code>Series</code>, <code>Index</code>, or <code>DataFrame</code>, depending on the subject and regular expression pattern (same behavior as pre-0.18.0). When <code>expand=True</code> it always returns a <code>DataFrame</code>, which is more consistent and less confusing from the perspective of a user. <code>expand=True</code> is the default since version 0.23.0.
+在 0.18.0中，<code>extract</code> 拥有了 <code>expand</code> 参数。当 <code>expand=False</code>时， 将返回一个序列，索引或者数据表， 这取决于原对象和正则表达式（之前的版本也是如此）。当 <code>expand=True</code> 时，它则总是返回一个``DataFrame``，这样可以更加一致，并且减少用户的混淆。 ``Expand=True`` 从0.23.0版本之后成为默认值。
 </p>
 </div>
 
-The ``extract`` method accepts a [regular expression](https://docs.python.org/3/library/re.html) with at least one capture group.
+``extract`` 方法接受一个至少含有一个捕获组的 [正则表达式](https://docs.python.org/3/library/re.html) 。
 
-Extracting a regular expression with more than one group returns a DataFrame with one column per group.
+使用超过一个捕获组的正则表达式则会提取并返回一个数据表，每一列为一个捕获组。
 
 ```python
 In [79]: pd.Series(['a1', 'b2', 'c3']).str.extract('([ab])(\d)', expand=False)
@@ -22,9 +22,9 @@ Out[79]:
 2  NaN  NaN
 ```
 
-Elements that do not match return a row filled with ``NaN``. Thus, a Series of messy strings can be “converted” into a like-indexed Series or DataFrame of cleaned-up or more useful strings, without necessitating ``get()`` to access tuples or ``re.match`` objects. The dtype of the result is always object, even if no match is found and the result only contains ``NaN``.
+没有成功匹配的元素将会返回一行``NaN``。因此，一个序列的混乱的字符串可以被‘转换’为一个类似索引的序列或数据表。返回的内容会更为清爽，而且不需要使用``get()``方法来访问元组中的成员或者``re.match``对象。返回的类型将总是``object``类，即使匹配失败，返回的全是``NaN``。
 
-Named groups like
+有名称的捕获组，如：
 
 ```python
 In [80]: pd.Series(['a1', 'b2', 'c3']).str.extract('(?P<letter>[ab])(?P<digit>\d)', expand=False)
@@ -35,7 +35,7 @@ Out[80]:
 2    NaN   NaN
 ```
 
-and optional groups like
+可选组类似，如：
 
 ```python
 In [81]: pd.Series(['a1', 'b2', '3']).str.extract('([ab])?(\d)', expand=False)
@@ -46,9 +46,9 @@ Out[81]:
 2  NaN  3
 ```
 
-can also be used. Note that any capture group names in the regular expression will be used for column names; otherwise capture group numbers will be used.
+也可以被使用。注意，任何有名称的捕获组，其名称都会被用做列名，否则将会直接使用数字
 
-Extracting a regular expression with one group returns a DataFrame with one column if ``expand=True``.
+如果仅使用正则表达式捕获一个组，而``expand=True``，那么仍然将返回一个数据表。
 
 ```python
 In [82]: pd.Series(['a1', 'b2', 'c3']).str.extract('[ab](\d)', expand=True)
@@ -59,7 +59,7 @@ Out[82]:
 2  NaN
 ```
 
-It returns a Series if ``expand=False``.
+如果``expand=False``，则会返回一个序列。
 
 ```python
 In [83]: pd.Series(['a1', 'b2', 'c3']).str.extract('[ab](\d)', expand=False)
@@ -70,7 +70,7 @@ Out[83]:
 dtype: object
 ```
 
-Calling on an Index with a regex with exactly one capture group returns a ``DataFrame`` with one column if ``expand=True``.
+在索引上使用正则表达式，并且仅捕获一个组时，将会返回一个数据表，如果``expand=True``。
 
 ```python
 In [84]: s = pd.Series(["a1", "b2", "c3"], ["A11", "B22", "C33"])
@@ -90,14 +90,14 @@ Out[86]:
 2      C
 ```
 
-It returns an ``Index`` if ``expand=False``.
+如果``expand=False``，则返回一个``Index``。
 
 ```python
 In [87]: s.index.str.extract("(?P<letter>[a-zA-Z])", expand=False)
 Out[87]: Index(['A', 'B', 'C'], dtype='object', name='letter')
 ```
 
-Calling on an ``Index`` with a regex with more than one capture group returns a ``DataFrame`` if ``expand=True``.
+如果在索引上使用正则并捕获多个组，则返回一个数据表，如果``expand=True``。
 
 ```python
 In [88]: s.index.str.extract("(?P<letter>[a-zA-Z])([0-9]+)", expand=True)
@@ -108,24 +108,24 @@ Out[88]:
 2      C  33
 ```
 
-It raises ValueError if expand=False.
+ 如果 ``expand=False``，则抛出``ValueError``。
 
 ```python
 >>> s.index.str.extract("(?P<letter>[a-zA-Z])([0-9]+)", expand=False)
 ValueError: only one regex group is supported with Index
 ```
 
-The table below summarizes the behavior of ``extract(expand=False)`` (input subject in first column, number of groups in regex in first row)
+下面的表格总结了``extract (expand=False)``时的行为（输入对象在第一列，捕获组的数量在第一行）
 
 - | 1 group | >1 group
 Index | Index | ValueError
 Series | Series | DataFrame
 
-## Extract all matches in each subject (extractall)
+## 提取所有的匹配 (extractall)
 
 *New in version 0.18.0*.
 
-Unlike ``extract`` (which returns only the first match),
+不同于 ``extract``（只返回第一个匹配），
 
 ```python
 In [89]: s = pd.Series(["a1a2", "b1", "c1"], index=["A", "B", "C"])
@@ -147,7 +147,7 @@ B      b     1
 C      c     1
 ```
 
-the ``extractall`` method returns every match. The result of ``extractall is`` always a ``DataFrame`` with a ``MultiIndex`` on its rows. The last level of the ``MultiIndex`` is named ``match`` and indicates the order in the subject.
+··``extractall``方法返回所有的匹配。``extractall``总是返回一个带有行多重索引的数据表，最后一级被命名为``match``，它指出匹配的顺序
 
 ```python
 In [93]: s.str.extractall(two_groups)
@@ -160,7 +160,7 @@ B 0          b     1
 C 0          c     1
 ```
 
-When each subject string in the Series has exactly one match,
+当所有的对象字串都只有一个匹配时，
 
 ```python
 In [94]: s = pd.Series(['a3', 'b3', 'c2'])
@@ -173,7 +173,7 @@ Out[95]:
 dtype: object
 ```
 
-then ``extractall(pat).xs(0, level='match')`` gives the same result as ``extract(pat)``.
+``extractall(pat).xs(0, level='match')`` 的返回与``extract(pat)``相同。
 
 ```python
 In [96]: extract_result = s.str.extract(two_groups, expand=True)
@@ -203,7 +203,7 @@ Out[100]:
 2      c     2
 ```
 
-``Index`` also supports ``.str.extractall.`` It returns a ``DataFrame`` which has the same result as a ``Series.str.extractall`` with a default index (starts from 0).
+索引也支持``.str.extractall``。 它返回一个数据表，其中包含与``Series.str.estractall``相同的结果，使用默认索引（从0开始）
 
 *New in version 0.19.0*.
 
