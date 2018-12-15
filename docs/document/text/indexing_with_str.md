@@ -1,6 +1,6 @@
 # 使用.str进行索引
 
-You can use ``[]`` notation to directly index by position locations. If you index past the end of the string, the result will be a ``NaN``.
+你可以使用 ``[]``方法来直接索引定位。如果你的索引超过了字符串的结尾，将返回``NaN``。
 
 ```python
 In [76]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan,
