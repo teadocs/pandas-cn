@@ -1,6 +1,6 @@
 # 测试匹配或包含模式的字符串
 
-You can check whether elements contain a pattern:
+你可以检查是否一个元素包含一个可以匹配到的正则表达式：
 
 ```python
 In [103]: pattern = r'[0-9][a-z]'
@@ -15,7 +15,7 @@ Out[104]:
 dtype: bool
 ```
 
-Or whether elements match a pattern:
+或者是否元素完整匹配一个正则表达式
 
 ```python
 In [105]: pd.Series(['1', '2', '3a', '3b', '03c']).str.match(pattern)
@@ -28,9 +28,8 @@ Out[105]:
 dtype: bool
 ```
 
-The distinction between ``match`` and ``contains`` is strictness: ``match`` relies on strict ``re.match``, while ``contains`` relies on re.search.
-
-Methods like ``match``, ``contains``, ``startswith``, and ``endswith`` take an extra na argument so missing values can be considered True or False:
+``match``和``contains``的区别是是否严格匹配。``match``严格基于``re.match``，而``contains``基于``re.search``。
+类似``match``, ``contains``, ``startswith`` 和 ``endswith`` 可以传入一个额外的``na``参数，因此，因此缺失值在匹配时可以被认为是``True``或者``False``：
 
 ```python
 In [106]: s4 = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
