@@ -1,22 +1,22 @@
-# 方法总结
+# 方法总览
 
-Method | Description
----|---
-[cat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat) | Concatenate strings
-[split()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.split.html#pandas.Series.str.split) | Split strings on delimiter
-[rsplit()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.rsplit.html#pandas.Series.str.rsplit) | Split strings on delimiter working from the end of the string
-[get()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.get.html#pandas.Series.str.get) | Index into each element (retrieve i-th element)
-[join()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.join.html#pandas.Series.str.join) | Join strings in each element of the Series with passed separator
-[get_dummies()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.get_dummies.html#pandas.Series.str.get_dummies) | Split strings on the delimiter returning DataFrame of dummy variables
-[contains()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.contains.html#pandas.Series.str.contains) | Return boolean array if each string contains pattern/regex
-[replace()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.replace.html#pandas.Series.str.replace) | Replace occurrences of pattern/regex/string with some other string or the return value of a callable given the occurrence
-[repeat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.repeat.html#pandas.Series.str.repeat) | Duplicate values (s.str.repeat(3) equivalent to x * 3)
-[pad()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.pad.html#pandas.Series.str.pad) | Add whitespace to left, right, or both sides of strings
-[center()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.center.html#pandas.Series.str.center) | Equivalent to str.center
-[ljust()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.ljust.html#pandas.Series.str.ljust) | Equivalent to str.ljust
-[rjust()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.rjust.html#pandas.Series.str.rjust) | Equivalent to str.rjust
-[zfill()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.zfill.html#pandas.Series.str.zfill) | Equivalent to str.zfill
-[wrap()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.wrap.html#pandas.Series.str.wrap) | Split long strings into lines with length less than a given width
+Method方法 | 描述 | Description
+---|---|---
+[cat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat) | | 拼接字符串 | Concatenate strings
+[split()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.split.html#pandas.Series.str.split) | 基于分隔符切分字符串 | Split strings on delimiter
+[rsplit()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.rsplit.html#pandas.Series.str.rsplit) | 基于分隔符，逆向切分字符串 | Split strings on delimiter working from the end of the string
+[get()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.get.html#pandas.Series.str.get) | 索引每一个元素（返回第i个元素） | Index into each element (retrieve i-th element)
+[join()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.join.html#pandas.Series.str.join) | 使用传入的分隔符依次拼接每一个元素 | Join strings in each element of the Series with passed separator
+[get_dummies()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.get_dummies.html#pandas.Series.str.get_dummies) | 用分隔符切分字符串，并返回一个含有哑变量的数据表 | Split strings on the delimiter returning DataFrame of dummy variables
+[contains()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.contains.html#pandas.Series.str.contains) | 返回一个布尔矩阵表明是每个元素包含字符串或正则表达式 | Return boolean array if each string contains pattern/regex
+[replace()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.replace.html#pandas.Series.str.replace) | 将匹配到的子串或正则表达式替换为另外的字符串，或者一个可调用对象的返回值 | Replace occurrences of pattern/regex/string with some other string or the return value of a callable given the occurrence
+[repeat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.repeat.html#pandas.Series.str.repeat) | 值复制（s.str.repeat(3)等价于x * 3） | Duplicate values (s.str.repeat(3) equivalent to x * 3)
+[pad()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.pad.html#pandas.Series.str.pad) | 将白空格插入到字符串的左、右或者两端 | Add whitespace to left, right, or both sides of strings
+[center()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.center.html#pandas.Series.str.center) | 等价于``str.center`` | Equivalent to str.center
+[ljust()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.ljust.html#pandas.Series.str.ljust) | 等价于``str.ljust`` | Equivalent to str.ljust
+[rjust()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.rjust.html#pandas.Series.str.rjust) | 等价于``str.rjust`` | Equivalent to str.rjust
+[zfill()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.zfill.html#pandas.Series.str.zfill) | 等价于str.zfill | Equivalent to str.zfill
+[wrap()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.wrap.html#pandas.Series.str.wrap) | 将长字符串转换为 | Split long strings into lines with length less than a given width
 [slice()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.slice.html#pandas.Series.str.slice) | Slice each string in the Series
 [slice_replace()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.slice_replace.html#pandas.Series.str.slice_replace) | Replace slice in each string with passed value
 [count()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.count.html#pandas.Series.str.count) | Count occurrences of pattern
