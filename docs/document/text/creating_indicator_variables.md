@@ -1,6 +1,6 @@
-# 创建指标变量
+# 建立一个指示变量
 
-You can extract dummy variables from string columns. For example if they are separated by a '|':
+你从字符串列可以抽出一个哑变量。例如，是否他们由``|``分割:
 
 ```python
 In [108]: s = pd.Series(['a', 'a|b', np.nan, 'a|c'])
@@ -14,7 +14,7 @@ Out[109]:
 3  1  0  1
 ```
 
-String ``Index`` also supports ``get_dummies`` which returns a MultiIndex.
+索引也支持``get_dummies``，它返回一个多重索引：
 
 *New in version 0.18.1*.
 
@@ -28,4 +28,4 @@ MultiIndex(levels=[[0, 1], [0, 1], [0, 1]],
            names=['a', 'b', 'c'])
 ```
 
-See also [get_dummies()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html#pandas.get_dummies).
+参见 [get_dummies()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html#pandas.get_dummies).
