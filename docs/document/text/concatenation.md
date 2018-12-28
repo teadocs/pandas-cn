@@ -1,4 +1,4 @@
-# 并列
+# 拼接
 
 Pandas提供了不同的方法将序列或索引与他们自己或者其他的对象进行拼接，所有的方法都是基于各自的[cat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.str.cat.html#pandas.Series.str.cat)。 ``Index.str.cat``。
 
