@@ -1,6 +1,7 @@
-# Pandas 基本功能
+# 必要的 Pandas 基本功能
 
 Here we discuss a lot of the essential functionality common to the pandas data structures. Here’s how to create some of the objects used in the examples from the previous section:
+我们将在这里讨论许多关于pandas数据结构的基础功能。这里展示的是如何创建一些在签一个章节的实例中使用到的对象：
 
 ```python
 In [1]: index = pd.date_range('1/1/2000', periods=8)
