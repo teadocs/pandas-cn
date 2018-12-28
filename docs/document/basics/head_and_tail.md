@@ -1,6 +1,7 @@
 # Head 和 Tail
 
 To view a small sample of a Series or DataFrame object, use the head() and tail() methods. The default number of elements to display is five, but you may pass a custom number.
+使用 ``head()`` 和 ``tail()`` 方法来只展示一个序列或数据表对象的一个局部。默认的展示元素数量是5，但是你可以传入任意的一个数值。
 
 ```python
 In [5]: long_series = pd.Series(np.random.randn(1000))
