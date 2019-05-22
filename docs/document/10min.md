@@ -2,40 +2,40 @@
 
 ## 目录
 
-- Object Creation
-- Viewing Data
-- Selection
-    - Getting
-    - Selection by Label
-    - Selection by Position
-    - Boolean Indexing
-    - Setting
-- Missing Data
-- Operations
-    - Stats
-    - Apply
-    - Histogramming
-    - String Methods
-- Merge
-    - Concat
+- 对象创建
+- 查看数据
+- 选择
+    - 入门
+    - 按标签选择
+    - 按位置选择
+    - 布尔索引
+    - 设置
+- 缺失值
+- 操作
+    - 统计（Stats）
+    - 应用（Apply）
+    - 直方图化
+    - 字符串方法
+- 合并（Merge）
+    - 字符串连接（Concat）
     - Join
-    - Append
-- Grouping
-- Reshaping
+    - 追加（Append）
+- 分组（Grouping）
+- 重塑（Reshaping）
     - Stack
     - Pivot Tables
-- Time Series
+- 时间序列（Time Series）
 - Categoricals
-- Plotting
-- Getting Data In/Out
+- 绘图
+- 数据输入/输出
     - CSV
     - HDF5
     - Excel
 - Gotchas
 
-This is a short introduction to pandas, geared mainly for new users. You can see more complex recipes in the [Cookbook](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#cookbook).
+这是一篇对pandas的简短介绍, 主要面向新用户。 你可以在[这里](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#cookbook)查看更多复杂的用法。
 
-Customarily, we import as follows:
+通常，我们做如下导入：
 
 ```python
 In [1]: import pandas as pd
@@ -45,11 +45,11 @@ In [2]: import numpy as np
 In [3]: import matplotlib.pyplot as plt
 ```
 
-## Object Creation
+## 对象创建
 
-See the [Data Structure Intro section](http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dsintro).
+请参阅 [数据结构简介部分](http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dsintro)。
 
-Creating a [Series](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series) by passing a list of values, letting pandas create a default integer index:
+通过传入一些值的列表来创建一个[Series](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series)， pandas会自动常见一个默认的整数索引：
 
 ```python
 In [4]: s = pd.Series([1,3,5,np.nan,6,8])
@@ -65,7 +65,7 @@ Out[5]:
 dtype: float64
 ```
 
-Creating a ``DataFrame`` by passing a NumPy array, with a datetime index and labeled columns:
+通过传递带有日期时间索引和带标签列的NumPy数组来创建[DataFrame](<http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame>)：
 
 ```python
 In [6]: dates = pd.date_range('20130101', periods=6)
@@ -89,7 +89,7 @@ Out[9]:
 2013-01-06 -0.673690  0.113648 -1.478427  0.524988
 ```
 
-Creating a DataFrame by passing a dict of objects that can be converted to series-like.
+通过传递可以转化为类似Series的dict对象来创建`DataFrame`:
 
 ```python
 In [10]: df2 = pd.DataFrame({ 'A' : 1.,
@@ -659,7 +659,7 @@ Out[65]:
 2013-01-06       NaN       NaN       NaN  NaN  NaN
 ```
 
-### Apply
+### 应用
 
 Applying functions to the data:
 
