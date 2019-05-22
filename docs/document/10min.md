@@ -109,7 +109,7 @@ Out[11]:
 3  1.0 2013-01-02  1.0  3  train  foo
 ```
 
-The columns of the resulting DataFrame have different dtypes.
+DataFrame的列具有不同的数据类型：
 
 ```python
 In [12]: df2.dtypes
