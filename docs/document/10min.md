@@ -123,7 +123,7 @@ F            object
 dtype: object
 ```
 
-If you’re using IPython, tab completion for column names (as well as public attributes) is automatically enabled. Here’s a subset of the attributes that will be completed:
+如果你正在使用 IPython, 按下tab键会自动补全所有的列名以及公共属性。下面是可以补全的属性中的一部分：
 
 ```python
 In [13]: df2.<TAB>
@@ -141,13 +141,13 @@ df2.applymap           df2.consolidate
 df2.D
 ```
 
-As you can see, the columns A, B, C, and D are automatically tab completed. E is there as well; the rest of the attributes have been truncated for brevity.
+如你所见，列A、B、C和D将自动补全，E也存在；为了简洁起见，只显示了一部分属性。
 
-## Viewing Data
+## 查看数据
 
-See the [Basics section](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics).
+请查看[基础部分](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics)
 
-Here is how to view the top and bottom rows of the frame:
+这里展示的是如何查看DataFrame顶部和尾部的数据：
 
 ```python
 In [14]: df.head()
@@ -167,7 +167,7 @@ Out[15]:
 2013-01-06 -0.673690  0.113648 -1.478427  0.524988
 ```
 
-Display the index, columns, and the underlying NumPy data:
+显示索引、列和底层NumPy数据：
 
 ```python
 In [16]: df.index
@@ -189,7 +189,7 @@ array([[ 0.4691, -0.2829, -1.5091, -1.1356],
        [-0.6737,  0.1136, -1.4784,  0.525 ]])
 ```
 
-[describe()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.describe.html#pandas.DataFrame.describe) shows a quick statistic summary of your data:
+[describe()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.describe.html#pandas.DataFrame.describe) 方法显示数据的快速统计摘要：
 
 ```python
 In [19]: df.describe()
@@ -205,7 +205,7 @@ min   -0.861849 -2.104569 -1.509059 -1.135632
 max    1.212112  0.567020  0.276232  1.071804
 ```
 
-Transposing your data:
+转置数据：
 
 ```python
 In [20]: df.T
@@ -217,7 +217,7 @@ C   -1.509059    0.119209   -0.494929   -1.039575    0.276232   -1.478427
 D   -1.135632   -1.044236    1.071804    0.271860   -1.087401    0.524988
 ```
 
-Sorting by an axis:
+按轴排序：
 
 ```python
 In [21]: df.sort_index(axis=1, ascending=False)
@@ -231,7 +231,7 @@ Out[21]:
 2013-01-06  0.524988 -1.478427  0.113648 -0.673690
 ```
 
-Sorting by values:
+按值排序：
 
 ```python
 In [22]: df.sort_values(by='B')
@@ -245,14 +245,14 @@ Out[22]:
 2013-01-05 -0.424972  0.567020  0.276232 -1.087401
 ```
 
-## Selection
+## 选择
 
-**Note**：While standard Python / Numpy expressions for selecting and setting are intuitive and come in handy for interactive work, for production code, we recommend the optimized pandas data access methods, .at, .iat, .loc and .iloc.
-See the indexing documentation Indexing and Selecting Data and MultiIndex / Advanced Indexing.
+**注意**：虽然用于选择和赋值的标准Python / Numpy表达式非常直观，并且便于交互工作，但是对于生产环境的代码，我们推荐优化的pandas数据访问方法.at、.iat、.loc和.iloc。
+参见索引文档索引、选择数据和多索引/高级索引。
 
-### Getting
+### 入门
 
-Selecting a single column, which yields a ``Series``, equivalent to ``df.A``:
+选择一个列，产生一个“Series”，相当于“df.A”:
 
 ```python
 In [23]: df['A']
@@ -266,7 +266,7 @@ Out[23]:
 Freq: D, Name: A, dtype: float64
 ```
 
-Selecting via [], which slices the rows.
+通过[ ]选择，对行进行切片：
 
 ```python
 In [24]: df[0:3]
@@ -284,11 +284,11 @@ Out[25]:
 2013-01-04  0.721555 -0.706771 -1.039575  0.271860
 ```
 
-### Selection by Label
+### 通过标签选择
 
-See more in [Selection by Label](http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label).
+在 [Selection by Label](http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label)查看更多
 
-For getting a cross section using a label:
+通过标签获取一行数据：
 
 ```python
 In [26]: df.loc[dates[0]]
@@ -300,7 +300,7 @@ D   -1.135632
 Name: 2013-01-01 00:00:00, dtype: float64
 ```
 
-Selecting on a multi-axis by label:
+通过标签在多个轴上选择数据：
 
 ```python
 In [27]: df.loc[:,['A','B']]
@@ -314,7 +314,7 @@ Out[27]:
 2013-01-06 -0.673690  0.113648
 ```
 
-Showing label slicing, both endpoints are included:
+通过标签同时在两个轴上切片：
 
 ```python
 In [28]: df.loc['20130102':'20130104',['A','B']]
@@ -325,7 +325,7 @@ Out[28]:
 2013-01-04  0.721555 -0.706771
 ```
 
-Reduction in the dimensions of the returned object:
+减小返回对象的大小：
 
 ```python
 In [29]: df.loc['20130102',['A','B']]
@@ -335,23 +335,23 @@ B   -0.173215
 Name: 2013-01-02 00:00:00, dtype: float64
 ```
 
-For getting a scalar value:
+获取标量值：
 
 ```python
 In [30]: df.loc[dates[0],'A']
 Out[30]: 0.46911229990718628
 ```
 
-For getting fast access to a scalar (equivalent to the prior method):
+快速访问标量（和上面的方法效果相同）：
 
 ```python
 In [31]: df.at[dates[0],'A']
 Out[31]: 0.46911229990718628
 ```
 
-### Selection by Position
+### 按位置选择
 
-See more in [Selection by Position](http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-integer).
+在 [Selection by Position](http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-integer)查看更多
 
 Select via the position of the passed integers:
 
