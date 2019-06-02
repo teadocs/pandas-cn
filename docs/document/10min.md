@@ -9,7 +9,7 @@
     - 按标签选择
     - 按位置选择
     - 布尔索引
-    - 设置
+    - 赋值
 - 缺失值
 - 操作
     - 统计（Stats）
@@ -353,7 +353,7 @@ Out[31]: 0.46911229990718628
 
 在 [Selection by Position](http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-integer)查看更多
 
-Select via the position of the passed integers:
+通过传递的整数的位置选择：
 
 ```python
 In [32]: df.iloc[3]
@@ -365,7 +365,7 @@ D    0.271860
 Name: 2013-01-04 00:00:00, dtype: float64
 ```
 
-By integer slices, acting similar to numpy/python:
+通过整数切片，类似于numpy/Python：
 
 ```python
 In [33]: df.iloc[3:5,0:2]
@@ -375,7 +375,7 @@ Out[33]:
 2013-01-05 -0.424972  0.567020
 ```
 
-By lists of integer position locations, similar to the numpy/python style:
+通过传递整数的列表按位置切片，类似于numpy/Python：
 
 ```python
 In [34]: df.iloc[[1,2,4],[0,2]]
@@ -386,17 +386,17 @@ Out[34]:
 2013-01-05 -0.424972  0.276232
 ```
 
-For slicing rows explicitly:
+整行切片：
 
 ```python
-In [35]: df.iloc[1:3,:]
+ [35]: df.iloc[1:3,:]
 Out[35]: 
                    A         B         C         D
 2013-01-02  1.212112 -0.173215  0.119209 -1.044236
 2013-01-03 -0.861849 -2.104569 -0.494929  1.071804
 ```
 
-For slicing columns explicitly:
+整列切片：
 
 ```python
 In [36]: df.iloc[:,1:3]
@@ -410,23 +410,23 @@ Out[36]:
 2013-01-06  0.113648 -1.478427
 ```
 
-For getting a value explicitly:
+获取具体值：
 
 ```python
 In [37]: df.iloc[1,1]
 Out[37]: -0.17321464905330858
 ```
 
-For getting fast access to a scalar (equivalent to the prior method):
+快速访问标量(等价于之前的方法)：
 
 ```python
 In [38]: df.iat[1,1]
 Out[38]: -0.17321464905330858
 ```
 
-### Boolean Indexing
+### 布尔索引
 
-Using a single column’s values to select data.
+使用单个列的值来选择数据：
 
 ```python
 In [39]: df[df.A > 0]
@@ -437,7 +437,7 @@ Out[39]:
 2013-01-04  0.721555 -0.706771 -1.039575  0.271860
 ```
 
-Selecting values from a DataFrame where a boolean condition is met.
+从满足布尔条件的DataFrame中选择值：
 
 ```python
 In [40]: df[df > 0]
@@ -451,7 +451,7 @@ Out[40]:
 2013-01-06       NaN  0.113648       NaN  0.524988
 ```
 
-Using the [isin()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.isin.html#pandas.Series.isin) method for filtering:
+使用 [isin()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.isin.html#pandas.Series.isin) 方法过滤：
 
 ```python
 In [41]: df2 = df.copy()
@@ -475,9 +475,9 @@ Out[44]:
 2013-01-05 -0.424972  0.567020  0.276232 -1.087401  four
 ```
 
-### Setting
+### 赋值
 
-Setting a new column automatically aligns the data by the indexes.
+添加新列将自动根据索引对齐数据：
 
 ```python
 In [45]: s1 = pd.Series([1,2,3,4,5,6], index=pd.date_range('20130102', periods=6))
@@ -495,25 +495,25 @@ Freq: D, dtype: int64
 In [47]: df['F'] = s1
 ```
 
-Setting values by label:
+通过标签赋值：
 
 ```python
 In [48]: df.at[dates[0],'A'] = 0
 ```
 
-Setting values by position:
+通过位置赋值：
 
 ```python
 In [49]: df.iat[0,1] = 0
 ```
 
-Setting by assigning with a NumPy array:
+使用NumPy数组赋值：
 
 ```python
 In [50]: df.loc[:,'D'] = np.array([5] * len(df))
 ```
 
-The result of the prior setting operations.
+前面一系列赋值操作的结果：
 
 ```python
 In [51]: df
@@ -527,7 +527,7 @@ Out[51]:
 2013-01-06 -0.673690  0.113648 -1.478427  5  5.0
 ```
 
-A where operation with setting.
+带有where条件的赋值操作：
 
 ```python
 In [52]: df2 = df.copy()
@@ -545,11 +545,11 @@ Out[54]:
 2013-01-06 -0.673690 -0.113648 -1.478427 -5 -5.0
 ```
 
-## Missing Data
+## 缺失值
 
-pandas primarily uses the value np.nan to represent missing data. It is by default not included in computations. See the [Missing Data section](http://pandas.pydata.org/pandas-docs/stable/missing_data.html#missing-data  ).
+pandas主要使用值np.nan来表示缺失的数据。 默认情况下，它不包含在计算中。 在 [Missing Data section](http://pandas.pydata.org/pandas-docs/stable/missing_data.html#missing-data  )中查看更多。
 
-Reindexing allows you to change/add/delete the index on a specified axis. This returns a copy of the data.
+重建索引允许你更改/添加/删除指定轴上的索引。 这个操作会返回一个副本（不会更改原来的对象）。
 
 ```python
 In [55]: df1 = df.reindex(index=dates[0:4], columns=list(df.columns) + ['E'])
@@ -565,7 +565,7 @@ Out[57]:
 2013-01-04  0.721555 -0.706771 -1.039575  5  3.0  NaN
 ```
 
-To drop any rows that have missing data.
+删除任何带有缺失值的行：
 
 ```python
 In [58]: df1.dropna(how='any')
@@ -574,7 +574,7 @@ Out[58]:
 2013-01-02  1.212112 -0.173215  0.119209  5  1.0  1.0
 ```
 
-Filling missing data.
+填充缺失值：
 
 ```python
 In [59]: df1.fillna(value=5)
@@ -586,7 +586,7 @@ Out[59]:
 2013-01-04  0.721555 -0.706771 -1.039575  5  3.0  5.0
 ```
 
-To get the boolean mask where values are nan.
+获取值为nan的掩码：
 
 ```python
 In [60]: pd.isna(df1)
@@ -598,15 +598,15 @@ Out[60]:
 2013-01-04  False  False  False  False  False   True
 ```
 
-## Operations
+## 操作
 
-See the [Basic section on Binary Ops](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics-binop).
+在 [Basic section on Binary Ops](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics-binop)查看更多。
 
-### Stats
+### 统计
 
-Operations in general exclude missing data.
+在一些操作中经常会排除缺失值。
 
-Performing a descriptive statistic:
+进行描述性统计：
 
 ```python
 In [61]: df.mean()
@@ -619,7 +619,7 @@ F    3.000000
 dtype: float64
 ```
 
-Same operation on the other axis:
+在其它轴（行）上进行同样的操作：
 
 ```python
 In [62]: df.mean(1)
@@ -633,7 +633,7 @@ Out[62]:
 Freq: D, dtype: float64
 ```
 
-Operating with objects that have different dimensionality and need alignment. In addition, pandas automatically broadcasts along the specified dimension.
+使用具有不同维度且需要对齐的对象进行操作。 此外，pandas会自动沿指定维度进行广播。
 
 ```python
 In [63]: s = pd.Series([1,3,5,np.nan,6,8], index=dates).shift(2)
@@ -659,9 +659,9 @@ Out[65]:
 2013-01-06       NaN       NaN       NaN  NaN  NaN
 ```
 
-### 应用
+### 应用（Apply）
 
-Applying functions to the data:
+将函数应用于数据：
 
 ```python
 In [66]: df.apply(np.cumsum)
@@ -684,9 +684,9 @@ F    4.000000
 dtype: float64
 ```
 
-### Histogramming
+### 直方图化
 
-See more at [Histogramming and Discretization](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics-discretization).
+在 [Histogramming and Discretization](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics-discretization)查看更多。
 
 ```python
 In [68]: s = pd.Series(np.random.randint(0, 7, size=10))
@@ -714,9 +714,9 @@ Out[70]:
 dtype: int64
 ```
 
-### String Methods
+### 字符串方法
 
-Series is equipped with a set of string processing methods in the str attribute that make it easy to operate on each element of the array, as in the code snippet below. Note that pattern-matching in str generally uses [regular expressions](https://docs.python.org/3/library/re.html) by default (and in some cases always uses them). See more at [Vectorized String Methods](http://pandas.pydata.org/pandas-docs/stable/text.html#text-string-methods).
+Series在str属性中配备了一组字符串处理方法，可以轻松地对数组的每个元素进行操作，如下面的代码片段所示。 请注意，str中的模式匹配中默认情况下通常使用[正则表达式](https://docs.python.org/3/library/re.html)。 请参阅[Vectorized String Methods](http://pandas.pydata.org/pandas-docs/stable/text.html#text-string-methods)。
 
 ```python
 In [71]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
@@ -735,15 +735,15 @@ Out[72]:
 dtype: object
 ```
 
-## Merge
+## 合并（Merge）
 
-### Concat
+### 连接（Concat）
 
-pandas provides various facilities for easily combining together Series, DataFrame, and Panel objects with various kinds of set logic for the indexes and relational algebra functionality in the case of join / merge-type operations.
+pandas提供了各种工具，可以轻松地将Series，DataFrame和Panel对象与各种赋值逻辑组合在一起，用于索引和连接/合并类型操作时的关系代数功能。
 
-See the [Merging section](http://pandas.pydata.org/pandas-docs/stable/merging.html#merging).
+在 [Merging section](http://pandas.pydata.org/pandas-docs/stable/merging.html#merging)查看更多。
 
-Concatenating pandas objects together with [concat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.concat.html#pandas.concat):
+使用 [concat()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.concat.html#pandas.concat)连接pandas对象：
 
 ```python
 In [73]: df = pd.DataFrame(np.random.randn(10, 4))
@@ -782,7 +782,7 @@ Out[76]:
 
 ### Join
 
-SQL style merges. See the Database style joining section.
+SQL风格的合并。 请参阅数据库样式连接部分。
 
 ```python
 In [77]: left = pd.DataFrame({'key': ['foo', 'foo'], 'lval': [1, 2]})
@@ -810,7 +810,7 @@ Out[81]:
 3  foo     2     5
 ```
 
-Another example that can be given is:
+另一个例子是：
 
 ```python
 In [82]: left = pd.DataFrame({'key': ['foo', 'bar'], 'lval': [1, 2]})
@@ -836,9 +836,9 @@ Out[86]:
 1  bar     2     5
 ```
 
-### Append
+### 追加（Append）
 
-Append rows to a dataframe. See the [Appending](http://pandas.pydata.org/pandas-docs/stable/merging.html#merging-concatenation) section.
+给dataframe追加一行。 请参阅 [Appending](http://pandas.pydata.org/pandas-docs/stable/merging.html#merging-concatenation) 部分。
 
 ```python
 In [87]: df = pd.DataFrame(np.random.randn(8, 4), columns=['A','B','C','D'])
@@ -871,15 +871,15 @@ Out[90]:
 8  1.453749  1.208843 -0.080952 -0.264610
 ```
 
-## Grouping
+## 分组（Grouping）
 
-By “group by” we are referring to a process involving one or more of the following steps:
+我们所说的“group by“是指涉及下列一项或多项步骤的程序：
 
-- **Splitting** the data into groups based on some criteria
-- **Applying** a function to each group independently
-- **Combining** the results into a data structure
+- **Splitting**：根据一些标准将数据分解成组
+- **Applying**：将函数独立地应用于每个组
+- **Combining**：将结果组合成数据结构
 
-See the [Grouping section](http://pandas.pydata.org/pandas-docs/stable/groupby.html#groupby).
+请参阅 [Grouping section](http://pandas.pydata.org/pandas-docs/stable/groupby.html#groupby)。
 
 ```python
 In [91]: df = pd.DataFrame({'A' : ['foo', 'bar', 'foo', 'bar',
@@ -1243,9 +1243,9 @@ very good    3
 dtype: int64
 ```
 
-## Plotting
+## 绘图
 
-See the [Plotting](http://pandas.pydata.org/pandas-docs/stable/visualization.html#visualization) docs.
+请参阅 [Plotting](http://pandas.pydata.org/pandas-docs/stable/visualization.html#visualization) 文档。
 
 ```python
 In [135]: ts = pd.Series(np.random.randn(1000), index=pd.date_range('1/1/2000', periods=1000))
@@ -1256,10 +1256,9 @@ In [137]: ts.plot()
 Out[137]: <matplotlib.axes._subplots.AxesSubplot at 0x7f213444c048>
 ```
 
-![基本走势图](static/images/series_plot_basic.png)
+![基本走势图](../../static/images/series_plot_basic.png)
 
-
-On a DataFrame, the [plot()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.plot.html#pandas.DataFrame.plot) method is a convenience to plot all of the columns with labels:
+在一个DataFrame中, [plot()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.plot.html#pandas.DataFrame.plot) 方法可以方便地绘制带有label的所有列：
 
 ```python
 In [138]: df = pd.DataFrame(np.random.randn(1000, 4), index=ts.index,
@@ -1272,7 +1271,9 @@ In [140]: plt.figure(); df.plot(); plt.legend(loc='best')
 Out[140]: <matplotlib.legend.Legend at 0x7f212489a780>
 ```
 
-_images/frame_plot_basic.png
+![图片](../../static/images/frame_plot_basic.png)
+
+
 
 ## Getting Data In/Out
 
