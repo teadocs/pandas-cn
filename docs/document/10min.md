@@ -22,8 +22,8 @@
     - 追加（Append）
 - 分组（Grouping）
 - 重塑（Reshaping）
-    - Stack
-    - Pivot Tables
+    - 堆叠（Stack）
+    - 数据透视表（Pivot Tables）
 - 时间序列（Time Series）
 - Categoricals
 - 绘图
@@ -31,7 +31,7 @@
     - CSV
     - HDF5
     - Excel
-- Gotchas
+- 陷阱（Gotchas）
 
 这是一篇对pandas的简短介绍, 主要面向新用户。 你可以在[这里](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#cookbook)查看更多复杂的用法。
 
@@ -903,7 +903,7 @@ Out[92]:
 7  foo  three  1.928123 -1.623033
 ```
 
-Grouping and then applying the sum() function to the resulting groups.
+分组，然后将sum()函数应用于分组结果：
 
 ```python
 In [93]: df.groupby('A').sum()
@@ -914,7 +914,7 @@ bar -2.802588  2.42611
 foo  3.146492 -0.63958
 ```
 
-Grouping by multiple columns forms a hierarchical index, and again we can apply the ``sum`` function.
+按多列分组形成层次索引，同样，我们可以应用`sum`函数：
 
 ```python
 In [94]: df.groupby(['A','B']).sum()
@@ -929,11 +929,11 @@ foo one   -1.195665 -0.616981
     two    2.414034  1.600434
 ```
 
-## Reshaping
+## 重塑（Reshaping）
 
-See the sections on [Hierarchical Indexing](http://pandas.pydata.org/pandas-docs/stable/advanced.html#advanced-hierarchical) and [Reshaping](http://pandas.pydata.org/pandas-docs/stable/reshaping.html#reshaping-stacking).
+请参阅 [Hierarchical Indexing](http://pandas.pydata.org/pandas-docs/stable/advanced.html#advanced-hierarchical) 和 [Reshaping](http://pandas.pydata.org/pandas-docs/stable/reshaping.html#reshaping-stacking)部分。
 
-### Stack
+### 堆叠（Stack）
 
 ```python
 In [95]: tuples = list(zip(*[['bar', 'bar', 'baz', 'baz',
@@ -958,7 +958,7 @@ baz   one    -1.575170  1.771208
       two     0.816482  1.100230
 ```
 
-The [stack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.stack.html#pandas.DataFrame.stack) method “compresses” a level in the DataFrame’s columns.
+[stack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.stack.html#pandas.DataFrame.stack)方法压缩DataFrame的列：
 
 ```python
 In [100]: stacked = df2.stack()
@@ -977,7 +977,7 @@ baz    one     A   -1.575170
 dtype: float64
 ```
 
-With a “stacked” DataFrame or Series (having a MultiIndex as the ``index``), the inverse operation of [stack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.stack.html#pandas.DataFrame.stack) is [unstack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.unstack.html#pandas.DataFrame.unstack), which by default unstacks the last level:
+“压缩”后的DataFrame或Series（具有MultiIndex作为索引）， [stack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.stack.html#pandas.DataFrame.stack) 的逆操作是[unstack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.unstack.html#pandas.DataFrame.unstack)，默认情况下取消最后压缩的那个级别：
 
 ```python
 In [102]: stacked.unstack()
@@ -1008,9 +1008,9 @@ two    A  0.282696  0.816482
        B -0.087302  1.100230
 ```
 
-## Pivot Tables
+## 数据透视表（Pivot Tables）
 
-See the section on [Pivot Tables](http://pandas.pydata.org/pandas-docs/stable/reshaping.html#reshaping-pivot).
+请参阅[Pivot Tables](http://pandas.pydata.org/pandas-docs/stable/reshaping.html#reshaping-pivot)部分。
 
 ```python
 In [105]: df = pd.DataFrame({'A' : ['one', 'one', 'two', 'three'] * 3,
@@ -1037,7 +1037,7 @@ Out[106]:
 11  three  C  bar  0.648740  1.167115
 ```
 
-We can produce pivot tables from this data very easily:
+我们可以非常轻松地从这些数据生成数据透视表：
 
 ```python
 In [107]: pd.pivot_table(df, values='D', index=['A', 'B'], columns=['C'])
@@ -1055,9 +1055,9 @@ two   A       NaN  0.100900
       C       NaN  0.536826
 ```
 
-## Time Series
+## 时间序列（Time Series）
 
-pandas has simple, powerful, and efficient functionality for performing resampling operations during frequency conversion (e.g., converting secondly data into 5-minutely data). This is extremely common in, but not limited to, financial applications. See the [Time Series section](http://pandas.pydata.org/pandas-docs/stable/timeseries.html#timeseries).
+pandas具有简单，强大且高效的功能，用于在频率转换期间执行重采样操作（例如，将第二数据转换为5分钟数据）。 这在财务应用程序中非常常见，但不仅限于此。请参阅[Time Series section](http://pandas.pydata.org/pandas-docs/stable/timeseries.html#timeseries)部分。
 
 ```python
 In [108]: rng = pd.date_range('1/1/2012', periods=100, freq='S')
@@ -1070,7 +1070,7 @@ Out[110]:
 Freq: 5T, dtype: int64
 ```
 
-Time zone representation:
+时区代表：
 
 ```python
 In [111]: rng = pd.date_range('3/6/2012 00:00', periods=5, freq='D')
@@ -1098,7 +1098,7 @@ Out[115]:
 Freq: D, dtype: float64
 ```
 
-Converting to another time zone:
+转换为另一个时区：
 
 ```python
 In [116]: ts_utc.tz_convert('US/Eastern')
@@ -1111,7 +1111,7 @@ Out[116]:
 Freq: D, dtype: float64
 ```
 
-Converting between time span representations:
+在时间跨度表示之间转换：
 
 ```python
 In [117]: rng = pd.date_range('1/1/2012', periods=5, freq='M')
@@ -1148,7 +1148,7 @@ Out[122]:
 Freq: MS, dtype: float64
 ```
 
-Converting between period and timestamp enables some convenient arithmetic functions to be used. In the following example, we convert a quarterly frequency with year ending in November to 9am of the end of the month following the quarter end:
+周期和时间戳之间的转换可以使用一些方便的算术函数。在下面的例子中，我们将一个以11月为结束年份的季度频率转换为季度结束后一个月末的上午9点：
 
 ```python
 In [123]: prng = pd.period_range('1990Q1', '2000Q4', freq='Q-NOV')
@@ -1167,7 +1167,7 @@ Out[126]:
 Freq: H, dtype: float64
 ```
 
-## Categoricals
+## 分类（Categoricals）
 
 pandas can include categorical data in a DataFrame. For full docs, see the [categorical introduction](http://pandas.pydata.org/pandas-docs/stable/categorical.html#categorical) and the [API documentation](http://pandas.pydata.org/pandas-docs/stable/api.html#api-categorical).
 
@@ -1275,17 +1275,17 @@ Out[140]: <matplotlib.legend.Legend at 0x7f212489a780>
 
 
 
-## Getting Data In/Out
+## 数据输入/输出
 
 ### CSV
 
-[Writing to a csv file](http://pandas.pydata.org/pandas-docs/stable/io.html#io-store-in-csv).
+[写入CSV文件](http://pandas.pydata.org/pandas-docs/stable/io.html#io-store-in-csv)。
 
 ```python
 In [141]: df.to_csv('foo.csv')
 ```
 
-[Reading from a csv file](http://pandas.pydata.org/pandas-docs/stable/io.html#io-read-csv-table).
+[从CSV文件读数据](http://pandas.pydata.org/pandas-docs/stable/io.html#io-read-csv-table)。
 
 ```python
 In [142]: pd.read_csv('foo.csv')
@@ -1312,15 +1312,15 @@ Out[142]:
 
 ### HDF5
 
-Reading and writing to [HDFStores](http://pandas.pydata.org/pandas-docs/stable/io.html#io-hdf5).
+请参阅[HDFStores](http://pandas.pydata.org/pandas-docs/stable/io.html#io-hdf5)。
 
-Writing to a HDF5 Store.
+写入HDF5：
 
 ```python
 In [143]: df.to_hdf('foo.h5','df')
 ```
 
-Reading from a HDF5 Store.
+从HDF5读数据：.
 
 ```python
 In [144]: pd.read_hdf('foo.h5','df')
@@ -1347,9 +1347,9 @@ Out[144]:
 
 ### Excel
 
-Reading and writing to [MS Excel](http://pandas.pydata.org/pandas-docs/stable/io.html#io-excel).
+请参阅[MS Excel](http://pandas.pydata.org/pandas-docs/stable/io.html#io-excel)。
 
-Writing to an excel file.
+写入excel文件：
 
 ```python
 In [145]: df.to_excel('foo.xlsx', sheet_name='Sheet1')
@@ -1380,9 +1380,9 @@ Out[146]:
 [1000 rows x 4 columns]
 ```
 
-## Gotchas
+## 陷阱（Gotchas）
 
-If you are attempting to perform an operation you might see an exception like:
+如果你试图执行一个操作，你可能会看到一个异常，如:
 
 ```python
 >>> if pd.Series([False, True, False]):
@@ -1392,6 +1392,7 @@ Traceback
 ValueError: The truth value of an array is ambiguous. Use a.empty, a.any() or a.all().
 ```
 
-See [Comparisons](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics-compare) for an explanation and what to do.
+在[Comparisons](http://pandas.pydata.org/pandas-docs/stable/basics.html#basics-compare)中查看为什么以及如何解决。
 
-See [Gotchas](http://pandas.pydata.org/pandas-docs/stable/gotchas.html#gotchas) as well.
+也可以在[Gotchas](http://pandas.pydata.org/pandas-docs/stable/gotchas.html#gotchas)查看更多。
+
