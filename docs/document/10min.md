@@ -1169,13 +1169,13 @@ Freq: H, dtype: float64
 
 ## 分类（Categoricals）
 
-pandas can include categorical data in a DataFrame. For full docs, see the [categorical introduction](http://pandas.pydata.org/pandas-docs/stable/categorical.html#categorical) and the [API documentation](http://pandas.pydata.org/pandas-docs/stable/api.html#api-categorical).
+pandas可以在DataFrame中包含分类数据。完成文档请参阅[categorical introduction](http://pandas.pydata.org/pandas-docs/stable/categorical.html#categorical) 和 [API documentation](http://pandas.pydata.org/pandas-docs/stable/api.html#api-categorical)。
 
 ```python
 In [127]: df = pd.DataFrame({"id":[1,2,3,4,5,6], "raw_grade":['a', 'b', 'b', 'a', 'a', 'e']})
 ```
 
-Convert the raw grades to a categorical data type.
+将原始成绩转换为category数据类型：
 
 ```python
 In [128]: df["grade"] = df["raw_grade"].astype("category")
@@ -1192,13 +1192,13 @@ Name: grade, dtype: category
 Categories (3, object): [a, b, e]
 ```
 
-Rename the categories to more meaningful names (assigning to Series.cat.categories is inplace!).
+将类别重命名为更有意义的名称（通过调用Series.cat.categories来替换！）。
 
 ```python
 In [130]: df["grade"].cat.categories = ["very good", "good", "very bad"]
 ```
 
-Reorder the categories and simultaneously add the missing categories (methods under ``Series .cat`` return a new ``Series`` by default).
+对categories重新排序并同时添加缺少的category（``Series.cat``下的方法默认返回一个新的``Series``）。
 
 ```python
 In [131]: df["grade"] = df["grade"].cat.set_categories(["very bad", "bad", "medium", "good", "very good"])
@@ -1215,7 +1215,7 @@ Name: grade, dtype: category
 Categories (5, object): [very bad, bad, medium, good, very good]
 ```
 
-Sorting is per order in the categories, not lexical order.
+排序是按categories中的顺序排序，而不是词汇顺序：
 
 ```python
 In [133]: df.sort_values(by="grade")
@@ -1229,7 +1229,7 @@ Out[133]:
 4   5         a  very good
 ```
 
-Grouping by a categorical column also shows empty categories.
+按分好类的列分组（groupby）可以显示空categories：
 
 ```python
 In [134]: df.groupby("grade").size()
