@@ -2,36 +2,36 @@
 
 ## 目录
 
-- 对象创建
-- 查看数据
-- 选择
-    - 入门
-    - 按标签选择
-    - 按位置选择
-    - 布尔索引
-    - 赋值
-- 缺失值
-- 操作
-    - 统计（Stats）
-    - 应用（Apply）
-    - 直方图化
-    - 字符串方法
-- 合并（Merge）
-    - 字符串连接（Concat）
-    - Join
-    - 追加（Append）
-- 分组（Grouping）
-- 重塑（Reshaping）
-    - 堆叠（Stack）
-    - 数据透视表（Pivot Tables）
-- 时间序列（Time Series）
-- Categoricals
-- 绘图
-- 数据输入/输出
-    - CSV
-    - HDF5
-    - Excel
-- 陷阱（Gotchas）
+- [对象创建](#对象创建)
+- [查看数据](#查看数据)
+- [选择](#选择)
+    - [入门](#入门)
+    - [按标签选择](#按标签选择)
+    - [按位置选择](#按位置选择)
+    - [布尔索引](#布尔索引)
+    - [赋值](#赋值)
+- [缺失值](#缺失值)
+- [操作](#操作)
+    - [统计(Stats)](#统计(Stats))
+    - [应用(Apply)](#应用(Apply))
+    - [直方图化](#直方图化)
+    - [字符串方法](#字符串方法)
+- [合并(Merge)](#合并(Merge))
+    - [字符串连接(Concat)](#字符串连接(Concat))
+    - [Join](#Join)
+    - [追加(Append)](#追加(Append))
+- [分组(Grouping)](#分组(Grouping))
+- [重塑(Reshaping)](#重塑(Reshaping))
+    - [堆叠(Stack)](#堆叠(Stack))
+    - [数据透视表(PivotTables)](#数据透视表(PivotTables))
+- [时间序列(TimeSeries)](#时间序列(TimeSeries))
+- [Categoricals](#Categoricals)
+- [绘图](#绘图)
+- [数据输入/输出](#数据输入/输出)
+    - [CSV](#CSV)
+    - [HDF5](#HDF5)
+    - [Excel](#Excel)
+- [陷阱(Gotchas)](#陷阱(Gotchas))
 
 这是一篇对pandas的简短介绍, 主要面向新用户。 你可以在[这里](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#cookbook)查看更多复杂的用法。
 
@@ -342,7 +342,7 @@ In [30]: df.loc[dates[0],'A']
 Out[30]: 0.46911229990718628
 ```
 
-快速访问标量（和上面的方法效果相同）：
+快速访问标量(和上面的方法效果相同)：
 
 ```python
 In [31]: df.at[dates[0],'A']
@@ -549,7 +549,7 @@ Out[54]:
 
 pandas主要使用值np.nan来表示缺失的数据。 默认情况下，它不包含在计算中。 在 [Missing Data section](http://pandas.pydata.org/pandas-docs/stable/missing_data.html#missing-data  )中查看更多。
 
-重建索引允许你更改/添加/删除指定轴上的索引。 这个操作会返回一个副本（不会更改原来的对象）。
+重建索引允许你更改/添加/删除指定轴上的索引。 这个操作会返回一个副本(不会更改原来的对象)。
 
 ```python
 In [55]: df1 = df.reindex(index=dates[0:4], columns=list(df.columns) + ['E'])
@@ -619,7 +619,7 @@ F    3.000000
 dtype: float64
 ```
 
-在其它轴（行）上进行同样的操作：
+在其它轴(行)上进行同样的操作：
 
 ```python
 In [62]: df.mean(1)
@@ -659,7 +659,7 @@ Out[65]:
 2013-01-06       NaN       NaN       NaN  NaN  NaN
 ```
 
-### 应用（Apply）
+### 应用(Apply)
 
 将函数应用于数据：
 
@@ -735,9 +735,9 @@ Out[72]:
 dtype: object
 ```
 
-## 合并（Merge）
+## 合并(Merge)
 
-### 连接（Concat）
+### 连接(Concat)
 
 pandas提供了各种工具，可以轻松地将Series，DataFrame和Panel对象与各种赋值逻辑组合在一起，用于索引和连接/合并类型操作时的关系代数功能。
 
@@ -836,7 +836,7 @@ Out[86]:
 1  bar     2     5
 ```
 
-### 追加（Append）
+### 追加(Append)
 
 给dataframe追加一行。 请参阅 [Appending](http://pandas.pydata.org/pandas-docs/stable/merging.html#merging-concatenation) 部分。
 
@@ -871,7 +871,7 @@ Out[90]:
 8  1.453749  1.208843 -0.080952 -0.264610
 ```
 
-## 分组（Grouping）
+## 分组(Grouping)
 
 我们所说的“group by“是指涉及下列一项或多项步骤的程序：
 
@@ -929,11 +929,11 @@ foo one   -1.195665 -0.616981
     two    2.414034  1.600434
 ```
 
-## 重塑（Reshaping）
+## 重塑(Reshaping)
 
 请参阅 [Hierarchical Indexing](http://pandas.pydata.org/pandas-docs/stable/advanced.html#advanced-hierarchical) 和 [Reshaping](http://pandas.pydata.org/pandas-docs/stable/reshaping.html#reshaping-stacking)部分。
 
-### 堆叠（Stack）
+### 堆叠(Stack)
 
 ```python
 In [95]: tuples = list(zip(*[['bar', 'bar', 'baz', 'baz',
@@ -977,7 +977,7 @@ baz    one     A   -1.575170
 dtype: float64
 ```
 
-“压缩”后的DataFrame或Series（具有MultiIndex作为索引）， [stack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.stack.html#pandas.DataFrame.stack) 的逆操作是[unstack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.unstack.html#pandas.DataFrame.unstack)，默认情况下取消最后压缩的那个级别：
+“压缩”后的DataFrame或Series(具有MultiIndex作为索引)， [stack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.stack.html#pandas.DataFrame.stack) 的逆操作是[unstack()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.unstack.html#pandas.DataFrame.unstack)，默认情况下取消最后压缩的那个级别：
 
 ```python
 In [102]: stacked.unstack()
@@ -1008,7 +1008,7 @@ two    A  0.282696  0.816482
        B -0.087302  1.100230
 ```
 
-## 数据透视表（Pivot Tables）
+## 数据透视表(PivotTables)
 
 请参阅[Pivot Tables](http://pandas.pydata.org/pandas-docs/stable/reshaping.html#reshaping-pivot)部分。
 
@@ -1055,9 +1055,9 @@ two   A       NaN  0.100900
       C       NaN  0.536826
 ```
 
-## 时间序列（Time Series）
+## 时间序列(TimeSeries)
 
-pandas具有简单，强大且高效的功能，用于在频率转换期间执行重采样操作（例如，将第二数据转换为5分钟数据）。 这在财务应用程序中非常常见，但不仅限于此。请参阅[Time Series section](http://pandas.pydata.org/pandas-docs/stable/timeseries.html#timeseries)部分。
+pandas具有简单，强大且高效的功能，用于在频率转换期间执行重采样操作(例如，将第二数据转换为5分钟数据)。 这在财务应用程序中非常常见，但不仅限于此。请参阅[Time Series section](http://pandas.pydata.org/pandas-docs/stable/timeseries.html#timeseries)部分。
 
 ```python
 In [108]: rng = pd.date_range('1/1/2012', periods=100, freq='S')
@@ -1167,7 +1167,7 @@ Out[126]:
 Freq: H, dtype: float64
 ```
 
-## 分类（Categoricals）
+## 分类(Categoricals)
 
 pandas可以在DataFrame中包含分类数据。完成文档请参阅[categorical introduction](http://pandas.pydata.org/pandas-docs/stable/categorical.html#categorical) 和 [API documentation](http://pandas.pydata.org/pandas-docs/stable/api.html#api-categorical)。
 
@@ -1192,13 +1192,13 @@ Name: grade, dtype: category
 Categories (3, object): [a, b, e]
 ```
 
-将类别重命名为更有意义的名称（通过调用Series.cat.categories来替换！）。
+将类别重命名为更有意义的名称(通过调用Series.cat.categories来替换！)。
 
 ```python
 In [130]: df["grade"].cat.categories = ["very good", "good", "very bad"]
 ```
 
-对categories重新排序并同时添加缺少的category（``Series.cat``下的方法默认返回一个新的``Series``）。
+对categories重新排序并同时添加缺少的category(``Series.cat``下的方法默认返回一个新的``Series``)。
 
 ```python
 In [131]: df["grade"] = df["grade"].cat.set_categories(["very bad", "bad", "medium", "good", "very good"])
@@ -1229,7 +1229,7 @@ Out[133]:
 4   5         a  very good
 ```
 
-按分好类的列分组（groupby）可以显示空categories：
+按分好类的列分组(groupby)可以显示空categories：
 
 ```python
 In [134]: df.groupby("grade").size()
@@ -1380,7 +1380,7 @@ Out[146]:
 [1000 rows x 4 columns]
 ```
 
-## 陷阱（Gotchas）
+## 陷阱(Gotchas)
 
 如果你试图执行一个操作，你可能会看到一个异常，如:
 
