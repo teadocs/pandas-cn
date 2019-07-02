@@ -23,11 +23,12 @@
 
 感谢以下翻译贡献者：
 
-|                            Avatar                            | GItHub                                           | Email                                       |
-| :----------------------------------------------------------: | :----------------------------------------------- | ------------------------------------------- |
-| ![](https://avatars1.githubusercontent.com/u/7500988?s=60&v=4) | [@lisniuse](https://github.com/lisniuse)         | [l@numpy.org.cn](mailto:l@numpy.org.cn)     |
-| ![](https://avatars1.githubusercontent.com/u/42760154?s=60&v=4) | [@lonelyorchid](https://github.com/lonelyorchid) | lonelyorchid@126.com                        |
-| ![](https://avatars1.githubusercontent.com/u/41409725?s=60&v=4) | [@Y-sir](https://github.com/Y-sir)               | [577790911@qq.com](mailto:577790911@qq.com) |
+|                            Avatar                            | GItHub                                             | Email                                         |
+| :----------------------------------------------------------: | :------------------------------------------------- | --------------------------------------------- |
+| ![](https://avatars1.githubusercontent.com/u/7500988?s=60&v=4) | [@lisniuse](https://github.com/lisniuse)           | [l@numpy.org.cn](mailto:l@numpy.org.cn)       |
+| ![](https://avatars1.githubusercontent.com/u/42760154?s=60&v=4) | [@lonelyorchid](https://github.com/lonelyorchid)   | lonelyorchid@126.com                          |
+| ![](https://avatars1.githubusercontent.com/u/41409725?s=60&v=4) | [@Y-sir](https://github.com/Y-sir)                 | [577790911@qq.com](mailto:577790911@qq.com)   |
+| ![TheDragonInUS](https://avatars2.githubusercontent.com/u/31626205?s=60&v=4) | [@TheDragonInUS](https://github.com/TheDragonInUS) | [1820245610@qq.com](mailto:1820245610@qq.com) |
 
 ## 文档生成
 
