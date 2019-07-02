@@ -1,3 +1,3 @@
-# pandas-cn
+# 简介
 
-pandas中文文档
+Pandas中文文档，欢迎贡献！
