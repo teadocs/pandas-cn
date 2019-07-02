@@ -1,8 +1,8 @@
 # Pandas：Python数据分析库
 
-pandas是一个开源的，BSD许可的库，为Python编程语言提供高性能，易于使用的数据结构和数据分析工具。
+Pandas是一个开源的，BSD许可的库，为Python编程语言提供高性能，易于使用的数据结构和数据分析工具。
 
-pandas是NumFOCUS赞助的项目。这将有助于确保pandas成为世界级开源项目的成功，并有可能捐赠给该项目。
+Pandas是NumFOCUS赞助的项目。这将有助于确保Pandas成为世界级开源项目的成功，并有可能捐赠给该项目。
 
 ![NumFOCUS Logo](/static/images/SponsoredProjectStamp_300px.png)
 
@@ -13,13 +13,13 @@ pandas是NumFOCUS赞助的项目。这将有助于确保pandas成为世界级开
 该版本可以使用conda-forge或默认频道的conda进行安装：
 
 ```sh
-conda install pandas
+conda install Pandas
 ```
 
 或者通过 PyPI:
 
 ```sh
-python3 -m pip install --upgrade pandas
+python3 -m pip install --upgrade Pandas
 ```
 
 请参阅 [历代特性](/document/whatsnew) 以获取所有更新日志。
@@ -40,58 +40,58 @@ python3 -m pip install --upgrade pandas
 从我们的开发渠道(OSX-64版本、Linux64版本和Python 2.7版本的Win 64版本、Python3.5版本和Python3.6版本都可以使用Conda)可以安装候选版本：
 
 ```sh
-conda install pandas
+conda install Pandas
 ```
 
 或 conda forge:
 
 ```sh
-conda install -c conda-forge pandas
+conda install -c conda-forge Pandas
 ```
 
 或者通过 PyPI:
 
 ```sh
-python3 -m pip install --upgrade pandas==0.23.0
+python3 -m pip install --upgrade Pandas==0.23.0
 ```
 
 请参阅 [历代特性](/document/whatsnew) 以获取所有更新日志。
 
 ## 最好的安装方式
 
-获得 pandas 的最佳方式是通过 [conda](http://pandas.pydata.org/pandas-docs/stable/install.html#installing-pandas-with-anaconda)
+获得 Pandas 的最佳方式是通过 [conda](http://Pandas.pydata.org/Pandas-docs/stable/install.html#installing-Pandas-with-anaconda)
 
 ```sh
-conda install pandas
+conda install Pandas
 ```
 
-在Windows、Linux和MacOS上，[所有受支持的python版本](http://pandas.pydata.org/pandas-docs/stable/install.html#python-version-support)都可以使用包。
+在Windows、Linux和MacOS上，[所有受支持的python版本](http://Pandas.pydata.org/Pandas-docs/stable/install.html#python-version-support)都可以使用包。
 
-pands 也被上传到[PyPI](https://pypi.org/project/pandas/)中，并且可以通过以下方式安装：
+pands 也被上传到[PyPI](https://pypi.org/project/Pandas/)中，并且可以通过以下方式安装：
 
 ```sh
-pip install pandas
+pip install Pandas
 ```
 
 ## 快速了解
 
-[Wes McKinney](https://vimeo.com/user10077863) 在 [Vimeo](https://vimeo.com/) 上的 [10分钟 pandas 之旅](https://vimeo.com/59324550) 视频教程
+[Wes McKinney](https://vimeo.com/user10077863) 在 [Vimeo](https://vimeo.com/) 上的 [10分钟 Pandas 之旅](https://vimeo.com/59324550) 视频教程
 
-## pandas解决了什么问题？
+## Pandas解决了什么问题？
 
 Python在数据处理和准备方面一直做得很好，但在数据分析和建模方面就没那么好了。熊猫帮助填补了这一空白，使您能够在Python中执行整个数据分析工作流程，而不必切换到更特定于领域的语言，如R。
 
 与出色的 [IPython](https://ipython.org/) 工具包和其他库相结合，Python中用于进行数据分析的环境在性能、生产率和协作能力方面都是卓越的。
 
-pandas没有在线性和面板回归之外实现重要的建模功能; 为此，请查看 [statsmodels](http://statsmodels.sf.net/) 和[scikit-learn](http://scikit-learn.org/)。为了使Python成为一流的统计建模环境，仍然需要做更多的工作，但我们正朝着这个目标迈进。
+Pandas没有在线性和面板回归之外实现重要的建模功能; 为此，请查看 [statsmodels](http://statsmodels.sf.net/) 和[scikit-learn](http://scikit-learn.org/)。为了使Python成为一流的统计建模环境，仍然需要做更多的工作，但我们正朝着这个目标迈进。
 
 ## 我们的用户有什么要说的？
 
-- **Roni Israelov**(博士，[AQR资本管理](https://www.aqr.com/)的组合投资经理)：pandas让我们更专注于研究而不是编程。我们发现 pandas 易于学习，易于使用且易于维护。最重要的是，它提高了我们的生产力。
+- **Roni Israelov**(博士，[AQR资本管理](https://www.aqr.com/)的组合投资经理)：Pandas让我们更专注于研究而不是编程。我们发现 Pandas 易于学习，易于使用且易于维护。最重要的是，它提高了我们的生产力。
     ![AQR资本管理 Logo](/static/images/aqr_capital_management_logo.png)
-- **David Himrod**([appNexus](https://www.appnexus.com/)的优化分析总监)：pandas 是一种完美的工具，可以在快速迭代的特殊分析和产品质量代码之间架起一座桥梁。如果你想在一个由工程师、数学家和分析师组成的多学科组织中使用一种工具，那就别再看了。
+- **David Himrod**([appNexus](https://www.appnexus.com/)的优化分析总监)：Pandas 是一种完美的工具，可以在快速迭代的特殊分析和产品质量代码之间架起一座桥梁。如果你想在一个由工程师、数学家和分析师组成的多学科组织中使用一种工具，那就别再看了。
     ![AppNexus Logo](/static/images/appnexus_logo.png)
-- **Olivier Pomel**([Datadog](https://www.datadoghq.com/)的CEO)：我们使用pandas处理生产服务器上的时间序列数据。其API的简单性和优雅性以及高容量数据集的高性能使其成为我们的完美选择。
+- **Olivier Pomel**([Datadog](https://www.datadoghq.com/)的CEO)：我们使用Pandas处理生产服务器上的时间序列数据。其API的简单性和优雅性以及高容量数据集的高性能使其成为我们的完美选择。
     ![Datadog Logo](/static/images/datadog_logo.png)
 
 ## Pandas库的亮点

@@ -1,10 +1,10 @@
 # Pandas 社区
 
-有关于Pandas的问题？你的第一个想到的应该是[Stack Overflow](http://stackoverflow.com/questions/tagged/pandas)。搜索您问题的现有答案，或发布新答案（并确保包含了“pandas”标签）。 您还可以在irc.freenode.net上的#pydata频道与其他用户聊天。
+有关于Pandas的问题？你的第一个想到的应该是[Stack Overflow](http://stackoverflow.com/questions/tagged/Pandas)。搜索您问题的现有答案，或发布新答案（并确保包含了“Pandas”标签）。 您还可以在irc.freenode.net上的#pydata频道与其他用户聊天。
 
-接下来，您应该访问[问题跟踪器](https://github.com/pydata/pandas/issues)，其中记录和讨论所有错误和新增加的功能。搜索相关的现有问题以进行评论或提交您自己的问题。
+接下来，您应该访问[问题跟踪器](https://github.com/pydata/Pandas/issues)，其中记录和讨论所有错误和新增加的功能。搜索相关的现有问题以进行评论或提交您自己的问题。
 
-要了解有关如何为Pandas的持续发展做出贡献的更多信息，请查看我们的[贡献指南](http://pandas-docs.github.io/pandas-docs-travis/contributing.html)。有关项目方向的深入开发讨论，您可以加入开发人员[邮件列表](https://mail.python.org/mailman/listinfo/pandas-dev)。
+要了解有关如何为Pandas的持续发展做出贡献的更多信息，请查看我们的[贡献指南](http://Pandas-docs.github.io/Pandas-docs-travis/contributing.html)。有关项目方向的深入开发讨论，您可以加入开发人员[邮件列表](https://mail.python.org/mailman/listinfo/Pandas-dev)。
 
 ## 开发历史
 
