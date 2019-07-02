@@ -49,7 +49,7 @@ In [3]: import matplotlib.pyplot as plt
 
 请参阅 [数据结构简介部分](http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dsintro)。
 
-通过传入一些值的列表来创建一个[Series](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series)， pandas会自动常见一个默认的整数索引：
+通过传入一些值的列表来创建一个[Series](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series)， pandas会自动创建一个默认的整数索引：
 
 ```python
 In [4]: s = pd.Series([1,3,5,np.nan,6,8])
