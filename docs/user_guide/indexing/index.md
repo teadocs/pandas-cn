@@ -1,23 +1,23 @@
 # Pandas 索引和数据选择器
 
-The axis labeling information in Pandas objects serves many purposes:
+Pandas对象的轴标签信息有很多用途：
 
-- Identifies data (i.e. provides *metadata*) using known indicators, important for analysis, visualization, and interactive console display.
-- Enables automatic and explicit data alignment.
-- Allows intuitive getting and setting of subsets of the data set.
+- 使用已知指标标识数据(即提供*元数据*)，这些指标对于分析、可视化和交互式控制台显示非常重要。
+- 启用自动和显式数据对齐。
+- 允许直观地获取和设置数据集的子集。
 
-In this section, we will focus on the final point: namely, how to slice, dice, and generally get and set subsets of Pandas objects. The primary focus will be on Series and DataFrame as they have received more development attention in this area.
+在本节中，我们将关注最后一点：即如何切片、分区，以及如何获取和设置panda对象的子集。由于Series和DataFrame在这一领域得到了更多的开发关注，因此它们将是主要的关注点。
 
-**Note**: The Python and NumPy indexing operators [] and attribute operator . provide quick and easy access to Pandas data structures across a wide range of use cases. This makes interactive work intuitive, as there’s little new to learn if you already know how to deal with Python dictionaries and NumPy arrays. However, since the type of the data to be accessed isn’t known in advance, directly using standard operators has some optimization limits. For production code, we recommended that you take advantage of the optimized Pandas data access methods exposed in this chapter.
+**注意**: Python和NumPy索引操作符 [] 和属性操作符 . 可以快速方便地访问Pandas数据结构。 这使得交互式工作更加直观，因为如果你已经知道如何处理Python字典和NumPy数组，那么就没有什么新的东西需要学习。 然而，由于要访问的数据类型事先并不知道，直接使用标准操作符有一些优化限制。对于生产代码，我们建议您利用本章中公开的优化Pandas数据访问方法。
 
 <div class="warning-warp">
-<b>警告</b><p>Whether a copy or a reference is returned for a setting operation, may depend on the context. This is sometimes called chained assignment and should be avoided. See Returning a View versus Copy.</p>
+<b>警告</b><p>是否为设置操作返回副本或引用，可能取决于上下文。这有时称为链式赋值，应该避免。请参见返回视图与复制。</p>
 </div>
 
 <div class="warning-warp">
-<b>警告</b><p>Warning Indexing on an integer-based Index with floats has been clarified in 0.18.0, for a summary of the changes, see <a href="http://Pandas.pydata.org/Pandas-docs/stable/whatsnew.html#whatsnew-0180-float-indexers">here</a>.</p>
+<b>警告</b><p>0.18.0中澄清了基于整数的带浮点索引的警告索引，有关更改的摘要，请参见<a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing-view-versus-copy">此处</a>。</p>
 </div>
 
-See the [MultiIndex / Advanced Indexing](http://Pandas.pydata.org/Pandas-docs/stable/advanced.html#advanced) for ``MultiIndex`` and more advanced indexing documentation.
+请参阅[分层索引/高级索引](http://pandas.pydata.org/pandas-docs/stable/advanced.html#advanced)以了解“分层索引”和更高级的索引文档。
 
-See the [cookbook](http://Pandas.pydata.org/Pandas-docs/stable/cookbook.html#cookbook-selection) for some advanced strategies.
+有关一些高级策略，请参阅[指南](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#cookbook#selection)。
