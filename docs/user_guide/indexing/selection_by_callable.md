@@ -1,8 +1,8 @@
 # 按可调用性选择
 
-*New in version 0.18.1*.
+*0.18.1版本新特性*.
 
-``.loc``, ``.iloc``, and also ``[]`` indexing can accept a callable as indexer. The ``callable`` must be a function with one argument (the calling Series, DataFrame or Panel) and that returns valid output for indexing.
+``.loc``, ``.iloc``, 和``[]`` 索引可以接收一个`callable`作为所引器。 The ``callable`` 必须是一个参数的函数（Series, DataFrame or Panel），并返回索引后的一个有效输出。
 
 ```python
 In [88]: df1 = pd.DataFrame(np.random.randn(6, 4),
@@ -57,7 +57,7 @@ f   -0.489682
 Name: A, dtype: float64
 ```
 
-You can use callable indexing in Series.
+你可以在`Series`中调用索引。
 
 ```python
 In [94]: df1.A.loc[lambda s: s > 0]
@@ -67,7 +67,7 @@ e    1.289997
 Name: A, dtype: float64
 ```
 
-Using these methods / indexers, you can chain data selection operations without using temporary variable.
+使用这些方法/索引器，可以在不使用临时变量的情况下链接数据选择操作。
 
 ```python
 In [95]: bb = pd.read_csv('data/baseball.csv', index_col='id')
