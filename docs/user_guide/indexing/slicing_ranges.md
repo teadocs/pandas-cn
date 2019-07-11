@@ -1,8 +1,8 @@
 # 切片范围
 
-The most robust and consistent way of slicing ranges along arbitrary axes is described in the [Selection by Position](http://Pandas.pydata.org/Pandas-docs/stable/indexing.html#indexing-integer) section detailing the ``.iloc`` method. For now, we explain the semantics of slicing using the ``[]`` operator.
+沿着任意轴最为保险的切片方式我们在 [通过位置索引](http://Pandas.pydata.org/Pandas-docs/stable/indexing.html#indexing-integer) 部分介绍`.iloc`方法的时候已经做了描述。现在我们来解释一下`[]`操作符。
 
-With Series, the syntax works exactly as with an ndarray, returning a slice of the values and the corresponding labels:
+使用Series，语法的工作原理与使用ndarray完全一样，返回值的一部分和相应的标签：
 
 ```python
 In [31]: s[:5]
@@ -55,7 +55,7 @@ Out[36]:
 Freq: D, Name: A, dtype: float64
 ```
 
-With DataFrame, slicing inside of ``[]`` **slices the rows**. This is provided largely as a convenience since it is such a common operation.
+使用DataFrame，在`[]`中对行切片。这主要是为了方便，因为这是一种常见的操作。
 
 ```python
 In [37]: df[:3]
