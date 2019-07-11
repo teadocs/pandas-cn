@@ -1,6 +1,6 @@
 # 属性访问
 
-You may access an index on a ``Series``, column on a ``DataFrame``, and an item on a ``Panel`` directly as an attribute:
+你可以直接以属性的方式访问 ``Series``中的 index,  ``DataFrame``中的 column，以及 ``Panel`` 中的 item：
 
 ```python
 In [17]: sa = pd.Series([1,2,3],index=list('abc'))
@@ -79,16 +79,16 @@ Out[27]:
 <div class="warning-warp">
 <b>警告</b>
 <ul>
-    <li>You can use this access only if the index element is a valid Python identifier, e.g. s.1 is not allowed. See here for an explanation of valid identifiers.</li>
-    <li>The attribute will not be available if it conflicts with an existing method name, e.g. s.min is not allowed.</li>
-    <li>Similarly, the attribute will not be available if it conflicts with any of the following list: index, major_axis, minor_axis, items.</li>
-    <li>In any of these cases, standard indexing will still work, e.g. s['1'], s['min'], and s['index'] will access the corresponding element or column.</li>
+    <li>只有在index元素是一个有效地Python标识符的情况下，你才可以访问它。例如s.1就不是一个有效地标识符。在<a href="https://docs.python.org/3/reference/lexical_analysis.html#identifiers">这里查看关于有效标识符的说明</a></li>
+    <li>如果属性与现有方法名冲突是不被允许的。例如s.min就不可以。</li>
+    <li>类似地，如果属性与下列列表中的任何一个冲突，则该属性将不可用：index、major_axis、minor_axis、items。</li>
+    <li>在这些情况下，标准索引仍然有效，例如s['1']、s['min']和s['index']将访问相应的元素或列。</li>
 </ul>
 </div>
 
-If you are using the IPython environment, you may also use tab-completion to see these accessible attributes.
+如果你用的是IPython环境，你可以通过Tab补齐来访问属性。
 
-You can also assign a ``dict`` to a row of a ``DataFrame``:
+你也可以把 ``dict`` 赋给 ``DataFrame``的行：
 
 ```python
 In [28]: x = pd.DataFrame({'x': [1, 2, 3], 'y': [3, 4, 5]})
@@ -103,7 +103,7 @@ Out[30]:
 2  3   5
 ```
 
-You can use attribute access to modify an existing element of a Series or column of a DataFrame, but be careful; if you try to use attribute access to create a new column, it creates a new attribute rather than a new column. In 0.21.0 and later, this will raise a ``UserWarning``:
+你可以使用属性访问来修改Series已有元素和DataFrame的column，但是要小心， 如果你尝试用属性访问的方式来创建新列，这样会创建一个新属性而不是新列。在0.21.0或更高版本，这将引发一个` UserWarning`：
 
 ```python
 In[1]: df = pd.DataFrame({'one': [1., 2., 3.]})

@@ -1,13 +1,14 @@
 # 基本说明
 
-As mentioned when introducing the data structures in the [last section](http://Pandas.pydata.org/Pandas-docs/stable/basics.html#basics), the primary function of indexing with ``[]`` (a.k.a. ``__getitem__`` for those familiar with implementing class behavior in Python) is selecting out lower-dimensional slices. The following table shows return type values when indexing Pandas objects with []:
+正如 [上一节](http://Pandas.pydata.org/Pandas-docs/stable/basics.html#basics)介绍数据结构时提到的，``[]`` 索引的主要功能是索引更低纬的切片。下面的表格展示了使用 `[]` 索引pandas对象时的返回值类型。
 
-Object Type | Selection | Return Value Type
-Series | series[label] | scalar value
-DataFrame | frame[colname] | Series corresponding to colname
-Panel | panel[itemname] | DataFrame corresponding to the itemname
+| Object Type | Selection       | Return Value Type                       |
+| ----------- | --------------- | --------------------------------------- |
+| Series      | series[label]   | scalar value                            |
+| DataFrame   | frame[colname]  | Series corresponding to colname         |
+| Panel       | panel[itemname] | DataFrame corresponding to the itemname |
 
-Here we construct a simple time series data set to use for illustrating the indexing functionality:
+这里，我们构造了一个简单的时间序列数据集，用于演示索引功能：
 
 ```python
 In [1]: dates = pd.date_range('1/1/2000', periods=8)
@@ -37,9 +38,9 @@ Major_axis axis: 2000-01-01 00:00:00 to 2000-01-08 00:00:00
 Minor_axis axis: A to D
 ```
 
-**Note**: None of the indexing functionality is time series specific unless specifically stated.
+**注意**: 除非特别说明，否则没有任何索引功能是特定于时间序列的。
 
-Thus, as per above, we have the most basic indexing using ``[]``:
+因此，综上所述，我们有最基本的 ``[]``索引：
 
 ```python
 In [6]: s = df['A']
@@ -60,7 +61,7 @@ Out[8]:
 2000-01-08 -0.430188 -0.761943 -0.446079  1.044010
 ```
 
-You can pass a list of columns to [] to select columns in that order. If a column is not contained in the DataFrame, an exception will be raised. Multiple columns can also be set in this manner:
+您可以将列列表传递给`[]`，以按该顺序选择列。如果DataFrame中不包含列，则会引发异常。多个列也可以这样设置：
 
 ```python
 In [9]: df
@@ -90,11 +91,11 @@ Out[11]:
 2000-01-08 -1.157892 -0.370647 -1.344312  0.844885
 ```
 
-You may find this useful for applying a transform (in-place) to a subset of the columns.
+您可能会发现这对于将转换应用到列的子集非常有用。
 
 <div class="warning-warp">
-<b>警告</b><p>Pandas aligns all AXES when setting Series and DataFrame from .loc, and .iloc.
-This will not modify df because the column alignment is before value assignment.</p>
+<b>警告</b><p>当从.loc和.iloc为Series和DataFrame赋值时，panda会自动对齐所有轴。
+这不会修改df，因为列对齐位于值赋值之前。</p>
 <pre class="prettyprint language-python">
 <code class="hljs">
 In [12]: df[['A', 'B']]
@@ -108,6 +109,7 @@ Out[12]:
 2000-01-06  0.113648 -0.673690
 2000-01-07  0.577046  0.404705
 2000-01-08 -1.157892 -0.370647
+
 
 In [13]: df.loc[:,['B', 'A']] = df[['A', 'B']]
 
@@ -124,11 +126,11 @@ Out[14]:
 2000-01-08 -1.157892 -0.370647
 </code>
 </pre>
-</p>The correct way to swap column values is by using raw values:</p>
+</p>交换列值的正确方法是使用原始值：</p>
+
 <pre class="prettyprint language-python">
 <code class="hljs">
 In [15]: df.loc[:,['B', 'A']] = df[['A', 'B']].values
-
 In [16]: df[['A', 'B']]
 Out[16]: 
                    A         B
