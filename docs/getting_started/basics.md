@@ -17,9 +17,9 @@ In [4]: wp = pd.Panel(np.random.randn(2, 5, 4), items=['Item1', 'Item2'],
    ...: 
 ```
 
-## 从前或从面查看
+## 从前或从后查看
 
-要从前或从面查看Series或DataFrame对象的小样本，可以使用head()和tail()方法。 显示条数默认为5，你也可以自定义条数.
+要从前或从后查看Series或DataFrame对象的小样本，可以使用head()和tail()方法。 显示条数默认为5，你也可以自定义条数.
 
 ```python
 In [5]: long_series = pd.Series(np.random.randn(1000))
