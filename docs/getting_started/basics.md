@@ -17,9 +17,9 @@ In [4]: wp = pd.Panel(np.random.randn(2, 5, 4), items=['Item1', 'Item2'],
    ...: 
 ```
 
-## Head and Tail
+## 从前或从面查看
 
-To view a small sample of a Series or DataFrame object, use the head() and tail() methods. The default number of elements to display is five, but you may pass a custom number.
+要从前或从面查看Series或DataFrame对象的小样本，可以使用head()和tail()方法。 显示条数默认为5，你也可以自定义条数.
 
 ```python
 In [5]: long_series = pd.Series(np.random.randn(1000))
