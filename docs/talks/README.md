@@ -3,374 +3,73 @@ sidebarDepth: 3
 sidebar: auto
 ---
 
-# Config Reference
+# Pandas 讨论
 
-<Bit/>
+## Pandas 的相关论文
 
-## Basic Config
+- Data Structures for Statistical Computing in Python; presented at SciPy 2010[[pdf]](http://jarrodmillman.com/scipy2010/pdfs/mckinney.pdf)[[bib]](http://Pandas.pydata.org/_downloads/reference_data_structures.bib)
+- Pandas: a Foundational Python Library for Data Analysis and Statistics; presented at PyHPC2011 [[pdf]](https://www.scribd.com/doc/71048089/Pandas-a-Foundational-Python-Library-for-Data-Analysis-and-Statistics)[[bib]](http://Pandas.pydata.org/_downloads/reference_foundational_library.bib)
 
-### base
+## Pandas 论坛
 
-- Type: `string`
-- Default: `/`
+### PyCon US 2015
 
-The base URL the site will be deployed at. You will need to set this if you plan to deploy your site under a sub path, for example, GitHub pages. If you plan to deploy your site to `https://foo.github.io/bar/`, then `base` should be set to `"/bar/"`. It should always start and end with a slash.
+- Pandas From The Ground Up (演讲者： Brandon Rhodes)
+    典型的Pandas用户一次学习一种数据帧方法，通过反复试验慢慢地将功能拼凑在一起，直到他们能够解决前面的任务 在本教程中，您将重新学习如何从头开始思考数据框，并发现如何通过直接和刻意选择的步骤智能地从他们的能力中选择来解决数据处理问题。
+    
+    讨论的的材料可以在[这里](https://github.com/brandon-rhodes/pycon-Pandas-tutorial)找到。
+    
+    持续时间：Talk = 2:24:57，你自己也做所有的练习 = 1天(需要python发行版+材料)
 
-The `base` is automatically prepended to all the URLs that start with `/` in other options, so you only need to specify it once.
+### Kiwi PyCon 2013
 
-**Also see:**
+- [使用IPython Notebook和Python Pandas在Twitter上科学探索](http://pyvideo.org/video/2443/exploring-science-on-twitter-with-ipython-noteboo-)
 
-- [Base URL](../guide/assets.md#base-url)
-- [Deploy Guide > GitHub Pages](../guide/deploy.md#github-pages)
+### PyCon US 2013
 
-### title
+- [使用Pandas进行服务器日志分析](http://pyvideo.org/video/1745/server-log-analysis-with-Pandas-0)
 
-- Type: `string`
-- Default: `undefined`
+### SciPy 2013
 
-Title for the site. This will be the prefix for all page titles, and displayed in the navbar in the default theme.
+- [Python中的统计数据分析](http://pyvideo.org/video/2063/statistical-data-analysis-in-python-scipy2013-tu-6)
+- [Pandas中ACIS的气候观测](http://pyvideo.org/video/1982/climate-observations-from-acis-in-Pandas-scipy-2)
 
-### description
+### PyCon US 2012
 
-- Type: `string`
-- Default: `undefined`
+- [使用Pandas在Python中进行数据分析](http://pyvideo.org/video/1982/climate-observations-from-acis-in-Pandas-scipy-2)
 
-Description for the site. This will be rendered as a `<meta>` tag in the page HTML.
+### SciPy 2012
 
-### head
+- [使用Pandas进行时间序列数据分析](http://pyvideo.org/video/611/data-analysis-in-python-with-Pandas)
 
-- Type: `Array`
-- Default: `[]`
+### PyData 2012
 
-Extra tags to be injected to the page HTML `<head>`. Each tag can be specified in the form of `[tagName, { attrName: attrValue }, innerHTML?]`. For example, to add a custom favicon:
+- [PyData：使用Pandas在Python中进行数据分析](http://pyvideo.org/video/970/pydata-data-analysis-in-python-with-Pandas)
 
-``` js
-module.exports = {
-  head: [
-    ['link', { rel: 'icon', href: '/logo.png' }]
-  ]
-}
-```
+### EuroPython 2012
 
-### host
+- [使用Pytables和Pandas进行快速数据挖掘](http://pyvideo.org/video/1255/fast-data-mining-with-pytables-and-Pandas)
 
-- Type: `string`
-- Default: `'0.0.0.0'`
+### PyGotham 2011
 
-Specify the host to use for the dev server.
+- [使用Pandas进行强大的Pythonic数据分析](http://pyvideo.org/video/487/pygotham-2011--powerful-pythonic-data-analysis-us)
 
-### port
+SciPy 2010 Pandas 介绍：
 
-- Type: `number`
-- Default: `8080`
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/BCN6Qeo0KC26ol" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/wesm/data-structures-for-statistical-computing-in-python" title="Data Structures for Statistical Computing in Python" target="_blank">Data Structures for Statistical Computing in Python</a> </strong> from <strong><a href="https://www.slideshare.net/wesm" target="_blank">Wes McKinney</a></strong> </div>
 
-Specify the port to use for the dev server.
+2011年PyHPC 介绍 Pandas：
 
-### temp
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/4BpC26SboWX2xM" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/wesm/Pandas-a-foundational-python-library-for-data-analysis-and-statistics" title="Pandas: a Foundational Python Library for Data Analysis and Statistics" target="_blank">Pandas: a Foundational Python Library for Data Analysis and Statistics</a> </strong> from <strong><a href="https://www.slideshare.net/wesm" target="_blank">Wes McKinney</a></strong> </div>
 
-- Type: `string`
-- Default: `/path/to/@vuepress/core/.temp`
+在NYC Python Meetup中进行 Pandas 开发：
 
+<iframe src="https://player.vimeo.com/video/35090565" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<p><a href="https://vimeo.com/35090565">Wes McKinney: Pandas design and development</a> from <a href="https://vimeo.com/user10017831">Adam Klein</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 
-Specify the temporary directory for client.
+更多介绍：
 
-### dest
-
-- Type: `string`
-- Default: `.vuepress/dist`
-
-Specify the output directory for `vuepress build`. If a relative path is specified, it will be resolved based on `process.cwd()`.
-
-### locales
-
-- Type: `{ [path: string]: Object }`
-- Default: `undefined`
-
-Specify locales for i18n support. For more details, see the guide on [Internationalization](../guide/i18n.md).
-
-### shouldPrefetch
-
-- Type: `Function`
-- Default: `() => true`
-
-A function to control what files should have `<link rel="preload">` resource hints generated. See [shouldPrefetch](https://ssr.vuejs.org/api/#shouldprefetch).
-
-### cache
-
-- Type: `boolean|string`
-- Default: `true`
-
-VuePress uses [cache-loader](https://github.com/webpack-contrib/cache-loader) by default to greatly speed up the compilation of webpack.
-
-This option can be used to specify the path to the cache, and can also remove the cache before each build by setting it to `false`.
-
-::: tip
-This option can also be used through the CLI:
-
-```bash
-vuepress dev docs --cache .cache # set cache path
-vuepress dev docs --no-cache     # remove cache before each build.
-```
-:::
-
-### extraWatchFiles
-
-- Type: `Array`
-- Default: `[]`
-
-Specify extra files to be watched.
-
-You can watch any file if you want. File changes will trigger `vuepress` rebuilding and real-time updates.
-
-``` js
-module.exports = {
-  extraWatchFiles: [
-    '.vuepress/foo.js', // Relative path usage
-    '/path/to/bar.js'   // Absolute path usage
-  ]
-}
-```
-
-## Styling
-
-### palette.styl
-
-If you wish to apply simple color overrides to the styling of the [default preset](https://github.com/vuejs/vuepress/blob/master/packages/@vuepress/core/lib/client/style/config.styl) or define some color variables for using later, you can create an `.vuepress/styles/palette.styl` file.
-
-There are a few color variables you can tweak:
-
-``` stylus
-// showing default values
-$accentColor = #3eaf7c
-$textColor = #2c3e50
-$borderColor = #eaecef
-$codeBgColor = #282c34
-```
-
-::: danger Note
-You should ONLY write color variables in this file. since `palette.styl` will be imported at the end of the root stylus config file, as a config, it will be used by multiple files, so once you wrote styles here, your style would be duplicated by multiple times.
-:::
-
-### index.styl
-
-VuePress provides a convenient way to add extra styles. you can create an `.vuepress/styles/index.styl` file for that. This is a [Stylus](http://stylus-lang.com/) file but you can use normal CSS syntax as well.
-
-```stylus
-.content {
-  font-size 30px
-}
-```
-
-**Also see:**
-
-- [Why can't `palette.styl` and `index.styl` merge into one API?](../faq/README.md#why-can-t-palette-styl-and-index-styl-merge-into-one-api)
-
-## Theming
-
-### theme
-
-- Type: `string`
-- Default: `undefined`
-
-Specify this to use a custom theme.
-
-**Also see:**
-
-- [Using a theme](../theme/using-a-theme.md).
-
-### themeConfig
-
-- Type: `Object`
-- Default: `{}`
-
-Provide config options to the used theme. The options will vary depending on the theme you are using.
-
-**Also see:**
-
-- [Default Theme Configuration](../theme/default-theme-config.md).
-
-## Pluggable
-
-### plugins
-
-- Type: `Object|Array`
-- Default: `undefined`
-
-Please refer to [Plugin > Using a plugin](../plugin/using-a-plugin.md) to learn how to use a plugin.
-
-## Markdown
-
-### markdown.lineNumbers
-
-- Type: `boolean`
-- Default: `undefined`
-
-Whether to show line numbers to the left of each code blocks.
-
-**Also see:**
-
-- [Line Numbers](../guide/markdown.md#line-numbers)
-
-### markdown.slugify
-
-- Type: `Function`
-- Default: [source](https://github.com/vuejs/vuepress/tree/master/packages/@vuepress/shared-utils/src/slugify.ts)
-
-Function for transforming [header](../miscellaneous/glossary.md#headers) texts into slugs. Changing this affects the ids/links generated for header anchors, [table of contents](../guide/markdown.md#table-of-contents) and [sidebar](../theme/default-theme-config.md#sidebar) links.
-
-### markdown.anchor
-
-- Type: `Object`
-- Default: `{ permalink: true, permalinkBefore: true, permalinkSymbol: '#' }`
-
-Options for [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor). (Note: prefer `markdown.slugify` if you want to customize header ids.)
-
-### markdown.externalLinks
-
-- Type: `Object`
-- Default: `{ target: '_blank', rel: 'noopener noreferrer' }`
-
-The key and value pair will be added to `<a>` tags that point to an external link. The default option will open external links in a new window.
-
-### markdown.toc
-
-- Type: `Object`
-- Default: `{ includeLevel: [2, 3] }`
-
-Options for [markdown-it-table-of-contents](https://github.com/Oktavilla/markdown-it-table-of-contents). (Note: prefer `markdown.slugify` if you want to customize header ids.)
-
-### markdown.plugins
-
-You can install any markdown-it plugins through `markdown.plugins` option. It is similar with [using VuePress plugins](../plugin/using-a-plugin.html#using-a-plugin). You can either use Babel style or object style. The `markdown-it-` prefix is optional and can omit in the list.
-
-``` js
-module.exports = {
-  markdown: {
-    plugins: [
-      '@org/foo', // equals to @org/markdown-it-foo if exists
-      ['markdown-it-bar', {
-        // provide options here
-      }]
-    ]
-  }
-}
-```
-
-or
-
-``` js
-module.exports = {
-  markdown: {
-    plugins: {
-      '@org/foo': {}
-      'markdown-it-bar': {
-        // provide options here
-      }
-    }
-  }
-}
-```
-
-### markdown.extendMarkdown
-
-- Type: `Function`
-- Default: `undefined`
-
-A function to modify default config or apply additional plugins to the [markdown-it](https://github.com/markdown-it/markdown-it) instance used to render source files. e.g.
-
-``` js
-module.exports = {
-  markdown: {
-    extendMarkdown: md => {
-      md.set({ breaks: true })
-      md.use(require('markdown-it-xxx'))
-    }
-  }
-}
-```
-
-::: tip
-This option is also included in [Plugin API](../plugin/option-api.md#extendmarkdown).
-:::
-
-## Build Pipeline
-
-:::tip Configuring CSS Pre-processors
-VuePress comes with built-in webpack config for the CSS pre-processors listed below. For more information on installation these or pre-processors without built-in support, see [Using Pre-Processors](../guide/using-vue.md#using-pre-processors) for more information.
-:::
-
-### postcss
-
-- Type: `Object`
-- Default: `{ plugins: [require('autoprefixer')] }`
-
-Options for [postcss-loader](https://github.com/postcss/postcss-loader). Note specifying this value will overwrite autoprefixer and you will need to include it yourself.
-
-### stylus
-
-- Type: `Object`
-- Default: `{ preferPathResolver: 'webpack' }`
-
-Options for [stylus-loader](https://github.com/shama/stylus-loader).
-
-### scss
-
-- Type: `Object`
-- Default: `{}`
-
-Options for [sass-loader](https://github.com/webpack-contrib/sass-loader) to load `*.scss` files.
-
-### sass
-
-- Type: `Object`
-- Default: `{ indentedSyntax: true }`
-
-Options for [sass-loader](https://github.com/webpack-contrib/sass-loader) to load `*.sass` files.
-
-### less
-
-- Type: `Object`
-- Default: `{}`
-
-Options for [less-loader](https://github.com/webpack-contrib/less-loader).
-
-### configureWebpack
-
-- Type: `Object | Function`
-- Default: `undefined`
-
-Modify the internal webpack config. If the value is an Object, it will be merged into the final config using [webpack-merge](https://github.com/survivejs/webpack-merge); If the value is a function, it will receive the config as the 1st argument and an `isServer` flag as the 2nd argument. You can either mutate the config directly, or return an object to be merged:
-
-``` js
-module.exports = {
-  configureWebpack: (config, isServer) => {
-    if (!isServer) {
-      // mutate the config for client
-    }
-  }
-}
-```
-
-### chainWebpack
-
-- Type: `Function`
-- Default: `undefined`
-
-Modify the internal webpack config with [webpack-chain](https://github.com/mozilla-neutrino/webpack-chain).
-
-``` js
-module.exports = {
-  chainWebpack: (config, isServer) => {
-    // config is an instance of ChainableConfig
-  }
-}
-```
-
-## Browser Compatibility
-
-### evergreen
-
-- Type: `boolean | Function`
-- Default: `false`
-
-Set to `true` if you are only targeting evergreen browsers. This will disable ES5 transpilation and polyfills for IE, and result in faster builds and smaller files.
+- [金融和统计领域的结构化数据挑战 (Rice)](https://www.slideshare.net/wesm/structured-data-challenges-in-finance-and-statistics) (11/21/11)
+- [使用Pandas进行财务数据分析的Python](https://www.slideshare.net/wesm/python-for-financial-data-analysis-with-Pandas) (10/17/11)
+- [Python中的数据分析和统计](https://www.slideshare.net/wesm/data-analysis-and-statistics-in-python-using-Pandas-and-statsmodels) (9/14/11)
+- [SlideShare上较早的ppt](https://www.slideshare.net/wesm)

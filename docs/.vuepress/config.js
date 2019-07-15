@@ -5,7 +5,7 @@ module.exports = ctx => ({
   locales: {
     '/': {
       lang: 'zh-CN',
-      title: 'Pandas 中文文档',
+      title: 'Pandas 中文',
       description: 'Pandas中文网、Pandas官方中文文档。'
     },
     '/en/': {
