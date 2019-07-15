@@ -27,7 +27,7 @@
 | :----------------------------------------------------------: | :------------------------------------------------- | --------------------------------------------- |
 | ![](https://avatars1.githubusercontent.com/u/7500988?s=60&v=4) | [@lisniuse](https://github.com/lisniuse)           | [l@numpy.org.cn](mailto:l@numpy.org.cn)       |
 | ![](https://avatars1.githubusercontent.com/u/42760154?s=60&v=4) | [@lonelyorchid](https://github.com/lonelyorchid)   | lonelyorchid@126.com                          |
-| ![](https://avatars1.githubusercontent.com/u/41409725?s=60&v=4) | [@Y-sir](https://github.com/Y-sir)                 | [577790911@qq.com](mailto:577790911@qq.com)   |
+| ![](https://avatars1.githubusercontent.com/u/41409725?s=60&v=4) | [@Y-sir](https://github.com/Y-sir)                 | [ysir@ysir308.com](mailto:ysir@ysir308.com)   |
 | ![TheDragonInUS](https://avatars2.githubusercontent.com/u/31626205?s=60&v=4) | [@TheDragonInUS](https://github.com/TheDragonInUS) | [1820245610@qq.com](mailto:1820245610@qq.com) |
 | ![@William533036](https://avatars0.githubusercontent.com/u/39235852?s=60&v=4) | [@William533036](https://github.com/William533036) | [69657041@qq.com](mailto:69657041@qq.com)   |
 
