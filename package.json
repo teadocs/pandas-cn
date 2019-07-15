@@ -1,0 +1,39 @@
+{
+  "private": true,
+  "version": "0.24.2",
+  "name": "pandas-cn",
+  "description": "pandas中文文档",
+  "scripts": {
+    "dev": "vuepress dev docs --temp .temp",
+    "build": "vuepress build docs --temp .temp",
+    "view-info": "vuepress view-info docs --temp .temp",
+    "show-help": "vuepress --help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teadocs/pandas-cn"
+  },
+  "keywords": [
+    "documentation",
+    "python",
+    "pandas",
+    "pandas-cn"
+  ],
+  "author": "Evan You",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/teadocs/pandas-cn/issues"
+  },
+  "homepage": "https://github.com/teadocs/pandas-cn#readme",
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.0.2",
+    "@vuepress/plugin-google-analytics": "^1.0.2",
+    "@vuepress/plugin-medium-zoom": "^1.0.2",
+    "@vuepress/plugin-pwa": "^1.0.2",
+    "@vuepress/theme-vue": "^1.0.2",
+    "vue-toasted": "^1.1.25",
+    "vuepress": "^1.0.2",
+    "vuepress-plugin-flowchart": "^1.4.2",
+    "vuepress-theme-teadocs": "^1.0.0"
+  }
+}
