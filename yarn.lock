@@ -7182,10 +7182,10 @@ vuepress-plugin-flowchart@^1.4.2:
   dependencies:
     flowchart.js "^1.11.3"
 
-vuepress-theme-teadocs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vuepress-theme-teadocs/-/vuepress-theme-teadocs-1.0.0.tgz#f15b54e9a70dee4ddc6b99c95b4fd8ea18ca6d29"
-  integrity sha512-UuEGFzs9ZPmdZElTQ4UeT/JDRf3PWb3bUZpV+O9HdJr91U6kwwAIptrpzfuCjQXHD6gM4zqu629vofA0qcY4xA==
+vuepress-theme-teadocs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-teadocs/-/vuepress-theme-teadocs-1.0.1.tgz#24eca41dbedeb3b8f5f16c4885dd4b0872f7d972"
+  integrity sha512-Sr3qpzhgpJ+/QfqhkQAGHWEg8SPasTzuo//tA4evBgFzX9DYzcq9FjkFPtqiw/0LjkiHj4Zf5c9yntP2JZMljA==
   dependencies:
     "@vuepress/plugin-active-header-links" "^1.0.2"
     "@vuepress/plugin-nprogress" "^1.0.2"

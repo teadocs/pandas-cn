@@ -1,66 +1,25 @@
 module.exports = [
   {
-    text: '指南',
-    link: '/en/guide/',
+    text: 'Introduction',
+    link: '/en/intro/',
   },
   {
-    text: '配置',
-    link: '/en/config/'
+    text: 'About',
+    link: '/en/about/'
   },
   {
-    text: '插件',
-    link: '/en/plugin/'
+    text: 'Get Pandas',
+    link: '/en/get_pandas/'
   },
   {
-    text: '主题',
-    link: '/en/theme/'
+    text: 'Documentation',
+    link: '/en/docs/'
   },
   {
-    text: '了解更多',
+    text: 'Learn More',
     items: [
-      {
-        text: 'API',
-        items: [
-          {
-            text: 'CLI',
-            link: '/en/api/cli.html'
-          },
-          {
-            text: 'Node',
-            link: '/en/api/node.html'
-          },
-        ]
-      },
-      {
-        text: '开发指南',
-        items: [
-          {
-            text: '设计理念',
-            link: '/en/miscellaneous/design-concepts.html'
-          },
-          {
-            text: 'FAQ',
-            link: '/en/faq/',
-          },
-          {
-            text: '术语',
-            link: '/en/miscellaneous/glossary.html'
-          },
-        ]
-      },
-      {
-        text: '其他',
-        items: [
-          {
-            text: '从 0.x 迁移',
-            link: '/en/miscellaneous/migration-guide.html'
-          },
-          {
-            text: 'Changelog',
-            link: 'https://github.com/vuejs/vuepress/blob/master/CHANGELOG.md'
-          }
-        ]
-      }
+      { text: 'Community', link: '/community/' },
+      { text: 'Talks', link: '/talks/' }
     ]
   }
 ]

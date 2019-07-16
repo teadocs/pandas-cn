@@ -10,8 +10,8 @@ module.exports = ctx => ({
     },
     '/en/': {
       lang: 'en-US',
-      title: 'Python Data Analysis Library',
-      description: 'pandas is an open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language.'
+      title: 'Pandas',
+      description: 'Python Data Analysis Library.'
     }
   },
   head: [

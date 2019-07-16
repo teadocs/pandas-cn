@@ -1,8 +1,8 @@
 ---
 home: true
 heroImage: /hero.png
-actionText: Get Started →
-actionLink: /guide/
+actionText: 快速开始 →
+actionLink: /docs/
 footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
 ---
 
@@ -27,10 +27,10 @@ footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-
 # 1、安装包
 $ pip install pandas
 
-# 2、进入python交互式街面
+# 2、进入python的交互式界面
 $ python -i
 
-# 3、使用pandas
+# 3、使用Pandas
 >>> import pandas as pd
 >>> df = pd.DataFrame() 
 >>> print(df)

@@ -7,21 +7,21 @@ sidebar: auto
 
 庞大用户和开发者社区规模庞大且分散。我们尝试将某些交流讨论引导至某些第三方渠道。
 
-1. 在StackOverflow上通过#pandas标签来查询你遇到的问题（例如“如何在pandas中执行X？”）
-1. Use the GitHub issue tracker for
-    - Bug reports (like “DataFrame.head() returns 6 rows, when it should return 5.”)
-    - Documentation issues (like “I found this section unclear”)
-    - Feature requests (like “I think the DataFrame repr should include a pandas emoji next to the shape.”)
-1. Use the pandas dev mailing list for longer-form discussion items. This is for things that concern the broader pandas community. Most users probably don’t care about an obscure edge-case in Series.str.split (which should be reported on the issue tracker), but may care about larger-picture things like
-    - How should we have discussions about pandas and the community?
-    - Developing or adding items to a pandas roadmap
-    - Announcing sprints or conference talks
-      - Changes to the development workflow
-      - Announcements for pandas releases and developer meetings
-      - …
-1. Use the pandas gitter for quick feedback on development issues
-    - I’m having trouble setting up the development environment.
-    - I messed up my git branches, can someone take a look?
+1. 在[StackOverflow上通过#pandas标签](http://stackoverflow.com/questions/tagged/pandas)来查询你遇到的问题（例如“如何在pandas中执行X？”）
+1. 使用[GitHub问题跟踪器](https://github.com/pandas-dev/pandas)
+    - **报告bug**（比如：“``DataFrame.head()``返回6行，应该返回5行。”）
+    - **文档问题** (比如：“我发现这一节写得不清楚。”)
+    - **功能需求** (比如：“我认为DataFrame repr应该在形状旁边包含Pandas的emoji表情符号” 🐼)。
+1. 使用[Pandas开发者邮件列表](https://mail.python.org/mailman/listinfo/pandas-dev)查看更多的以其他形式存在的讨论项目，这是为了针对更广泛的Pandas社区用户而提供的。大多数用户可能不关心局部的譬如：``Series.str.split``中的模糊边缘大小写的问题(应该在问题跟踪器上报告)，而可能会关心Pandas整体，比如：
+    - 我们该如何参到Pandas的社区讨论中来？
+    - 开发或添加新需求到Pandas的路线图。
+    - 宣布新的版本或者加入讨论。
+      - 参与改变开发工作的流程。
+      - 公布Pandas的发布日志和开发者会议
+      - ...
+1. 使用[Pandas gitter](https://gitter.im/pydata/pandas)可以快速反馈开发问题
+    - 我在设置开发环境时遇到了麻烦。
+    - 我弄乱了我的git分支树，有人可以看看吗？
     - … 
 
 要了解有关如何为Pandas的持续发展做出贡献的更多信息，请查看我们的[贡献指南](http://Pandas-docs.github.io/Pandas-docs-travis/contributing.html)。有关项目方向的深入开发讨论，您可以加入开发人员[邮件列表](https://mail.python.org/mailman/listinfo/Pandas-dev)。

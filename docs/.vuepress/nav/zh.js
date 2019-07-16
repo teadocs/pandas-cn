@@ -1,14 +1,14 @@
 module.exports = [
   {
-    text: '简介',
+    text: 'Pandas 简介',
     link: '/intro/'
   },
   {
-    text: '关于',
+    text: '关于 Pandas',
     link: '/about/'
   },
   {
-    text: '获取Pandas',
+    text: '获取 Pandas',
     link: '/get_pandas/'
   },
   {

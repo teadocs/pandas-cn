@@ -1,34 +1,46 @@
 ---
 home: true
 heroImage: /hero.png
-actionText: 快速上手 →
-actionLink: /zh/guide/
-features:
-- title: 简洁至上
-  details: 以 Markdown 为中心的项目结构，以最少的配置帮助你专注于写作。
-- title: Vue 驱动
-  details: 享受 Vue + webpack 的开发体验，可以在 Markdown 中使用 Vue 组件，又可以使用 Vue 来开发自定义主题。
-- title: 高性能
-  details: VuePress 会为每个页面预渲染生成静态的 HTML，同时，每个页面被加载的时候，将作为 SPA 运行。
-footer: MIT Licensed | Copyright © 2018-present Evan You
+actionText: Get Started →
+actionLink: /guide/
+footer: Attribution-NonCommercial-ShareAlike 3.0 China Mainland (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
 ---
 
-### 像数 1, 2, 3 一样容易
+<div class="features">
+  <div class="feature">
+    <h2>What is pandas?</h2>
+    <p>Pandas is a powerful tool set for analyzing structured data; it is based on Numpy (which provides high-performance matrix operations); it is used for data mining and data analysis, as well as data cleaning capabilities.</p>
+  </div>
+  <div class="feature">
+    <h2>Feature: DataFrame</h2>
+    <p>DataFrame is a tabular data structure in Pandas, which contains a set of ordered columns, each of which can be a different value type (value, string, Boolean, etc.), DataFrame has both row index and column index, and can be regarded as a dictionary made up of Series.</p>
+  </div>
+  <div class="feature">
+    <h2>Feature: Series</h2>
+    <p>It is an object similar to a one-dimensional array, consisting of a set of data (various NumPy data types) and a set of related data tags (that is, indexes). Simple Series objects can also be generated from a single set of data.</p>
+  </div>
+</div>
+
+### As Easy as 1, 2, 3
 
 ``` bash
-# 安装
-yarn global add vuepress # 或者：npm install -g vuepress
+# 1. Installation package
+$ pip install pandas
 
-# 新建一个 markdown 文件
-echo '# Hello VuePress!' > README.md
+# 2. Enter the interactive interface of python
+$ python -i
 
-# 开始写作
-vuepress dev .
+# 3. Using Pandas
+>>> import pandas as pd
+>>> df = pd.DataFrame() 
+>>> print(df)
 
-# 构建静态文件
-vuepress build .
+# 4. Output result
+Empty DataFrame
+Columns: []
+Index: []
 ```
 
-::: warning 注意
-请确保你的 Node.js 版本 >= 8.6。
+::: warning NOTE
+This site is recommended to use Python 3.x and above.
 :::

@@ -27,7 +27,7 @@ conda install Pandas
 python3 -m pip install --upgrade Pandas
 ```
 
-请参阅 [历代特性](/document/whatsnew) 以获取所有更新日志。
+请参阅 [历代特性](https://pandas.pydata.org/pandas-docs/version/0.24.2/whatsnew/v0.24.2.html) 以获取所有更新日志。
 
 ## 版本 v0.24.0 (2018年1月25日)
 
