@@ -18,8 +18,8 @@ module.exports = [
   {
     text: 'Learn More',
     items: [
-      { text: 'Community', link: '/community/' },
-      { text: 'Talks', link: '/talks/' }
+      { text: 'Community', link: '/en/community/' },
+      { text: 'Talks', link: '/en/talks/' }
     ]
   }
 ]
