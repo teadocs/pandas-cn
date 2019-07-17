@@ -3,9 +3,7 @@ sidebarDepth: 3
 sidebar: auto
 ---
 
-# Config Reference
-
-<Bit/>
+# Pandas：强大的Python数据分析工具包
 
 ## Basic Config
 

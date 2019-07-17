@@ -16,4 +16,4 @@ sidebar: auto
 
 ## 开发中版本
 
-发布候选版本将在主要版本发布之前提供。会发送公布给在[邮寄名单](https://mail.python.org/mailman/listinfo/Pandas-dev)上的人。
+发布候选版本将在主要版本发布之前提供。会发送公布给在[邮件名单列表](https://mail.python.org/mailman/listinfo/Pandas-dev)上的人。

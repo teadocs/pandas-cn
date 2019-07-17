@@ -1,5 +1,3 @@
-const { fs, path } = require('@vuepress/shared-utils')
-
 module.exports = ctx => ({
   dest: './dist',
   locales: {
@@ -37,12 +35,7 @@ module.exports = ctx => ({
         editLinkText: '在 GitHub 上编辑此页',
         lastUpdated: '上次更新',
         nav: require('./nav/zh'),
-        sidebar: {
-          '/api/': getApiSidebar(),
-          '/guide/': getGuideSidebar('指南', '深入'),
-          '/plugin/': getPluginSidebar('插件', '介绍', '官方插件'),
-          '/theme/': getThemeSidebar('主题', '介绍')
-        }
+        sidebar: {}
       },
       '/en/': {
         label: 'English',
@@ -50,12 +43,7 @@ module.exports = ctx => ({
         editLinkText: 'Edit this page on GitHub',
         lastUpdated: 'Last Updated',
         nav: require('./nav/en'),
-        sidebar: {
-          '/en/api/': getApiSidebar(),
-          '/en/guide/': getGuideSidebar('Guide', 'Advanced'),
-          '/en/plugin/': getPluginSidebar('Plugin', 'Introduction', 'Official Plugins'),
-          '/en/theme/': getThemeSidebar('Theme', 'Introduction'),
-        }
+        sidebar: require('./sidebar/en')()
       }
     }
   },
@@ -85,85 +73,3 @@ module.exports = ctx => ({
     '.vuepress/nav/zh.js',
   ]
 })
-
-function getApiSidebar () {
-  return [
-    'cli',
-    'node'
-  ]
-}
-
-function getGuideSidebar (groupA, groupB) {
-  return [
-    {
-      title: groupA,
-      collapsable: false,
-      children: [
-        '',
-        'getting-started',
-        'directory-structure',
-        'basic-config',
-        'assets',
-        'markdown',
-        'using-vue',
-        'i18n',
-        'deploy',
-      ]
-    },
-    {
-      title: groupB,
-      collapsable: false,
-      children: [
-        'frontmatter',
-        'permalinks',
-        'markdown-slot',
-        'global-computed'
-      ]
-    }
-  ]
-}
-
-const officalPlugins = fs
-  .readdirSync(path.resolve(__dirname, '../plugin/official'))
-  .map(filename => 'official/' + filename.slice(0, -3))
-  .sort()
-
-function getPluginSidebar (pluginTitle, pluginIntro, officialPluginTitle) {
-  return [
-    {
-      title: pluginTitle,
-      collapsable: false,
-      children: [
-        ['', pluginIntro],
-        'using-a-plugin',
-        'writing-a-plugin',
-        'life-cycle',
-        'option-api',
-        'context-api'
-      ]
-    },
-    {
-      title: officialPluginTitle,
-      collapsable: false,
-      children: officalPlugins,
-    }
-  ]
-}
-
-function getThemeSidebar (groupA, introductionA) {
-  return [
-    {
-      title: groupA,
-      collapsable: false,
-      sidebarDepth: 2,
-      children: [
-        ['', introductionA],
-        'using-a-theme',
-        'writing-a-theme',
-        'option-api',
-        'default-theme-config',
-        'inheritance'
-      ]
-    },
-  ]
-}

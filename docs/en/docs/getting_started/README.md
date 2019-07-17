@@ -1,0 +1,53 @@
+# Getting started
+
+- Package overview
+  - Data Structures
+  - Mutability and copying of data
+  - Getting Support
+  - Community
+  - Project Governance
+  - Development Team
+  - Institutional Partners
+  - License
+- 10 Minutes to pandas
+  - Object Creation
+  - Viewing Data
+  - Selection
+  - Missing Data
+  - Operations
+  - Merge
+  - Grouping
+  - Reshaping
+  - Time Series
+  - Categoricals
+  - Plotting
+  - Getting Data In/Out
+  - Gotchas
+- Essential Basic Functionality
+  - Head and Tail
+  - Attributes and Underlying Data
+  - Accelerated operations
+  - Flexible binary operations
+  - Descriptive statistics
+  - Function application
+  - Reindexing and altering labels
+  - Iteration
+  - .dt accessor
+  - Vectorized string methods
+  - Sorting
+  - Copying
+  - dtypes
+  - Selecting columns based on dtype
+- Intro to Data Structures
+  - Series
+  - DataFrame
+  - Panel
+  - Deprecate Panel
+- IComparison with other tools
+  - Comparison with R / R libraries
+  - Comparison with SQL
+  - Comparison with SAS
+  - Comparison with Stata
+- Tutorials
+  - Internal Guides
+  - Community Guides

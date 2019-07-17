@@ -5,9 +5,9 @@ sidebar: auto
 
 # 一个Python的数据分析库
 
-Pandas是一个开源的，BSD许可的库，为[Python](https://www.python.org/)编程语言提供高性能，易于使用的数据结构和数据分析工具。
+``Pandas``是一个开源的，BSD许可的库，为[Python](https://www.python.org/)编程语言提供高性能，易于使用的数据结构和数据分析工具。
 
-Pandas是[NumFOCUS](https://www.numfocus.org/open-source-projects.html)赞助的项目。这将有助于确保Pandas成为世界级开源项目的成功，并有可能[捐赠](https://pandas.pydata.org/donate.html)给该项目。
+``Pandas``是[NumFOCUS](https://www.numfocus.org/open-source-projects.html)赞助的项目。这将有助于确保Pandas成为世界级开源项目的成功，并有可能[捐赠](https://pandas.pydata.org/donate.html)给该项目。
 
 ![NumFOCUS Logo](/static/images/SponsoredProjectStamp_300px.png)
 
@@ -17,14 +17,14 @@ Pandas是[NumFOCUS](https://www.numfocus.org/open-source-projects.html)赞助的
 
 该版本可以使用conda-forge或默认频道的conda进行安装：
 
-```sh
-conda install Pandas
+``` bash
+$ conda install Pandas
 ```
 
 或者通过 PyPI:
 
-```sh
-python3 -m pip install --upgrade Pandas
+``` bash
+$ python3 -m pip install --upgrade Pandas
 ```
 
 请参阅 [历代特性](https://pandas.pydata.org/pandas-docs/version/0.24.2/whatsnew/v0.24.2.html) 以获取所有更新日志。
@@ -35,31 +35,26 @@ python3 -m pip install --upgrade Pandas
 
 亮点包括：
 
-- [可选的可空整数支持。](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#optional-integer-na-support)
-- [用于访问支持系列或索引的阵列的新API。](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#accessing-the-values-in-a-series-or-index)
-- [用于创建数组的新的顶级pandas.array()方法。](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#array)
-- [将 Interval 和 Period 数据存储在Series或DataFrame中。](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#storing-interval-and-period-data-in-series-and-dataframe)
-- [连接两个多索引](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#joining-with-two-multi-indexes)
+- [可选的可空整数支持](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#optional-integer-na-support)
+- [用于支持访问Series或者Index的矩阵的新API](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#accessing-the-values-in-a-series-or-index)
+- [用于创建数组的新的顶级静态方法``pandas.array()``](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#array)
+- [将 Interval 和 Period 数据存储在Series或DataFrame中](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#storing-interval-and-period-data-in-series-and-dataframe)
+- [连接两个多索引(MultiIndexes)](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#joining-with-two-multi-indexes)
 
 有关从0.23.4开始的所有更新的完整列表，请参阅[发行版日志](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html)。
 
 可以使用默认值或 conda-forge 通道将候选版本与 conda 一起安装
 
-```sh
-conda install Pandas
+``` bash
+$ conda install Pandas
 ```
 
-或 conda forge:
+或者通过 PyPI
 
-```sh
-conda install -c conda-forge Pandas
+``` bash
+$ python3 -m pip install --upgrade pandas
 ```
 
-或者通过 PyPI:
-
-```sh
-python3 -m pip install --upgrade Pandas==0.23.0
-```
 
 请注意，0.24.x是支持Python 2的最后一系列版本。
 
@@ -69,19 +64,21 @@ python3 -m pip install --upgrade Pandas==0.23.0
 
 获得 Pandas 的最佳方式是通过 [conda](http://Pandas.pydata.org/Pandas-docs/stable/install.html#installing-Pandas-with-anaconda)
 
-```sh
-conda install Pandas
+``` bash
+$ conda install Pandas
 ```
 
 在Windows、Linux和MacOS上，[所有受支持的python版本](http://Pandas.pydata.org/Pandas-docs/stable/install.html#python-version-support)都可以使用包。
 
 pands 也被上传到[PyPI](https://pypi.org/project/Pandas/)中，并且可以通过以下方式安装：
 
-```sh
-pip install Pandas
+``` bash
+$ pip install Pandas
 ```
 
 ## 快速了解
+
+<iframe src="https://player.vimeo.com/video/59324550" style="margin-top: 20px;" width="500" height="309" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
 
 [Wes McKinney](https://vimeo.com/user10077863) 在 [Vimeo](https://vimeo.com/) 上的 [10分钟 Pandas 之旅](https://vimeo.com/59324550) 视频教程
 
@@ -96,11 +93,11 @@ Pandas没有在线性和面板回归之外实现重要的建模功能; 为此，
 ## 我们的用户有什么要说的？
 
 - **Roni Israelov**(博士，[AQR资本管理](https://www.aqr.com/)的组合投资经理)：Pandas让我们更专注于研究而不是编程。我们发现 Pandas 易于学习，易于使用且易于维护。最重要的是，它提高了我们的生产力。
-    ![AQR资本管理 Logo](/static/images/aqr_capital_management_logo.png)
+  - ![AQR资本管理 Logo](/static/images/aqr_capital_management_logo.png)
 - **David Himrod**([appNexus](https://www.appnexus.com/)的优化分析总监)：Pandas 是一种完美的工具，可以在快速迭代的特殊分析和产品质量代码之间架起一座桥梁。如果你想在一个由工程师、数学家和分析师组成的多学科组织中使用一种工具，那就别再看了。
-    ![AppNexus Logo](/static/images/appnexus_logo.png)
+  - ![AppNexus Logo](/static/images/appnexus_logo.png)
 - **Olivier Pomel**([Datadog](https://www.datadoghq.com/)的CEO)：我们使用Pandas处理生产服务器上的时间序列数据。其API的简单性和优雅性以及高容量数据集的高性能使其成为我们的完美选择。
-    ![Datadog Logo](/static/images/datadog_logo.png)
+  - ![Datadog Logo](/static/images/datadog_logo.png)
 
 ## Pandas库的亮点
 
