@@ -22,7 +22,11 @@ module.exports = function () {
       children: [
         ['/en/docs/getting_started/', 'Index'],
         ['/en/docs/getting_started/overview', 'Package overview'],
-        ['/en/docs/getting_started/10min', '10 Minutes to pandas']
+        ['/en/docs/getting_started/10min', '10 Minutes to pandas'],
+        ['/en/docs/getting_started/basics', 'Essential Basic Functionality'],
+        ['/en/docs/getting_started/dsintro', 'Intro to Data Structures'],
+        ['/en/docs/getting_started/comparison', 'Comparison with other tools'],
+        ['/en/docs/getting_started/tutorials', 'Tutorials']
       ]
     },
     {

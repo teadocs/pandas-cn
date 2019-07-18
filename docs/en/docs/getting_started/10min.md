@@ -387,6 +387,7 @@ Out[35]:
 
 For slicing columns explicitly:
 
+``` python
 In [36]: df.iloc[:, 1:3]
 Out[36]: 
                    B         C
@@ -396,25 +397,38 @@ Out[36]:
 2013-01-04 -0.706771 -1.039575
 2013-01-05  0.567020  0.276232
 2013-01-06  0.113648 -1.478427
+```
+
 For getting a value explicitly:
 
+``` python
 In [37]: df.iloc[1, 1]
 Out[37]: -0.17321464905330858
+```
+
 For getting fast access to a scalar (equivalent to the prior method):
 
+``` python
 In [38]: df.iat[1, 1]
 Out[38]: -0.17321464905330858
-Boolean Indexing
+```
+
+### Boolean Indexing
+
 Using a single column’s values to select data.
 
+``` python
 In [39]: df[df.A > 0]
 Out[39]: 
                    A         B         C         D
 2013-01-01  0.469112 -0.282863 -1.509059 -1.135632
 2013-01-02  1.212112 -0.173215  0.119209 -1.044236
 2013-01-04  0.721555 -0.706771 -1.039575  0.271860
+```
+
 Selecting values from a DataFrame where a boolean condition is met.
 
+``` python
 In [40]: df[df > 0]
 Out[40]: 
                    A         B         C         D
@@ -424,8 +438,11 @@ Out[40]:
 2013-01-04  0.721555       NaN       NaN  0.271860
 2013-01-05       NaN  0.567020  0.276232       NaN
 2013-01-06       NaN  0.113648       NaN  0.524988
-Using the isin() method for filtering:
+```
 
+Using the [isin()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isin.html#pandas.Series.isin) method for filtering:
+
+``` python
 In [41]: df2 = df.copy()
 
 In [42]: df2['E'] = ['one', 'one', 'two', 'three', 'four', 'three']
@@ -445,9 +462,13 @@ Out[44]:
                    A         B         C         D     E
 2013-01-03 -0.861849 -2.104569 -0.494929  1.071804   two
 2013-01-05 -0.424972  0.567020  0.276232 -1.087401  four
-Setting
+```
+
+### Setting
+
 Setting a new column automatically aligns the data by the indexes.
 
+``` python
 In [45]: s1 = pd.Series([1, 2, 3, 4, 5, 6], index=pd.date_range('20130102', periods=6))
 
 In [46]: s1
@@ -461,17 +482,29 @@ Out[46]:
 Freq: D, dtype: int64
 
 In [47]: df['F'] = s1
+```
+
 Setting values by label:
 
+``` python
 In [48]: df.at[dates[0], 'A'] = 0
+```
+
 Setting values by position:
 
+``` python
 In [49]: df.iat[0, 1] = 0
+```
+
 Setting by assigning with a NumPy array:
 
+``` python
 In [50]: df.loc[:, 'D'] = np.array([5] * len(df))
+```
+
 The result of the prior setting operations.
 
+``` python
 In [51]: df
 Out[51]: 
                    A         B         C  D    F
@@ -481,8 +514,11 @@ Out[51]:
 2013-01-04  0.721555 -0.706771 -1.039575  5  3.0
 2013-01-05 -0.424972  0.567020  0.276232  5  4.0
 2013-01-06 -0.673690  0.113648 -1.478427  5  5.0
-A where operation with setting.
+```
 
+A ``where`` operation with setting.
+
+``` python
 In [52]: df2 = df.copy()
 
 In [53]: df2[df2 > 0] = -df2
@@ -496,11 +532,15 @@ Out[54]:
 2013-01-04 -0.721555 -0.706771 -1.039575 -5 -3.0
 2013-01-05 -0.424972 -0.567020 -0.276232 -5 -4.0
 2013-01-06 -0.673690 -0.113648 -1.478427 -5 -5.0
-Missing Data
-pandas primarily uses the value np.nan to represent missing data. It is by default not included in computations. See the Missing Data section.
+```
+
+## Missing Data
+
+pandas primarily uses the value ``np.nan`` to represent missing data. It is by default not included in computations. See the [Missing Data section](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data).
 
 Reindexing allows you to change/add/delete the index on a specified axis. This returns a copy of the data.
 
+``` python
 In [55]: df1 = df.reindex(index=dates[0:4], columns=list(df.columns) + ['E'])
 
 In [56]: df1.loc[dates[0]:dates[1], 'E'] = 1
@@ -512,14 +552,20 @@ Out[57]:
 2013-01-02  1.212112 -0.173215  0.119209  5  1.0  1.0
 2013-01-03 -0.861849 -2.104569 -0.494929  5  2.0  NaN
 2013-01-04  0.721555 -0.706771 -1.039575  5  3.0  NaN
+```
+
 To drop any rows that have missing data.
 
+``` python
 In [58]: df1.dropna(how='any')
 Out[58]: 
                    A         B         C  D    F    E
 2013-01-02  1.212112 -0.173215  0.119209  5  1.0  1.0
+```
+
 Filling missing data.
 
+``` python
 In [59]: df1.fillna(value=5)
 Out[59]: 
                    A         B         C  D    F    E
@@ -527,8 +573,11 @@ Out[59]:
 2013-01-02  1.212112 -0.173215  0.119209  5  1.0  1.0
 2013-01-03 -0.861849 -2.104569 -0.494929  5  2.0  5.0
 2013-01-04  0.721555 -0.706771 -1.039575  5  3.0  5.0
+```
+
 To get the boolean mask where values are nan.
 
+``` python
 In [60]: pd.isna(df1)
 Out[60]: 
                 A      B      C      D      F      E
@@ -536,14 +585,19 @@ Out[60]:
 2013-01-02  False  False  False  False  False  False
 2013-01-03  False  False  False  False  False   True
 2013-01-04  False  False  False  False  False   True
-Operations
-See the Basic section on Binary Ops.
+```
 
-Stats
+## Operations
+
+See the [Basic section on Binary Ops](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-binop).
+
+### Stats
+
 Operations in general exclude missing data.
 
 Performing a descriptive statistic:
 
+``` python
 In [61]: df.mean()
 Out[61]: 
 A   -0.004474
@@ -552,8 +606,11 @@ C   -0.687758
 D    5.000000
 F    3.000000
 dtype: float64
+```
+
 Same operation on the other axis:
 
+``` python
 In [62]: df.mean(1)
 Out[62]: 
 2013-01-01    0.872735
@@ -563,8 +620,11 @@ Out[62]:
 2013-01-05    1.883656
 2013-01-06    1.592306
 Freq: D, dtype: float64
+```
+
 Operating with objects that have different dimensionality and need alignment. In addition, pandas automatically broadcasts along the specified dimension.
 
+``` python
 In [63]: s = pd.Series([1, 3, 5, np.nan, 6, 8], index=dates).shift(2)
 
 In [64]: s
@@ -586,9 +646,13 @@ Out[65]:
 2013-01-04 -2.278445 -3.706771 -4.039575  2.0  0.0
 2013-01-05 -5.424972 -4.432980 -4.723768  0.0 -1.0
 2013-01-06       NaN       NaN       NaN  NaN  NaN
-Apply
+```
+
+### Apply
+
 Applying functions to the data:
 
+``` python
 In [66]: df.apply(np.cumsum)
 Out[66]: 
                    A         B         C   D     F
@@ -607,9 +671,13 @@ C    1.785291
 D    0.000000
 F    4.000000
 dtype: float64
-Histogramming
-See more at Histogramming and Discretization.
+```
 
+### Histogramming
+
+See more at [Histogramming and Discretization](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-discretization).
+
+``` python
 In [68]: s = pd.Series(np.random.randint(0, 7, size=10))
 
 In [69]: s
@@ -633,9 +701,13 @@ Out[70]:
 2    2
 1    1
 dtype: int64
-String Methods
-Series is equipped with a set of string processing methods in the str attribute that make it easy to operate on each element of the array, as in the code snippet below. Note that pattern-matching in str generally uses regular expressions by default (and in some cases always uses them). See more at Vectorized String Methods.
+```
 
+### String Methods
+
+Series is equipped with a set of string processing methods in the str attribute that make it easy to operate on each element of the array, as in the code snippet below. Note that pattern-matching in str generally uses [regular expressions](https://docs.python.org/3/library/re.html) by default (and in some cases always uses them). See more at [Vectorized String Methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#text-string-methods).
+
+``` python
 In [71]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
 
 In [72]: s.str.lower()
@@ -650,14 +722,19 @@ Out[72]:
 7     dog
 8     cat
 dtype: object
-Merge
-Concat
+```
+
+## Merge
+
+### Concat
+
 pandas provides various facilities for easily combining together Series, DataFrame, and Panel objects with various kinds of set logic for the indexes and relational algebra functionality in the case of join / merge-type operations.
 
-See the Merging section.
+See the [Merging section](https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#merging).
 
-Concatenating pandas objects together with concat():
+Concatenating pandas objects together with [concat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html#pandas.concat):
 
+``` python
 In [73]: df = pd.DataFrame(np.random.randn(10, 4))
 
 In [74]: df
@@ -690,9 +767,13 @@ Out[76]:
 7 -0.932132  1.956030  0.017587 -0.016692
 8 -0.575247  0.254161 -1.143704  0.215897
 9  1.193555 -0.077118 -0.408530 -0.862495
-Join
-SQL style merges. See the Database style joining section.
+```
 
+### Join
+
+SQL style merges. See the [Database style joining](https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#merging-join) section.
+
+``` python
 In [77]: left = pd.DataFrame({'key': ['foo', 'foo'], 'lval': [1, 2]})
 
 In [78]: right = pd.DataFrame({'key': ['foo', 'foo'], 'rval': [4, 5]})
@@ -716,8 +797,11 @@ Out[81]:
 1  foo     1     5
 2  foo     2     4
 3  foo     2     5
+```
+
 Another example that can be given is:
 
+``` python
 In [82]: left = pd.DataFrame({'key': ['foo', 'bar'], 'lval': [1, 2]})
 
 In [83]: right = pd.DataFrame({'key': ['foo', 'bar'], 'rval': [4, 5]})
@@ -739,9 +823,13 @@ Out[86]:
    key  lval  rval
 0  foo     1     4
 1  bar     2     5
-Append
-Append rows to a dataframe. See the Appending section.
+```
 
+### Append
+
+Append rows to a dataframe. See the [Appending](https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#merging-concatenation) section.
+
+``` python
 In [87]: df = pd.DataFrame(np.random.randn(8, 4), columns=['A', 'B', 'C', 'D'])
 
 In [88]: df
@@ -770,14 +858,19 @@ Out[90]:
 6  0.141809  0.220390  0.435589  0.192451
 7 -0.096701  0.803351  1.715071 -0.708758
 8  1.453749  1.208843 -0.080952 -0.264610
-Grouping
+```
+
+## Grouping
+
 By “group by” we are referring to a process involving one or more of the following steps:
 
-Splitting the data into groups based on some criteria
-Applying a function to each group independently
-Combining the results into a data structure
-See the Grouping section.
+- **Splitting** the data into groups based on some criteria
+- **Applying** a function to each group independently
+- **Combining** the results into a data structure
 
+See the [Grouping section](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#groupby).
+
+``` python
 In [91]: df = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar',
    ....:                          'foo', 'bar', 'foo', 'foo'],
    ....:                    'B': ['one', 'one', 'two', 'three',
@@ -797,16 +890,22 @@ Out[92]:
 5  bar    two -0.392670 -0.136473
 6  foo    one  0.007207 -0.561757
 7  foo  three  1.928123 -1.623033
-Grouping and then applying the sum() function to the resulting groups.
+```
 
+Grouping and then applying the [sum()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sum.html#pandas.DataFrame.sum) function to the resulting groups.
+
+``` python
 In [93]: df.groupby('A').sum()
 Out[93]: 
             C        D
 A                     
 bar -2.802588  2.42611
 foo  3.146492 -0.63958
+```
+
 Grouping by multiple columns forms a hierarchical index, and again we can apply the sum function.
 
+``` python
 In [94]: df.groupby(['A', 'B']).sum()
 Out[94]: 
                   C         D
@@ -817,10 +916,15 @@ bar one   -1.814470  2.395985
 foo one   -1.195665 -0.616981
     three  1.928123 -1.623033
     two    2.414034  1.600434
-Reshaping
-See the sections on Hierarchical Indexing and Reshaping.
+```
 
-Stack
+## Reshaping
+
+See the sections on [Hierarchical Indexing](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-hierarchical) and [Reshaping](https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html#reshaping-stacking).
+
+### Stack
+
+``` python
 In [95]: tuples = list(zip(*[['bar', 'bar', 'baz', 'baz',
    ....:                      'foo', 'foo', 'qux', 'qux'],
    ....:                     ['one', 'two', 'one', 'two',
@@ -841,8 +945,11 @@ bar   one     0.029399 -0.542108
       two     0.282696 -0.087302
 baz   one    -1.575170  1.771208
       two     0.816482  1.100230
-The stack() method “compresses” a level in the DataFrame’s columns.
+```
 
+The [stack()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.stack.html#pandas.DataFrame.stack) method “compresses” a level in the DataFrame’s columns.
+
+``` python
 In [100]: stacked = df2.stack()
 
 In [101]: stacked
@@ -857,8 +964,11 @@ baz    one     A   -1.575170
        two     A    0.816482
                B    1.100230
 dtype: float64
-With a “stacked” DataFrame or Series (having a MultiIndex as the index), the inverse operation of stack() is unstack(), which by default unstacks the last level:
+```
 
+With a “stacked” DataFrame or Series (having a ``MultiIndex`` as the ``index``), the inverse operation of [stack()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.stack.html#pandas.DataFrame.stack) is [unstack()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.unstack.html#pandas.DataFrame.unstack), which by default unstacks the **last level**:
+
+``` python
 In [102]: stacked.unstack()
 Out[102]: 
                      A         B
@@ -885,9 +995,13 @@ one    A  0.029399 -1.575170
        B -0.542108  1.771208
 two    A  0.282696  0.816482
        B -0.087302  1.100230
-Pivot Tables
-See the section on Pivot Tables.
+```
 
+### Pivot Tables
+
+See the section on [Pivot Tables](https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html#reshaping-pivot).
+
+``` python
 In [105]: df = pd.DataFrame({'A': ['one', 'one', 'two', 'three'] * 3,
    .....:                    'B': ['A', 'B', 'C'] * 4,
    .....:                    'C': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'] * 2,
@@ -910,8 +1024,11 @@ Out[106]:
 9     one  A  bar -0.773723  1.824375
 10    two  B  bar -1.170653  0.595974
 11  three  C  bar  0.648740  1.167115
+```
+
 We can produce pivot tables from this data very easily:
 
+``` python
 In [107]: pd.pivot_table(df, values='D', index=['A', 'B'], columns=['C'])
 Out[107]: 
 C             bar       foo
@@ -925,9 +1042,13 @@ three A  1.006160       NaN
 two   A       NaN  0.100900
       B -1.170653       NaN
       C       NaN  0.536826
-Time Series
-pandas has simple, powerful, and efficient functionality for performing resampling operations during frequency conversion (e.g., converting secondly data into 5-minutely data). This is extremely common in, but not limited to, financial applications. See the Time Series section.
+```
 
+## Time Series
+
+pandas has simple, powerful, and efficient functionality for performing resampling operations during frequency conversion (e.g., converting secondly data into 5-minutely data). This is extremely common in, but not limited to, financial applications. See the [Time Series section](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries).
+
+``` python
 In [108]: rng = pd.date_range('1/1/2012', periods=100, freq='S')
 
 In [109]: ts = pd.Series(np.random.randint(0, 500, len(rng)), index=rng)
@@ -936,8 +1057,11 @@ In [110]: ts.resample('5Min').sum()
 Out[110]: 
 2012-01-01    25083
 Freq: 5T, dtype: int64
+```
+
 Time zone representation:
 
+``` python
 In [111]: rng = pd.date_range('3/6/2012 00:00', periods=5, freq='D')
 
 In [112]: ts = pd.Series(np.random.randn(len(rng)), rng)
@@ -961,8 +1085,11 @@ Out[115]:
 2012-03-09 00:00:00+00:00    0.306389
 2012-03-10 00:00:00+00:00   -2.290613
 Freq: D, dtype: float64
+```
+
 Converting to another time zone:
 
+``` python
 In [116]: ts_utc.tz_convert('US/Eastern')
 Out[116]: 
 2012-03-05 19:00:00-05:00    0.464000
@@ -971,8 +1098,11 @@ Out[116]:
 2012-03-08 19:00:00-05:00    0.306389
 2012-03-09 19:00:00-05:00   -2.290613
 Freq: D, dtype: float64
+```
+
 Converting between time span representations:
 
+``` python
 In [117]: rng = pd.date_range('1/1/2012', periods=5, freq='M')
 
 In [118]: ts = pd.Series(np.random.randn(len(rng)), index=rng)
@@ -1005,8 +1135,11 @@ Out[122]:
 2012-04-01    0.281957
 2012-05-01    1.523962
 Freq: MS, dtype: float64
+```
+
 Converting between period and timestamp enables some convenient arithmetic functions to be used. In the following example, we convert a quarterly frequency with year ending in November to 9am of the end of the month following the quarter end:
 
+``` python
 In [123]: prng = pd.period_range('1990Q1', '2000Q4', freq='Q-NOV')
 
 In [124]: ts = pd.Series(np.random.randn(len(prng)), prng)
@@ -1021,14 +1154,21 @@ Out[126]:
 1990-12-01 09:00   -0.368204
 1991-03-01 09:00   -1.144073
 Freq: H, dtype: float64
-Categoricals
-pandas can include categorical data in a DataFrame. For full docs, see the categorical introduction and the API documentation.
+```
 
+## Categoricals
+
+pandas can include categorical data in a ``DataFrame``. For full docs, see the [categorical introduction](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) and the [API documentation](https://pandas.pydata.org/pandas-docs/stable/reference/arrays.html#api-arrays-categorical).
+
+``` python
 In [127]: df = pd.DataFrame({"id": [1, 2, 3, 4, 5, 6],
    .....:                    "raw_grade": ['a', 'b', 'b', 'a', 'a', 'e']})
    .....: 
+```
+
 Convert the raw grades to a categorical data type.
 
+``` python
 In [128]: df["grade"] = df["raw_grade"].astype("category")
 
 In [129]: df["grade"]
@@ -1041,11 +1181,17 @@ Out[129]:
 5    e
 Name: grade, dtype: category
 Categories (3, object): [a, b, e]
-Rename the categories to more meaningful names (assigning to Series.cat.categories is inplace!).
+```
 
+Rename the categories to more meaningful names (assigning to ``Series.cat.categories`` is inplace!).
+
+``` python
 In [130]: df["grade"].cat.categories = ["very good", "good", "very bad"]
-Reorder the categories and simultaneously add the missing categories (methods under Series .cat return a new Series by default).
+```
 
+Reorder the categories and simultaneously add the missing categories (methods under ``Series .cat`` return a new ``Series`` by default).
+
+``` python
 In [131]: df["grade"] = df["grade"].cat.set_categories(["very bad", "bad", "medium",
    .....:                                               "good", "very good"])
    .....: 
@@ -1060,8 +1206,11 @@ Out[132]:
 5     very bad
 Name: grade, dtype: category
 Categories (5, object): [very bad, bad, medium, good, very good]
+```
+
 Sorting is per order in the categories, not lexical order.
 
+``` python
 In [133]: df.sort_values(by="grade")
 Out[133]: 
    id raw_grade      grade
@@ -1071,8 +1220,11 @@ Out[133]:
 0   1         a  very good
 3   4         a  very good
 4   5         a  very good
+```
+
 Grouping by a categorical column also shows empty categories.
 
+``` python
 In [134]: df.groupby("grade").size()
 Out[134]: 
 grade
@@ -1082,9 +1234,13 @@ medium       0
 good         2
 very good    3
 dtype: int64
-Plotting
-See the Plotting docs.
+```
 
+## Plotting
+
+See the [Plotting](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#visualization) docs.
+
+``` python
 In [135]: ts = pd.Series(np.random.randn(1000),
    .....:                index=pd.date_range('1/1/2000', periods=1000))
    .....: 
@@ -1093,9 +1249,13 @@ In [136]: ts = ts.cumsum()
 
 In [137]: ts.plot()
 Out[137]: <matplotlib.axes._subplots.AxesSubplot at 0x7f2b5771ac88>
-../_images/series_plot_basic.png
-On a DataFrame, the plot() method is a convenience to plot all of the columns with labels:
+```
 
+![plotting](/static/images/series_plot_basic.png)
+
+On a DataFrame, the [plot()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html#pandas.DataFrame.plot) method is a convenience to plot all of the columns with labels:
+
+``` python
 In [138]: df = pd.DataFrame(np.random.randn(1000, 4), index=ts.index,
    .....:                   columns=['A', 'B', 'C', 'D'])
    .....: 
@@ -1110,14 +1270,23 @@ Out[141]: <matplotlib.axes._subplots.AxesSubplot at 0x7f2b53a2d7f0>
 
 In [142]: plt.legend(loc='best')
 Out[142]: <matplotlib.legend.Legend at 0x7f2b539728d0>
-../_images/frame_plot_basic.png
-Getting Data In/Out
-CSV
-Writing to a csv file.
+```
 
+![plotting](/static/images/frame_plot_basic.png)
+
+## Getting Data In/Out
+
+### CSV
+
+[Writing to a csv file](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-store-in-csv).
+
+``` python
 In [143]: df.to_csv('foo.csv')
+```
+
 Reading from a csv file.
 
+``` python
 In [144]: pd.read_csv('foo.csv')
 Out[144]: 
      Unnamed: 0          A          B         C          D
@@ -1138,14 +1307,21 @@ Out[144]:
 999  2002-09-26 -11.856774 -10.671012 -3.216025  29.369368
 
 [1000 rows x 5 columns]
-HDF5
-Reading and writing to HDFStores.
+```
+
+### HDF5
+
+Reading and writing to [HDFStores](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-hdf5).
 
 Writing to a HDF5 Store.
 
+``` python
 In [145]: df.to_hdf('foo.h5', 'df')
+```
+
 Reading from a HDF5 Store.
 
+``` python
 In [146]: pd.read_hdf('foo.h5', 'df')
 Out[146]: 
                     A          B         C          D
@@ -1166,14 +1342,21 @@ Out[146]:
 2002-09-26 -11.856774 -10.671012 -3.216025  29.369368
 
 [1000 rows x 4 columns]
-Excel
-Reading and writing to MS Excel.
+```
+
+### Excel
+
+Reading and writing to [MS Excel](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-excel).
 
 Writing to an excel file.
 
+``` python
 In [147]: df.to_excel('foo.xlsx', sheet_name='Sheet1')
+```
+
 Reading from an excel file.
 
+``` python
 In [148]: pd.read_excel('foo.xlsx', 'Sheet1', index_col=None, na_values=['NA'])
 Out[148]: 
     Unnamed: 0          A          B         C          D
@@ -1194,14 +1377,20 @@ Out[148]:
 999 2002-09-26 -11.856774 -10.671012 -3.216025  29.369368
 
 [1000 rows x 5 columns]
-Gotchas
+```
+
+## Gotchas
+
 If you are attempting to perform an operation you might see an exception like:
 
+``` python
 >>> if pd.Series([False, True, False]):
 ...     print("I was true")
 Traceback
     ...
 ValueError: The truth value of an array is ambiguous. Use a.empty, a.any() or a.all().
-See Comparisons for an explanation and what to do.
+```
 
-See Gotchas as well.
+See [Comparisons](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-compare) for an explanation and what to do.
+
+See [Gotchas](https://pandas.pydata.org/pandas-docs/stable/user_guide/gotchas.html#gotchas) as well.

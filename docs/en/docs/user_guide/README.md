@@ -2,6 +2,202 @@
 
 The User Guide covers all of pandas by topic area. Each of the subsections introduces a topic (such as “working with missing data”), and discusses how pandas approaches the problem, with many examples throughout.
 
-Users brand-new to pandas should start with 10 Minutes to pandas.
+Users brand-new to pandas should start with [10 Minutes to pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html#min).
 
-Further information on any specific method can be obtained in the API Reference.
+Further information on any specific method can be obtained in the [API Reference](https://pandas.pydata.org/pandas-docs/stable/reference/index.html#api).
+
+- IO Tools (Text, CSV, HDF5, …)
+  - CSV & Text files
+  - JSON
+  - HTML
+  - Excel files
+  - Clipboard
+  - Pickling
+  - msgpack
+  - HDF5 (PyTables)
+  - Feather
+  - Parquet
+  - SQL Queries
+  - Google BigQuery
+  - Stata Format
+  - SAS Formats
+  - Other file formats
+  - Performance Considerations
+- Indexing and Selecting Data
+  - Different Choices for Indexing
+  - Basics
+  - Attribute Access
+  - Slicing ranges
+  - Selection By Label
+  - Selection By Position
+  - Selection By Callable
+  - IX Indexer is Deprecated
+  - Indexing with list with missing labels is Deprecated
+  - Selecting Random Samples
+  - Setting With Enlargement
+  - Fast scalar value getting and setting
+  - Boolean indexing
+  - Indexing with isin
+  - The where() Method and Masking
+  - The query() Method
+  - Duplicate Data
+  - Dictionary-like get() method
+  - The lookup() Method
+  - Index objects
+  - Set / Reset Index
+  - Returning a view versus a copy
+- MultiIndex / Advanced Indexing
+  - Hierarchical indexing (MultiIndex)
+  - Advanced indexing with hierarchical index
+  - Sorting a MultiIndex
+  - Take Methods
+  - Index Types
+  - Miscellaneous indexing FAQ
+- Merge, join, and concatenate
+  - Concatenating objects
+  - Database-style DataFrame or named Series joining/merging
+  - Timeseries friendly merging
+- Reshaping and Pivot Tables
+  - Reshaping by pivoting DataFrame objects
+  - Reshaping by stacking and unstacking
+  - Reshaping by Melt
+  - Combining with stats and GroupBy
+  - Pivot tables
+  - Cross tabulations
+  - Tiling
+  - Computing indicator / dummy variables
+  - Factorizing values
+  - Examples
+- Working with Text Data
+  - Splitting and Replacing Strings
+  - Concatenation
+  - Indexing with .str
+  - Extracting Substrings
+  - Testing for Strings that Match or Contain a Pattern
+  - Creating Indicator Variables
+  - Method Summary
+- Working with missing data
+  - Values considered “missing”
+  - Sum/Prod of Empties/Nans
+  - NA values in GroupBy
+  - Filling missing values: fillna
+  - Filling with a PandasObject
+  - Dropping axis labels with missing data: dropna
+  - Interpolation
+  - Replacing Generic Values
+  - String/Regular Expression Replacement
+  - Numeric Replacement
+- Categorical Data
+  - Object Creation
+  - CategoricalDtype
+  - Description
+  - Working with categories
+  - Sorting and Order
+  - Comparisons
+  - Operations
+  - Data munging
+  - Getting Data In/Out
+  - Missing Data
+  - Differences to R’s factor
+  - Gotchas
+- Nullable Integer Data Type
+- Visualization
+  - Basic Plotting: plot
+  - Other Plots
+  - Plotting with Missing Data
+  - Plotting Tools
+  - Plot Formatting
+  - Plotting directly with matplotlib
+  - Trellis plotting interface
+- Computational tools
+  - Statistical Functions
+  - Window Functions
+  - Aggregation
+  - Expanding Windows
+  - Exponentially Weighted Windows
+- Group By: split-apply-combine
+  - Splitting an object into groups
+  - Iterating through groups
+  - Selecting a group
+  - Aggregation
+  - Transformation
+  - Filtration
+  - Dispatching to instance methods
+  - Flexible apply
+  - Other useful features
+  - Examples
+- Time Series / Date functionality
+  - Overview
+  - Timestamps vs. Time Spans
+  - Converting to Timestamps
+  - Generating Ranges of Timestamps
+  - Timestamp Limitations
+  - Indexing
+  - Iterating through groups
+  - Time/Date Components
+  - DateOffset Objects
+  - Time Series-Related Instance Methods
+  - Resampling
+  - Time Span Representation
+  - Converting Between Representations
+  - Representing Out-of-Bounds Spans
+  - Time Zone Handling
+- Time Deltas
+  - Parsing
+  - Operations
+  - Reductions
+  - Frequency Conversion
+  - Attributes
+  - TimedeltaIndex
+  - Resampling
+- Styling
+  - Building Styles
+  - Finer Control: Slicing
+  - Finer Control: Display Values
+  - Builtin Styles
+  - Sharing Styles
+  - Other Options
+  - Fun stuff
+  - Export to Excel
+  - Extensibility
+- Options and Settings
+  - Overview
+  - Getting and Setting Options
+  - Setting Startup Options in python/ipython Environment
+  - Frequently Used Options
+  - Available Options
+  - Number Formatting
+  - Unicode Formatting
+  - Table Schema Display
+- Enhancing Performance
+  - Cython (Writing C extensions for pandas)
+  - Using Numba
+  - Expression Evaluation via eval()
+- Sparse data structures
+  - Sparse Accessor
+  - SparseArray
+  - SparseIndex objects
+  - Sparse Dtypes
+  - Sparse Calculation
+  - Interaction with scipy.sparse
+- Frequently Asked Questions (FAQ)
+  - DataFrame memory usage
+  - Using If/Truth Statements with pandas
+  - NaN, Integer NA values and NA type promotions
+  - Differences with NumPy
+  - Thread-safety
+  - Byte-Ordering Issues
+- Cookbook
+  - Idioms
+  - Selection
+  - MultiIndexing
+  - Missing Data
+  - Grouping
+  - Timeseries
+  - Merge
+  - Plotting
+  - Data In/Out
+  - Computation
+  - Timedeltas
+  - Aliasing Axis Names
+  - Creating Example Data
