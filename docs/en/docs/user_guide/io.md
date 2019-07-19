@@ -145,67 +145,89 @@ The workhorse function for reading text files (a.k.a. flat files) is [read_csv()
     0    a    b     2
     ```
 
-- skipfooter : int, default 0
-Number of lines at bottom of file to skip (unsupported with engine=’c’).
-nrows : int, default None
-Number of rows of file to read. Useful for reading pieces of large files.
-low_memory : boolean, default True
-Internally process the file in chunks, resulting in lower memory use while parsing, but possibly mixed type inference. To ensure no mixed types either set False, or specify the type with the dtype parameter. Note that the entire file is read into a single DataFrame regardless, use the chunksize or iterator parameter to return the data in chunks. (Only valid with C parser)
-memory_map : boolean, default False
-If a filepath is provided for filepath_or_buffer, map the file object directly onto memory and access the data directly from there. Using this option can improve performance because there is no longer any I/O overhead.
-NA and Missing Data Handling
-na_values : scalar, str, list-like, or dict, default None
-Additional strings to recognize as NA/NaN. If dict passed, specific per-column NA values. See na values const below for a list of the values interpreted as NaN by default.
-keep_default_na : boolean, default True
-Whether or not to include the default NaN values when parsing the data. Depending on whether na_values is passed in, the behavior is as follows:
+- skipfooter : *int, default 0*
+    - Number of lines at bottom of file to skip (unsupported with engine=’c’).
 
-If keep_default_na is True, and na_values are specified, na_values is appended to the default NaN values used for parsing.
-If keep_default_na is True, and na_values are not specified, only the default NaN values are used for parsing.
-If keep_default_na is False, and na_values are specified, only the NaN values specified na_values are used for parsing.
-If keep_default_na is False, and na_values are not specified, no strings will be parsed as NaN.
-Note that if na_filter is passed in as False, the keep_default_na and na_values parameters will be ignored.
+- nrows : *int, default None*
+  - Number of rows of file to read. Useful for reading pieces of large files.
 
-na_filter : boolean, default True
-Detect missing value markers (empty strings and the value of na_values). In data without any NAs, passing na_filter=False can improve the performance of reading a large file.
-verbose : boolean, default False
-Indicate number of NA values placed in non-numeric columns.
-skip_blank_lines : boolean, default True
-If True, skip over blank lines rather than interpreting as NaN values.
-Datetime Handling
-parse_dates : boolean or list of ints or names or list of lists or dict, default False.
-If True -> try parsing the index.
-If [1, 2, 3] -> try parsing columns 1, 2, 3 each as a separate date column.
-If [[1, 3]] -> combine columns 1 and 3 and parse as a single date column.
-If {'foo': [1, 3]} -> parse columns 1, 3 as date and call result ‘foo’. A fast-path exists for iso8601-formatted dates.
-infer_datetime_format : boolean, default False
-If True and parse_dates is enabled for a column, attempt to infer the datetime format to speed up the processing.
-keep_date_col : boolean, default False
-If True and parse_dates specifies combining multiple columns then keep the original columns.
-date_parser : function, default None
-Function to use for converting a sequence of string columns to an array of datetime instances. The default uses dateutil.parser.parser to do the conversion. Pandas will try to call date_parser in three different ways, advancing to the next if an exception occurs: 1) Pass one or more arrays (as defined by parse_dates) as arguments; 2) concatenate (row-wise) the string values from the columns defined by parse_dates into a single array and pass that; and 3) call date_parser once for each row using one or more strings (corresponding to the columns defined by parse_dates) as arguments.
-dayfirst : boolean, default False
-DD/MM format dates, international and European format.
-Iteration
-iterator : boolean, default False
-Return TextFileReader object for iteration or getting chunks with get_chunk().
-chunksize : int, default None
-Return TextFileReader object for iteration. See iterating and chunking below.
-Quoting, Compression, and File Format
-compression : {'infer', 'gzip', 'bz2', 'zip', 'xz', None}, default 'infer'
-For on-the-fly decompression of on-disk data. If ‘infer’, then use gzip, bz2, zip, or xz if filepath_or_buffer is a string ending in ‘.gz’, ‘.bz2’, ‘.zip’, or ‘.xz’, respectively, and no decompression otherwise. If using ‘zip’, the ZIP file must contain only one data file to be read in. Set to None for no decompression.
+- low_memory : *boolean, default ``True``*
+  - Internally process the file in chunks, resulting in lower memory use while parsing, but possibly mixed type inference. To ensure no mixed types either set ``False``, or specify the type with the ``dtype`` parameter. Note that the entire file is read into a single ``DataFrame`` regardless, use the ``chunksize`` or ``iterator`` parameter to return the data in chunks. (Only valid with C parser)
 
-New in version 0.18.1: support for ‘zip’ and ‘xz’ compression.
+- memory_map : *boolean, default False*
+  - If a filepath is provided for ``filepath_or_buffer``, map the file object directly onto memory and access the data directly from there. Using this option can improve performance because there is no longer any I/O overhead.
 
-Changed in version 0.24.0: ‘infer’ option added and set to default.
+#### NA and Missing Data Handling
 
-thousands : str, default None
-Thousands separator.
-decimal : str, default '.'
-Character to recognize as decimal point. E.g. use ',' for European data.
-float_precision : string, default None
-Specifies which converter the C engine should use for floating-point values. The options are None for the ordinary converter, high for the high-precision converter, and round_trip for the round-trip converter.
-lineterminator : str (length 1), default None
-Character to break file into lines. Only valid with C parser.
+- na_values : *scalar, str, list-like, or dict, default ``None``*
+    - Additional strings to recognize as NA/NaN. If dict passed, specific per-column NA values. See [na values const](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-navaluesconst) below for a list of the values interpreted as NaN by default.
+
+- keep_default_na : *boolean, default ``True``*
+    - Whether or not to include the default NaN values when parsing the data. Depending on whether na_values is passed in, the behavior is as follows:
+      - If *keep_default_na* is ``True``, and na_values are specified, na_values is appended to the default NaN values used for parsing.
+      - If *keep_default_na* is ``True``, and na_values are not specified, only the default NaN values are used for parsing.
+      - If *keep_default_na* is ``False``, and na_values are specified, only the NaN values specified na_values are used for parsing.
+      - If *keep_default_na* is ``False``, and na_values are not specified, no strings will be parsed as NaN.
+
+    Note that if *na_filter* is passed in as ``False``, the *keep_default_na* and *na_values* parameters will be ignored.
+
+- na_filter : *boolean, default ``True``*
+    - Detect missing value markers (empty strings and the value of na_values). In data without any NAs, passing ``na_filter=False`` can improve the performance of reading a large file.
+
+- verbose : *boolean, default ``False``*
+    - Indicate number of NA values placed in non-numeric columns.
+
+- skip_blank_lines : *boolean, default ``True``*
+  - If ``True``, skip over blank lines rather than interpreting as NaN values.
+
+#### Datetime Handling
+
+- parse_dates : *boolean or list of ints or names or list of lists or dict, default ``False``.*
+    - If ``True`` -> try parsing the index.
+    - If ``[1, 2, 3]`` -> try parsing columns 1, 2, 3 each as a separate date column.
+    - If ``[[1, 3]]`` -> combine columns 1 and 3 and parse as a single date column.
+    - If ``{'foo': [1, 3]}`` -> parse columns 1, 3 as date and call result ‘foo’. A fast-path exists for iso8601-formatted dates.
+
+- infer_datetime_format : *boolean, default ``False``*
+    - If ``True`` and parse_dates is enabled for a column, attempt to infer the datetime format to speed up the processing.
+
+- keep_date_col : *boolean, default ``False``*
+    - If ``True`` and parse_dates specifies combining multiple columns then keep the original columns.
+
+- date_parser : *function, default ``None``*
+    - Function to use for converting a sequence of string columns to an array of datetime instances. The default uses ``dateutil.parser.parser`` to do the conversion. Pandas will try to call date_parser in three different ways, advancing to the next if an exception occurs: 1) Pass one or more arrays (as defined by parse_dates) as arguments; 2) concatenate (row-wise) the string values from the columns defined by parse_dates into a single array and pass that; and 3) call date_parser once for each row using one or more strings (corresponding to the columns defined by parse_dates) as arguments.
+
+- dayfirst : *``boolean``, default ``False``*
+    - DD/MM format dates, international and European format.
+
+#### Iteration
+
+- iterator : *boolean, default ``False``*
+    - Return *TextFileReader* object for iteration or getting chunks with ``get_chunk()``.
+- chunksize : int, default None
+    - Return *TextFileReader* object for iteration. See [iterating and chunking](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-chunking) below.
+
+#### Quoting, Compression, and File Format
+
+- compression : *{'infer', 'gzip', 'bz2', 'zip', 'xz', None}*, default *'infer'*
+    - For on-the-fly decompression of on-disk data. If ‘infer’, then use gzip, bz2, zip, or xz if filepath_or_buffer is a string ending in ‘.gz’, ‘.bz2’, ‘.zip’, or ‘.xz’, respectively, and no decompression otherwise. If using ‘zip’, the ZIP file must contain only one data file to be read in. Set to None for no decompression.
+
+    *New in version 0.18.1*: support for ‘zip’ and ‘xz’ compression.
+
+    *Changed in version 0.24.0*: ‘infer’ option added and set to default.
+
+- thousands : *str, default ``None``*
+    - Thousands separator.
+
+- decimal : *str, default '.'*
+    - Character to recognize as decimal point. E.g. use ',' for European data.
+
+- float_precision : *string, default None*
+    - Specifies which converter the C engine should use for floating-point values. The options are ``None`` for the ordinary converter, ``high`` for the high-precision converter, and ``round_trip`` for the round-trip converter.
+
+- lineterminator : *str (length 1), default ``None``*
+    - Character to break file into lines. Only valid with C parser.
+
 quotechar : str (length 1)
 The character used to denote the start and end of a quoted item. Quoted items can include the delimiter and it will be ignored.
 quoting : int or csv.QUOTE_* instance, default 0
@@ -1613,7 +1635,8 @@ header default True, will print the column labels
 justify default left, will print column headers left- or right-justified
 The Series object also has a to_string method, but with only the buf, na_rep, float_format arguments. There is also a length argument which, if set to True, will additionally output the length of the Series.
 
-JSON
+## JSON
+
 Read and write JSON format files and strings.
 
 Writing JSON
@@ -2234,8 +2257,11 @@ In [290]: new_df = pd.read_json('test.json', orient='table')
 
 In [291]: print(new_df.index.name)
 None
-HTML
-Reading HTML Content
+
+## HTML
+
+### Reading HTML Content
+
 Warning We highly encourage you to read the HTML Table Parsing gotchas below regarding the issues surrounding the BeautifulSoup4/html5lib/lxml parsers.
 The top-level read_html() function can accept an HTML string/file/URL and will parse HTML tables into list of pandas DataFrames. Let’s look at a few examples.
 
@@ -2664,14 +2690,20 @@ html5lib is pure Python and requires no additional build steps beyond its own in
 Drawbacks
 
 The biggest drawback to using html5lib is that it is slow as molasses. However consider the fact that many tables on the web are not big enough for the parsing algorithm runtime to matter. It is more likely that the bottleneck will be in the process of reading the raw text from the URL over the web, i.e., IO (input-output). For very large tables, this might not be true.
-Excel files
+
+## Excel files
+
 The read_excel() method can read Excel 2003 (.xls) and Excel 2007+ (.xlsx) files using the xlrd Python module. The to_excel() instance method is used for saving a DataFrame to Excel. Generally the semantics are similar to working with csv data. See the cookbook for some advanced strategies.
 
-Reading Excel Files
+### Reading Excel Files
+
 In the most basic use-case, read_excel takes a path to an Excel file, and the sheet_name indicating which sheet to parse.
 
+``` python
 # Returns a DataFrame
 pd.read_excel('path_to_file.xls', sheet_name='Sheet1')
+```
+
 ExcelFile class
 To facilitate working with multiple sheets from the same file, the ExcelFile class can be used to wrap the file and can be passed into read_excel There will be a performance benefit for reading multiple sheets as the file is read into memory only once.
 
@@ -2905,7 +2937,9 @@ The look and feel of Excel worksheets created from pandas can be modified using 
 
 float_format : Format string for floating point numbers (default None).
 freeze_panes : A tuple of two integers representing the bottommost row and rightmost column to freeze. Each of these parameters is one-based, so (1, 1) will freeze the first row and first column (default None).
-Clipboard
+
+## Clipboard
+
 A handy way to grab data is to use the read_clipboard() method, which takes the contents of the clipboard buffer and passes them to the read_csv method. For instance, you can copy the following text to the clipboard (CTRL-C on many operating systems):
 
   A B C
@@ -2994,7 +3028,9 @@ PyperclipException:
 We can see that we got the same content back, which we had earlier written to the clipboard.
 
 Note You may need to install xclip or xsel (with gtk, PyQt5, PyQt4 or qtpy) on Linux to use these methods.
-Pickling
+
+## Pickling
+
 All pandas objects are equipped with to_pickle methods which use Python’s cPickle module to save data structures to disk using the pickle format.
 
 In [329]: df
@@ -3157,7 +3193,9 @@ Out[345]:
 998   -0.937512
 999    0.632369
 Name: A, Length: 1000, dtype: float64
-msgpack
+
+## msgpack
+
 pandas supports the msgpack format for object serialization. This is a lightweight portable binary format, similar to binary JSON, that is highly space efficient, and provides good performance both on the writing (serialization), and reading (deserialization).
 
 Warning This is a very new feature of pandas. We intend to provide certain optimizations in the io of the msgpack data. Since this is marked as an EXPERIMENTAL LIBRARY, the storage format may not be stable until a future release.
@@ -3275,7 +3313,9 @@ Out[358]:
  2013-01-04    0.707267
  2013-01-05    0.261656
  Freq: D, dtype: float64]
-HDF5 (PyTables)
+
+## HDF5 (PyTables)
+
 HDFStore is a dict-like object which reads and writes pandas using the high performance HDF5 format using the excellent PyTables library. See the cookbook for some advanced strategies
 
 Warning pandas requires PyTables >= 3.0.0. There is a indexing bug in PyTables < 3.2 which may appear when querying stores using an index. If you see a subset of results being returned, upgrade to PyTables >= 3.2. Stores created previously will need to be rewritten using the updated version.
@@ -4538,7 +4578,9 @@ You can pass ``chunksize=<int>`` to append, specifying the write chunksize (defa
 You can pass ``expectedrows=<int>`` to the first append, to set the TOTAL number of expected rows that PyTables will expected. This will optimize read/write performance.
 Duplicate rows can be written to tables, but are filtered out in selection (with the last items being selected; thus a table is unique on major, minor pairs)
 A PerformanceWarning will be raised if you are attempting to store types that will be pickled by PyTables (rather than stored as endemic types). See Here for more information and some solutions.
-Feather
+
+## Feather
+
 New in version 0.20.0.
 
 Feather provides binary columnar serialization for data frames. It is designed to make reading and writing data frames efficient, and to make sharing data across data analysis languages easy.
@@ -4610,7 +4652,9 @@ g                datetime64[ns]
 h    datetime64[ns, US/Eastern]
 i                datetime64[ns]
 dtype: object
-Parquet
+
+## Parquet
+
 New in version 0.21.0.
 
 Apache Parquet provides a partitioned binary columnar serialization for data frames. It is designed to make reading and writing data frames efficient, and to make sharing data across data analysis languages easy. Parquet can use a variety of compression techniques to shrink the file size as much as possible while still maintaining good read performance.
@@ -4723,7 +4767,9 @@ test
 └── a=1
     ├── e6ab24a4f45147b49b54a662f0c412a3.parquet
     └── ...
-SQL Queries
+
+## SQL Queries
+
 The pandas.io.sql module provides a collection of query wrappers to both facilitate data retrieval and to reduce dependency on DB-specific API. Database abstraction is provided by SQLAlchemy if installed. In addition you will need a driver library for your database. Examples of such drivers are psycopg2 for PostgreSQL or pymysql for MySQL. For SQLite this is included in Python’s standard library by default. You can find an overview of supported drivers for each SQL dialect in the SQLAlchemy docs.
 
 If SQLAlchemy is not installed, a fallback is only provided for sqlite (and for mysql for backwards compatibility, but this is deprecated and will be removed in a future version). This mode requires a Python database adapter which respect the Python DB-API.
@@ -4999,7 +5045,9 @@ And then issue the following queries:
 
 data.to_sql('data', con)
 pd.read_sql_query("SELECT * FROM data", con)
-Google BigQuery
+
+## Google BigQuery
+
 Warning Starting in 0.20.0, pandas has split off Google BigQuery support into the separate package pandas-gbq. You can pip install pandas-gbq to get it.
 The pandas-gbq package provides functionality to read/write from Google BigQuery.
 
@@ -5007,8 +5055,10 @@ pandas integrates with this external package. if pandas-gbq is installed, you ca
 
 Full documentation can be found here.
 
-Stata Format
-Writing to Stata format
+## Stata Format
+
+### Writing to Stata format
+
 The method to_stata() will write a DataFrame into a .dta file. The format version of this file is always 115 (Stata 12).
 
 In [567]: df = pd.DataFrame(np.random.randn(10, 2), columns=list('AB'))
@@ -5071,7 +5121,9 @@ Labeled data can similarly be imported from Stata data files as Categorical vari
 
 Note When importing categorical data, the values of the variables in the Stata data file are not preserved since Categorical variables always use integer data types between -1 and n-1 where n is the number of categories. If the original values in the Stata data file are required, these can be imported by setting convert_categoricals=False, which will import original data (but not the variable labels). The original values can be matched to the imported categorical data since there is a simple mapping between the original Stata data values and the category codes of imported Categorical variables: missing values are assigned code -1, and the smallest original value is assigned 0, the second smallest is assigned 1 and so on until the largest original value is assigned the code n-1.
 Note Stata supports partially labeled series. These series have value labels for some but not all data values. Importing a partially labeled series will produce a Categorical with string categories for the values that are labeled and numeric categories for values with no label.
-SAS Formats
+
+## SAS Formats
+
 The top-level function read_sas() can read (but not write) SAS xport (.XPT) and (since v0.18.0) SAS7BDAT (.sas7bdat) format files.
 
 SAS files only contain two value types: ASCII text and floating point values (usually 8 bytes but sometimes truncated). For xport files, there is no automatic type conversion to integers, dates, or categoricals. For SAS7BDAT files, the format codes may allow date variables to be automatically converted to dates. By default the whole file is read and returned as a DataFrame.
@@ -5093,15 +5145,18 @@ The specification for the xport file format is available from the SAS web site.
 
 No official documentation is available for the SAS7BDAT format.
 
-Other file formats
+## Other file formats
+
 pandas itself only supports IO with a limited set of file formats that map cleanly to its tabular data model. For reading and writing other file formats into and from pandas, we recommend these packages from the broader community.
 
 netCDF
 xarray provides data structures inspired by the pandas DataFrame for working with multi-dimensional datasets, with a focus on the netCDF file format and easy conversion to and from pandas.
 
-Performance Considerations
+## Performance Considerations
+
 This is an informal comparison of various IO methods, using pandas 0.20.3. Timings are machine dependent and small differences should be ignored.
 
+``` python
 In [1]: sz = 1000000
 In [2]: df = pd.DataFrame({'A': np.random.randn(sz), 'B': [1] * sz})
 
@@ -5113,8 +5168,11 @@ A    1000000 non-null float64
 B    1000000 non-null int64
 dtypes: float64(1), int64(1)
 memory usage: 15.3 MB
+```
+
 Given the next test set:
 
+``` python
 from numpy.random import randn
 
 sz = 1000000
@@ -5198,6 +5256,8 @@ def test_pickle_write_compress(df):
 
 def test_pickle_read_compress():
     pd.read_pickle('test.pkl.compress', compression='xz')
+```
+
 When writing, the top-three functions in terms of speed are are test_pickle_write, test_feather_write and test_hdf_fixed_write_compress.
 
 In [14]: %timeit test_sql_write(df)
