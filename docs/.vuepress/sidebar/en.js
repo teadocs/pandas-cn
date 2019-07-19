@@ -35,7 +35,24 @@ module.exports = function () {
       sidebarDepth: 1,
       children: [
         ['/en/docs/user_guide/', 'Index'],
-        ['/en/docs/user_guide/io', 'IO Tools (Text, CSV, HDF5, …)']
+        ['/en/docs/user_guide/io', 'IO Tools (Text, CSV, HDF5, …)'],
+        ['/en/docs/user_guide/indexing', 'Indexing and Selecting Data'],
+        ['/en/docs/user_guide/merging', 'Merge, join, and concatenate'],
+        ['/en/docs/user_guide/reshaping', 'Reshaping and pivot tables'],
+        ['/en/docs/user_guide/text', 'Working with text data'],
+        ['/en/docs/user_guide/categorical', 'Categorical data'],
+        ['/en/docs/user_guide/integer_na', 'Nullable integer data type'],
+        ['/en/docs/user_guide/visualization', 'Visualization'],
+        ['/en/docs/user_guide/computation', 'Computational tools'],
+        ['/en/docs/user_guide/groupby', 'Group By: split-apply-combine'],
+        ['/en/docs/user_guide/timeseries', 'Time series / date functionality'],
+        ['/en/docs/user_guide/timedeltas', 'Time deltas'],
+        ['/en/docs/user_guide/style', 'Styling'],
+        ['/en/docs/user_guide/options', 'Options and settings'],
+        ['/en/docs/user_guide/enhancingperf', 'Enhancing performance'],
+        ['/en/docs/user_guide/sparse', 'Sparse data structures'],
+        ['/en/docs/user_guide/gotchas', 'Frequently Asked Questions (FAQ)'],
+        ['/en/docs/user_guide/cookbook', 'Cookbook']
       ]
     },
     {

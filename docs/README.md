@@ -44,3 +44,9 @@ Index: []
 ::: warning 提醒
 本网站推荐使用Python3.x及以上版本。
 :::
+
+### 站点相关
+
+* [粤ICP备16025085号-8](http://www.beian.miit.gov.cn/)
+* [Logo 捐赠名单](/logo/)
+

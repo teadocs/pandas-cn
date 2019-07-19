@@ -13,6 +13,8 @@ module.exports = ctx => ({
     }
   },
   head: [
+    ['script', {src: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML', async: 'async'}],
+    ['script', {innerText: `MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})`}],
     ['link', { rel: 'icon', href: `/logo.png` }],
     ['link', { rel: 'manifest', href: '/manifest.json' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
@@ -71,5 +73,7 @@ module.exports = ctx => ({
   extraWatchFiles: [
     '.vuepress/nav/en.js',
     '.vuepress/nav/zh.js',
+    '.vuepress/sidebar/en.js',
+    '.vuepress/sidebar/zh.js'
   ]
 })

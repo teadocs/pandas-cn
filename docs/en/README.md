@@ -44,3 +44,7 @@ Index: []
 ::: warning NOTE
 This site is recommended to use Python 3.x and above.
 :::
+
+### Publicity
+
+* [Logo donation list](/en/logo/)
