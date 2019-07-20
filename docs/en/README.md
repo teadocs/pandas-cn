@@ -42,7 +42,7 @@ Index: []
 ```
 
 ::: warning NOTE
-This site is recommended to use Python 3.x and above.
+This site is recommended to use [Python 3.x](https://www.python.org/downloads/) and above.
 :::
 
 ### Publicity

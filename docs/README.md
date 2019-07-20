@@ -42,7 +42,7 @@ Index: []
 ```
 
 ::: warning 提醒
-本网站推荐使用Python3.x及以上版本。
+本网站推荐使用[Python3.x](https://www.python.org/downloads/)及以上版本。
 :::
 
 ### 站点相关

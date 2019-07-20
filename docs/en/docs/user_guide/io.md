@@ -228,34 +228,49 @@ The workhorse function for reading text files (a.k.a. flat files) is [read_csv()
 - lineterminator : *str (length 1), default ``None``*
     - Character to break file into lines. Only valid with C parser.
 
-quotechar : str (length 1)
-The character used to denote the start and end of a quoted item. Quoted items can include the delimiter and it will be ignored.
-quoting : int or csv.QUOTE_* instance, default 0
-Control field quoting behavior per csv.QUOTE_* constants. Use one of QUOTE_MINIMAL (0), QUOTE_ALL (1), QUOTE_NONNUMERIC (2) or QUOTE_NONE (3).
-doublequote : boolean, default True
-When quotechar is specified and quoting is not QUOTE_NONE, indicate whether or not to interpret two consecutive quotechar elements inside a field as a single quotechar element.
-escapechar : str (length 1), default None
-One-character string used to escape delimiter when quoting is QUOTE_NONE.
-comment : str, default None
-Indicates remainder of line should not be parsed. If found at the beginning of a line, the line will be ignored altogether. This parameter must be a single character. Like empty lines (as long as skip_blank_lines=True), fully commented lines are ignored by the parameter header but not by skiprows. For example, if comment='#', parsing ‘#empty\na,b,c\n1,2,3’ with header=0 will result in ‘a,b,c’ being treated as the header.
-encoding : str, default None
-Encoding to use for UTF when reading/writing (e.g. 'utf-8'). List of Python standard encodings.
-dialect : str or csv.Dialect instance, default None
-If provided, this parameter will override values (default or not) for the following parameters: delimiter, doublequote, escapechar, skipinitialspace, quotechar, and quoting. If it is necessary to override values, a ParserWarning will be issued. See csv.Dialect documentation for more details.
-tupleize_cols : boolean, default False
-Deprecated since version 0.21.0.
-This argument will be removed and will always convert to MultiIndex
+- quotechar : *str (length 1)*
+    - The character used to denote the start and end of a quoted item. Quoted items can include the delimiter and it will be ignored.
 
-Leave a list of tuples on columns as is (default is to convert to a MultiIndex on the columns).
+- quoting : *int or ``csv.QUOTE_*`` instance, default 0*
+    - Control field quoting behavior per ``csv.QUOTE_*`` constants. Use one of ``QUOTE_MINIMAL`` (0), ``QUOTE_ALL`` (1), ``QUOTE_NONNUMERIC`` (2) or ``QUOTE_NONE`` (3).
 
-Error Handling
-error_bad_lines : boolean, default True
-Lines with too many fields (e.g. a csv line with too many commas) will by default cause an exception to be raised, and no DataFrame will be returned. If False, then these “bad lines” will dropped from the DataFrame that is returned. See bad lines below.
-warn_bad_lines : boolean, default True
-If error_bad_lines is False, and warn_bad_lines is True, a warning for each “bad line” will be output.
-Specifying column data types
-You can indicate the data type for the whole DataFrame or individual columns:
+- doublequote : *boolean, default ``True``*
+    - When ``quotechar`` is specified and ``quoting`` is not ``QUOTE_NONE``, indicate whether or not to interpret two consecutive ``quotechar`` elements inside a field as a single ``quotechar`` element.
 
+- escapechar : *str (length 1), default ``None``*
+    - One-character string used to escape delimiter when quoting is ``QUOTE_NONE``.
+
+- comment : *str, default ``None``*
+    - Indicates remainder of line should not be parsed. If found at the beginning of a line, the line will be ignored altogether. This parameter must be a single character. Like empty lines (as long as ``skip_blank_lines=True``), fully commented lines are ignored by the parameter header but not by skiprows. For example, if ``comment='#'``, parsing ‘#empty\na,b,c\n1,2,3’ with header=0 will result in ‘a,b,c’ being treated as the header.
+
+- encoding : *``str``, default ``None``*
+    - Encoding to use for UTF when reading/writing (e.g. ``'utf-8'``). [List of Python standard encodings](https://docs.python.org/3/library/codecs.html#standard-encodings).
+
+- dialect : *str or [csv.Dialect](https://docs.python.org/3/library/csv.html#csv.Dialect) instance, default ``None``*
+    - If provided, this parameter will override values (default or not) for the following parameters: delimiter, doublequote, escapechar, skipinitialspace, quotechar, and quoting. If it is necessary to override values, a ParserWarning will be issued. See [csv.Dialect](https://docs.python.org/3/library/csv.html#csv.Dialect) documentation for more details.
+
+- tupleize_cols : *boolean, default ``False``*
+    ::: danger 
+    Deprecated since version 0.21.0. 
+    :::
+
+    This argument will be removed and will always convert to MultiIndex
+
+  Leave a list of tuples on columns as is (default is to convert to a MultiIndex on the columns).
+
+#### Error Handling
+
+- error_bad_lines : *boolean, default ``True``*
+    - Lines with too many fields (e.g. a csv line with too many commas) will by default cause an exception to be raised, and no ``DataFrame`` will be returned. If ``False``, then these “bad lines” will dropped from the ``DataFrame`` that is returned. See [bad lines](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-bad-lines) below.
+
+- warn_bad_lines : *boolean, default ``True``*
+    - If error_bad_lines is ``False``, and warn_bad_lines is ``True``, a warning for each “bad line” will be output.
+
+### Specifying column data types
+
+You can indicate the data type for the whole ``DataFrame`` or individual columns:
+
+``` python
 In [8]: data = ('a,b,c,d\n'
    ...:         '1,2,3,4\n'
    ...:         '5,6,7,8\n'
@@ -291,10 +306,13 @@ b     object
 c    float64
 d      Int64
 dtype: object
-Fortunately, pandas offers more than one way to ensure that your column(s) contain only one dtype. If you’re unfamiliar with these concepts, you can see here to learn more about dtypes, and here to learn more about object conversion in pandas.
+```
 
-For instance, you can use the converters argument of read_csv():
+Fortunately, pandas offers more than one way to ensure that your column(s) contain only one dtype. If you’re unfamiliar with these concepts, you can see [here](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes) to learn more about dtypes, and [here](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-object-conversion) to learn more about ``object`` conversion in pandas.
 
+For instance, you can use the ``converters`` argument of [read_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv):
+
+``` python
 In [15]: data = ("col_1\n"
    ....:         "1\n"
    ....:         "2\n"
@@ -316,8 +334,11 @@ In [18]: df['col_1'].apply(type).value_counts()
 Out[18]: 
 <class 'str'>    4
 Name: col_1, dtype: int64
-Or you can use the to_numeric() function to coerce the dtypes after reading in the data,
+```
 
+Or you can use the [to_numeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_numeric.html#pandas.to_numeric) function to coerce the dtypes after reading in the data,
+
+``` python
 In [19]: df2 = pd.read_csv(StringIO(data))
 
 In [20]: df2['col_1'] = pd.to_numeric(df2['col_1'], errors='coerce')
@@ -334,15 +355,21 @@ In [22]: df2['col_1'].apply(type).value_counts()
 Out[22]: 
 <class 'float'>    4
 Name: col_1, dtype: int64
-which will convert all valid parsing to floats, leaving the invalid parsing as NaN.
+```
 
-Ultimately, how you deal with reading in columns containing mixed dtypes depends on your specific needs. In the case above, if you wanted to NaN out the data anomalies, then to_numeric() is probably your best option. However, if you wanted for all the data to be coerced, no matter the type, then using the converters argument of read_csv() would certainly be worth trying.
+which will convert all valid parsing to floats, leaving the invalid parsing as ``NaN``.
 
-New in version 0.20.0: support for the Python parser.
+Ultimately, how you deal with reading in columns containing mixed dtypes depends on your specific needs. In the case above, if you wanted to ``NaN`` out the data anomalies, then [to_numeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_numeric.html#pandas.to_numeric) is probably your best option. However, if you wanted for all the data to be coerced, no matter the type, then using the ``converters`` argument of [read_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv) would certainly be worth trying.
 
-The dtype option is supported by the ‘python’ engine.
+  *New in version 0.20.0: support for the Python parser.*
 
-Note In some cases, reading in abnormal data with columns containing mixed dtypes will result in an inconsistent dataset. If you rely on pandas to infer the dtypes of your columns, the parsing engine will go and infer the dtypes for different chunks of the data, rather than the whole dataset at once. Consequently, you can end up with column(s) with mixed dtypes. For example,
+  The ``dtype`` option is supported by the ‘python’ engine.
+
+::: tip Note
+
+In some cases, reading in abnormal data with columns containing mixed dtypes will result in an inconsistent dataset. If you rely on pandas to infer the dtypes of your columns, the parsing engine will go and infer the dtypes for different chunks of the data, rather than the whole dataset at once. Consequently, you can end up with column(s) with mixed dtypes. For example,
+
+``` python
 In [23]: col_1 = list(range(500000)) + ['a', 'b'] + list(range(500000))
 
 In [24]: df = pd.DataFrame({'col_1': col_1})
@@ -359,13 +386,18 @@ Name: col_1, dtype: int64
 
 In [28]: mixed_df['col_1'].dtype
 Out[28]: dtype('O')
-will result with mixed_df containing an int dtype for certain chunks of the column, and str for others due to the mixed dtypes from the data that was read in. It is important to note that the overall column will be marked with a dtype of object, which is used for columns with mixed dtypes.
+```
 
-Specifying Categorical dtype
-New in version 0.19.0.
+will result with *mixed_df* containing an ``int`` dtype for certain chunks of the column, and ``str`` for others due to the mixed dtypes from the data that was read in. It is important to note that the overall column will be marked with a ``dtype`` of ``object``, which is used for columns with mixed dtypes.
+:::
 
-Categorical columns can be parsed directly by specifying dtype='category' or dtype=CategoricalDtype(categories, ordered).
+### Specifying Categorical dtype
 
+*New in version 0.19.0.*
+
+``Categorical`` columns can be parsed directly by specifying ``dtype='category'`` or ``dtype=CategoricalDtype(categories, ordered)``.
+
+``` python
 In [29]: data = ('col1,col2,col3\n'
    ....:         'a,b,1\n'
    ....:         'a,b,2\n'
@@ -392,18 +424,24 @@ col1    category
 col2    category
 col3    category
 dtype: object
-Individual columns can be parsed as a Categorical using a dict specification:
+```
 
+Individual columns can be parsed as a ``Categorical`` using a dict specification:
+
+``` python
 In [33]: pd.read_csv(StringIO(data), dtype={'col1': 'category'}).dtypes
 Out[33]: 
 col1    category
 col2      object
 col3       int64
 dtype: object
-New in version 0.21.0.
+```
 
-Specifying dtype='cateogry' will result in an unordered Categorical whose categories are the unique values observed in the data. For more control on the categories and order, create a CategoricalDtype ahead of time, and pass that for that column’s dtype.
+*New in version 0.21.0.*
 
+Specifying ``dtype='cateogry'`` will result in an unordered ``Categorical`` whose ``categories`` are the unique values observed in the data. For more control on the categories and order, create a **CategoricalDtype** ahead of time, and pass that for that column’s ``dtype``.
+
+``` python
 In [34]: from pandas.api.types import CategoricalDtype
 
 In [35]: dtype = CategoricalDtype(['d', 'c', 'b', 'a'], ordered=True)
@@ -414,8 +452,11 @@ col1    category
 col2      object
 col3       int64
 dtype: object
-When using dtype=CategoricalDtype, “unexpected” values outside of dtype.categories are treated as missing values.
+```
 
+When using ``dtype=CategoricalDtype``, “unexpected” values outside of ``dtype.categories`` are treated as missing values.
+
+``` python
 In [37]: dtype = CategoricalDtype(['a', 'b', 'd'])  # No 'c'
 
 In [38]: pd.read_csv(StringIO(data), dtype={'col1': dtype}).col1
@@ -425,11 +466,17 @@ Out[38]:
 2    NaN
 Name: col1, dtype: category
 Categories (3, object): [a, b, d]
-This matches the behavior of Categorical.set_categories().
+```
 
-Note With dtype='category', the resulting categories will always be parsed as strings (object dtype). If the categories are numeric they can be converted using the to_numeric() function, or as appropriate, another converter such as to_datetime().
-When dtype is a CategoricalDtype with homogeneous categories ( all numeric, all datetimes, etc.), the conversion is done automatically.
+This matches the behavior of **Categorical.set_categories()**.
 
+::: tip Note
+
+With ``dtype='category'``, the resulting categories will always be parsed as strings (object dtype). If the categories are numeric they can be converted using the [to_numeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_numeric.html#pandas.to_numeric) function, or as appropriate, another converter such as [to_datetime()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html#pandas.to_datetime).
+
+When ``dtype`` is a ``CategoricalDtype`` with homogeneous ``categories`` ( all numeric, all datetimes, etc.), the conversion is done automatically.
+
+``` python
 In [39]: df = pd.read_csv(StringIO(data), dtype='category')
 
 In [40]: df.dtypes
@@ -456,10 +503,17 @@ Out[43]:
 2    3
 Name: col3, dtype: category
 Categories (3, int64): [1, 2, 3]
-Naming and Using Columns
-Handling column names
+```
+
+:::
+
+### Naming and Using Columns
+
+#### Handling column names
+
 A file may or may not have a header row. pandas assumes the first row should be used as the column names:
 
+``` python
 In [44]: data = ('a,b,c\n'
    ....:         '1,2,3\n'
    ....:         '4,5,6\n'
@@ -478,8 +532,11 @@ Out[46]:
 0  1  2  3
 1  4  5  6
 2  7  8  9
-By specifying the names argument in conjunction with header you can indicate other names to use and whether or not to throw away the header row (if any):
+```
 
+By specifying the ``names`` argument in conjunction with ``header`` you can indicate other names to use and whether or not to throw away the header row (if any):
+
+``` python
 In [47]: print(data)
 a,b,c
 1,2,3
@@ -500,8 +557,11 @@ Out[49]:
 1   1   2   3
 2   4   5   6
 3   7   8   9
-If the header is in a row other than the first, pass the row number to header. This will skip the preceding rows:
+```
 
+If the header is in a row other than the first, pass the row number to ``header``. This will skip the preceding rows:
+
+``` python
 In [50]: data = ('skip this skip it\n'
    ....:         'a,b,c\n'
    ....:         '1,2,3\n'
@@ -515,10 +575,19 @@ Out[51]:
 0  1  2  3
 1  4  5  6
 2  7  8  9
-Note Default behavior is to infer the column names: if no names are passed the behavior is identical to header=0 and column names are inferred from the first non-blank line of the file, if column names are passed explicitly then the behavior is identical to header=None.
-Duplicate names parsing
+```
+
+::: tip Note
+
+Default behavior is to infer the column names: if no names are passed the behavior is identical to ``header=0`` and column names are inferred from the first non-blank line of the file, if column names are passed explicitly then the behavior is identical to ``header=None``.
+
+:::
+
+### Duplicate names parsing
+
 If the file or header contains duplicate names, pandas will by default distinguish between them so as to prevent overwriting data:
 
+``` python
 In [52]: data = ('a,b,a\n'
    ....:         '0,1,2\n'
    ....:         '3,4,5')
@@ -529,25 +598,35 @@ Out[53]:
    a  b  a.1
 0  0  1    2
 1  3  4    5
-There is no more duplicate data because mangle_dupe_cols=True by default, which modifies a series of duplicate columns ‘X’, …, ‘X’ to become ‘X’, ‘X.1’, …, ‘X.N’. If mangle_dupe_cols=False, duplicate data can arise:
+```
 
+There is no more duplicate data because ``mangle_dupe_cols=True`` by default, which modifies a series of duplicate columns ‘X’, …, ‘X’ to become ‘X’, ‘X.1’, …, ‘X.N’. If ``mangle_dupe_cols=False``, duplicate data can arise:
+
+``` python
 In [2]: data = 'a,b,a\n0,1,2\n3,4,5'
 In [3]: pd.read_csv(StringIO(data), mangle_dupe_cols=False)
 Out[3]:
    a  b  a
 0  2  1  2
 1  5  4  5
-To prevent users from encountering this problem with duplicate data, a ValueError exception is raised if mangle_dupe_cols != True:
+```
 
+To prevent users from encountering this problem with duplicate data, a ``ValueError`` exception is raised if ``mangle_dupe_cols != True``:
+
+``` python
 In [2]: data = 'a,b,a\n0,1,2\n3,4,5'
 In [3]: pd.read_csv(StringIO(data), mangle_dupe_cols=False)
 ...
 ValueError: Setting mangle_dupe_cols=False is not supported yet
-Filtering columns (usecols)
-The usecols argument allows you to select any subset of the columns in a file, either using the column names, position numbers or a callable:
+```
 
-New in version 0.20.0: support for callable usecols arguments
+#### Filtering columns (``usecols``)
 
+The ``usecols`` argument allows you to select any subset of the columns in a file, either using the column names, position numbers or a callable:
+
+*New in version 0.20.0*: support for callable usecols arguments
+
+``` python
 In [54]: data = 'a,b,c,d\n1,2,3,foo\n4,5,6,bar\n7,8,9,baz'
 
 In [55]: pd.read_csv(StringIO(data))
@@ -577,20 +656,28 @@ Out[58]:
 0  1  3
 1  4  6
 2  7  9
-The usecols argument can also be used to specify which columns not to use in the final result:
+```
 
+The ``usecols`` argument can also be used to specify which columns not to use in the final result:
+
+``` python
 In [59]: pd.read_csv(StringIO(data), usecols=lambda x: x not in ['a', 'c'])
 Out[59]: 
    b    d
 0  2  foo
 1  5  bar
 2  8  baz
+```
+
 In this case, the callable is specifying that we exclude the “a” and “c” columns from the output.
 
-Comments and Empty Lines
-Ignoring line comments and empty lines
-If the comment parameter is specified, then completely commented lines will be ignored. By default, completely blank lines will be ignored as well.
+### Comments and Empty Lines
 
+#### Ignoring line comments and empty lines
+
+If the ``comment`` parameter is specified, then completely commented lines will be ignored. By default, completely blank lines will be ignored as well.
+
+``` python
 In [60]: data = ('\n'
    ....:         'a,b,c\n'
    ....:         '  \n'
@@ -614,8 +701,11 @@ Out[62]:
    a  b  c
 0  1  2  3
 1  4  5  6
-If skip_blank_lines=False, then read_csv will not ignore blank lines:
+```
 
+If ``skip_blank_lines=False``, then ``read_csv`` will not ignore blank lines:
+
+``` python
 In [63]: data = ('a,b,c\n'
    ....:         '\n'
    ....:         '1,2,3\n'
@@ -632,7 +722,13 @@ Out[64]:
 2  NaN  NaN  NaN
 3  NaN  NaN  NaN
 4  4.0  5.0  6.0
-Warning The presence of ignored lines might create ambiguities involving line numbers; the parameter header uses row numbers (ignoring commented/empty lines), while skiprows uses line numbers (including commented/empty lines):
+```
+
+::: danger Warning
+
+The presence of ignored lines might create ambiguities involving line numbers; the parameter header uses row numbers (ignoring commented/empty lines), while ``skiprows`` uses line numbers (including commented/empty lines):
+
+``` python
 In [65]: data = ('#comment\n'
    ....:         'a,b,c\n'
    ....:         'A,B,C\n'
@@ -654,8 +750,13 @@ In [68]: pd.read_csv(StringIO(data), comment='#', skiprows=2)
 Out[68]: 
    a  b  c
 0  1  2  3
-If both header and skiprows are specified, header will be relative to the end of skiprows. For example:
+```
 
+If both ``header`` and ``skiprows`` are specified, ``header`` will be relative to the end of ``skiprows``. For example:
+
+:::
+
+``` python
 In [69]: data = ('# empty\n'
    ....:         '# second empty line\n'
    ....:         '# third emptyline\n'
@@ -682,16 +783,23 @@ Out[71]:
      A    B     C
 0  1.0  2.0   4.0
 1  5.0  NaN  10.0
-Comments
+```
+
+#### Comments
+
 Sometimes comments or meta data may be included in a file:
 
+``` python
 In [72]: print(open('tmp.csv').read())
 ID,level,category
 Patient1,123000,x # really unpleasant
 Patient2,23000,y # wouldn't take his medicine
 Patient3,1234018,z # awesome
+```
+
 By default, the parser includes the comments in the output:
 
+``` python
 In [73]: df = pd.read_csv('tmp.csv')
 
 In [74]: df
@@ -700,8 +808,11 @@ Out[74]:
 0  Patient1   123000           x # really unpleasant
 1  Patient2    23000  y # wouldn't take his medicine
 2  Patient3  1234018                     z # awesome
-We can suppress the comments using the comment keyword:
+```
 
+We can suppress the comments using the ``comment`` keyword:
+
+``` python
 In [75]: df = pd.read_csv('tmp.csv', comment='#')
 
 In [76]: df
@@ -710,9 +821,13 @@ Out[76]:
 0  Patient1   123000       x 
 1  Patient2    23000       y 
 2  Patient3  1234018       z 
-Dealing with Unicode Data
-The encoding argument should be used for encoded unicode data, which will result in byte strings being decoded to unicode in the result:
+```
 
+### Dealing with Unicode Data
+
+The ``encoding`` argument should be used for encoded unicode data, which will result in byte strings being decoded to unicode in the result:
+
+``` python
 In [77]: data = (b'word,length\n'
    ....:         b'Tr\xc3\xa4umen,7\n'
    ....:         b'Gr\xc3\xbc\xc3\x9fe,5')
@@ -730,11 +845,15 @@ Out[80]:
 
 In [81]: df['word'][1]
 Out[81]: 'Grüße'
-Some formats which encode all characters as multiple bytes, like UTF-16, won’t parse correctly at all without specifying the encoding. Full list of Python standard encodings.
+```
 
-Index columns and trailing delimiters
-If a file has one more column of data than the number of column names, the first column will be used as the DataFrame’s row names:
+Some formats which encode all characters as multiple bytes, like UTF-16, won’t parse correctly at all without specifying the encoding. [Full list of Python standard encodings](https://docs.python.org/3/library/codecs.html#standard-encodings).
 
+### Index columns and trailing delimiters
+
+If a file has one more column of data than the number of column names, the first column will be used as the ``DataFrame’s`` row names:
+
+``` python
 In [82]: data = ('a,b,c\n'
    ....:         '4,apple,bat,5.7\n'
    ....:         '8,orange,cow,10')
@@ -745,6 +864,9 @@ Out[83]:
         a    b     c
 4   apple  bat   5.7
 8  orange  cow  10.0
+```
+
+``` python
 In [84]: data = ('index,a,b,c\n'
    ....:         '4,apple,bat,5.7\n'
    ....:         '8,orange,cow,10')
@@ -756,10 +878,13 @@ Out[85]:
 index                   
 4       apple  bat   5.7
 8      orange  cow  10.0
-Ordinarily, you can achieve this behavior using the index_col option.
+```
 
-There are some exception cases when a file has been prepared with delimiters at the end of each data line, confusing the parser. To explicitly disable the index column inference and discard the last column, pass index_col=False:
+Ordinarily, you can achieve this behavior using the ``index_col`` option.
 
+There are some exception cases when a file has been prepared with delimiters at the end of each data line, confusing the parser. To explicitly disable the index column inference and discard the last column, pass ``index_col=False``:
+
+``` python
 In [86]: data = ('a,b,c\n'
    ....:         '4,apple,bat,\n'
    ....:         '8,orange,cow,')
@@ -781,8 +906,11 @@ Out[89]:
    a       b    c
 0  4   apple  bat
 1  8  orange  cow
-If a subset of data is being parsed using the usecols option, the index_col specification is based on that subset, not the original data.
+```
 
+If a subset of data is being parsed using the ``usecols`` option, the ``index_col`` specification is based on that subset, not the original data.
+
+``` python
 In [90]: data = ('a,b,c\n'
    ....:         '4,apple,bat,\n'
    ....:         '8,orange,cow,')
@@ -804,12 +932,17 @@ Out[93]:
      b   c
 4  bat NaN
 8  cow NaN
-Date Handling
-Specifying Date Columns
-To better facilitate working with datetime data, read_csv() uses the keyword arguments parse_dates and date_parser to allow users to specify a variety of columns and date/time formats to turn the input text data into datetime objects.
+```
 
-The simplest case is to just pass in parse_dates=True:
+### Date Handling
 
+#### Specifying Date Columns
+
+To better facilitate working with datetime data, [read_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv) uses the keyword arguments ``parse_dates`` and ``date_parser`` to allow users to specify a variety of columns and date/time formats to turn the input text data into ``datetime`` objects.
+
+The simplest case is to just pass in ``parse_dates=True``:
+
+``` python
 # Use a column as an index, and parse it as dates.
 In [94]: df = pd.read_csv('foo.csv', index_col=0, parse_dates=True)
 
@@ -824,10 +957,13 @@ date
 # These are Python datetime objects
 In [96]: df.index
 Out[96]: DatetimeIndex(['2009-01-01', '2009-01-02', '2009-01-03'], dtype='datetime64[ns]', name='date', freq=None)
-It is often the case that we may want to store date and time data separately, or store various date fields separately. the parse_dates keyword can be used to specify a combination of columns to parse the dates and/or times from.
+```
 
-You can specify a list of column lists to parse_dates, the resulting date columns will be prepended to the output (so as to not affect the existing column order) and the new column names will be the concatenation of the component column names:
+It is often the case that we may want to store date and time data separately, or store various date fields separately. the ``parse_dates`` keyword can be used to specify a combination of columns to parse the dates and/or times from.
 
+You can specify a list of column lists to ``parse_dates``, the resulting date columns will be prepended to the output (so as to not affect the existing column order) and the new column names will be the concatenation of the component column names:
+
+``` python
 In [97]: print(open('tmp.csv').read())
 KORD,19990127, 19:00:00, 18:56:00, 0.8100
 KORD,19990127, 20:00:00, 19:56:00, 0.0100
@@ -847,8 +983,11 @@ Out[99]:
 3 1999-01-27 21:00:00 1999-01-27 21:18:00  KORD -0.99
 4 1999-01-27 22:00:00 1999-01-27 21:56:00  KORD -0.59
 5 1999-01-27 23:00:00 1999-01-27 22:56:00  KORD -0.59
-By default the parser removes the component date columns, but you can choose to retain them via the keep_date_col keyword:
+```
 
+By default the parser removes the component date columns, but you can choose to retain them via the ``keep_date_col`` keyword:
+
+``` python
 In [100]: df = pd.read_csv('tmp.csv', header=None, parse_dates=[[1, 2], [1, 3]],
    .....:                  keep_date_col=True)
    .....: 
@@ -862,10 +1001,13 @@ Out[101]:
 3 1999-01-27 21:00:00 1999-01-27 21:18:00  KORD  19990127   21:00:00   21:18:00 -0.99
 4 1999-01-27 22:00:00 1999-01-27 21:56:00  KORD  19990127   22:00:00   21:56:00 -0.59
 5 1999-01-27 23:00:00 1999-01-27 22:56:00  KORD  19990127   23:00:00   22:56:00 -0.59
-Note that if you wish to combine multiple columns into a single date column, a nested list must be used. In other words, parse_dates=[1, 2] indicates that the second and third columns should each be parsed as separate date columns while parse_dates=[[1, 2]] means the two columns should be parsed into a single column.
+```
+
+Note that if you wish to combine multiple columns into a single date column, a nested list must be used. In other words, ``parse_dates=[1, 2]`` indicates that the second and third columns should each be parsed as separate date columns while ``parse_dates=[[1, 2]]`` means the two columns should be parsed into a single column.
 
 You can also use a dict to specify custom name columns:
 
+``` python
 In [102]: date_spec = {'nominal': [1, 2], 'actual': [1, 3]}
 
 In [103]: df = pd.read_csv('tmp.csv', header=None, parse_dates=date_spec)
@@ -879,8 +1021,11 @@ Out[104]:
 3 1999-01-27 21:00:00 1999-01-27 21:18:00  KORD -0.99
 4 1999-01-27 22:00:00 1999-01-27 21:56:00  KORD -0.59
 5 1999-01-27 23:00:00 1999-01-27 22:56:00  KORD -0.59
-It is important to remember that if multiple text columns are to be parsed into a single date column, then a new column is prepended to the data. The index_col specification is based off of this new set of columns rather than the original data columns:
+```
 
+It is important to remember that if multiple text columns are to be parsed into a single date column, then a new column is prepended to the data. The *index_col* specification is based off of this new set of columns rather than the original data columns:
+
+``` python
 In [105]: date_spec = {'nominal': [1, 2], 'actual': [1, 3]}
 
 In [106]: df = pd.read_csv('tmp.csv', header=None, parse_dates=date_spec,
@@ -897,12 +1042,25 @@ nominal
 1999-01-27 21:00:00 1999-01-27 21:18:00  KORD -0.99
 1999-01-27 22:00:00 1999-01-27 21:56:00  KORD -0.59
 1999-01-27 23:00:00 1999-01-27 22:56:00  KORD -0.59
-Note If a column or index contains an unparsable date, the entire column or index will be returned unaltered as an object data type. For non-standard datetime parsing, use to_datetime() after pd.read_csv.
-Note read_csv has a fast_path for parsing datetime strings in iso8601 format, e.g “2000-01-01T00:01:02+00:00” and similar variations. If you can arrange for your data to store datetimes in this format, load times will be significantly faster, ~20x has been observed.
-Note When passing a dict as the parse_dates argument, the order of the columns prepended is not guaranteed, because dict objects do not impose an ordering on their keys. On Python 2.7+ you may use collections.OrderedDict instead of a regular dict if this matters to you. Because of this, when using a dict for ‘parse_dates’ in conjunction with the index_col argument, it’s best to specify index_col as a column label rather then as an index on the resulting frame.
-Date Parsing Functions
-Finally, the parser allows you to specify a custom date_parser function to take full advantage of the flexibility of the date parsing API:
+```
 
+::: tip Note
+If a column or index contains an unparsable date, the entire column or index will be returned unaltered as an object data type. For non-standard datetime parsing, use [to_datetime()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html#pandas.to_datetime) after ``pd.read_csv``.
+:::
+
+::: tip Note
+read_csv has a fast_path for parsing datetime strings in iso8601 format, e.g “2000-01-01T00:01:02+00:00” and similar variations. If you can arrange for your data to store datetimes in this format, load times will be significantly faster, ~20x has been observed.
+:::
+
+::: tip Note
+When passing a dict as the parse_dates argument, the order of the columns prepended is not guaranteed, because dict objects do not impose an ordering on their keys. On Python 2.7+ you may use ``collections.OrderedDict`` instead of a regular dict if this matters to you. Because of this, when using a dict for ‘parse_dates’ in conjunction with the ``index_col`` argument, it’s best to specify ``index_col`` as a column label rather then as an index on the resulting frame.
+:::
+
+#### Date Parsing Functions
+
+Finally, the parser allows you to specify a custom ``date_parser`` function to take full advantage of the flexibility of the date parsing API:
+
+``` python
 In [108]: df = pd.read_csv('tmp.csv', header=None, parse_dates=date_spec,
    .....:                  date_parser=pd.io.date_converters.parse_date_time)
    .....: 
@@ -916,21 +1074,27 @@ Out[109]:
 3 1999-01-27 21:00:00 1999-01-27 21:18:00  KORD -0.99
 4 1999-01-27 22:00:00 1999-01-27 21:56:00  KORD -0.59
 5 1999-01-27 23:00:00 1999-01-27 22:56:00  KORD -0.59
-Pandas will try to call the date_parser function in three different ways. If an exception is raised, the next one is tried:
+```
 
-date_parser is first called with one or more arrays as arguments, as defined using parse_dates (e.g., date_parser(['2013', '2013'], ['1', '2'])).
-If #1 fails, date_parser is called with all the columns concatenated row-wise into a single array (e.g., date_parser(['2013 1', '2013 2'])).
-If #2 fails, date_parser is called once for every row with one or more string arguments from the columns indicated with parse_dates (e.g., date_parser('2013', '1') for the first row, date_parser('2013', '2') for the second, etc.).
+Pandas will try to call the ``date_parser`` function in three different ways. If an exception is raised, the next one is tried:
+
+1. ``date_parser`` is first called with one or more arrays as arguments, as defined using parse_dates (e.g., ``date_parser(['2013', '2013'], ['1', '2'])``).
+1. If #1 fails, ``date_parser`` is called with all the columns concatenated row-wise into a single array (e.g., ``date_parser(['2013 1', '2013 2'])``).
+1. If #2 fails, ``date_parser`` is called once for every row with one or more string arguments from the columns indicated with parse_dates (e.g., ``date_parser('2013', '1')`` for the first row, ``date_parser('2013', '2')`` for the second, etc.).
+
 Note that performance-wise, you should try these methods of parsing dates in order:
 
-Try to infer the format using infer_datetime_format=True (see section below).
-If you know the format, use pd.to_datetime(): date_parser=lambda x: pd.to_datetime(x, format=...).
-If you have a really non-standard format, use a custom date_parser function. For optimal performance, this should be vectorized, i.e., it should accept arrays as arguments.
-You can explore the date parsing functionality in date_converters.py and add your own. We would love to turn this module into a community supported set of date/time parsers. To get you started, date_converters.py contains functions to parse dual date and time columns, year/month/day columns, and year/month/day/hour/minute/second columns. It also contains a generic_parser function so you can curry it with a function that deals with a single date rather than the entire array.
+1. Try to infer the format using ``infer_datetime_format=True`` (see section below).
+1. If you know the format, use ``pd.to_datetime()``: ``date_parser=lambda x: pd.to_datetime(x, format=...)``.
+1. If you have a really non-standard format, use a custom ``date_parser`` function. For optimal performance, this should be vectorized, i.e., it should accept arrays as arguments.
 
-Parsing a CSV with mixed Timezones
-Pandas cannot natively represent a column or index with mixed timezones. If your CSV file contains columns with a mixture of timezones, the default result will be an object-dtype column with strings, even with parse_dates.
+You can explore the date parsing functionality in [date_converters.py](https://github.com/pandas-dev/pandas/blob/master/pandas/io/date_converters.py) and add your own. We would love to turn this module into a community supported set of date/time parsers. To get you started, ``date_converters.py`` contains functions to parse dual date and time columns, year/month/day columns, and year/month/day/hour/minute/second columns. It also contains a ``generic_parser`` function so you can curry it with a function that deals with a single date rather than the entire array.
 
+#### Parsing a CSV with mixed Timezones
+
+Pandas cannot natively represent a column or index with mixed timezones. If your CSV file contains columns with a mixture of timezones, the default result will be an object-dtype column with strings, even with ``parse_dates``.
+
+``` python
 In [110]: content = """\
    .....: a
    .....: 2000-01-01T00:00:00+05:00
@@ -944,8 +1108,11 @@ Out[112]:
 0    2000-01-01 00:00:00+05:00
 1    2000-01-01 00:00:00+06:00
 Name: a, dtype: object
-To parse the mixed-timezone values as a datetime column, pass a partially-applied to_datetime() with utc=True as the date_parser.
+```
 
+To parse the mixed-timezone values as a datetime column, pass a partially-applied [to_datetime()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html#pandas.to_datetime) with ``utc=True`` as the ``date_parser``.
+
+``` python
 In [113]: df = pd.read_csv(StringIO(content), parse_dates=['a'],
    .....:                  date_parser=lambda col: pd.to_datetime(col, utc=True))
    .....: 
@@ -955,19 +1122,24 @@ Out[114]:
 0   1999-12-31 19:00:00+00:00
 1   1999-12-31 18:00:00+00:00
 Name: a, dtype: datetime64[ns, UTC]
-Inferring Datetime Format
-If you have parse_dates enabled for some or all of your columns, and your datetime strings are all formatted the same way, you may get a large speed up by setting infer_datetime_format=True. If set, pandas will attempt to guess the format of your datetime strings, and then use a faster means of parsing the strings. 5-10x parsing speeds have been observed. pandas will fallback to the usual parsing if either the format cannot be guessed or the format that was guessed cannot properly parse the entire column of strings. So in general, infer_datetime_format should not have any negative consequences if enabled.
+```
+
+#### Inferring Datetime Format
+
+If you have ``parse_dates`` enabled for some or all of your columns, and your datetime strings are all formatted the same way, you may get a large speed up by setting ``infer_datetime_format=True``. If set, pandas will attempt to guess the format of your datetime strings, and then use a faster means of parsing the strings. 5-10x parsing speeds have been observed. pandas will fallback to the usual parsing if either the format cannot be guessed or the format that was guessed cannot properly parse the entire column of strings. So in general, ``infer_datetime_format`` should not have any negative consequences if enabled.
 
 Here are some examples of datetime strings that can be guessed (All representing December 30th, 2011 at 00:00:00):
 
-“20111230”
-“2011/12/30”
-“20111230 00:00:00”
-“12/30/2011 00:00:00”
-“30/Dec/2011 00:00:00”
-“30/December/2011 00:00:00”
-Note that infer_datetime_format is sensitive to dayfirst. With dayfirst=True, it will guess “01/12/2011” to be December 1st. With dayfirst=False (default) it will guess “01/12/2011” to be January 12th.
+- “20111230”
+- “2011/12/30”
+- “20111230 00:00:00”
+- “12/30/2011 00:00:00”
+- “30/Dec/2011 00:00:00”
+- “30/December/2011 00:00:00”
 
+Note that ``infer_datetime_format`` is sensitive to ``dayfirst``. With ``dayfirst=True``, it will guess “01/12/2011” to be December 1st. With ``dayfirst=False`` (default) it will guess “01/12/2011” to be January 12th.
+
+``` python
 # Try to infer the format for the index column
 In [115]: df = pd.read_csv('foo.csv', index_col=0, parse_dates=True,
    .....:                  infer_datetime_format=True)
@@ -980,9 +1152,13 @@ date
 2009-01-01  a  1  2
 2009-01-02  b  3  4
 2009-01-03  c  4  5
-International Date Formats
-While US date formats tend to be MM/DD/YYYY, many international formats use DD/MM/YYYY instead. For convenience, a dayfirst keyword is provided:
+```
 
+#### International Date Formats
+
+While US date formats tend to be MM/DD/YYYY, many international formats use DD/MM/YYYY instead. For convenience, a ``dayfirst`` keyword is provided:
+
+``` python
 In [117]: print(open('tmp.csv').read())
 date,value,cat
 1/6/2000,5,a
@@ -1002,9 +1178,13 @@ Out[119]:
 0 2000-06-01      5   a
 1 2000-06-02     10   b
 2 2000-06-03     15   c
-Specifying method for floating-point conversion
-The parameter float_precision can be specified in order to use a specific floating-point converter during parsing with the C engine. The options are the ordinary converter, the high-precision converter, and the round-trip converter (which is guaranteed to round-trip values after writing to a file). For example:
+```
 
+### Specifying method for floating-point conversion
+
+The parameter ``float_precision`` can be specified in order to use a specific floating-point converter during parsing with the C engine. The options are the ordinary converter, the high-precision converter, and the round-trip converter (which is guaranteed to round-trip values after writing to a file). For example:
+
+``` python
 In [120]: val = '0.3066101993807095471566981359501369297504425048828125'
 
 In [121]: data = 'a,b,c\n1,2,{0}'.format(val)
@@ -1023,11 +1203,15 @@ In [124]: abs(pd.read_csv(StringIO(data), engine='c',
    .....:                 float_precision='round_trip')['c'][0] - float(val))
    .....: 
 Out[124]: 0.0
-Thousand Separators
-For large numbers that have been written with a thousands separator, you can set the thousands keyword to a string of length 1 so that integers will be parsed correctly:
+```
+
+### Thousand Separators
+
+For large numbers that have been written with a thousands separator, you can set the ``thousands`` keyword to a string of length 1 so that integers will be parsed correctly:
 
 By default, numbers with a thousands separator will be parsed as strings:
 
+``` python
 In [125]: print(open('tmp.csv').read())
 ID|level|category
 Patient1|123,000|x
@@ -1045,8 +1229,11 @@ Out[127]:
 
 In [128]: df.level.dtype
 Out[128]: dtype('O')
-The thousands keyword allows integers to be parsed correctly:
+```
 
+The ``thousands`` keyword allows integers to be parsed correctly:
+
+``` python
 In [129]: print(open('tmp.csv').read())
 ID|level|category
 Patient1|123,000|x
@@ -1064,33 +1251,51 @@ Out[131]:
 
 In [132]: df.level.dtype
 Out[132]: dtype('int64')
-NA Values
-To control which values are parsed as missing values (which are signified by NaN), specify a string in na_values. If you specify a list of strings, then all values in it are considered to be missing values. If you specify a number (a float, like 5.0 or an integer like 5), the corresponding equivalent values will also imply a missing value (in this case effectively [5.0, 5] are recognized as NaN).
+```
 
-To completely override the default values that are recognized as missing, specify keep_default_na=False.
+### NA Values
 
-The default NaN recognized values are ['-1.#IND', '1.#QNAN', '1.#IND', '-1.#QNAN', '#N/A N/A', '#N/A', 'N/A', 'n/a', 'NA', '#NA', 'NULL', 'null', 'NaN', '-NaN', 'nan', '-nan', ''].
+To control which values are parsed as missing values (which are signified by ``NaN``), specify a string in ``na_values``. If you specify a list of strings, then all values in it are considered to be missing values. If you specify a number (a ``float``, like ``5.0`` or an ``integer`` like 5), the corresponding equivalent values will also imply a missing value (in this case effectively ``[5.0, 5]`` are recognized as ``NaN``).
+
+To completely override the default values that are recognized as missing, specify ``keep_default_na=False``.
+
+The default NaN recognized values are ``['-1.#IND', '1.#QNAN', '1.#IND', '-1.#QNAN', '#N/A N/A', '#N/A', 'N/A', 'n/a', 'NA', '#NA', 'NULL', 'null', 'NaN', '-NaN', 'nan', '-nan', '']``.
 
 Let us consider some examples:
 
+``` python
 pd.read_csv('path_to_file.csv', na_values=[5])
-In the example above 5 and 5.0 will be recognized as NaN, in addition to the defaults. A string will first be interpreted as a numerical 5, then as a NaN.
+```
 
+In the example above ``5`` and ``5.0`` will be recognized as ``NaN``, in addition to the defaults. A string will first be interpreted as a numerical ``5``, then as a ``NaN``.
+
+``` python
 pd.read_csv('path_to_file.csv', keep_default_na=False, na_values=[""])
+```
+
 Above, only an empty field will be recognized as NaN.
 
+``` python
 pd.read_csv('path_to_file.csv', keep_default_na=False, na_values=["NA", "0"])
+```
+
 Above, both NA and 0 as strings are NaN.
 
+``` python
 pd.read_csv('path_to_file.csv', na_values=["Nope"])
-The default values, in addition to the string "Nope" are recognized as NaN.
+```
 
-Infinity
-inf like values will be parsed as np.inf (positive infinity), and -inf as -np.inf (negative infinity). These will ignore the case of the value, meaning Inf, will also be parsed as np.inf.
+The default values, in addition to the string ``"Nope"`` are recognized as ``NaN``.
 
-Returning Series
-Using the squeeze keyword, the parser will return output with a single column as a Series:
+### Infinity
 
+``inf`` like values will be parsed as ``np.inf`` (positive infinity), and ``-inf`` as ``-np.inf`` (negative infinity). These will ignore the case of the value, meaning ``Inf``, will also be parsed as ``np.inf``.
+
+### Returning Series
+
+Using the ``squeeze`` keyword, the parser will return output with a single column as a ``Series``:
+
+``` python
 In [133]: print(open('tmp.csv').read())
 level
 Patient1,123000
@@ -1108,9 +1313,13 @@ Name: level, dtype: int64
 
 In [136]: type(output)
 Out[136]: pandas.core.series.Series
-Boolean values
-The common values True, False, TRUE, and FALSE are all recognized as boolean. Occasionally you might want to recognize other values as being boolean. To do this, use the true_values and false_values options as follows:
+```
 
+### Boolean values
+
+The common values ``True``, ``False``, ``TRUE``, and ``FALSE`` are all recognized as boolean. Occasionally you might want to recognize other values as being boolean. To do this, use the ``true_values`` and ``false_values`` options as follows:
+
+``` python
 In [137]: data = ('a,b,c\n'
    .....:         '1,Yes,2\n'
    .....:         '3,No,4')
@@ -1132,7 +1341,10 @@ Out[140]:
    a      b  c
 0  1   True  2
 1  3  False  4
-Handling “bad” lines
+```
+
+### Handling “bad” lines
+
 Some files may have malformed lines with too few fields or too many. Lines with too few fields will have NA values filled in the trailing fields. Lines with too many fields will raise an error by default:
 
 ``` python
@@ -1191,6 +1403,7 @@ ParserError: Error tokenizing data. C error: Expected 3 fields in line 3, saw 4
 
 You can elect to skip bad lines:
 
+``` python
 In [29]: pd.read_csv(StringIO(data), error_bad_lines=False)
 Skipping line 3: expected 3 fields, saw 4
 
@@ -1198,8 +1411,11 @@ Out[29]:
    a  b   c
 0  1  2   3
 1  8  9  10
-You can also use the usecols parameter to eliminate extraneous column data that appear in some lines but not others:
+```
 
+You can also use the ``usecols`` parameter to eliminate extraneous column data that appear in some lines but not others:
+
+``` python
 In [30]: pd.read_csv(StringIO(data), usecols=[0, 1, 2])
 
  Out[30]:
@@ -1207,19 +1423,26 @@ In [30]: pd.read_csv(StringIO(data), usecols=[0, 1, 2])
  0  1  2   3
  1  4  5   6
  2  8  9  10
-Dialect
-The dialect keyword gives greater flexibility in specifying the file format. By default it uses the Excel dialect but you can specify either the dialect name or a csv.Dialect instance.
+ ```
+
+### Dialect
+
+The ``dialect`` keyword gives greater flexibility in specifying the file format. By default it uses the Excel dialect but you can specify either the dialect name or a [csv.Dialect](https://docs.python.org/3/library/csv.html#csv.Dialect) instance.
 
 Suppose you had data with unenclosed quotes:
 
+``` python
 In [143]: print(data)
 label1,label2,label3
 index1,"a,c,e
 index2,b,d,f
-By default, read_csv uses the Excel dialect and treats the double quote as the quote character, which causes it to fail when it finds a newline before it finds the closing double quote.
+```
 
-We can get around this using dialect:
+By default, ``read_csv`` uses the Excel dialect and treats the double quote as the quote character, which causes it to fail when it finds a newline before it finds the closing double quote.
 
+We can get around this using ``dialect``:
+
+``` python
 In [144]: import csv
 
 In [145]: dia = csv.excel()
@@ -1231,8 +1454,11 @@ Out[147]:
        label1 label2 label3
 index1     "a      c      e
 index2      b      d      f
+```
+
 All of the dialect options can be specified separately by keyword arguments:
 
+``` python
 In [148]: data = 'a,b,c~1,2,3~4,5,6'
 
 In [149]: pd.read_csv(StringIO(data), lineterminator='~')
@@ -1240,8 +1466,11 @@ Out[149]:
    a  b  c
 0  1  2  3
 1  4  5  6
-Another common dialect option is skipinitialspace, to skip any whitespace after a delimiter:
+```
 
+Another common dialect option is ``skipinitialspace``, to skip any whitespace after a delimiter:
+
+``` python
 In [150]: data = 'a, b, c\n1, 2, 3\n4, 5, 6'
 
 In [151]: print(data)
@@ -1254,11 +1483,15 @@ Out[152]:
    a  b  c
 0  1  2  3
 1  4  5  6
+```
+
 The parsers make every attempt to “do the right thing” and not be fragile. Type inference is a pretty big deal. If a column can be coerced to integer dtype without altering the contents, the parser will do so. Any non-numeric columns will come through as object dtype as with the rest of pandas objects.
 
-Quoting and Escape Characters
-Quotes (and other escape characters) in embedded fields can be handled in any number of ways. One way is to use backslashes; to properly parse this data, you should pass the escapechar option:
+### Quoting and Escape Characters
 
+Quotes (and other escape characters) in embedded fields can be handled in any number of ways. One way is to use backslashes; to properly parse this data, you should pass the ``escapechar`` option:
+
+``` python
 In [153]: data = 'a,b\n"hello, \\"Bob\\", nice to see you",5'
 
 In [154]: print(data)
@@ -1269,21 +1502,27 @@ In [155]: pd.read_csv(StringIO(data), escapechar='\\')
 Out[155]: 
                                a  b
 0  hello, "Bob", nice to see you  5
-Files with Fixed Width Columns
-While read_csv() reads delimited data, the read_fwf() function works with data files that have known and fixed column widths. The function parameters to read_fwf are largely the same as read_csv with two extra parameters, and a different usage of the delimiter parameter:
+```
 
-colspecs: A list of pairs (tuples) giving the extents of the fixed-width fields of each line as half-open intervals (i.e., [from, to[ ). String value ‘infer’ can be used to instruct the parser to try detecting the column specifications from the first 100 rows of the data. Default behavior, if not specified, is to infer.
-widths: A list of field widths which can be used instead of ‘colspecs’ if the intervals are contiguous.
-delimiter: Characters to consider as filler characters in the fixed-width file. Can be used to specify the filler character of the fields if it is not spaces (e.g., ‘~’).
+### Files with Fixed Width Columns
+
+While [read_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv) reads delimited data, the [read_fwf()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_fwf.html#pandas.read_fwf) function works with data files that have known and fixed column widths. The function parameters to ``read_fwf`` are largely the same as read_csv with two extra parameters, and a different usage of the ``delimiter`` parameter:
+
+- ``colspecs``: A list of pairs (tuples) giving the extents of the fixed-width fields of each line as half-open intervals (i.e., [from, to[ ). String value ‘infer’ can be used to instruct the parser to try detecting the column specifications from the first 100 rows of the data. Default behavior, if not specified, is to infer.
+- ``widths``: A list of field widths which can be used instead of ‘colspecs’ if the intervals are contiguous.
+- ``delimiter``: Characters to consider as filler characters in the fixed-width file. Can be used to specify the filler character of the fields if it is not spaces (e.g., ‘~’).
 Consider a typical fixed-width data file:
 
+``` python
 In [156]: print(open('bar.csv').read())
 id8141    360.242940   149.910199   11950.7
 id1594    444.953632   166.985655   11788.4
 id1849    364.136849   183.628767   11806.2
 id1230    413.836124   184.375703   11916.8
 id1948    502.953953   173.237159   12468.3
-In order to parse this file into a DataFrame, we simply need to supply the column specifications to the read_fwf function along with the file name:
+```
+
+In order to parse this file into a ``DataFrame``, we simply need to supply the column specifications to the *read_fwf* function along with the file name:
 
 ``` python
 # Column specifications are a list of half-intervals
@@ -1302,7 +1541,7 @@ id1230  413.836124  184.375703  11916.8
 id1948  502.953953  173.237159  12468.3
 ```
 
-Note how the parser automatically picks column names ``X.<column number>`` when header=None argument is specified. Alternatively, you can supply just the column widths for contiguous columns:
+Note how the parser automatically picks column names ``X.<column number>`` when ``header=None`` argument is specified. Alternatively, you can supply just the column widths for contiguous columns:
 
 ``` python
 # Widths are a list of integers
@@ -1322,8 +1561,9 @@ Out[162]:
 
 The parser will take care of extra white spaces around the columns so it’s ok to have extra separation between the columns in the file.
 
-By default, read_fwf will try to infer the file’s colspecs by using the first 100 rows of the file. It can do it only in cases when the columns are aligned and correctly separated by the provided delimiter (default delimiter is whitespace).
+By default, ``read_fwf`` will try to infer the file’s ``colspecs`` by using the first 100 rows of the file. It can do it only in cases when the columns are aligned and correctly separated by the provided ``delimiter`` (default delimiter is whitespace).
 
+``` python
 In [163]: df = pd.read_fwf('bar.csv', header=None, index_col=0)
 
 In [164]: df
@@ -1335,10 +1575,13 @@ id1594  444.953632  166.985655  11788.4
 id1849  364.136849  183.628767  11806.2
 id1230  413.836124  184.375703  11916.8
 id1948  502.953953  173.237159  12468.3
-New in version 0.20.0.
+```
 
-read_fwf supports the dtype parameter for specifying the types of parsed columns to be different from the inferred type.
+*New in version 0.20.0.*
 
+``read_fwf`` supports the ``dtype`` parameter for specifying the types of parsed columns to be different from the inferred type.
+
+``` python
 In [165]: pd.read_fwf('bar.csv', header=None, index_col=0).dtypes
 Out[165]: 
 1    float64
@@ -1353,32 +1596,47 @@ Out[166]:
 2     object
 3    float64
 dtype: object
-Indexes
-Files with an “implicit” index column
+```
+
+### Indexes
+
+#### Files with an “implicit” index column
+
 Consider a file with one less entry in the header than the number of data column:
 
+``` python
 In [167]: print(open('foo.csv').read())
 A,B,C
 20090101,a,1,2
 20090102,b,3,4
 20090103,c,4,5
-In this special case, read_csv assumes that the first column is to be used as the index of the DataFrame:
+```
 
+In this special case, ``read_csv`` assumes that the first column is to be used as the index of the ``DataFrame``:
+
+``` python
 In [168]: pd.read_csv('foo.csv')
 Out[168]: 
           A  B  C
 20090101  a  1  2
 20090102  b  3  4
 20090103  c  4  5
+```
+
 Note that the dates weren’t automatically parsed. In that case you would need to do as before:
 
+``` python
 In [169]: df = pd.read_csv('foo.csv', parse_dates=True)
 
 In [170]: df.index
 Out[170]: DatetimeIndex(['2009-01-01', '2009-01-02', '2009-01-03'], dtype='datetime64[ns]', freq=None)
-Reading an index with a MultiIndex
+```
+
+#### Reading an index with a ``MultiIndex``
+
 Suppose you have data indexed by two columns:
 
+``` python
 In [171]: print(open('data/mindex_ex.csv').read())
 year,indiv,zit,xit
 1977,"A",1.2,.6
@@ -1396,8 +1654,11 @@ year,indiv,zit,xit
 1979,"G",3.4,1.9
 1979,"H",5.4,2.7
 1979,"I",6.4,1.2
-The index_col argument to read_csv can take a list of column numbers to turn multiple columns into a MultiIndex for the index of the returned object:
+```
 
+The ``index_col`` argument to ``read_csv`` can take a list of column numbers to turn multiple columns into a ``MultiIndex`` for the index of the returned object:
+
+``` python
 In [172]: df = pd.read_csv("data/mindex_ex.csv", index_col=[0, 1])
 
 In [173]: df
@@ -1429,9 +1690,13 @@ B      0.7  0.20
 C      0.8  0.30
 D      0.9  0.50
 E      1.4  0.90
-Reading columns with a MultiIndex
-By specifying list of row locations for the header argument, you can read in a MultiIndex for the columns. Specifying non-consecutive rows will skip the intervening rows.
+```
 
+#### Reading columns with a ``MultiIndex``
+
+By specifying list of row locations for the ``header`` argument, you can read in a ``MultiIndex`` for the columns. Specifying non-consecutive rows will skip the intervening rows.
+
+``` python
 In [175]: from pandas.util.testing import makeCustomDataframe as mkdf
 
 In [176]: df = mkdf(5, 3, r_idx_nlevels=2, c_idx_nlevels=4)
@@ -1450,7 +1715,6 @@ R_l0_g2,R_l1_g2,R2C0,R2C1,R2C2
 R_l0_g3,R_l1_g3,R3C0,R3C1,R3C2
 R_l0_g4,R_l1_g4,R4C0,R4C1,R4C2
 
-
 In [179]: pd.read_csv('mi.csv', header=[0, 1, 2, 3], index_col=[0, 1])
 Out[179]: 
 C0              C_l0_g0 C_l0_g1 C_l0_g2
@@ -1463,8 +1727,11 @@ R_l0_g1 R_l1_g1    R1C0    R1C1    R1C2
 R_l0_g2 R_l1_g2    R2C0    R2C1    R2C2
 R_l0_g3 R_l1_g3    R3C0    R3C1    R3C2
 R_l0_g4 R_l1_g4    R4C0    R4C1    R4C2
-read_csv is also able to interpret a more common format of multi-columns indices.
+```
 
+``read_csv`` is also able to interpret a more common format of multi-columns indices.
+
+``` python
 In [180]: print(open('mi2.csv').read())
 ,a,a,a,b,c,c
 ,q,r,s,t,u,v
@@ -1477,11 +1744,17 @@ Out[181]:
      q  r  s   t   u   v
 one  1  2  3   4   5   6
 two  7  8  9  10  11  12
-Note: If an index_col is not specified (e.g. you don’t have an index, or wrote it with df.to_csv(..., index=False), then any names on the columns index will be lost.
+```
 
-Automatically “sniffing” the delimiter
-read_csv is capable of inferring delimited (not necessarily comma-separated) files, as pandas uses the csv.Sniffer class of the csv module. For this, you have to specify sep=None.
+::: tip Note
+If an ``index_col`` is not specified (e.g. you don’t have an index, or wrote it with ``df.to_csv(..., index=False)``, then any ``names`` on the columns index will be lost.
+:::
 
+### Automatically “sniffing” the delimiter
+
+``read_csv`` is capable of inferring delimited (not necessarily comma-separated) files, as pandas uses the [csv.Sniffer](https://docs.python.org/3/library/csv.html#csv.Sniffer) class of the csv module. For this, you have to specify ``sep=None.``
+
+``` python
 In [182]: print(open('tmp2.sv').read())
 :0:1:2:3
 0:0.4691122999071863:-0.2828633443286633:-1.5090585031735124:-1.1356323710171934
@@ -1509,12 +1782,17 @@ Out[183]:
 7           7 -0.370647 -1.157892 -1.344312  0.844885
 8           8  1.075770 -0.109050  1.643563 -1.469388
 9           9  0.357021 -0.674600 -1.776904 -0.968914
-Reading multiple files to create a single DataFrame
-It’s best to use concat() to combine multiple files. See the cookbook for an example.
+```
 
-Iterating through files chunk by chunk
+### Reading multiple files to create a single DataFrame
+
+It’s best to use [concat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html#pandas.concat) to combine multiple files. See the [cookbook](https://pandas.pydata.org/pandas-docs/stable/user_guide/cookbook.html#cookbook-csv-multiple-files) for an example.
+
+### Iterating through files chunk by chunk
+
 Suppose you wish to iterate through a (potentially very large) file lazily rather than reading the entire file into memory, such as the following:
 
+``` python
 In [184]: print(open('tmp.sv').read())
 |0|1|2|3
 0|0.4691122999071863|-0.2828633443286633|-1.5090585031735124|-1.1356323710171934
@@ -1544,8 +1822,11 @@ Out[186]:
 7           7 -0.370647 -1.157892 -1.344312  0.844885
 8           8  1.075770 -0.109050  1.643563 -1.469388
 9           9  0.357021 -0.674600 -1.776904 -0.968914
-By specifying a chunksize to read_csv, the return value will be an iterable object of type TextFileReader:
+```
 
+By specifying a ``chunksize`` to ``read_csv``, the return value will be an iterable object of type ``TextFileReader``:
+
+``` python
 In [187]: reader = pd.read_csv('tmp.sv', sep='|', chunksize=4)
 
 In [188]: reader
@@ -1567,8 +1848,11 @@ In [189]: for chunk in reader:
    Unnamed: 0         0        1         2         3
 8           8  1.075770 -0.10905  1.643563 -1.469388
 9           9  0.357021 -0.67460 -1.776904 -0.968914
-Specifying iterator=True will also return the TextFileReader object:
+```
 
+Specifying ``iterator=True`` will also return the ``TextFileReader`` object:
+
+``` python
 In [190]: reader = pd.read_csv('tmp.sv', sep='|', iterator=True)
 
 In [191]: reader.get_chunk(5)
@@ -1579,68 +1863,85 @@ Out[191]:
 2           2 -0.861849 -2.104569 -0.494929  1.071804
 3           3  0.721555 -0.706771 -1.039575  0.271860
 4           4 -0.424972  0.567020  0.276232 -1.087401
-Specifying the parser engine
-Under the hood pandas uses a fast and efficient parser implemented in C as well as a Python implementation which is currently more feature-complete. Where possible pandas uses the C parser (specified as engine='c'), but may fall back to Python if C-unsupported options are specified. Currently, C-unsupported options include:
+```
 
-sep other than a single character (e.g. regex separators)
-skipfooter
-sep=None with delim_whitespace=False
-Specifying any of the above options will produce a ParserWarning unless the python engine is selected explicitly using engine='python'.
+### Specifying the parser engine
 
-Reading remote files
+Under the hood pandas uses a fast and efficient parser implemented in C as well as a Python implementation which is currently more feature-complete. Where possible pandas uses the C parser (specified as ``engine='c'``), but may fall back to Python if C-unsupported options are specified. Currently, C-unsupported options include:
+
+- ``sep`` other than a single character (e.g. regex separators)
+- ``skipfooter``
+- ``sep=None`` with ``delim_whitespace=False``
+
+Specifying any of the above options will produce a ``ParserWarning`` unless the python engine is selected explicitly using ``engine='python'``.
+
+### Reading remote files
+
 You can pass in a URL to a CSV file:
 
+``` python
 df = pd.read_csv('https://download.bls.gov/pub/time.series/cu/cu.item',
                  sep='\t')
-S3 URLs are handled as well but require installing the S3Fs library:
+```
 
+S3 URLs are handled as well but require installing the [S3Fs](https://pypi.org/project/s3fs/) library:
+
+``` python
 df = pd.read_csv('s3://pandas-test/tips.csv')
-If your S3 bucket requires cedentials you will need to set them as environment variables or in the ~/.aws/credentials config file, refer to the S3Fs documentation on credentials.
+```
 
-Writing out Data
-Writing to CSV format
-The Series and DataFrame objects have an instance method to_csv which allows storing the contents of the object as a comma-separated-values file. The function takes a number of arguments. Only the first is required.
+If your S3 bucket requires cedentials you will need to set them as environment variables or in the ``~/.aws/credentials`` config file, refer to the [S3Fs documentation on credentials](https://s3fs.readthedocs.io/en/latest/#credentials).
 
-path_or_buf: A string path to the file to write or a file object. If a file object it must be opened with newline=’‘
-sep : Field delimiter for the output file (default “,”)
-na_rep: A string representation of a missing value (default ‘’)
-float_format: Format string for floating point numbers
-columns: Columns to write (default None)
-header: Whether to write out the column names (default True)
-index: whether to write row (index) names (default True)
-index_label: Column label(s) for index column(s) if desired. If None (default), and header and index are True, then the index names are used. (A sequence should be given if the DataFrame uses MultiIndex).
-mode : Python write mode, default ‘w’
-encoding: a string representing the encoding to use if the contents are non-ASCII, for Python versions prior to 3
-line_terminator: Character sequence denoting line end (default os.linesep)
-quoting: Set quoting rules as in csv module (default csv.QUOTE_MINIMAL). Note that if you have set a float_format then floats are converted to strings and csv.QUOTE_NONNUMERIC will treat them as non-numeric
-quotechar: Character used to quote fields (default ‘”’)
-doublequote: Control quoting of quotechar in fields (default True)
-escapechar: Character used to escape sep and quotechar when appropriate (default None)
-chunksize: Number of rows to write at a time
-tupleize_cols: If False (default), write as a list of tuples, otherwise write in an expanded line format suitable for read_csv
-date_format: Format string for datetime objects
-Writing a formatted string
-The DataFrame object has an instance method to_string which allows control over the string representation of the object. All arguments are optional:
+### Writing out Data
 
-buf default None, for example a StringIO object
-columns default None, which columns to write
-col_space default None, minimum width of each column.
-na_rep default NaN, representation of NA value
-formatters default None, a dictionary (by column) of functions each of which takes a single argument and returns a formatted string
-float_format default None, a function which takes a single (float) argument and returns a formatted string; to be applied to floats in the DataFrame.
-sparsify default True, set to False for a DataFrame with a hierarchical index to print every MultiIndex key at each row.
-index_names default True, will print the names of the indices
-index default True, will print the index (ie, row labels)
-header default True, will print the column labels
-justify default left, will print column headers left- or right-justified
-The Series object also has a to_string method, but with only the buf, na_rep, float_format arguments. There is also a length argument which, if set to True, will additionally output the length of the Series.
+#### Writing to CSV format
+
+The ``Series`` and ``DataFrame`` objects have an instance method ``to_csv`` which allows storing the contents of the object as a comma-separated-values file. The function takes a number of arguments. Only the first is required.
+
+- ``path_or_buf``: A string path to the file to write or a file object. If a file object it must be opened with *newline*=’‘
+- ``sep`` : Field delimiter for the output file (default “,”)
+- ``na_rep``: A string representation of a missing value (default ‘’)
+- ``float_format``: Format string for floating point numbers
+- ``columns``: Columns to write (default None)
+- ``header``: Whether to write out the column names (default True)
+- ``index``: whether to write row (index) names (default True)
+- ``index_label``: Column label(s) for index column(s) if desired. If None (default), and header and index are True, then the index names are used. (A sequence should be given if the ``DataFrame`` uses MultiIndex).
+- ``mode`` : Python write mode, default ‘w’
+- ``encoding``: a string representing the encoding to use if the contents are non-ASCII, for Python versions prior to 3
+- ``line_terminator``: Character sequence denoting line end (default os.linesep)
+- ``quoting``: Set quoting rules as in csv module (default csv.QUOTE_MINIMAL). Note that if you have set a float_format then floats are converted to strings and csv.QUOTE_NONNUMERIC will treat them as non-numeric
+- ``quotechar``: Character used to quote fields (default ‘”’)
+- ``doublequote``: Control quoting of ``quotechar`` in fields (default True)
+- ``escapechar``: Character used to escape ``sep`` and ``quotechar`` when appropriate (default None)
+- ``chunksize``: Number of rows to write at a time
+- ``tupleize_cols``: If False (default), write as a list of tuples, otherwise write in an expanded line format suitable for ``read_csv``
+- ``date_format``: Format string for datetime objects
+
+#### Writing a formatted string
+
+The ``DataFrame`` object has an instance method ``to_string`` which allows control over the string representation of the object. All arguments are optional:
+
+- ``buf`` default None, for example a StringIO object
+- ``columns`` default None, which columns to write
+- ``col_space`` default None, minimum width of each column.
+- ``na_rep`` default ``NaN``, representation of NA value
+- ``formatters`` default None, a dictionary (by column) of functions each of which takes a single argument and returns a formatted string
+- ``float_format`` default None, a function which takes a single (float) argument and returns a formatted string; to be applied to floats in the ``DataFrame``.
+- ``sparsify`` default True, set to False for a ``DataFrame`` with a hierarchical index to print every MultiIndex key at each row.
+- ``index_names`` default True, will print the names of the indices
+- ``index`` default True, will print the index (ie, row labels)
+- ``header`` default True, will print the column labels
+- ``justify`` default ``left``, will print column headers left- or right-justified
+
+The ``Series`` object also has a ``to_string`` method, but with only the ``buf``, ``na_rep``, ``float_format`` ``arguments``. There is also a ``length`` argument which, if set to ``True``, will additionally output the length of the Series.
 
 ## JSON
 
 Read and write JSON format files and strings.
 
-Writing JSON
-A Series or DataFrame can be converted to a valid JSON string. Use to_json with optional parameters:
+### Writing JSON
+
+A ``Series`` or ``DataFrame`` can be converted to a valid JSON string. Use ``to_json`` with optional parameters:
 
 path_or_buf : the pathname or buffer to write the output This can be None in which case a JSON string is returned
 
