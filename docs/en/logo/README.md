@@ -2,67 +2,67 @@
 sidebar: false
 ---
 
-# Logo 捐赠名单
+# Logo Donor List
 
-特此鸣谢以下捐赠者对Pandas中文网Logo的捐赠。
+I would like to thank the following donors for their donation to the Pandas Chinese website logo.
 
-排名 | 昵称 | 姓名 | 身份证号 | 捐赠金额（元）| 联系方式 | 备注
+Ranking | Nickname | Name | Identity Number | Amount(¥) | Contact | Remarks
 ---|---|---|---|---|---|---
-<b style="color: #cb960d">1</b> | <b style="color: #cb960d">AIBAO</b> | <b style="color: #cb960d">匿名</b> | <b style="color: #cb960d">不公开</b> | <b style="color: #cb960d">199.00</b> | <b style="color: #cb960d">微信：archibao</b> | <b style="color: #cb960d">土豪</b>
-2 | Rambo | 匿名 | 不公开 | 105.00 | 邮箱：846058904@qq.com | 无
-3 | 姚巍 | 匿名 | 不公开 | 88.00 | 无 | 无
-4 | 末路人 | 匿名 | 不公开 | 72.60 | 无 | 无
-5 | 😼吴腾跃 | 匿名 | 不公开 | 66.00 | 无 | 无
-6 | 百灵与雏菊 | 匿名 | 不公开 | 65.00 | 无 | 无
-7 | LSZ | 匿名 | 不公开 | 60.00 | 无 | 无
-8 | Xukai CHENG | 匿名 | 不公开 | 50.00 | 微信：Snake_KaiKai | 无
-9 | Anna | 匿名 | 不公开 | 50.00 | 无 | 无
-10 | 远源 | 匿名 | 不公开 | 45.00 | 无 | 无
-11 | visv | 匿名 | 不公开 | 40.96 | 微信：visvlee | 无
-12 | Niejvv | 匿名 | 不公开 | 35.00 | 无 | 无
-13 | 聪 | 匿名 | 不公开 | 30.00 | 邮箱：519517745@qq.com | 无
-14 | 4U | 匿名 | 不公开 | 28.00 | 无 | 无
-15 | Rena | 匿名 | 不公开 | 27.00 | 无 | 无
-16 | 平衡大大大 | 匿名 | 不公开 | 26.02 | 公众号：数分笔记 | 无
-17 | 毛韩 | 匿名 | 不公开 | 26.00 | 微信：mm571025 | 无
-18 | 周琦 | 匿名 | 不公开 | 26.00 | 邮箱：jkmoll@163.com | 无
-19 | 天津包子🙊💯 | 匿名 | 不公开 | 22.22 | 邮箱：974893251@qq.com | 无
-20 | 阿里BaBa | 匿名 | 不公开 | 20.48 | 无 | 无
-21 | Stubborn | 匿名 | 不公开 | 20.00 | 网站：www.sutbbron.cn | 无
-22 | 寒友 | 匿名 | 不公开 | 20.00 | 无 | 无
-23 | 杨不知 | 匿名 | 不公开 | 16.00 | 网站：www.ysir308.com | 无
-24 | 姜泽坤 | 匿名 | 不公开 | 16.00 | 微信：jzk20150101 | 无
-25 | 支支 | 匿名 | 不公开 | 16.10 | 微信：zhi5620553 | 无
-26 | Ph | 匿名 | 不公开 | 15.00 | 无 | 无
-27 | shadow | 匿名 | 不公开 | 15.00 | 无 | 无
-28 | 招成宝 | 匿名 | 不公开 | 15.00 | 微信：Swan-zhaocb | 无
-29 | Kobe Bryant | 匿名 | 不公开 | 15.00 | 无 | 无
-30 | 老巫婆 | 匿名 | 不公开 | 15.00 | 邮箱：zyloldwitch@163.com | 无
-31 | zy | 匿名 | 不公开 | 15.00 | 微信：zy280631772 | 无
-32 | SSRR | 匿名 | 不公开 | 15.00 | 微信：Rosa--J | 无
-33 | 王腾坤 | 匿名 | 不公开 | 15.00 | 无 | 无
-34 | 欲言又止 | 匿名 | 不公开 | 15.00 | 微信：emtakool | 无
-35 | 龚老师 | 匿名 | 不公开 | 15.00 | 邮箱：gongal@163.com | 无
-36 | 谢荃羽 | 匿名 | 不公开 | 13.32 | 无 | 无
-37 | 曾坤 | 匿名 | 不公开 | 13.00 | 无 | 无
-38 | 押尾コータロー | 匿名 | 不公开 | 10.24 | 无 | 无
-39 | Tarro | 匿名 | 不公开 | 10.00 | 无 | 无
-40 | Alx | 匿名 | 不公开 | 10.00 | 无 | 无
-41 | ohh . | 匿名 | 不公开 | 10.00 | 微信：yangyuwx001 | 无
-42 | X.x | 匿名 | 不公开 | 10.00 | 无 | 无
-43 | 宋宇 | 匿名 | 不公开 | 10.00 | 无 | 无
-44 | someone | 匿名 | 不公开 | 10.00 | 无 | 无
-45 | 杨 | 匿名 | 不公开 | 10.00 | 无 | 无
-46 | 洋~ | 匿名 | 不公开 | 10.00 | 无 | 无
-47 | 刘盼 | 匿名 | 不公开 | 10.00 | 无 | 无
-48 | 凌绝顶 | 匿名 | 不公开 | 10.00 | 无 | 无
-49 | Axzc | 匿名 | 不公开 | 8.88 | 无 | 无
-50 | 何文定 | 匿名 | 不公开 | 8.88 | 无 | 无
-51 | 赵恒涛 | 匿名 | 不公开 | 8.00 | 无 | 无
-52 | 吾悦 | 匿名 | 不公开 | 7.77 | 无 | 无
-53 | 宝山 | 匿名 | 不公开 | 6.66 | 无 | 无
-54 | Vendci | 匿名 | 不公开 | 6.66 | 无 | 无
-55 | Amber | 匿名 | 不公开 | 6.60 | 无 | 无
-56 | 幽兰@幽香 | 匿名 | 不公开 | 6.60 | 无 | 无
-57 | Y&2Y | 匿名 | 不公开 | 1.00 | 无 | 无
-58 | 李东bbsky | 匿名 | 不公开 | 1.00 | 无 | 无
+<b style="color: #cb960d">1</b> | <b style="color: #cb960d">AIBAO</b> | <b style="color: #cb960d">Anonymous</b> | <b style="color: #cb960d">Private</b> | <b style="color: #cb960d">199.00</b> | <b style="color: #cb960d">WeChat:archibao</b> | <b style="color: #cb960d">土豪</b>
+2 | Rambo | Anonymous | Private | 105.00 | Email:846058904@qq.com | None
+3 | 姚巍 | Anonymous | Private | 88.00 | None | None
+4 | 末路人 | Anonymous | Private | 72.60 | None | None
+5 | 😼吴腾跃 | Anonymous | Private | 66.00 | None | None
+6 | 百灵与雏菊 | Anonymous | Private | 65.00 | None | None
+7 | LSZ | Anonymous | Private | 60.00 | None | None
+8 | Xukai CHENG | Anonymous | Private | 50.00 | WeChat:Snake_KaiKai | None
+9 | Anna | Anonymous | Private | 50.00 | None | None
+10 | 远源 | Anonymous | Private | 45.00 | None | None
+11 | visv | Anonymous | Private | 40.96 | WeChat:visvlee | None
+12 | Niejvv | Anonymous | Private | 35.00 | None | None
+13 | 聪 | Anonymous | Private | 30.00 | Email:519517745@qq.com | None
+14 | 4U | Anonymous | Private | 28.00 | None | None
+15 | Rena | Anonymous | Private | 27.00 | None | None
+16 | 平衡大大大 | Anonymous | Private | 26.02 | WeChat P:数分笔记 | None
+17 | 毛韩 | Anonymous | Private | 26.00 | WeChat:mm571025 | None
+18 | 周琦 | Anonymous | Private | 26.00 | Email:jkmoll@163.com | None
+19 | 天津包子🙊💯 | Anonymous | Private | 22.22 | Email:974893251@qq.com | None
+20 | 阿里BaBa | Anonymous | Private | 20.48 | None | None
+21 | Stubborn | Anonymous | Private | 20.00 | WebSite:www.sutbbron.cn | None
+22 | 寒友 | Anonymous | Private | 20.00 | None | None
+23 | 杨不知 | Anonymous | Private | 16.00 | WebSite:www.ysir308.com | None
+24 | 姜泽坤 | Anonymous | Private | 16.00 | WeChat:jzk20150101 | None
+25 | 支支 | Anonymous | Private | 16.10 | WeChat:zhi5620553 | None
+26 | Ph | Anonymous | Private | 15.00 | None | None
+27 | shadow | Anonymous | Private | 15.00 | None | None
+28 | 招成宝 | Anonymous | Private | 15.00 | WeChat:Swan-zhaocb | None
+29 | Kobe Bryant | Anonymous | Private | 15.00 | None | None
+30 | 老巫婆 | Anonymous | Private | 15.00 | Email:zyloldwitch@163.com | None
+31 | zy | Anonymous | Private | 15.00 | WeChat:zy280631772 | None
+32 | SSRR | Anonymous | Private | 15.00 | WeChat:Rosa--J | None
+33 | 王腾坤 | Anonymous | Private | 15.00 | None | None
+34 | 欲言又止 | Anonymous | Private | 15.00 | WeChat:emtakool | None
+35 | 龚老师 | Anonymous | Private | 15.00 | Email:gongal@163.com | None
+36 | 谢荃羽 | Anonymous | Private | 13.32 | None | None
+37 | 曾坤 | Anonymous | Private | 13.00 | None | None
+38 | 押尾コータロー | Anonymous | Private | 10.24 | None | None
+39 | Tarro | Anonymous | Private | 10.00 | None | None
+40 | Alx | Anonymous | Private | 10.00 | None | None
+41 | ohh . | Anonymous | Private | 10.00 | WeChat:yangyuwx001 | None
+42 | X.x | Anonymous | Private | 10.00 | None | None
+43 | 宋宇 | Anonymous | Private | 10.00 | None | None
+44 | someone | Anonymous | Private | 10.00 | None | None
+45 | 杨 | Anonymous | Private | 10.00 | None | None
+46 | 洋~ | Anonymous | Private | 10.00 | None | None
+47 | 刘盼 | Anonymous | Private | 10.00 | None | None
+48 | 凌绝顶 | Anonymous | Private | 10.00 | None | None
+49 | Axzc | Anonymous | Private | 8.88 | None | None
+50 | 何文定 | Anonymous | Private | 8.88 | None | None
+51 | 赵恒涛 | Anonymous | Private | 8.00 | None | None
+52 | 吾悦 | Anonymous | Private | 7.77 | None | None
+53 | 宝山 | Anonymous | Private | 6.66 | None | None
+54 | Vendci | Anonymous | Private | 6.66 | None | None
+55 | Amber | Anonymous | Private | 6.60 | None | None
+56 | 幽兰@幽香 | Anonymous | Private | 6.60 | None | None
+57 | Y&2Y | Anonymous | Private | 1.00 | None | None
+58 | 李东bbsky | Anonymous | Private | 1.00 | None | None
