@@ -1937,52 +1937,62 @@ The ``Series`` object also has a ``to_string`` method, but with only the ``buf``
 
 ## JSON
 
-Read and write JSON format files and strings.
+Read and write ``JSON`` format files and strings.
 
 ### Writing JSON
 
 A ``Series`` or ``DataFrame`` can be converted to a valid JSON string. Use ``to_json`` with optional parameters:
 
-path_or_buf : the pathname or buffer to write the output This can be None in which case a JSON string is returned
+- ``path_or_buf`` : the pathname or buffer to write the output This can be ``None`` in which case a JSON string is returned
 
-orient :
+- ``orient`` :
 
-Series:
-default is index
-allowed values are {split, records, index}
-DataFrame:
-default is columns
-allowed values are {split, records, index, columns, values, table}
-The format of the JSON string
+- ``Series``:
+  - default is ``index``
+  - allowed values are ``{split, records, index}``
 
-split	dict like {index -> [index], columns -> [columns], data -> [values]}
-records	list like [{column -> value}, … , {column -> value}]
-index	dict like {index -> {column -> value}}
-columns	dict like {column -> {index -> value}}
-values	just the values array
-date_format : string, type of date conversion, ‘epoch’ for timestamp, ‘iso’ for ISO8601.
+- ``DataFrame``:
+    - default is ``columns``
+    - allowed values are ``{split, records, index, columns, values, table}``
 
-double_precision : The number of decimal places to use when encoding floating point values, default 10.
+  The format of the JSON string
 
-force_ascii : force encoded string to be ASCII, default True.
+  - | -
+  ---|---
+  split | dict like {index -> [index], columns -> [columns], data -> [values]}
+  records | list like [{column -> value}, … , {column -> value}]
+  index | dict like {index -> {column -> value}}
+  columns | dict like {column -> {index -> value}}
+  values | just the values array
 
-date_unit : The time unit to encode to, governs timestamp and ISO8601 precision. One of ‘s’, ‘ms’, ‘us’ or ‘ns’ for seconds, milliseconds, microseconds and nanoseconds respectively. Default ‘ms’.
+- ``date_format`` : string, type of date conversion, ‘epoch’ for timestamp, ‘iso’ for ISO8601.
 
-default_handler : The handler to call if an object cannot otherwise be converted to a suitable format for JSON. Takes a single argument, which is the object to convert, and returns a serializable object.
+- ``double_precision`` : The number of decimal places to use when encoding floating point values, default 10.
 
-lines : If records orient, then will write each record per line as json.
+- ``force_ascii`` : force encoded string to be ASCII, default True.
 
-Note NaN’s, NaT’s and None will be converted to null and datetime objects will be converted based on the date_format and date_unit parameters.
+- ``date_unit`` : The time unit to encode to, governs timestamp and ISO8601 precision. One of ‘s’, ‘ms’, ‘us’ or ‘ns’ for seconds, milliseconds, microseconds and nanoseconds respectively. Default ‘ms’.
 
+- ``default_handler`` : The handler to call if an object cannot otherwise be converted to a suitable format for JSON. Takes a single argument, which is the object to convert, and returns a serializable object.
+
+- ``lines`` : If ``records`` orient, then will write each record per line as json.
+
+Note ``NaN’``s, ``NaT``’s and ``None`` will be converted to ``null`` and datetime objects will be converted based on the ``date_format`` and ``date_unit`` parameters.
+
+``` python
 In [192]: dfj = pd.DataFrame(np.random.randn(5, 2), columns=list('AB'))
 
 In [193]: json = dfj.to_json()
 
 In [194]: json
 Out[194]: '{"A":{"0":-1.2945235903,"1":0.2766617129,"2":-0.0139597524,"3":-0.0061535699,"4":0.8957173022},"B":{"0":0.4137381054,"1":-0.472034511,"2":-0.3625429925,"3":-0.923060654,"4":0.8052440254}}'
-Orient Options
-There are a number of different options for the format of the resulting JSON file / string. Consider the following DataFrame and Series:
+```
 
+#### Orient Options
+
+There are a number of different options for the format of the resulting JSON file / string. Consider the following ``DataFrame`` and ``Series``:
+
+``` python
 In [195]: dfjo = pd.DataFrame(dict(A=range(1, 4), B=range(4, 7), C=range(7, 10)),
    .....:                     columns=list('ABC'), index=list('xyz'))
    .....: 
@@ -2002,45 +2012,67 @@ x    15
 y    16
 z    17
 Name: D, dtype: int64
-Column oriented (the default for DataFrame) serializes the data as nested JSON objects with column labels acting as the primary index:
+```
 
+**Column oriented** (the default for ``DataFrame``) serializes the data as nested JSON objects with column labels acting as the primary index:
+
+``` python
 In [199]: dfjo.to_json(orient="columns")
 Out[199]: '{"A":{"x":1,"y":2,"z":3},"B":{"x":4,"y":5,"z":6},"C":{"x":7,"y":8,"z":9}}'
 
 # Not available for Series
-Index oriented (the default for Series) similar to column oriented but the index labels are now primary:
+```
 
+**Index oriented** (the default for ``Series``) similar to column oriented but the index labels are now primary:
+
+``` python
 In [200]: dfjo.to_json(orient="index")
 Out[200]: '{"x":{"A":1,"B":4,"C":7},"y":{"A":2,"B":5,"C":8},"z":{"A":3,"B":6,"C":9}}'
 
 In [201]: sjo.to_json(orient="index")
 Out[201]: '{"x":15,"y":16,"z":17}'
-Record oriented serializes the data to a JSON array of column -> value records, index labels are not included. This is useful for passing DataFrame data to plotting libraries, for example the JavaScript library d3.js:
+```
 
+**Record oriented** serializes the data to a JSON array of column -> value records, index labels are not included. This is useful for passing ``DataFrame`` data to plotting libraries, for example the JavaScript library ``d3.js``:
+
+``` python
 In [202]: dfjo.to_json(orient="records")
 Out[202]: '[{"A":1,"B":4,"C":7},{"A":2,"B":5,"C":8},{"A":3,"B":6,"C":9}]'
 
 In [203]: sjo.to_json(orient="records")
 Out[203]: '[15,16,17]'
-Value oriented is a bare-bones option which serializes to nested JSON arrays of values only, column and index labels are not included:
+```
 
+**Value oriented** is a bare-bones option which serializes to nested JSON arrays of values only, column and index labels are not included:
+
+``` python
 In [204]: dfjo.to_json(orient="values")
 Out[204]: '[[1,4,7],[2,5,8],[3,6,9]]'
 
 # Not available for Series
-Split oriented serializes to a JSON object containing separate entries for values, index and columns. Name is also included for Series:
+```
 
+**Split oriented** serializes to a JSON object containing separate entries for values, index and columns. Name is also included for ``Series``:
+
+``` python
 In [205]: dfjo.to_json(orient="split")
 Out[205]: '{"columns":["A","B","C"],"index":["x","y","z"],"data":[[1,4,7],[2,5,8],[3,6,9]]}'
 
 In [206]: sjo.to_json(orient="split")
 Out[206]: '{"name":"D","index":["x","y","z"],"data":[15,16,17]}'
-Table oriented serializes to the JSON Table Schema, allowing for the preservation of metadata including but not limited to dtypes and index names.
+```
 
-Note Any orient option that encodes to a JSON object will not preserve the ordering of index and column labels during round-trip serialization. If you wish to preserve label ordering use the split option as it uses ordered containers.
-Date Handling
+**Table oriented** serializes to the JSON [Table Schema](https://specs.frictionlessdata.io/json-table-schema/), allowing for the preservation of metadata including but not limited to dtypes and index names.
+
+::: tip Note 
+Any orient option that encodes to a JSON object will not preserve the ordering of index and column labels during round-trip serialization. If you wish to preserve label ordering use the *split* option as it uses ordered containers.
+:::
+
+#### Date Handling
+
 Writing in ISO date format:
 
+``` python
 In [207]: dfd = pd.DataFrame(np.random.randn(5, 2), columns=list('AB'))
 
 In [208]: dfd['date'] = pd.Timestamp('20130101')
@@ -2051,20 +2083,29 @@ In [210]: json = dfd.to_json(date_format='iso')
 
 In [211]: json
 Out[211]: '{"date":{"0":"2013-01-01T00:00:00.000Z","1":"2013-01-01T00:00:00.000Z","2":"2013-01-01T00:00:00.000Z","3":"2013-01-01T00:00:00.000Z","4":"2013-01-01T00:00:00.000Z"},"B":{"0":2.5656459463,"1":1.3403088498,"2":-0.2261692849,"3":0.8138502857,"4":-0.8273169356},"A":{"0":-1.2064117817,"1":1.4312559863,"2":-1.1702987971,"3":0.4108345112,"4":0.1320031703}}'
+```
+
 Writing in ISO date format, with microseconds:
 
+``` python
 In [212]: json = dfd.to_json(date_format='iso', date_unit='us')
 
 In [213]: json
 Out[213]: '{"date":{"0":"2013-01-01T00:00:00.000000Z","1":"2013-01-01T00:00:00.000000Z","2":"2013-01-01T00:00:00.000000Z","3":"2013-01-01T00:00:00.000000Z","4":"2013-01-01T00:00:00.000000Z"},"B":{"0":2.5656459463,"1":1.3403088498,"2":-0.2261692849,"3":0.8138502857,"4":-0.8273169356},"A":{"0":-1.2064117817,"1":1.4312559863,"2":-1.1702987971,"3":0.4108345112,"4":0.1320031703}}'
+```
+
 Epoch timestamps, in seconds:
 
+``` python
 In [214]: json = dfd.to_json(date_format='epoch', date_unit='s')
 
 In [215]: json
 Out[215]: '{"date":{"0":1356998400,"1":1356998400,"2":1356998400,"3":1356998400,"4":1356998400},"B":{"0":2.5656459463,"1":1.3403088498,"2":-0.2261692849,"3":0.8138502857,"4":-0.8273169356},"A":{"0":-1.2064117817,"1":1.4312559863,"2":-1.1702987971,"3":0.4108345112,"4":0.1320031703}}'
+```
+
 Writing to a file, with a date index and a date column:
 
+``` python
 In [216]: dfj2 = dfj.copy()
 
 In [217]: dfj2['date'] = pd.Timestamp('20130101')
@@ -2081,88 +2122,114 @@ In [222]: with open('test.json') as fh:
    .....:     print(fh.read())
    .....: 
 {"A":{"1356998400000":-1.2945235903,"1357084800000":0.2766617129,"1357171200000":-0.0139597524,"1357257600000":-0.0061535699,"1357344000000":0.8957173022},"B":{"1356998400000":0.4137381054,"1357084800000":-0.472034511,"1357171200000":-0.3625429925,"1357257600000":-0.923060654,"1357344000000":0.8052440254},"date":{"1356998400000":1356998400000,"1357084800000":1356998400000,"1357171200000":1356998400000,"1357257600000":1356998400000,"1357344000000":1356998400000},"ints":{"1356998400000":0,"1357084800000":1,"1357171200000":2,"1357257600000":3,"1357344000000":4},"bools":{"1356998400000":true,"1357084800000":true,"1357171200000":true,"1357257600000":true,"1357344000000":true}}
-Fallback Behavior
+```
+
+#### Fallback Behavior
+
 If the JSON serializer cannot handle the container contents directly it will fall back in the following manner:
 
-if the dtype is unsupported (e.g. np.complex) then the default_handler, if provided, will be called for each value, otherwise an exception is raised.
+  - if the dtype is unsupported (e.g. ``np.complex``) then the default_handler, if provided, will be called for each value, otherwise an exception is raised.
 
-if an object is unsupported it will attempt the following:
+  - if an object is unsupported it will attempt the following:
+    - check if the object has defined a ``toDict`` method and call it. A ``toDict`` method should return a ``dict`` which will then be JSON serialized.
+    - invoke the ``default_handler`` if one was provided.
+    - convert the object to a ``dict`` by traversing its contents. However this will often fail with an ``OverflowError`` or give unexpected results.
 
-check if the object has defined a toDict method and call it. A toDict method should return a dict which will then be JSON serialized.
-invoke the default_handler if one was provided.
-convert the object to a dict by traversing its contents. However this will often fail with an OverflowError or give unexpected results.
-In general the best approach for unsupported objects or dtypes is to provide a default_handler. For example:
+In general the best approach for unsupported objects or dtypes is to provide a ``default_handler``. For example:
 
+``` python
 >>> DataFrame([1.0, 2.0, complex(1.0, 2.0)]).to_json()  # raises
 RuntimeError: Unhandled numpy dtype 15
-can be dealt with by specifying a simple default_handler:
+```
 
+can be dealt with by specifying a simple ``default_handler``:
+
+``` python
 In [223]: pd.DataFrame([1.0, 2.0, complex(1.0, 2.0)]).to_json(default_handler=str)
 Out[223]: '{"0":{"0":"(1+0j)","1":"(2+0j)","2":"(1+2j)"}}'
-Reading JSON
-Reading a JSON string to pandas object can take a number of parameters. The parser will try to parse a DataFrame if typ is not supplied or is None. To explicitly force Series parsing, pass typ=series
+```
 
-filepath_or_buffer : a VALID JSON string or file handle / StringIO. The string could be a URL. Valid URL schemes include http, ftp, S3, and file. For file URLs, a host is expected. For instance, a local file could be file ://localhost/path/to/table.json
+### Reading JSON
 
-typ : type of object to recover (series or frame), default ‘frame’
+Reading a JSON string to pandas object can take a number of parameters. The parser will try to parse a ``DataFrame`` if ``typ`` is not supplied or is ``None``. To explicitly force ``Series`` parsing, pass ``typ=series``
 
-orient :
+  - ``filepath_or_buffer`` : a **VALID** JSON string or file handle / StringIO. The string could be a URL. Valid URL schemes include http, ftp, S3, and file. For file URLs, a host is expected. For instance, a local file could be file ://localhost/path/to/table.json
 
-Series :
-default is index
-allowed values are {split, records, index}
-DataFrame
-default is columns
-allowed values are {split, records, index, columns, values, table}
-The format of the JSON string
+  - ``typ`` : type of object to recover (series or frame), default ‘frame’
 
-split	dict like {index -> [index], columns -> [columns], data -> [values]}
-records	list like [{column -> value}, … , {column -> value}]
-index	dict like {index -> {column -> value}}
-columns	dict like {column -> {index -> value}}
-values	just the values array
-table	adhering to the JSON Table Schema
-dtype : if True, infer dtypes, if a dict of column to dtype, then use those, if False, then don’t infer dtypes at all, default is True, apply only to the data.
+  - ``orient`` :
+    - Series :
+      - default is ``index``
+      - allowed values are ``{split, records, index}``
+    - DataFrame
+      - default is ``columns``
+      - allowed values are ``{split, records, index, columns, values, table}``
 
-convert_axes : boolean, try to convert the axes to the proper dtypes, default is True
+    The format of the JSON string
 
-convert_dates : a list of columns to parse for dates; If True, then try to parse date-like columns, default is True.
+    - | -
+    ---|---
+    split | dict like {index -> [index], columns -> [columns], data -> [values]}
+    records | list like [{column -> value}, … , {column -> value}]
+    index | dict like {index -> {column -> value}}
+    columns | dict like {column -> {index -> value}}
+    values | just the values array
+    table | adhering to the JSON [Table Schema](https://specs.frictionlessdata.io/json-table-schema/)
 
-keep_default_dates : boolean, default True. If parsing dates, then parse the default date-like columns.
+    - ``dtype`` : if True, infer dtypes, if a dict of column to dtype, then use those, if ``False``, then don’t infer dtypes at all, default is True, apply only to the data.
 
-numpy : direct decoding to NumPy arrays. default is False; Supports numeric data only, although labels may be non-numeric. Also note that the JSON ordering MUST be the same for each term if numpy=True.
+    - ``convert_axes`` : boolean, try to convert the axes to the proper dtypes, default is ``True``
 
-precise_float : boolean, default False. Set to enable usage of higher precision (strtod) function when decoding string to double values. Default (False) is to use fast but less precise builtin functionality.
+    - ``convert_dates`` : a list of columns to parse for dates; If ``True``, then try to parse date-like columns, default is ``True``.
 
-date_unit : string, the timestamp unit to detect if converting dates. Default None. By default the timestamp precision will be detected, if this is not desired then pass one of ‘s’, ‘ms’, ‘us’ or ‘ns’ to force timestamp precision to seconds, milliseconds, microseconds or nanoseconds respectively.
+    - ``keep_default_dates`` : boolean, default ``True``. If parsing dates, then parse the default date-like columns.
 
-lines : reads file as one json object per line.
+    - ``numpy`` : direct decoding to NumPy arrays. default is ``False``; Supports numeric data only, although labels may be non-numeric. Also note that the JSON ordering **MUST** be the same for each term if ``numpy=True``.
 
-encoding : The encoding to use to decode py3 bytes.
+    - ``precise_float`` : boolean, default ``False``. Set to enable usage of higher precision (strtod) function when decoding string to double values. Default (``False``) is to use fast but less precise builtin functionality.
 
-chunksize : when used in combination with lines=True, return a JsonReader which reads in chunksize lines per iteration.
+    - ``date_unit`` : string, the timestamp unit to detect if converting dates. Default None. By default the timestamp precision will be detected, if this is not desired then pass one of ‘s’, ‘ms’, ‘us’ or ‘ns’ to force timestamp precision to seconds, milliseconds, microseconds or nanoseconds respectively.
 
-The parser will raise one of ValueError/TypeError/AssertionError if the JSON is not parseable.
+    - ``lines`` : reads file as one json object per line.
 
-If a non-default orient was used when encoding to JSON be sure to pass the same option here so that decoding produces sensible results, see Orient Options for an overview.
+    - ``encoding`` : The encoding to use to decode py3 bytes.
 
-Data Conversion
-The default of convert_axes=True, dtype=True, and convert_dates=True will try to parse the axes, and all of the data into appropriate types, including dates. If you need to override specific dtypes, pass a dict to dtype. convert_axes should only be set to False if you need to preserve string-like numbers (e.g. ‘1’, ‘2’) in an axes.
+    - ``chunksize`` : when used in combination with ``lines=True``, return a JsonReader which reads in ``chunksize`` lines per iteration.
 
-Note Large integer values may be converted to dates if convert_dates=True and the data and / or column labels appear ‘date-like’. The exact threshold depends on the date_unit specified. ‘date-like’ means that the column label meets one of the following criteria:
-it ends with '_at'
-it ends with '_time'
-it begins with 'timestamp'
-it is 'modified'
-it is 'date'
-Warning When reading JSON data, automatic coercing into dtypes has some quirks:
-an index can be reconstructed in a different order from serialization, that is, the returned order is not guaranteed to be the same as before serialization
-a column that was float data will be converted to integer if it can be done safely, e.g. a column of 1.
-bool columns will be converted to integer on reconstruction
-Thus there are times where you may want to specify specific dtypes via the dtype keyword argument.
+The parser will raise one of ``ValueError/TypeError/AssertionError`` if the JSON is not parseable.
+
+If a non-default ``orient`` was used when encoding to JSON be sure to pass the same option here so that decoding produces sensible results, see [Orient Options](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#orient-options) for an overview.
+
+#### Data Conversion
+
+The default of ``convert_axes=True``, ``dtype=True``, and c``onvert_dates=True`` will try to parse the axes, and all of the data into appropriate types, including dates. If you need to override specific dtypes, pass a dict to ``dtype``. ``convert_axes`` should only be set to ``False`` if you need to preserve string-like numbers (e.g. ‘1’, ‘2’) in an axes.
+
+::: tip Note
+Large integer values may be converted to dates if ``convert_dates=True`` and the data and / or column labels appear ‘date-like’. The exact threshold depends on the ``date_unit`` specified. ‘date-like’ means that the column label meets one of the following criteria:
+
+- it ends with ``'_at'``
+- it ends with ``'_time'``
+- it begins with ``'timestamp'``
+- it is ``'modified'``
+- it is ``'date'``
+
+:::
+
+::: tip Warning
+
+When reading JSON data, automatic coercing into dtypes has some quirks:
+
+- an index can be reconstructed in a different order from serialization, that is, the returned order is not guaranteed to be the same as before serialization
+- a column that was ``float`` data will be converted to ``integer`` if it can be done safely, e.g. a column of ``1``.
+- bool columns will be converted to ``integer`` on reconstruction
+
+Thus there are times where you may want to specify specific dtypes via the ``dtype`` keyword argument.
+
+:::
 
 Reading from a JSON string:
 
+``` python
 In [224]: pd.read_json(json)
 Out[224]: 
         date         B         A
@@ -2171,8 +2238,11 @@ Out[224]:
 2 2013-01-01 -0.226169 -1.170299
 3 2013-01-01  0.813850  0.410835
 4 2013-01-01 -0.827317  0.132003
+```
+
 Reading from a file:
 
+``` python
 In [225]: pd.read_json('test.json')
 Out[225]: 
                    A         B       date  ints  bools
@@ -2181,8 +2251,11 @@ Out[225]:
 2013-01-03 -0.013960 -0.362543 2013-01-01     2   True
 2013-01-04 -0.006154 -0.923061 2013-01-01     3   True
 2013-01-05  0.895717  0.805244 2013-01-01     4   True
+```
+
 Don’t convert any data (but still convert axes and dates):
 
+``` python
 In [226]: pd.read_json('test.json', dtype=object).dtypes
 Out[226]: 
 A        object
@@ -2191,8 +2264,11 @@ date     object
 ints     object
 bools    object
 dtype: object
+```
+
 Specify dtypes for conversion:
 
+``` python
 In [227]: pd.read_json('test.json', dtype={'A': 'float32', 'bools': 'int8'}).dtypes
 Out[227]: 
 A               float32
@@ -2201,8 +2277,11 @@ date     datetime64[ns]
 ints              int64
 bools              int8
 dtype: object
+```
+
 Preserve string indices:
 
+``` python
 In [228]: si = pd.DataFrame(np.zeros((4, 4)), columns=list(range(4)),
    .....:                   index=[str(i) for i in range(4)])
    .....: 
@@ -2238,8 +2317,11 @@ Out[235]: Index(['0', '1', '2', '3'], dtype='object')
 
 In [236]: sij.columns
 Out[236]: Index(['0', '1', '2', '3'], dtype='object')
+```
+
 Dates written in nanoseconds need to be read back in nanoseconds:
 
+``` python
 In [237]: json = dfj2.to_json(date_unit='ns')
 
 # Try to parse timestamps as millseconds -> Won't Work
@@ -2277,12 +2359,21 @@ Out[243]:
 2013-01-03 -0.013960 -0.362543 2013-01-01     2   True
 2013-01-04 -0.006154 -0.923061 2013-01-01     3   True
 2013-01-05  0.895717  0.805244 2013-01-01     4   True
-The Numpy Parameter
-Note This supports numeric data only. Index and columns labels may be non-numeric, e.g. strings, dates etc.
-If numpy=True is passed to read_json an attempt will be made to sniff an appropriate dtype during deserialization and to subsequently decode directly to NumPy arrays, bypassing the need for intermediate Python objects.
+```
+
+#### The Numpy Parameter
+
+::: tip Note 
+
+This supports numeric data only. Index and columns labels may be non-numeric, e.g. strings, dates etc.
+
+:::
+
+If ``numpy=True`` is passed to ``read_json`` an attempt will be made to sniff an appropriate dtype during deserialization and to subsequently decode directly to NumPy arrays, bypassing the need for intermediate Python objects.
 
 This can provide speedups if you are deserialising a large amount of numeric data:
 
+``` python
 In [244]: randfloats = np.random.uniform(-100, 1000, 10000)
 
 In [245]: randfloats.shape = (1000, 10)
@@ -2290,24 +2381,49 @@ In [245]: randfloats.shape = (1000, 10)
 In [246]: dffloats = pd.DataFrame(randfloats, columns=list('ABCDEFGHIJ'))
 
 In [247]: jsonfloats = dffloats.to_json()
+```
+
+``` python
 In [248]: %timeit pd.read_json(jsonfloats)
 15.3 ms +- 305 us per loop (mean +- std. dev. of 7 runs, 100 loops each)
+```
+
+``` python
 In [249]: %timeit pd.read_json(jsonfloats, numpy=True)
 15.4 ms +- 4.12 ms per loop (mean +- std. dev. of 7 runs, 100 loops each)
+```
+
 The speedup is less noticeable for smaller datasets:
 
+``` python
 In [250]: jsonfloats = dffloats.head(100).to_json()
+```
+
+``` python
 In [251]: %timeit pd.read_json(jsonfloats)
 25.4 ms +- 2.74 ms per loop (mean +- std. dev. of 7 runs, 10 loops each)
+```
+
+``` python
 In [252]: %timeit pd.read_json(jsonfloats, numpy=True)
 19.9 ms +- 1.45 ms per loop (mean +- std. dev. of 7 runs, 10 loops each)
-Warning Direct NumPy decoding makes a number of assumptions and may fail or produce unexpected output if these assumptions are not satisfied:
-data is numeric.
-data is uniform. The dtype is sniffed from the first value decoded. A ValueError may be raised, or incorrect output may be produced if this condition is not satisfied.
-labels are ordered. Labels are only read from the first container, it is assumed that each subsequent row / column has been encoded in the same order. This should be satisfied if the data was encoded using to_json but may not be the case if the JSON is from another source.
-Normalization
+```
+
+::: danger Warning
+
+Direct NumPy decoding makes a number of assumptions and may fail or produce unexpected output if these assumptions are not satisfied:
+
+- data is numeric.
+- data is uniform. The dtype is sniffed from the first value decoded. A ``ValueError`` may be raised, or incorrect output may be produced if this condition is not satisfied.
+- labels are ordered. Labels are only read from the first container, it is assumed that each subsequent row / column has been encoded in the same order. This should be satisfied if the data was encoded using ``to_json`` but may not be the case if the JSON is from another source.
+
+:::
+
+### Normalization
+
 pandas provides a utility function to take a dict or list of dicts and normalize this semi-structured data into a flat table.
 
+``` python
 In [253]: from pandas.io.json import json_normalize
 
 In [254]: data = [{'id': 1, 'name': {'first': 'Coleen', 'last': 'Volk'}},
@@ -2321,6 +2437,9 @@ Out[255]:
 0  1.0         NaN         NaN     Coleen        NaN      Volk
 1  NaN         NaN      Regner        NaN       Mose       NaN
 2  2.0  Faye Raker         NaN        NaN        NaN       NaN
+```
+
+``` python
 In [256]: data = [{'state': 'Florida',
    .....:          'shortname': 'FL',
    .....:          'info': {'governor': 'Rick Scott'},
@@ -2342,15 +2461,36 @@ Out[257]:
 2  Palm Beach       60000  Florida        FL    Rick Scott
 3      Summit        1234     Ohio        OH   John Kasich
 4    Cuyahoga        1337     Ohio        OH   John Kasich
-Line delimited json
-New in version 0.19.0.
+```
+
+The max_level parameter provides more control over which level to end normalization. With max_level=1 the following snippet normalizes until 1st nesting level of the provided dict.
+
+``` python
+In [258]: data = [{'CreatedBy': {'Name': 'User001'},
+   .....:          'Lookup': {'TextField': 'Some text',
+   .....:                     'UserField': {'Id': 'ID001',
+   .....:                                   'Name': 'Name001'}},
+   .....:          'Image': {'a': 'b'}
+   .....:          }]
+   .....: 
+
+In [259]: json_normalize(data, max_level=1)
+Out[259]: 
+  CreatedBy.Name Lookup.TextField                    Lookup.UserField Image.a
+0        User001        Some text  {'Id': 'ID001', 'Name': 'Name001'}       b
+```
+
+### Line delimited json
+
+*New in version 0.19.0.*
 
 pandas is able to read and write line-delimited json files that are common in data processing pipelines using Hadoop or Spark.
 
-New in version 0.21.0.
+*New in version 0.21.0.*
 
-For line-delimited json files, pandas can also return an iterator which reads in chunksize lines at a time. This can be useful for large files or to read from a stream.
+For line-delimited json files, pandas can also return an iterator which reads in ``chunksize`` lines at a time. This can be useful for large files or to read from a stream.
 
+``` python
 In [258]: jsonl = '''
    .....:     {"a": 1, "b": 2}
    .....:     {"a": 3, "b": 4}
@@ -2384,11 +2524,15 @@ Index: []
 0  1  2
    a  b
 1  3  4
-Table Schema
-New in version 0.20.0.
+```
 
-Table Schema is a spec for describing tabular datasets as a JSON object. The JSON includes information on the field names, types, and other attributes. You can use the orient table to build a JSON string with two fields, schema and data.
+### Table Schema
 
+*New in version 0.20.0.*
+
+[Table Schema](https://specs.frictionlessdata.io/json-table-schema/) is a spec for describing tabular datasets as a JSON object. The JSON includes information on the field names, types, and other attributes. You can use the orient ``table`` to build a JSON string with two fields, ``schema`` and ``data``.
+
+``` python
 In [265]: df = pd.DataFrame({'A': [1, 2, 3],
    .....:                    'B': ['a', 'b', 'c'],
    .....:                    'C': pd.date_range('2016-01-01', freq='d', periods=3)},
@@ -2405,151 +2549,177 @@ idx
 
 In [267]: df.to_json(orient='table', date_format="iso")
 Out[267]: '{"schema": {"fields":[{"name":"idx","type":"integer"},{"name":"A","type":"integer"},{"name":"B","type":"string"},{"name":"C","type":"datetime"}],"primaryKey":["idx"],"pandas_version":"0.20.0"}, "data": [{"idx":0,"A":1,"B":"a","C":"2016-01-01T00:00:00.000Z"},{"idx":1,"A":2,"B":"b","C":"2016-01-02T00:00:00.000Z"},{"idx":2,"A":3,"B":"c","C":"2016-01-03T00:00:00.000Z"}]}'
-The schema field contains the fields key, which itself contains a list of column name to type pairs, including the Index or MultiIndex (see below for a list of types). The schema field also contains a primaryKey field if the (Multi)index is unique.
+```
 
-The second field, data, contains the serialized data with the records orient. The index is included, and any datetimes are ISO 8601 formatted, as required by the Table Schema spec.
+The ``schema`` field contains the ``fields`` key, which itself contains a list of column name to type pairs, including the ``Index`` or ``MultiIndex`` (see below for a list of types). The ``schema`` field also contains a ``primaryKey`` field if the (Multi)index is unique.
+
+The second field, ``data``, contains the serialized data with the ``records`` orient. The index is included, and any datetimes are ISO 8601 formatted, as required by the Table Schema spec.
 
 The full list of types supported are described in the Table Schema spec. This table shows the mapping from pandas types:
 
-Pandas type	Table Schema type
-int64	integer
-float64	number
-bool	boolean
-datetime64[ns]	datetime
-timedelta64[ns]	duration
-categorical	any
-object	str
+Pandas type | Table Schema type
+---|---
+int64 | integer
+float64 | number
+bool | boolean
+datetime64[ns] | datetime
+timedelta64[ns] | duration
+categorical | any
+object | str
+
 A few notes on the generated table schema:
 
-The schema object contains a pandas_version field. This contains the version of pandas’ dialect of the schema, and will be incremented with each revision.
+- The ``schema`` object contains a ``pandas_version`` field. This contains the version of pandas’ dialect of the schema, and will be incremented with each revision.
 
-All dates are converted to UTC when serializing. Even timezone naive values, which are treated as UTC with an offset of 0.
+- All dates are converted to UTC when serializing. Even timezone naive values, which are treated as UTC with an offset of 0.
 
-In [268]: from pandas.io.json import build_table_schema
+  ``` python
+  In [268]: from pandas.io.json import build_table_schema
 
-In [269]: s = pd.Series(pd.date_range('2016', periods=4))
+  In [269]: s = pd.Series(pd.date_range('2016', periods=4))
 
-In [270]: build_table_schema(s)
-Out[270]: 
-{'fields': [{'name': 'index', 'type': 'integer'},
-  {'name': 'values', 'type': 'datetime'}],
- 'primaryKey': ['index'],
- 'pandas_version': '0.20.0'}
-datetimes with a timezone (before serializing), include an additional field tz with the time zone name (e.g. 'US/Central').
+  In [270]: build_table_schema(s)
+  Out[270]: 
+  {'fields': [{'name': 'index', 'type': 'integer'},
+    {'name': 'values', 'type': 'datetime'}],
+  'primaryKey': ['index'],
+  'pandas_version': '0.20.0'}
+  ```
+  
+- datetimes with a timezone (before serializing), include an additional field tz with the time zone name (e.g. ``'US/Central'``).
 
-In [271]: s_tz = pd.Series(pd.date_range('2016', periods=12,
-   .....:                                tz='US/Central'))
-   .....: 
+  ``` python
+  In [271]: s_tz = pd.Series(pd.date_range('2016', periods=12,
+    .....:                                tz='US/Central'))
+    .....: 
 
-In [272]: build_table_schema(s_tz)
-Out[272]: 
-{'fields': [{'name': 'index', 'type': 'integer'},
-  {'name': 'values', 'type': 'datetime', 'tz': 'US/Central'}],
- 'primaryKey': ['index'],
- 'pandas_version': '0.20.0'}
-Periods are converted to timestamps before serialization, and so have the same behavior of being converted to UTC. In addition, periods will contain and additional field freq with the period’s frequency, e.g. 'A-DEC'.
+  In [272]: build_table_schema(s_tz)
+  Out[272]: 
+  {'fields': [{'name': 'index', 'type': 'integer'},
+    {'name': 'values', 'type': 'datetime', 'tz': 'US/Central'}],
+  'primaryKey': ['index'],
+  'pandas_version': '0.20.0'}
+  ```
 
-In [273]: s_per = pd.Series(1, index=pd.period_range('2016', freq='A-DEC',
-   .....:                                            periods=4))
-   .....: 
+- Periods are converted to timestamps before serialization, and so have the same behavior of being converted to UTC. In addition, periods will contain and additional field ``freq`` with the period’s frequency, e.g. ``'A-DEC'``.
 
-In [274]: build_table_schema(s_per)
-Out[274]: 
-{'fields': [{'name': 'index', 'type': 'datetime', 'freq': 'A-DEC'},
-  {'name': 'values', 'type': 'integer'}],
- 'primaryKey': ['index'],
- 'pandas_version': '0.20.0'}
-Categoricals use the any type and an enum constraint listing the set of possible values. Additionally, an ordered field is included:
+  ``` python
+  In [273]: s_per = pd.Series(1, index=pd.period_range('2016', freq='A-DEC',
+    .....:                                            periods=4))
+    .....: 
 
-In [275]: s_cat = pd.Series(pd.Categorical(['a', 'b', 'a']))
+  In [274]: build_table_schema(s_per)
+  Out[274]: 
+  {'fields': [{'name': 'index', 'type': 'datetime', 'freq': 'A-DEC'},
+    {'name': 'values', 'type': 'integer'}],
+  'primaryKey': ['index'],
+  'pandas_version': '0.20.0'}
+  ```
 
-In [276]: build_table_schema(s_cat)
-Out[276]: 
-{'fields': [{'name': 'index', 'type': 'integer'},
-  {'name': 'values',
-   'type': 'any',
-   'constraints': {'enum': ['a', 'b']},
-   'ordered': False}],
- 'primaryKey': ['index'],
- 'pandas_version': '0.20.0'}
-A primaryKey field, containing an array of labels, is included if the index is unique:
+- Categoricals use the ``any`` type and an ``enum`` constraint listing the set of possible values. Additionally, an ``ordered`` field is included:
 
-In [277]: s_dupe = pd.Series([1, 2], index=[1, 1])
+  ``` python
+  In [275]: s_cat = pd.Series(pd.Categorical(['a', 'b', 'a']))
 
-In [278]: build_table_schema(s_dupe)
-Out[278]: 
-{'fields': [{'name': 'index', 'type': 'integer'},
-  {'name': 'values', 'type': 'integer'}],
- 'pandas_version': '0.20.0'}
-The primaryKey behavior is the same with MultiIndexes, but in this case the primaryKey is an array:
+  In [276]: build_table_schema(s_cat)
+  Out[276]: 
+  {'fields': [{'name': 'index', 'type': 'integer'},
+    {'name': 'values',
+    'type': 'any',
+    'constraints': {'enum': ['a', 'b']},
+    'ordered': False}],
+  'primaryKey': ['index'],
+  'pandas_version': '0.20.0'}
+  ```
 
-In [279]: s_multi = pd.Series(1, index=pd.MultiIndex.from_product([('a', 'b'),
-   .....:                                                          (0, 1)]))
-   .....: 
+- A ``primaryKey`` field, containing an array of labels, is included *if the index is unique*:
 
-In [280]: build_table_schema(s_multi)
-Out[280]: 
-{'fields': [{'name': 'level_0', 'type': 'string'},
-  {'name': 'level_1', 'type': 'integer'},
-  {'name': 'values', 'type': 'integer'}],
- 'primaryKey': FrozenList(['level_0', 'level_1']),
- 'pandas_version': '0.20.0'}
-The default naming roughly follows these rules:
+  ``` python
+  In [277]: s_dupe = pd.Series([1, 2], index=[1, 1])
 
-For series, the object.name is used. If that’s none, then the name is values
-For DataFrames, the stringified version of the column name is used
-For Index (not MultiIndex), index.name is used, with a fallback to index if that is None.
-For MultiIndex, mi.names is used. If any level has no name, then ``level_<i>`` is used.
-New in version 0.23.0.
+  In [278]: build_table_schema(s_dupe)
+  Out[278]: 
+  {'fields': [{'name': 'index', 'type': 'integer'},
+    {'name': 'values', 'type': 'integer'}],
+  'pandas_version': '0.20.0'}
+  ```
 
-read_json also accepts orient='table' as an argument. This allows for the preservation of metadata such as dtypes and index names in a round-trippable manner.
+- The ``primaryKey`` behavior is the same with MultiIndexes, but in this case the ``primaryKey`` is an array:
 
-In [281]: df = pd.DataFrame({'foo': [1, 2, 3, 4],
-   .....:                    'bar': ['a', 'b', 'c', 'd'],
-   .....:                    'baz': pd.date_range('2018-01-01', freq='d', periods=4),
-   .....:                    'qux': pd.Categorical(['a', 'b', 'c', 'c'])
-   .....:                    }, index=pd.Index(range(4), name='idx'))
-   .....: 
+  ``` python
+  In [279]: s_multi = pd.Series(1, index=pd.MultiIndex.from_product([('a', 'b'),
+    .....:                                                          (0, 1)]))
+    .....: 
 
-In [282]: df
-Out[282]: 
-     foo bar        baz qux
-idx                        
-0      1   a 2018-01-01   a
-1      2   b 2018-01-02   b
-2      3   c 2018-01-03   c
-3      4   d 2018-01-04   c
+  In [280]: build_table_schema(s_multi)
+  Out[280]: 
+  {'fields': [{'name': 'level_0', 'type': 'string'},
+    {'name': 'level_1', 'type': 'integer'},
+    {'name': 'values', 'type': 'integer'}],
+  'primaryKey': FrozenList(['level_0', 'level_1']),
+  'pandas_version': '0.20.0'}
+  ```
 
-In [283]: df.dtypes
-Out[283]: 
-foo             int64
-bar            object
-baz    datetime64[ns]
-qux          category
-dtype: object
+- The default naming roughly follows these rules:
+    - For series, the ``object.name`` is used. If that’s none, then the name is ``values``
+    - For ``DataFrames``, the stringified version of the column name is used
+    - For ``Index`` (not ``MultiIndex``), ``index.name`` is used, with a fallback to ``index`` if that is None.
+    - For ``MultiIndex``, ``mi.names`` is used. If any level has no name, then ``level_<i>`` is used.
 
-In [284]: df.to_json('test.json', orient='table')
+*New in version 0.23.0.*
 
-In [285]: new_df = pd.read_json('test.json', orient='table')
+``read_json`` also accepts ``orient='table'`` as an argument. This allows for the preservation of metadata such as dtypes and index names in a round-trippable manner.
 
-In [286]: new_df
-Out[286]: 
-     foo bar        baz qux
-idx                        
-0      1   a 2018-01-01   a
-1      2   b 2018-01-02   b
-2      3   c 2018-01-03   c
-3      4   d 2018-01-04   c
+  ``` python
+  In [281]: df = pd.DataFrame({'foo': [1, 2, 3, 4],
+    .....:                    'bar': ['a', 'b', 'c', 'd'],
+    .....:                    'baz': pd.date_range('2018-01-01', freq='d', periods=4),
+    .....:                    'qux': pd.Categorical(['a', 'b', 'c', 'c'])
+    .....:                    }, index=pd.Index(range(4), name='idx'))
+    .....: 
 
-In [287]: new_df.dtypes
-Out[287]: 
-foo             int64
-bar            object
-baz    datetime64[ns]
-qux          category
-dtype: object
-Please note that the literal string ‘index’ as the name of an Index is not round-trippable, nor are any names beginning with 'level_' within a MultiIndex. These are used by default in DataFrame.to_json() to indicate missing values and the subsequent read cannot distinguish the intent.
+  In [282]: df
+  Out[282]: 
+      foo bar        baz qux
+  idx                        
+  0      1   a 2018-01-01   a
+  1      2   b 2018-01-02   b
+  2      3   c 2018-01-03   c
+  3      4   d 2018-01-04   c
 
+  In [283]: df.dtypes
+  Out[283]: 
+  foo             int64
+  bar            object
+  baz    datetime64[ns]
+  qux          category
+  dtype: object
+
+  In [284]: df.to_json('test.json', orient='table')
+
+  In [285]: new_df = pd.read_json('test.json', orient='table')
+
+  In [286]: new_df
+  Out[286]: 
+      foo bar        baz qux
+  idx                        
+  0      1   a 2018-01-01   a
+  1      2   b 2018-01-02   b
+  2      3   c 2018-01-03   c
+  3      4   d 2018-01-04   c
+
+  In [287]: new_df.dtypes
+  Out[287]: 
+  foo             int64
+  bar            object
+  baz    datetime64[ns]
+  qux          category
+  dtype: object
+  ```
+
+Please note that the literal string ‘index’ as the name of an [Index](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) is not round-trippable, nor are any names beginning with ``'level_'`` within a [MultiIndex](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex). These are used by default in [DataFrame.to_json()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_json.html#pandas.DataFrame.to_json) to indicate missing values and the subsequent read cannot distinguish the intent.
+
+``` python
 In [288]: df.index.name = 'index'
 
 In [289]: df.to_json('test.json', orient='table')
@@ -2558,17 +2728,29 @@ In [290]: new_df = pd.read_json('test.json', orient='table')
 
 In [291]: print(new_df.index.name)
 None
+```
 
 ## HTML
 
 ### Reading HTML Content
 
-Warning We highly encourage you to read the HTML Table Parsing gotchas below regarding the issues surrounding the BeautifulSoup4/html5lib/lxml parsers.
-The top-level read_html() function can accept an HTML string/file/URL and will parse HTML tables into list of pandas DataFrames. Let’s look at a few examples.
+::: tip Warning
 
-Note read_html returns a list of DataFrame objects, even if there is only a single table contained in the HTML content.
+We **highly encourage** you to read the [HTML Table Parsing gotchas](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-html-gotchas) below regarding the issues surrounding the BeautifulSoup4/html5lib/lxml parsers.
+
+:::
+
+The top-level **read_html()** function can accept an HTML string/file/URL and will parse HTML tables into list of pandas ``DataFrames``. Let’s look at a few examples.
+
+::: tip Note
+
+``read_html`` returns a ``list`` of ``DataFrame`` objects, even if there is only a single table contained in the HTML content.
+
+:::
+
 Read a URL with no options:
 
+``` python
 In [292]: url = 'https://www.fdic.gov/bank/individual/failed/banklist.html'
 
 In [293]: dfs = pd.read_html(url)
@@ -2593,9 +2775,17 @@ Out[294]:
  554                                   Bank of Honolulu            Honolulu  HI  21029                   Bank of the Orient   October 13, 2000      March 17, 2005
  
  [555 rows x 7 columns]]
-Note The data from the above URL changes every Monday so the resulting data above and the data below may be slightly different.
-Read in the content of the file from the above URL and pass it to read_html as a string:
+```
 
+::: tip Note
+
+The data from the above URL changes every Monday so the resulting data above and the data below may be slightly different.
+
+:::
+
+Read in the content of the file from the above URL and pass it to ``read_html`` as a string:
+
+``` python
 In [295]: with open(file_path, 'r') as f:
    .....:     dfs = pd.read_html(f.read())
    .....: 
@@ -2620,8 +2810,11 @@ Out[296]:
  504                          Bank of Honolulu      Honolulu  HI  21029                   Bank of the Orient   October 13, 2000     March 17, 2005
  
  [505 rows x 7 columns]]
-You can even pass in an instance of StringIO if you so desire:
+```
 
+You can even pass in an instance of ``StringIO`` if you so desire:
+
+``` python
 In [297]: with open(file_path, 'r') as f:
    .....:     sio = StringIO(f.read())
    .....: 
@@ -2648,7 +2841,14 @@ Out[299]:
  504                          Bank of Honolulu      Honolulu  HI  21029                   Bank of the Orient   October 13, 2000     March 17, 2005
  
  [505 rows x 7 columns]]
-Note The following examples are not run by the IPython evaluator due to the fact that having so many network-accessing functions slows down the documentation build. If you spot an error or an example that doesn’t run, please do not hesitate to report it over on pandas GitHub issues page.
+```
+
+::: tip Note
+
+The following examples are not run by the IPython evaluator due to the fact that having so many network-accessing functions slows down the documentation build. If you spot an error or an example that doesn’t run, please do not hesitate to report it over on [pandas GitHub issues page](https://www.github.com/pandas-dev/pandas/issues).
+
+:::
+
 Read a URL and match a table that contains specific text:
 
 ``` python
@@ -2670,53 +2870,93 @@ dfs = pd.read_html(url, index_col=0)
 
 Specify a number of rows to skip:
 
+``` python
 dfs = pd.read_html(url, skiprows=0)
-Specify a number of rows to skip using a list (xrange (Python 2 only) works as well):
+```
 
+Specify a number of rows to skip using a list (``xrange`` (Python 2 only) works as well):
+
+``` python
 dfs = pd.read_html(url, skiprows=range(2))
+```
+
 Specify an HTML attribute:
 
+``` python
 dfs1 = pd.read_html(url, attrs={'id': 'table'})
 dfs2 = pd.read_html(url, attrs={'class': 'sortable'})
 print(np.array_equal(dfs1[0], dfs2[0]))  # Should be True
+```
+
 Specify values that should be converted to NaN:
 
+``` python
 dfs = pd.read_html(url, na_values=['No Acquirer'])
-New in version 0.19.
+```
+
+*New in version 0.19.*
 
 Specify whether to keep the default set of NaN values:
 
+``` python
 dfs = pd.read_html(url, keep_default_na=False)
-New in version 0.19.
+```
+
+*New in version 0.19.*
 
 Specify converters for columns. This is useful for numerical text data that has leading zeros. By default columns that are numerical are cast to numeric types and the leading zeros are lost. To avoid this, we can convert these columns to strings.
 
+``` python
 url_mcc = 'https://en.wikipedia.org/wiki/Mobile_country_code'
 dfs = pd.read_html(url_mcc, match='Telekom Albania', header=0,
                    converters={'MNC': str})
-New in version 0.19.
+```
+
+*New in version 0.19.*
 
 Use some combination of the above:
 
+``` python
 dfs = pd.read_html(url, match='Metcalf Bank', index_col=0)
-Read in pandas to_html output (with some loss of floating point precision):
+```
 
+Read in pandas ``to_html`` output (with some loss of floating point precision):
+
+``` python
 df = pd.DataFrame(np.random.randn(2, 2))
 s = df.to_html(float_format='{0:.40g}'.format)
 dfin = pd.read_html(s, index_col=0)
-The lxml backend will raise an error on a failed parse if that is the only parser you provide. If you only have a single parser you can provide just a string, but it is considered good practice to pass a list with one string if, for example, the function expects a sequence of strings. You may use:
+```
 
+The ``lxml`` backend will raise an error on a failed parse if that is the only parser you provide. If you only have a single parser you can provide just a string, but it is considered good practice to pass a list with one string if, for example, the function expects a sequence of strings. You may use:
+
+``` python
 dfs = pd.read_html(url, 'Metcalf Bank', index_col=0, flavor=['lxml'])
+```
+
 Or you could pass flavor='lxml' without a list:
 
+``` python
 dfs = pd.read_html(url, 'Metcalf Bank', index_col=0, flavor='lxml')
-However, if you have bs4 and html5lib installed and pass None or ['lxml', 'bs4'] then the parse will most likely succeed. Note that as soon as a parse succeeds, the function will return.
+```
 
+However, if you have bs4 and html5lib installed and pass ``None or ['lxml', 'bs4']`` then the parse will most likely succeed. Note that *as soon as a parse succeeds, the function will return*.
+
+``` python
 dfs = pd.read_html(url, 'Metcalf Bank', index_col=0, flavor=['lxml', 'bs4'])
-Writing to HTML files
-DataFrame objects have an instance method to_html which renders the contents of the DataFrame as an HTML table. The function arguments are as in the method to_string described above.
+```
 
-Note Not all of the possible options for DataFrame.to_html are shown here for brevity’s sake. See to_html() for the full set of options.
+### Writing to HTML files
+
+``DataFrame`` objects have an instance method ``to_html`` which renders the contents of the ``DataFrame`` as an HTML table. The function arguments are as in the method ``to_string`` described above.
+
+::: tip Note
+
+Not all of the possible options for ``DataFrame.to_html`` are shown here for brevity’s sake. See **to_html()** for the full set of options.
+
+:::
+
+``` python
 In [300]: df = pd.DataFrame(np.random.randn(2, 2))
 
 In [301]: df
@@ -2747,13 +2987,18 @@ In [302]: print(df.to_html())  # raw html
     </tr>
   </tbody>
 </table>
+```
+
 HTML:
 
-0	1
-0	-0.184744	0.496971
-1	-0.856240	1.857977
-The columns argument will limit the columns shown:
+0 | 1
+---|---
+0 | -0.184744 | 0.496971
+1 | -0.856240 | 1.857977
 
+The ``columns`` argument will limit the columns shown:
+
+``` html
 In [303]: print(df.to_html(columns=[0]))
 <table border="1" class="dataframe">
   <thead>
@@ -2773,13 +3018,18 @@ In [303]: print(df.to_html(columns=[0]))
     </tr>
   </tbody>
 </table>
+```
+
 HTML:
 
-0
-0	-0.184744
-1	-0.856240
-float_format takes a Python callable to control the precision of floating point values:
+0 | -
+---|---
+0 | -0.184744
+1 | -0.856240
 
+``float_format`` takes a Python callable to control the precision of floating point values:
+
+``` html
 In [304]: print(df.to_html(float_format='{0:.10f}'.format))
 <table border="1" class="dataframe">
   <thead>
@@ -2802,13 +3052,18 @@ In [304]: print(df.to_html(float_format='{0:.10f}'.format))
     </tr>
   </tbody>
 </table>
+```
+
 HTML:
 
-0	1
-0	-0.1847438576	0.4969711327
-1	-0.8562396763	1.8579766508
-bold_rows will make the row labels bold by default, but you can turn that off:
+0 | 1
+---|---
+0 | -0.1847438576 | 0.4969711327
+1 | -0.8562396763 | 1.8579766508
 
+``bold_rows`` will make the row labels bold by default, but you can turn that off:
+
+``` python
 In [305]: print(df.to_html(bold_rows=False))
 <table border="1" class="dataframe">
   <thead>
@@ -2831,11 +3086,16 @@ In [305]: print(df.to_html(bold_rows=False))
     </tr>
   </tbody>
 </table>
-0	1
-0	-0.184744	0.496971
-1	-0.856240	1.857977
-The classes argument provides the ability to give the resulting HTML table CSS classes. Note that these classes are appended to the existing 'dataframe' class.
+```
 
+0 | 1
+---|---
+0 | -0.184744 | 0.496971
+1 | -0.856240 | 1.857977
+
+The ``classes`` argument provides the ability to give the resulting HTML table CSS classes. Note that these classes are appended to the existing ``'dataframe'`` class.
+
+``` python
 In [306]: print(df.to_html(classes=['awesome_table_class', 'even_more_awesome_class']))
 <table border="1" class="dataframe awesome_table_class even_more_awesome_class">
   <thead>
@@ -2858,10 +3118,13 @@ In [306]: print(df.to_html(classes=['awesome_table_class', 'even_more_awesome_cl
     </tr>
   </tbody>
 </table>
-The render_links argument provides the ability to add hyperlinks to cells that contain URLs.
+```
 
-New in version 0.24.
+The ``render_links`` argument provides the ability to add hyperlinks to cells that contain URLs.
 
+*New in version 0.24.*
+
+``` python
 In [307]: url_df = pd.DataFrame({
    .....:     'name': ['Python', 'Pandas'],
    .....:     'url': ['https://www.python.org/', 'http://pandas.pydata.org']})
@@ -2889,16 +3152,24 @@ In [308]: print(url_df.to_html(render_links=True))
     </tr>
   </tbody>
 </table>
+```
+
 HTML:
 
-name	url
-0	Python	https://www.python.org/
-1	Pandas	http://pandas.pydata.org
-Finally, the escape argument allows you to control whether the “<”, “>” and “&” characters escaped in the resulting HTML (by default it is True). So to get the HTML without escaped characters pass escape=False
+name | url
+---|---
+0 | Python | https://www.python.org/
+1 | Pandas | http://pandas.pydata.org
 
+Finally, the ``escape`` argument allows you to control whether the “<”, “>” and “&” characters escaped in the resulting HTML (by default it is ``True``). So to get the HTML without escaped characters pass ``escape=False``
+
+``` python
 In [309]: df = pd.DataFrame({'a': list('&<>'), 'b': np.random.randn(3)})
+```
+
 Escaped:
 
+``` html
 In [310]: print(df.to_html())
 <table border="1" class="dataframe">
   <thead>
@@ -2926,12 +3197,17 @@ In [310]: print(df.to_html())
     </tr>
   </tbody>
 </table>
-a	b
-0	&	-0.474063
-1	<	-0.230305
-2	>	-0.400654
+```
+
+a | b
+---|---
+0 | & | -0.474063
+1 | < | -0.230305
+2 | > | -0.400654
+
 Not escaped:
 
+``` html
 In [311]: print(df.to_html(escape=False))
 <table border="1" class="dataframe">
   <thead>
@@ -2959,74 +3235,93 @@ In [311]: print(df.to_html(escape=False))
     </tr>
   </tbody>
 </table>
-a	b
-0	&	-0.474063
-1	<	-0.230305
-2	>	-0.400654
-Note Some browsers may not show a difference in the rendering of the previous two HTML tables.
-HTML Table Parsing Gotchas
-There are some versioning issues surrounding the libraries that are used to parse HTML tables in the top-level pandas io function read_html.
+```
 
-Issues with lxml
+a | b
+---|---
+0 | & | -0.474063
+1 | < | -0.230305
+2 | > | -0.400654
 
-Benefits
+::: tip Note
+Some browsers may not show a difference in the rendering of the previous two HTML tables.
+:::
 
-lxml is very fast.
-lxml requires Cython to install correctly.
-Drawbacks
+### HTML Table Parsing Gotchas
 
-lxml does not make any guarantees about the results of its parse unless it is given strictly valid markup.
-In light of the above, we have chosen to allow you, the user, to use the lxml backend, but this backend will use html5lib if lxml fails to parse
-It is therefore highly recommended that you install both BeautifulSoup4 and html5lib, so that you will still get a valid result (provided everything else is valid) even if lxml fails.
-Issues with BeautifulSoup4 using lxml as a backend
+There are some versioning issues surrounding the libraries that are used to parse HTML tables in the top-level pandas io function ``read_html``.
 
-The above issues hold here as well since BeautifulSoup4 is essentially just a wrapper around a parser backend.
-Issues with BeautifulSoup4 using html5lib as a backend
+Issues with [lxml](https://lxml.de/)
 
-Benefits
+- Benefits
+  - [lxml](https://lxml.de/) is very fast.
+  - [lxml](https://lxml.de/) requires Cython to install correctly.
 
-html5lib is far more lenient than lxml and consequently deals with real-life markup in a much saner way rather than just, e.g., dropping an element without notifying you.
-html5lib generates valid HTML5 markup from invalid markup automatically. This is extremely important for parsing HTML tables, since it guarantees a valid document. However, that does NOT mean that it is “correct”, since the process of fixing markup does not have a single definition.
-html5lib is pure Python and requires no additional build steps beyond its own installation.
-Drawbacks
+- Drawbacks
+  - [lxml](https://lxml.de/) does not make any guarantees about the results of its parse *unless* it is given [strictly valid markup](https://validator.w3.org/docs/help.html#validation_basics).
+  - In light of the above, we have chosen to allow you, the user, to use the lxml backend, but **this backend will use** [html5lib](https://github.com/html5lib/html5lib-python) if [lxml](https://lxml.de/) fails to parse
+  - It is therefore *highly recommended* that you install both [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) and [html5lib](https://github.com/html5lib/html5lib-python), so that you will still get a valid result (provided everything else is valid) even if [lxml](https://lxml.de/) fails.
 
-The biggest drawback to using html5lib is that it is slow as molasses. However consider the fact that many tables on the web are not big enough for the parsing algorithm runtime to matter. It is more likely that the bottleneck will be in the process of reading the raw text from the URL over the web, i.e., IO (input-output). For very large tables, this might not be true.
+Issues with [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) using [lxml](https://lxml.de/) as a backend
+
+- The above issues hold here as well since [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) is essentially just a wrapper around a parser backend.
+
+Issues with [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) using [html5lib](https://github.com/html5lib/html5lib-python) as a backend
+
+- Benefits
+  - [html5lib](https://github.com/html5lib/html5lib-python) is far more lenient than [lxml](https://lxml.de/) and consequently deals with *real-life markup* in a much saner way rather than just, e.g., dropping an element without notifying you.
+  - [html5lib](https://github.com/html5lib/html5lib-python) *generates valid HTML5 markup from invalid markup automatically*. This is extremely important for parsing HTML tables, since it guarantees a valid document. However, that does NOT mean that it is “correct”, since the process of fixing markup does not have a single definition.
+  - [html5lib](https://github.com/html5lib/html5lib-python) is pure Python and requires no additional build steps beyond its own installation.
+
+- Drawbacks
+  - The biggest drawback to using [html5lib](https://github.com/html5lib/html5lib-python) is that it is slow as molasses. However consider the fact that many tables on the web are not big enough for the parsing algorithm runtime to matter. It is more likely that the bottleneck will be in the process of reading the raw text from the URL over the web, i.e., IO (input-output). For very large tables, this might not be true.
 
 ## Excel files
 
-The read_excel() method can read Excel 2003 (.xls) and Excel 2007+ (.xlsx) files using the xlrd Python module. The to_excel() instance method is used for saving a DataFrame to Excel. Generally the semantics are similar to working with csv data. See the cookbook for some advanced strategies.
+The [read_excel()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html#pandas.read_excel) method can read Excel 2003 (``.xls``) files using the ``xlrd`` Python module. Excel 2007+ (``.xlsx``) files can be read using either ``xlrd`` or ``openpyxl``. The [to_excel()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_excel.html#pandas.DataFrame.to_excel) instance method is used for saving a ``DataFrame`` to Excel. Generally the semantics are similar to working with [csv](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-read-csv-table) data. See the [cookbook](https://pandas.pydata.org/pandas-docs/stable/user_guide/cookbook.html#cookbook-excel) for some advanced strategies.
 
 ### Reading Excel Files
 
-In the most basic use-case, read_excel takes a path to an Excel file, and the sheet_name indicating which sheet to parse.
+In the most basic use-case, ``read_excel`` takes a path to an Excel file, and the ``sheet_name`` indicating which sheet to parse.
 
 ``` python
 # Returns a DataFrame
 pd.read_excel('path_to_file.xls', sheet_name='Sheet1')
 ```
 
-ExcelFile class
-To facilitate working with multiple sheets from the same file, the ExcelFile class can be used to wrap the file and can be passed into read_excel There will be a performance benefit for reading multiple sheets as the file is read into memory only once.
+#### ``ExcelFile`` class
 
+To facilitate working with multiple sheets from the same file, the ``ExcelFile`` class can be used to wrap the file and can be passed into ``read_excel`` There will be a performance benefit for reading multiple sheets as the file is read into memory only once.
+
+``` python
 xlsx = pd.ExcelFile('path_to_file.xls')
 df = pd.read_excel(xlsx, 'Sheet1')
-The ExcelFile class can also be used as a context manager.
+```
 
+The ``ExcelFile`` class can also be used as a context manager.
+
+``` python
 with pd.ExcelFile('path_to_file.xls') as xls:
     df1 = pd.read_excel(xls, 'Sheet1')
     df2 = pd.read_excel(xls, 'Sheet2')
-The sheet_names property will generate a list of the sheet names in the file.
+```
 
-The primary use-case for an ExcelFile is parsing multiple sheets with different parameters:
+The ``sheet_names`` property will generate a list of the sheet names in the file.
 
+The primary use-case for an ``ExcelFile`` is parsing multiple sheets with different parameters:
+
+``` python
 data = {}
 # For when Sheet1's format differs from Sheet2
 with pd.ExcelFile('path_to_file.xls') as xls:
     data['Sheet1'] = pd.read_excel(xls, 'Sheet1', index_col=None,
                                    na_values=['NA'])
     data['Sheet2'] = pd.read_excel(xls, 'Sheet2', index_col=1)
-Note that if the same parsing parameters are used for all sheets, a list of sheet names can simply be passed to read_excel with no loss in performance.
+```
 
+Note that if the same parsing parameters are used for all sheets, a list of sheet names can simply be passed to ``read_excel`` with no loss in performance.
+
+``` python
 # using the ExcelFile class
 data = {}
 with pd.ExcelFile('path_to_file.xls') as xls:
@@ -3038,40 +3333,82 @@ with pd.ExcelFile('path_to_file.xls') as xls:
 # equivalent using the read_excel function
 data = pd.read_excel('path_to_file.xls', ['Sheet1', 'Sheet2'],
                      index_col=None, na_values=['NA'])
-Specifying Sheets
-Note The second argument is sheet_name, not to be confused with ExcelFile.sheet_names.
-Note An ExcelFile’s attribute sheet_names provides access to a list of sheets.
-The arguments sheet_name allows specifying the sheet or sheets to read.
-The default value for sheet_name is 0, indicating to read the first sheet
-Pass a string to refer to the name of a particular sheet in the workbook.
-Pass an integer to refer to the index of a sheet. Indices follow Python convention, beginning at 0.
-Pass a list of either strings or integers, to return a dictionary of specified sheets.
-Pass a None to return a dictionary of all available sheets.
+```
+
+``ExcelFile`` can also be called with a ``xlrd.book.Book`` object as a parameter. This allows the user to control how the excel file is read. For example, sheets can be loaded on demand by calling ``xlrd.open_workbook()`` with ``on_demand=True``.
+
+``` python
+import xlrd
+xlrd_book = xlrd.open_workbook('path_to_file.xls', on_demand=True)
+with pd.ExcelFile(xlrd_book) as xls:
+    df1 = pd.read_excel(xls, 'Sheet1')
+    df2 = pd.read_excel(xls, 'Sheet2')
+```
+
+#### Specifying Sheets
+
+::: tip Note
+
+The second argument is ``sheet_name``, not to be confused with ``ExcelFile.sheet_names``.
+
+:::
+
+::: tip Note
+
+An ExcelFile’s attribute ``sheet_names`` provides access to a list of sheets.
+
+:::
+
+
+- The arguments ``sheet_name`` allows specifying the sheet or sheets to read.
+- The default value for ``sheet_name`` is 0, indicating to read the first sheet
+- Pass a string to refer to the name of a particular sheet in the workbook.
+- Pass an integer to refer to the index of a sheet. Indices follow Python convention, beginning at 0.
+- Pass a list of either strings or integers, to return a dictionary of specified sheets.
+- Pass a None to return a dictionary of all available sheets.
+
+``` python
 # Returns a DataFrame
 pd.read_excel('path_to_file.xls', 'Sheet1', index_col=None, na_values=['NA'])
+```
+
 Using the sheet index:
 
+``` python
 # Returns a DataFrame
 pd.read_excel('path_to_file.xls', 0, index_col=None, na_values=['NA'])
+```
+
 Using all default values:
 
+``` python
 # Returns a DataFrame
 pd.read_excel('path_to_file.xls')
+```
+
 Using None to get all sheets:
 
+``` python
 # Returns a dictionary of DataFrames
 pd.read_excel('path_to_file.xls', sheet_name=None)
+```
+
 Using a list to get multiple sheets:
 
+``` python
 # Returns the 1st and 4th sheet, as a dictionary of DataFrames.
 pd.read_excel('path_to_file.xls', sheet_name=['Sheet1', 3])
-read_excel can read more than one sheet, by setting sheet_name to either a list of sheet names, a list of sheet positions, or None to read all sheets. Sheets can be specified by sheet index or sheet name, using an integer or string, respectively.
+```
 
-Reading a MultiIndex
-read_excel can read a MultiIndex index, by passing a list of columns to index_col and a MultiIndex column by passing a list of rows to header. If either the index or columns have serialized level names those will be read in as well by specifying the rows/columns that make up the levels.
+``read_excel`` can read more than one sheet, by setting ``sheet_name`` to either a list of sheet names, a list of sheet positions, or ``None`` to read all sheets. Sheets can be specified by sheet index or sheet name, using an integer or string, respectively.
+
+#### Reading a ``MultiIndex``
+
+``read_excel`` can read a ``MultiIndex`` index, by passing a list of columns to ``index_col`` and a ``MultiIndex`` column by passing a list of rows to ``header``. If either the ``index`` or ``columns`` have serialized level names those will be read in as well by specifying the rows/columns that make up the levels.
 
 For example, to read in a MultiIndex index without names:
 
+``` python
 In [312]: df = pd.DataFrame({'a': [1, 2, 3, 4], 'b': [5, 6, 7, 8]},
    .....:                   index=pd.MultiIndex.from_product([['a', 'b'], ['c', 'd']]))
    .....: 
@@ -3087,8 +3424,11 @@ a c  1  5
   d  2  6
 b c  3  7
   d  4  8
+```
+
 If the index has level names, they will parsed as well, using the same parameters.
 
+``` python
 In [316]: df.index = df.index.set_names(['lvl1', 'lvl2'])
 
 In [317]: df.to_excel('path_to_file.xlsx')
@@ -3103,8 +3443,11 @@ a    c     1  5
      d     2  6
 b    c     3  7
      d     4  8
-If the source file has both MultiIndex index and columns, lists specifying each should be passed to index_col and header:
+```
 
+If the source file has both ``MultiIndex`` index and columns, lists specifying each should be passed to ``index_col`` and ``header``:
+
+``` python
 In [320]: df.columns = pd.MultiIndex.from_product([['a'], ['b', 'd']],
    .....:                                         names=['c1', 'c2'])
    .....: 
@@ -3122,6 +3465,8 @@ a    c     1  5
      d     2  6
 b    c     3  7
      d     4  8
+```
+
 Parsing Specific Columns
 It is often the case that users will insert columns to do temporary computations in Excel and you may not want to read in those columns. read_excel takes a usecols keyword to allow you to specify a subset of columns to parse.
 
@@ -4664,14 +5009,14 @@ Warning PyTables will show a NaturalNameWarning if a column name cannot be used 
 DataTypes
 HDFStore will map an object dtype to the PyTables underlying dtype. This means the following types are known to work:
 
-Type	Represents missing values
-floating : float64, float32, float16	np.nan
-integer : int64, int32, int8, uint64,uint32, uint8	 
-boolean	 
-datetime64[ns]	NaT
-timedelta64[ns]	NaT
-categorical : see the section below	 
-object : strings	np.nan
+Type | Represents missing values
+floating : float64, float32, float16 | np.nan
+integer : int64, int32, int8, uint64,uint32, uint8 |  
+boolean |  
+datetime64[ns] | NaT
+timedelta64[ns] | NaT
+categorical : see the section below |  
+object : strings | np.nan
 unicode columns are not supported, and WILL FAIL.
 
 Categorical Data
@@ -5079,10 +5424,10 @@ See also some cookbook examples for some advanced strategies.
 
 The key functions are:
 
-read_sql_table(table_name, con[, schema, …])	Read SQL database table into a DataFrame.
-read_sql_query(sql, con[, index_col, …])	Read SQL query into a DataFrame.
-read_sql(sql, con[, index_col, …])	Read SQL query or database table into a DataFrame.
-DataFrame.to_sql(name, con[, schema, …])	Write records stored in a DataFrame to a SQL database.
+read_sql_table(table_name, con[, schema, …]) | Read SQL database table into a DataFrame.
+read_sql_query(sql, con[, index_col, …]) | Read SQL query into a DataFrame.
+read_sql(sql, con[, index_col, …]) | Read SQL query or database table into a DataFrame.
+DataFrame.to_sql(name, con[, schema, …]) | Write records stored in a DataFrame to a SQL database.
 Note The function read_sql() is a convenience wrapper around read_sql_table() and read_sql_query() (and for backward compatibility) and will delegate to specific function depending on the provided input (database table name or sql query). Table names do not need to be quoted if they have special characters.
 In the following example, we use the SQlite SQL database engine. You can use a temporary SQLite database where data are stored in “memory”.
 
@@ -5099,10 +5444,10 @@ with engine.connect() as conn, conn.begin():
 Writing DataFrames
 Assuming the following data is in a DataFrame data, we can insert it into the database using to_sql().
 
-id	Date	Col_1	Col_2	Col_3
-26	2012-10-18	X	25.7	True
-42	2012-10-19	Y	-12.4	False
-63	2012-10-20	Z	5.73	True
+id | Date | Col_1 | Col_2 | Col_3
+26 | 2012-10-18 | X | 25.7 | True
+42 | 2012-10-19 | Y | -12.4 | False
+63 | 2012-10-20 | Z | 5.73 | True
 In [545]: data
 Out[545]: 
    id       Date Col_1  Col_2  Col_3
@@ -5129,10 +5474,10 @@ Using SQLAlchemy, to_sql() is capable of writing datetime data that is timezone 
 
 The following table lists supported data types for datetime data for some common databases. Other database dialects may have different data types for datetime data.
 
-Database	SQL Datetime Types	Timezone Support
-SQLite	TEXT	No
-MySQL	TIMESTAMP or DATETIME	No
-PostgreSQL	TIMESTAMP or TIMESTAMP WITH TIME ZONE	Yes
+Database | SQL Datetime Types | Timezone Support
+SQLite | TEXT | No
+MySQL | TIMESTAMP or DATETIME | No
+PostgreSQL | TIMESTAMP or TIMESTAMP WITH TIME ZONE | Yes
 When writing timezone aware data to databases that do not support timezones, the data will be written as timezone naive timestamps that are in local time with respect to the timezone.
 
 read_sql_table() is also capable of reading datetime data that is timezone aware or naive. When reading TIMESTAMP WITH TIME ZONE types, pandas will convert the data to UTC.
