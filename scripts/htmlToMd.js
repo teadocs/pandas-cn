@@ -90,7 +90,7 @@
           let title = pEl.text();
           let tempContent = this.getMarkdown(el);
           content = `\n::: danger ${title}\n${tempContent}\n:::\n`;
-        } else if (className === 'section') {
+        } else if (className === 'section' || className === 'toctree-wrapper compound') {
           content = this.getMarkdown(el);
         } else if (className.indexOf('highlight-') !== -1) {
           let langName = className.split('highlight-')[1].split(' ')[0];
@@ -303,7 +303,7 @@
   window.c = new Convert({
     baseUrl: 'https://pandas.pydata.org/pandas-docs/stable',
     baseImgDir: '/static/images/',
-    el: `#Styling`,
+    el: `#whats-new-in-0-24-1-february-3-2019`,
     $: window.$
   });
 

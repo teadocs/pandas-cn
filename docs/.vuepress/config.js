@@ -70,7 +70,7 @@ module.exports = ctx => ({
         editLinkText: '在 GitHub 上编辑此页',
         lastUpdated: '上次更新',
         nav: require('./nav/zh'),
-        sidebar: {}
+        sidebar: require('./sidebar/zh')()
       },
       '/en/': {
         label: 'English',

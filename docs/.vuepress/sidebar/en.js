@@ -4,7 +4,7 @@ module.exports = function () {
       collapsable: true,
       sidebarDepth: 3,
       children: [
-        ['/en/docs/whatsnew/v0.24.2', 'What\'s New in 0.24.2']
+        ['/en/docs/whatsnew/v0.25.0', 'What’s new in 0.25.0']
       ]
     },
     {

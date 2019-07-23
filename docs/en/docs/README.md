@@ -1,8 +1,8 @@
 # pandas: powerful Python data analysis toolkit
 
-**Date**: Mar 12, 2019 **Version**: 0.24.2
+**Date**: Jul 18, 2019 **Version**: 0.25.0
 
-**Download documentation**: PDF Version | Zipped HTML
+**Download documentation**: [PDF Version](https://pandas.pydata.org/pandas-docs/stable/pandas.pdf) | [Zipped HTML](https://pandas.pydata.org/pandas-docs/stable/pandas.zip)
 
 **Useful links**: [Binary Installers](https://pypi.org/project/pandas) | [Source Repository](https://github.com/pandas-dev/pandas) | [Issues & Ideas](https://github.com/pandas-dev/pandas/issues) | [Q&A Support](https://stackoverflow.com/questions/tagged/pandas) | [Mailing List](https://groups.google.com/forum/#!forum/pydata)
 
@@ -10,56 +10,56 @@
 
 See the [Package overview](https://pandas.pydata.org/pandas-docs/stable/getting_started/overview.html#overview) for more detail about what’s in the library.
 
-- Whats New in 0.24.2 (March 12, 2019)
-- Installation
-- Getting started
-  - Package overview
-  - 10 Minutes to pandas
-  - Essential Basic Functionality
-  - Intro to Data Structures
-  - Comparison with other tools
-  - Tutorials
-- User Guide
-  - IO Tools (Text, CSV, HDF5, …)
-  - Indexing and Selecting Data
-  - MultiIndex / Advanced Indexing
-  - Merge, join, and concatenate
-  - Reshaping and Pivot Tables
-  - Working with Text Data
-  - Working with missing data
-  - Categorical Data
-  - Nullable Integer Data Type
-  - Visualization
-  - Computational tools
-  - Group By: split-apply-combine
-  - Time Series / Date functionality
-  - Time Deltas
-  - Styling
-  - Options and Settings
-  - Enhancing Performance
-  - Sparse data structures
-  - Frequently Asked Questions (FAQ)
-  - Cookbook
-- pandas Ecosystem
-  - API Reference
-  - Input/Output
-  - General functions
-  - Series
-  - DataFrame
-  - Pandas Arrays
-  - Panel
-  - Indexing
-  - Date Offsets
-  - Window
-  - GroupBy
-  - Resampling
-  - Style
-  - Plotting
-  - General utility functions
-  - Extensions
-- Development
-  - Contributing to pandas
-  - Internals
-  - Extending Pandas
-  - Developer
-- Release Notes
+- [What’s new in 0.25.0 (July 18, 2019)](whatsnew/v0.25.0.html)
+- [Installation](install.html)
+- [Getting started](getting_started/index.html)
+  - [Package overview](getting_started/overview.html)
+  - [10 Minutes to pandas](getting_started/10min.html)
+  - [Essential Basic Functionality](getting_started/basics.html)
+  - [Intro to Data Structures](getting_started/dsintro.html)
+  - [Comparison with other tools](getting_started/comparison/index.html)
+  - [Tutorials](getting_started/tutorials.html)
+- [User Guide](user_guide/index.html)
+  - [IO Tools (Text, CSV, HDF5, …)](user_guide/io.html)
+  - [Indexing and Selecting Data](user_guide/indexing.html)
+  - [MultiIndex / Advanced Indexing](user_guide/advanced.html)
+  - [Merge, join, and concatenate](user_guide/merging.html)
+  - [Reshaping and Pivot Tables](user_guide/reshaping.html)
+  - [Working with Text Data](user_guide/text.html)
+  - [Working with missing data](user_guide/missing_data.html)
+  - [Categorical Data](user_guide/categorical.html)
+  - [Nullable Integer Data Type](user_guide/integer_na.html)
+  - [Visualization](user_guide/visualization.html)
+  - [Computational tools](user_guide/computation.html)
+  - [Group By: split-apply-combine](user_guide/groupby.html)
+  - [Time Series / Date functionality](user_guide/timeseries.html)
+  - [Time Deltas](user_guide/timedeltas.html)
+  - [Styling](user_guide/style.html)
+  - [Options and Settings](user_guide/options.html)
+  - [Enhancing Performance](user_guide/enhancingperf.html)
+  - [Sparse data structures](user_guide/sparse.html)
+  - [Frequently Asked Questions (FAQ)](user_guide/gotchas.html)
+  - [Cookbook](user_guide/cookbook.html)
+- [pandas Ecosystem](ecosystem.html)
+- [API Reference](reference/index.html)
+  - [Input/Output](reference/io.html)
+  - [General functions](reference/general_functions.html)
+  - [Series](reference/series.html)
+  - [DataFrame](reference/frame.html)
+  - [Pandas Arrays](reference/arrays.html)
+  - [Panel](reference/panel.html)
+  - [Indexing](reference/indexing.html)
+  - [Date Offsets](reference/offset_frequency.html)
+  - [Window](reference/window.html)
+  - [GroupBy](reference/groupby.html)
+  - [Resampling](reference/resampling.html)
+  - [Style](reference/style.html)
+  - [Plotting](reference/plotting.html)
+  - [General utility functions](reference/general_utility_functions.html)
+  - [Extensions](reference/extensions.html)
+- [Development](development/index.html)
+  - [Contributing to pandas](development/contributing.html)
+  - [Internals](development/internals.html)
+  - [Extending Pandas](development/extending.html)
+  - [Developer](development/developer.html)
+- [Release Notes](whatsnew/index.html)

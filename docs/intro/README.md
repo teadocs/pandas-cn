@@ -11,7 +11,33 @@ sidebar: auto
 
 ![NumFOCUS Logo](/static/images/SponsoredProjectStamp_300px.png)
 
-## 版本 v0.24.2 (2019年3月14日)
+## v0.25.0 (发布于：2019年7月18日)
+
+这是从0.24.2开始的主要版本，包括大量API更改、新功能、增强功能和性能改进以及大量错误修复。
+
+亮点包括：
+
+- 不再支持 Python 2.x
+- [重新标记的Groupby聚合](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#groupby-aggregation-with-relabeling)
+- [更好的多索引repr](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#better-repr-for-multiindex)
+- [针对Series和DataFrame的更好的截断repr](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#shorter-truncated-repr-for-series-and-dataframe)
+- [Series.explode将类似列表的值拆分为行MultiIndexes](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#series-explode-to-split-list-like-values-to-rows)
+
+该版本可以使用conda-forge或默认频道的conda进行安装：
+
+``` bash
+$ conda install pandas
+```
+
+或者通过 PyPI:
+
+``` bash
+python3 -m pip install --upgrade pandas
+```
+
+请参阅 [v0.25.0版本特性](/docs/whatsnew/v0.25.0.html) 以获取全部更新情况。
+
+## v0.24.2（发布于：2019年3月14日）
 
 这是0.24.x系列中的一个小错误修复版本，包括一些回归修复，错误修复和性能改进。 我们建议所有用户升级到此版本。
 
@@ -28,37 +54,6 @@ $ python3 -m pip install --upgrade Pandas
 ```
 
 请参阅 [历代特性](https://pandas.pydata.org/pandas-docs/version/0.24.2/whatsnew/v0.24.2.html) 以获取所有更新日志。
-
-## 版本 v0.24.0 (2018年1月25日)
-
-这是0.23.4的主要版本，包括许多API更改，新功能，增强功能和性能改进以及大量错误修复。
-
-亮点包括：
-
-- [可选的可空整数支持](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#optional-integer-na-support)
-- [用于支持访问Series或者Index的矩阵的新API](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#accessing-the-values-in-a-series-or-index)
-- [用于创建数组的新的顶级静态方法``pandas.array()``](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#array)
-- [将 Interval 和 Period 数据存储在Series或DataFrame中](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#storing-interval-and-period-data-in-series-and-dataframe)
-- [连接两个多索引(MultiIndexes)](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#joining-with-two-multi-indexes)
-
-有关从0.23.4开始的所有更新的完整列表，请参阅[发行版日志](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html)。
-
-可以使用默认值或 conda-forge 通道将候选版本与 conda 一起安装
-
-``` bash
-$ conda install Pandas
-```
-
-或者通过 PyPI
-
-``` bash
-$ python3 -m pip install --upgrade pandas
-```
-
-
-请注意，0.24.x是支持Python 2的最后一系列版本。
-
-请在Pandas的[issue](https://github.com/pandas-dev/pandas/issues)问题跟踪器上提交与现有发行版有关的任何问题。
 
 ## 最好的安装方式
 

@@ -11,6 +11,32 @@ sidebar: auto
 
 ![NumFOCUS Logo](/static/images/SponsoredProjectStamp_300px.png)
 
+## v0.25.0 Final (July 18, 2019)
+
+This is a major release from 0.24.2 and includes a number of API changes, new features, enhancements, and performance improvements along with a large number of bug fixes.
+
+Highlights include:
+
+- Dropped Python 2 support
+- [Groupby aggregation with relabeling](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#groupby-aggregation-with-relabeling)
+- [Better repr for MultiIndex](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#better-repr-for-multiindex)
+- [Better truncated repr for Series and DataFrame](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#shorter-truncated-repr-for-series-and-dataframe)
+- [Series.explode to split list-like values to rows MultiIndexes](https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.25.0.html#series-explode-to-split-list-like-values-to-rows)
+
+The release can be installed with conda from conda-forge or the default channel:
+
+``` bash
+$ conda install pandas
+```
+
+Or via PyPI:
+
+``` bash
+python3 -m pip install --upgrade pandas
+```
+
+See the full [whatsnew](/en/docs/whatsnew/v0.25.0.html) for a list of all the changes.
+
 ## v0.24.2 Final (March 14, 2019)
 
 This is a minor bug-fix release in the 0.24.x series and includes some regression fixes, bug fixes, and performance improvements. We recommend that all users upgrade to this version.
@@ -28,36 +54,6 @@ $ python3 -m pip install --upgrade Pandas
 ```
 
 See the [full whatsnew](https://pandas.pydata.org/pandas-docs/version/0.24.2/whatsnew/v0.24.2.html) for a list of all the changes.
-
-## v0.24.0 Final (January 25, 2018)
-
-This is a major release from 0.23.4 and includes a number of API changes, new features, enhancements, and performance improvements along with a large number of bug fixes.
-
-Highlights include:
-
-- [Optional Nullable Integer Support](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#optional-integer-na-support)
-- [New APIs for accessing the array backing a Series or Index](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#accessing-the-values-in-a-series-or-index)
-- [A new top-level pandas.array() method for creating arrays](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#array)
-- [Store Interval and Period data in a Series or DataFrame](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#storing-interval-and-period-data-in-series-and-dataframe)
-- [Joining with two MultiIndexes](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html#joining-with-two-multi-indexes)
-
-See the [release notes](http://pandas.pydata.org/pandas-docs/version/0.24/whatsnew/v0.24.0.html) for a full list of all the change from 0.23.4
-
-The release candidate can be installed with conda using the defaults or conda-forge channels
-
-``` bash
-$ conda install pandas
-```
-
-Or via PyPI
-
-``` bash
-$ python3 -m pip install --upgrade pandas
-```
-
-Note that 0.24.x is the last series of releases to support Python 2.
-
-Please report any issues with the release candidate on the [pandas issue tracker](https://github.com/pandas-dev/pandas/issues).
 
 ## Best way to Install
 
