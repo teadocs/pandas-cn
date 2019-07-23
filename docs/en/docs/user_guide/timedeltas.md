@@ -1,8 +1,11 @@
 # Time deltas
 
-Timedeltas are differences in times, expressed in difference units, e.g. days, hours, minutes, seconds. They can be both positive and negative.
+Timedeltas are differences in times, expressed in difference units, e.g. days, hours, minutes,
+seconds. They can be both positive and negative.
 
-``Timedelta`` is a subclass of ``datetime.timedelta``, and behaves in a similar manner, but allows compatibility with ``np.timedelta64`` types as well as a host of custom representation, parsing, and attributes.
+``Timedelta`` is a subclass of ``datetime.timedelta``, and behaves in a similar manner,
+but allows compatibility with ``np.timedelta64`` types as well as a host of custom representation,
+parsing, and attributes.
 
 ## Parsing
 
@@ -60,50 +63,78 @@ In [14]: pd.Timedelta('P0DT0H0M0.000000123S')
 Out[14]: Timedelta('0 days 00:00:00.000000')
 ```
 
-*New in version 0.23.0*: Added constructor for [ISO 8601 Duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) strings
+*New in version 0.23.0:* Added constructor for [ISO 8601 Duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) strings
 
-DateOffsets (Day, Hour, Minute, Second, Milli, Micro, Nano) can also be used in construction.
+[DateOffsets](timeseries.html#timeseries-offsets) (``Day, Hour, Minute, Second, Milli, Micro, Nano``) can also be used in construction.
 
+``` python
 In [15]: pd.Timedelta(pd.offsets.Second(2))
 Out[15]: Timedelta('0 days 00:00:02')
-Further, operations among the scalars yield another scalar Timedelta.
+```
 
+Further, operations among the scalars yield another scalar ``Timedelta``.
+
+``` python
 In [16]: pd.Timedelta(pd.offsets.Day(2)) + pd.Timedelta(pd.offsets.Second(2)) +\
    ....:     pd.Timedelta('00:00:00.000123')
    ....: 
 Out[16]: Timedelta('2 days 00:00:02.000123')
-to_timedelta
-Using the top-level pd.to_timedelta, you can convert a scalar, array, list, or Series from a recognized timedelta format / value into a Timedelta type. It will construct Series if the input is a Series, a scalar if the input is scalar-like, otherwise it will output a TimedeltaIndex.
+```
+
+### to_timedelta
+
+Using the top-level ``pd.to_timedelta``, you can convert a scalar, array, list,
+or Series from a recognized timedelta format / value into a ``Timedelta`` type.
+It will construct Series if the input is a Series, a scalar if the input is
+scalar-like, otherwise it will output a ``TimedeltaIndex``.
 
 You can parse a single string to a Timedelta:
 
+``` python
 In [17]: pd.to_timedelta('1 days 06:05:01.00003')
 Out[17]: Timedelta('1 days 06:05:01.000030')
 
 In [18]: pd.to_timedelta('15.5us')
 Out[18]: Timedelta('0 days 00:00:00.000015')
+```
+
 or a list/array of strings:
 
+``` python
 In [19]: pd.to_timedelta(['1 days 06:05:01.00003', '15.5us', 'nan'])
 Out[19]: TimedeltaIndex(['1 days 06:05:01.000030', '0 days 00:00:00.000015', NaT], dtype='timedelta64[ns]', freq=None)
-The unit keyword argument specifies the unit of the Timedelta:
+```
 
+The ``unit`` keyword argument specifies the unit of the Timedelta:
+
+``` python
 In [20]: pd.to_timedelta(np.arange(5), unit='s')
 Out[20]: TimedeltaIndex(['00:00:00', '00:00:01', '00:00:02', '00:00:03', '00:00:04'], dtype='timedelta64[ns]', freq=None)
 
 In [21]: pd.to_timedelta(np.arange(5), unit='d')
 Out[21]: TimedeltaIndex(['0 days', '1 days', '2 days', '3 days', '4 days'], dtype='timedelta64[ns]', freq=None)
-Timedelta limitations
-Pandas represents Timedeltas in nanosecond resolution using 64 bit integers. As such, the 64 bit integer limits determine the Timedelta limits.
+```
 
+### Timedelta limitations
+
+Pandas represents ``Timedeltas`` in nanosecond resolution using
+64 bit integers. As such, the 64 bit integer limits determine
+the ``Timedelta`` limits.
+
+``` python
 In [22]: pd.Timedelta.min
 Out[22]: Timedelta('-106752 days +00:12:43.145224')
 
 In [23]: pd.Timedelta.max
 Out[23]: Timedelta('106751 days 23:47:16.854775')
-Operations
-You can operate on Series/DataFrames and construct timedelta64[ns] Series through subtraction operations on datetime64[ns] Series, or Timestamps.
+```
 
+## Operations
+
+You can operate on Series/DataFrames and construct ``timedelta64[ns]`` Series through
+subtraction operations on ``datetime64[ns]`` Series, or ``Timestamps``.
+
+``` python
 In [24]: s = pd.Series(pd.date_range('2012-1-1', periods=3, freq='D'))
 
 In [25]: td = pd.Series([pd.Timedelta(days=i) for i in range(3)])
@@ -167,8 +198,11 @@ Out[35]:
 1   2012-01-02 00:05:00.005
 2   2012-01-03 00:05:00.005
 dtype: datetime64[ns]
-Operations with scalars from a timedelta64[ns] series:
+```
 
+Operations with scalars from a ``timedelta64[ns]`` series:
+
+``` python
 In [36]: y = s - s[0]
 
 In [37]: y
@@ -177,8 +211,11 @@ Out[37]:
 1   1 days
 2   2 days
 dtype: timedelta64[ns]
-Series of timedeltas with NaT values are supported:
+```
 
+Series of timedeltas with ``NaT`` values are supported:
+
+``` python
 In [38]: y = s - s.shift()
 
 In [39]: y
@@ -187,8 +224,11 @@ Out[39]:
 1   1 days
 2   1 days
 dtype: timedelta64[ns]
-Elements can be set to NaT using np.nan analogously to datetimes:
+```
 
+Elements can be set to ``NaT`` using ``np.nan`` analogously to datetimes:
+
+``` python
 In [40]: y[1] = np.nan
 
 In [41]: y
@@ -197,8 +237,11 @@ Out[41]:
 1      NaT
 2   1 days
 dtype: timedelta64[ns]
+```
+
 Operands can also appear in a reversed order (a singular object operated with a Series):
 
+``` python
 In [42]: s.max() - s
 Out[42]: 
 0   2 days
@@ -219,8 +262,11 @@ Out[44]:
 1   2012-01-02 00:05:00
 2   2012-01-03 00:05:00
 dtype: datetime64[ns]
-min, max and the corresponding idxmin, idxmax operations are supported on frames:
+```
 
+``min, max`` and the corresponding ``idxmin, idxmax`` operations are supported on frames:
+
+``` python
 In [45]: A = s - pd.Timestamp('20120101') - pd.Timedelta('00:05:05')
 
 In [46]: B = s - pd.Series(pd.date_range('2012-1-2', periods=3, freq='D'))
@@ -258,8 +304,11 @@ Out[52]:
 A    2
 B    0
 dtype: int64
-min, max, idxmin, idxmax operations are supported on Series as well. A scalar result will be a Timedelta.
+```
 
+``min, max, idxmin, idxmax`` operations are supported on Series as well. A scalar result will be a ``Timedelta``.
+
+``` python
 In [53]: df.min().max()
 Out[53]: Timedelta('-1 days +23:54:55')
 
@@ -271,8 +320,11 @@ Out[55]: 'A'
 
 In [56]: df.min(axis=1).idxmin()
 Out[56]: 0
+```
+
 You can fillna on timedeltas, passing a timedelta to get a particular value.
 
+``` python
 In [57]: y.fillna(pd.Timedelta(0))
 Out[57]: 
 0   0 days
@@ -293,8 +345,11 @@ Out[59]:
 1   -1 days +00:00:05
 2     1 days 00:00:00
 dtype: timedelta64[ns]
-You can also negate, multiply and use abs on Timedeltas:
+```
 
+You can also negate, multiply and use ``abs`` on ``Timedeltas``:
+
+``` python
 In [60]: td1 = pd.Timedelta('-1 days 2 hours 3 seconds')
 
 In [61]: td1
@@ -308,9 +363,14 @@ Out[63]: Timedelta('1 days 02:00:03')
 
 In [64]: abs(td1)
 Out[64]: Timedelta('1 days 02:00:03')
-Reductions
-Numeric reduction operation for timedelta64[ns] will return Timedelta objects. As usual NaT are skipped during evaluation.
+```
 
+## Reductions
+
+Numeric reduction operation for ``timedelta64[ns]`` will return ``Timedelta`` objects. As usual
+``NaT`` are skipped during evaluation.
+
+``` python
 In [65]: y2 = pd.Series(pd.to_timedelta(['-1 days +00:00:05', 'nat',
    ....:                                 '-1 days +00:00:05', '1 days']))
    ....: 
@@ -334,9 +394,15 @@ Out[69]: Timedelta('-1 days +00:00:05')
 
 In [70]: y2.sum()
 Out[70]: Timedelta('-1 days +00:00:10')
-Frequency conversion
-Timedelta Series, TimedeltaIndex, and Timedelta scalars can be converted to other ‘frequencies’ by dividing by another timedelta, or by astyping to a specific timedelta type. These operations yield Series and propagate NaT -> nan. Note that division by the NumPy scalar is true division, while astyping is equivalent of floor division.
+```
 
+## Frequency conversion
+
+Timedelta Series, ``TimedeltaIndex``, and ``Timedelta`` scalars can be converted to other ‘frequencies’ by dividing by another timedelta,
+or by astyping to a specific timedelta type. These operations yield Series and propagate ``NaT`` -> ``nan``.
+Note that division by the NumPy scalar is true division, while astyping is equivalent of floor division.
+
+``` python
 In [71]: december = pd.Series(pd.date_range('20121201', periods=4))
 
 In [72]: january = pd.Series(pd.date_range('20130101', periods=4))
@@ -397,8 +463,12 @@ Out[81]:
 2    1.018617
 3         NaN
 dtype: float64
-Dividing or multiplying a timedelta64[ns] Series by an integer or integer Series yields another timedelta64[ns] dtypes Series.
+```
 
+Dividing or multiplying a ``timedelta64[ns]`` Series by an integer or integer Series
+yields another ``timedelta64[ns]`` dtypes Series.
+
+``` python
 In [82]: td * -1
 Out[82]: 
 0   -31 days +00:00:00
@@ -414,8 +484,12 @@ Out[83]:
 2   93 days 00:15:09
 3                NaT
 dtype: timedelta64[ns]
-Rounded division (floor-division) of a timedelta64[ns] Series by a scalar Timedelta gives a series of integers.
+```
 
+Rounded division (floor-division) of a ``timedelta64[ns]`` Series by a scalar
+``Timedelta`` gives a series of integers.
+
+``` python
 In [84]: td // pd.Timedelta(days=3, hours=4)
 Out[84]: 
 0    9.0
@@ -431,8 +505,11 @@ Out[85]:
 2    0.0
 3    NaN
 dtype: float64
-The mod (%) and divmod operations are defined for Timedelta when operating with another timedelta-like or with a numeric argument.
+```
 
+The mod (%) and divmod operations are defined for ``Timedelta`` when operating with another timedelta-like or with a numeric argument.
+
+``` python
 In [86]: pd.Timedelta(hours=37) % datetime.timedelta(hours=2)
 Out[86]: Timedelta('0 days 01:00:00')
 
@@ -443,14 +520,23 @@ Out[87]: (10, Timedelta('0 days 00:10:00'))
 # divmod against a numeric returns a pair (Timedelta, Timedelta)
 In [88]: divmod(pd.Timedelta(hours=25), 86400000000000)
 Out[88]: (Timedelta('0 days 00:00:00.000000'), Timedelta('0 days 01:00:00'))
-Attributes
-You can access various components of the Timedelta or TimedeltaIndex directly using the attributes days,seconds,microseconds,nanoseconds. These are identical to the values returned by datetime.timedelta, in that, for example, the .seconds attribute represents the number of seconds >= 0 and < 1 day. These are signed according to whether the Timedelta is signed.
+```
 
-These operations can also be directly accessed via the .dt property of the Series as well.
+## Attributes
 
-Note Note that the attributes are NOT the displayed values of the Timedelta. Use .components to retrieve the displayed values.
-For a Series:
+You can access various components of the ``Timedelta`` or ``TimedeltaIndex`` directly using the attributes ``days,seconds,microseconds,nanoseconds``. These are identical to the values returned by ``datetime.timedelta``, in that, for example, the ``.seconds`` attribute represents the number of seconds >= 0 and < 1 day. These are signed according to whether the ``Timedelta`` is signed.
 
+These operations can also be directly accessed via the ``.dt`` property of the ``Series`` as well.
+
+::: tip Note
+
+Note that the attributes are NOT the displayed values of the ``Timedelta``. Use ``.components`` to retrieve the displayed values.
+
+:::
+
+For a ``Series``:
+
+``` python
 In [89]: td.dt.days
 Out[89]: 
 0    31.0
@@ -466,8 +552,11 @@ Out[90]:
 2    303.0
 3      NaN
 dtype: float64
-You can access the value of the fields for a scalar Timedelta directly.
+```
 
+You can access the value of the fields for a scalar ``Timedelta`` directly.
+
+``` python
 In [91]: tds = pd.Timedelta('31 days 5 min 3 sec')
 
 In [92]: tds.days
@@ -478,8 +567,12 @@ Out[93]: 303
 
 In [94]: (-tds).seconds
 Out[94]: 86097
-You can use the .components property to access a reduced form of the timedelta. This returns a DataFrame indexed similarly to the Series. These are the displayed values of the Timedelta.
+```
 
+You can use the ``.components`` property to access a reduced form of the timedelta. This returns a ``DataFrame`` indexed
+similarly to the ``Series``. These are the *displayed* values of the ``Timedelta``.
+
+``` python
 In [95]: td.dt.components
 Out[95]: 
    days  hours  minutes  seconds  milliseconds  microseconds  nanoseconds
@@ -495,20 +588,30 @@ Out[96]:
 2    3.0
 3    NaN
 Name: seconds, dtype: float64
-You can convert a Timedelta to an ISO 8601 Duration string with the .isoformat method
+```
 
-New in version 0.20.0.
+You can convert a ``Timedelta`` to an [ISO 8601 Duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) string with the
+``.isoformat`` method
 
+*New in version 0.20.0.* 
+
+``` python
 In [97]: pd.Timedelta(days=6, minutes=50, seconds=3,
    ....:              milliseconds=10, microseconds=10,
    ....:              nanoseconds=12).isoformat()
    ....: 
 Out[97]: 'P6DT0H50M3.010010012S'
-TimedeltaIndex
-To generate an index with time delta, you can use either the TimedeltaIndex or the timedelta_range() constructor.
+```
 
-Using TimedeltaIndex you can pass string-like, Timedelta, timedelta, or np.timedelta64 objects. Passing np.nan/pd.NaT/nat will represent missing values.
+## TimedeltaIndex
 
+To generate an index with time delta, you can use either the [``TimedeltaIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.TimedeltaIndex.html#pandas.TimedeltaIndex) or
+the [``timedelta_range()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.timedelta_range.html#pandas.timedelta_range) constructor.
+
+Using ``TimedeltaIndex`` you can pass string-like, ``Timedelta``, ``timedelta``,
+or ``np.timedelta64`` objects. Passing ``np.nan/pd.NaT/nat`` will represent missing values.
+
+``` python
 In [98]: pd.TimedeltaIndex(['1 days', '1 days, 00:00:05', np.timedelta64(2, 'D'),
    ....:                    datetime.timedelta(days=2, seconds=2)])
    ....: 
@@ -516,24 +619,41 @@ Out[98]:
 TimedeltaIndex(['1 days 00:00:00', '1 days 00:00:05', '2 days 00:00:00',
                 '2 days 00:00:02'],
                dtype='timedelta64[ns]', freq=None)
-The string ‘infer’ can be passed in order to set the frequency of the index as the inferred frequency upon creation:
+```
 
+The string ‘infer’ can be passed in order to set the frequency of the index as the
+inferred frequency upon creation:
+
+``` python
 In [99]: pd.TimedeltaIndex(['0 days', '10 days', '20 days'], freq='infer')
 Out[99]: TimedeltaIndex(['0 days', '10 days', '20 days'], dtype='timedelta64[ns]', freq='10D')
-Generating ranges of time deltas
-Similar to date_range(), you can construct regular ranges of a TimedeltaIndex using timedelta_range(). The default frequency for timedelta_range is calendar day:
+```
 
+### Generating ranges of time deltas
+
+Similar to [``date_range()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.date_range.html#pandas.date_range), you can construct regular ranges of a ``TimedeltaIndex``
+using [``timedelta_range()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.timedelta_range.html#pandas.timedelta_range).  The default frequency for ``timedelta_range`` is
+calendar day:
+
+``` python
 In [100]: pd.timedelta_range(start='1 days', periods=5)
 Out[100]: TimedeltaIndex(['1 days', '2 days', '3 days', '4 days', '5 days'], dtype='timedelta64[ns]', freq='D')
-Various combinations of start, end, and periods can be used with timedelta_range:
+```
 
+Various combinations of ``start``, ``end``, and ``periods`` can be used with
+``timedelta_range``:
+
+``` python
 In [101]: pd.timedelta_range(start='1 days', end='5 days')
 Out[101]: TimedeltaIndex(['1 days', '2 days', '3 days', '4 days', '5 days'], dtype='timedelta64[ns]', freq='D')
 
 In [102]: pd.timedelta_range(end='10 days', periods=4)
 Out[102]: TimedeltaIndex(['7 days', '8 days', '9 days', '10 days'], dtype='timedelta64[ns]', freq='D')
-The freq parameter can passed a variety of frequency aliases:
+```
 
+The ``freq`` parameter can passed a variety of [frequency aliases](timeseries.html#timeseries-offset-aliases):
+
+``` python
 In [103]: pd.timedelta_range(start='1 days', end='2 days', freq='30T')
 Out[103]: 
 TimedeltaIndex(['1 days 00:00:00', '1 days 00:30:00', '1 days 01:00:00',
@@ -560,10 +680,15 @@ Out[104]:
 TimedeltaIndex(['1 days 00:00:00', '3 days 05:00:00', '5 days 10:00:00',
                 '7 days 15:00:00', '9 days 20:00:00'],
                dtype='timedelta64[ns]', freq='53H')
-New in version 0.23.0.
+```
 
-Specifying start, end, and periods will generate a range of evenly spaced timedeltas from start to end inclusively, with periods number of elements in the resulting TimedeltaIndex:
+*New in version 0.23.0.* 
 
+Specifying ``start``, ``end``, and ``periods`` will generate a range of evenly spaced
+timedeltas from ``start`` to ``end`` inclusively, with ``periods`` number of elements
+in the resulting ``TimedeltaIndex``:
+
+``` python
 In [105]: pd.timedelta_range('0 days', '4 days', periods=5)
 Out[105]: TimedeltaIndex(['0 days', '1 days', '2 days', '3 days', '4 days'], dtype='timedelta64[ns]', freq=None)
 
@@ -574,9 +699,14 @@ TimedeltaIndex(['0 days 00:00:00', '0 days 10:40:00', '0 days 21:20:00',
                 '2 days 16:00:00', '3 days 02:40:00', '3 days 13:20:00',
                 '4 days 00:00:00'],
                dtype='timedelta64[ns]', freq=None)
-Using the TimedeltaIndex
-Similarly to other of the datetime-like indices, DatetimeIndex and PeriodIndex, you can use TimedeltaIndex as the index of pandas objects.
+```
 
+### Using the TimedeltaIndex
+
+Similarly to other of the datetime-like indices, ``DatetimeIndex`` and ``PeriodIndex``, you can use
+``TimedeltaIndex`` as the index of pandas objects.
+
+``` python
 In [107]: s = pd.Series(np.arange(100),
    .....:               index=pd.timedelta_range('1 days', periods=100, freq='h'))
    .....: 
@@ -595,8 +725,11 @@ Out[108]:
 5 days 02:00:00    98
 5 days 03:00:00    99
 Freq: H, Length: 100, dtype: int64
+```
+
 Selections work similarly, with coercion on string-likes and slices:
 
+``` python
 In [109]: s['1 day':'2 day']
 Out[109]: 
 1 days 00:00:00     0
@@ -617,8 +750,11 @@ Out[110]: 1
 
 In [111]: s[pd.Timedelta('1 day 1h')]
 Out[111]: 1
+```
+
 Furthermore you can use partial string selection and the range will be inferred:
 
+``` python
 In [112]: s['1 day':'1 day 5 hours']
 Out[112]: 
 1 days 00:00:00    0
@@ -628,9 +764,13 @@ Out[112]:
 1 days 04:00:00    4
 1 days 05:00:00    5
 Freq: H, dtype: int64
-Operations
-Finally, the combination of TimedeltaIndex with DatetimeIndex allow certain combination operations that are NaT preserving:
+```
 
+### Operations
+
+Finally, the combination of ``TimedeltaIndex`` with ``DatetimeIndex`` allow certain combination operations that are NaT preserving:
+
+``` python
 In [113]: tdi = pd.TimedeltaIndex(['1 days', pd.NaT, '2 days'])
 
 In [114]: tdi.to_list()
@@ -649,16 +789,23 @@ Out[117]: [Timestamp('2013-01-02 00:00:00'), NaT, Timestamp('2013-01-05 00:00:00
 
 In [118]: (dti - tdi).to_list()
 Out[118]: [Timestamp('2012-12-31 00:00:00'), NaT, Timestamp('2013-01-01 00:00:00')]
-Conversions
-Similarly to frequency conversion on a Series above, you can convert these indices to yield another Index.
+```
 
+### Conversions
+
+Similarly to frequency conversion on a ``Series`` above, you can convert these indices to yield another Index.
+
+``` python
 In [119]: tdi / np.timedelta64(1, 's')
 Out[119]: Float64Index([86400.0, nan, 172800.0], dtype='float64')
 
 In [120]: tdi.astype('timedelta64[s]')
 Out[120]: Float64Index([86400.0, nan, 172800.0], dtype='float64')
-Scalars type ops work as well. These can potentially return a different type of index.
+```
 
+Scalars type ops work as well. These can potentially return a *different* type of index.
+
+``` python
 # adding or timedelta and date -> datelike
 In [121]: tdi + pd.Timestamp('20130101')
 Out[121]: DatetimeIndex(['2013-01-02', 'NaT', '2013-01-03'], dtype='datetime64[ns]', freq=None)
@@ -679,9 +826,13 @@ Out[124]: TimedeltaIndex(['0 days 12:00:00', NaT, '1 days 00:00:00'], dtype='tim
 # or a Float64Index if the divisor is a Timedelta
 In [125]: tdi / tdi[0]
 Out[125]: Float64Index([1.0, nan, 2.0], dtype='float64')
-Resampling
-Similar to timeseries resampling, we can resample with a TimedeltaIndex.
+```
 
+## Resampling
+
+Similar to [timeseries resampling](timeseries.html#timeseries-resampling), we can resample with a ``TimedeltaIndex``.
+
+``` python
 In [126]: s.resample('D').mean()
 Out[126]: 
 1 days    11.5
@@ -690,3 +841,4 @@ Out[126]:
 4 days    83.5
 5 days    97.5
 Freq: D, dtype: float64
+```

@@ -3,6 +3,7 @@
   class Convert {
     constructor(options) {
       this.baseUrl = options.baseUrl;
+      this.baseImgDir = options.baseImgDir;
       this.$ = options.$;
       this.mainEl = this.$(options.el);
     }
@@ -30,7 +31,7 @@
           content = '';
           break;
         case 'H1':
-          content = `\n# ${this.getHtext(el)}\n`;
+          content = `# ${this.getHtext(el)}\n`;
           break;
         case 'H2':
           content = `\n## ${this.getHtext(el)}\n`;
@@ -65,11 +66,20 @@
         }
       }
       break;
+      case 'IMG': {
+        let imgSrc = this.$(el).attr('src');
+        let imgNameArr = imgSrc.split('/');
+        let imgName = imgNameArr[imgNameArr.length - 1];
+        let fileName = imgName.split('.')[0];
+        content = `\n![${fileName}](${this.baseImgDir}${imgName})\n`;
+      }
+      break;
       case 'DIV': {
         let className = this.$(el).attr('class');
         if (!className) {
           content = this.getMarkdown(el);
-          console.log('content', content);
+        } else if (className === 'math notranslate nohighlight') {
+          content = `\n<div class="math notranslate nohighlight">\nIt's a mathematical formula.\n</div>\n`;
         } else if (className === 'admonition note') {
           let pEl = this.$(el).find('.first.admonition-title');
           let title = pEl.text();
@@ -84,12 +94,14 @@
           content = this.getMarkdown(el);
         } else if (className.indexOf('highlight-') !== -1) {
           let langName = className.split('highlight-')[1].split(' ')[0];
-          if (langName === 'ipython' || langName === 'default') langName = 'python';
+          if (langName === 'ipython' || langName === 'default' || langName === 'ipython3') langName = 'python';
           if (langName === 'console' || langName === 'text' || langName === 'none') {
             langName = '';
           }
-          let tempContent = this.$(el).text();
-          content = `\n\`\`\` ${langName}\n${tempContent}\`\`\`\n`;
+          let tempContent = this.uReplaceStr(this.$(el).text());
+          if (tempContent) {
+            content = `\n\`\`\` ${langName}\n${tempContent}\n\`\`\`\n`;
+          }
         } else {
           content = this.getMarkdown(el);
         }
@@ -168,6 +180,7 @@
       tempContent = this.replaceCite(this.$(tempContent));
       tempContent = this.replaceStrong(this.$(tempContent));
       tempContent = this.replaceSpan(this.$(tempContent));
+      tempContent = this.replaceEm(this.$(tempContent));
       tempContent = this.$(tempContent).text();
       let content = `\n${tempContent}\n`;
       return content;
@@ -229,8 +242,8 @@
         spans.each(function (index, el) {
           let outHtml = that.$(el).prop("outerHTML");
           let text = that.$(el).text();
-          let clsssName = that.$(el).attr('class');
-          if (clsssName === 'classifier' || clsssName === 'versionmodified') {
+          let className = that.$(el).attr('class');
+          if (className === 'classifier' || className === 'versionmodified') {
             hContent = hContent.replace(outHtml, `*${that.uReplaceStr(text)}* `);
           } else {
             hContent = hContent.replace(outHtml, `${text}`);
@@ -268,6 +281,20 @@
       return hContent;
     }
 
+    replaceEm($el) {
+      let that = this;
+      let hContent = $el.prop("outerHTML");
+      let ems = $el.find('em');
+      if (ems.length) {
+        ems.each(function (index, el) {
+          let outHtml = that.$(el).prop("outerHTML");
+          let text = that.$(el).text();
+          hContent = hContent.replace(outHtml, `*${text}*`);
+        });
+      }
+      return hContent;
+    }
+
     uReplaceStr(str) {
       return str.replace(/(^\n*)|(\n*$)/g, "").replace(/(^\s*)|(\s*$)/g, "");
     }
@@ -275,7 +302,8 @@
 
   window.c = new Convert({
     baseUrl: 'https://pandas.pydata.org/pandas-docs/stable',
-    el: `#io-tools-text-csv-hdf5`,
+    baseImgDir: '/static/images/',
+    el: `#Styling`,
     $: window.$
   });
 

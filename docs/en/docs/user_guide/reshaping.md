@@ -43,7 +43,7 @@ def unpivot(frame):
 df = unpivot(tm.makeTimeDataFrame())
 ```
 
-To select out everything for variable A we could do:
+To select out everything for variable ``A`` we could do:
 
 ``` python
 In [2]: df[df['variable'] == 'A']
@@ -54,8 +54,13 @@ Out[2]:
 2 2000-01-05        A -1.509059
 ```
 
-But suppose we wish to do time series operations with the variables. A better representation would be where the columns are the unique variables and an index of dates identifies individual observations. To reshape the data into this form, we use the DataFrame.pivot() method (also implemented as a top level function pivot()):
+But suppose we wish to do time series operations with the variables. A better
+representation would be where the ``columns`` are the unique variables and an
+``index`` of dates identifies individual observations. To reshape the data into
+this form, we use the [``DataFrame.pivot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#pandas.DataFrame.pivot) method (also implemented as a
+top level function [``pivot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot.html#pandas.pivot)):
 
+``` python
 In [3]: df.pivot(index='date', columns='variable', values='value')
 Out[3]: 
 variable           A         B         C         D
@@ -63,8 +68,14 @@ date
 2000-01-03  0.469112 -1.135632  0.119209 -2.104569
 2000-01-04 -0.282863  1.212112 -1.044236 -0.494929
 2000-01-05 -1.509059 -0.173215 -0.861849  1.071804
-If the values argument is omitted, and the input DataFrame has more than one column of values which are not used as column or index inputs to pivot, then the resulting “pivoted” DataFrame will have hierarchical columns whose topmost level indicates the respective value column:
+```
 
+If the ``values`` argument is omitted, and the input ``DataFrame`` has more than
+one column of values which are not used as column or index inputs to ``pivot``,
+then the resulting “pivoted” ``DataFrame`` will have [hierarchical columns](advanced.html#advanced-hierarchical) whose topmost level indicates the respective value
+column:
+
+``` python
 In [4]: df['value2'] = df['value'] * 2
 
 In [5]: pivoted = df.pivot(index='date', columns='variable')
@@ -77,8 +88,11 @@ date
 2000-01-03  0.469112 -1.135632  0.119209 -2.104569  0.938225 -2.271265  0.238417 -4.209138
 2000-01-04 -0.282863  1.212112 -1.044236 -0.494929 -0.565727  2.424224 -2.088472 -0.989859
 2000-01-05 -1.509059 -0.173215 -0.861849  1.071804 -3.018117 -0.346429 -1.723698  2.143608
-You can then select subsets from the pivoted DataFrame:
+```
 
+You can then select subsets from the pivoted ``DataFrame``:
+
+``` python
 In [7]: pivoted['value2']
 Out[7]: 
 variable           A         B         C         D
@@ -86,18 +100,42 @@ date
 2000-01-03  0.938225 -2.271265  0.238417 -4.209138
 2000-01-04 -0.565727  2.424224 -2.088472 -0.989859
 2000-01-05 -3.018117 -0.346429 -1.723698  2.143608
-Note that this returns a view on the underlying data in the case where the data are homogeneously-typed.
+```
 
-Note pivot() will error with a ValueError: Index contains duplicate entries, cannot reshape if the index/column pair is not unique. In this case, consider using pivot_table() which is a generalization of pivot that can handle duplicate values for one index/column pair.
-Reshaping by stacking and unstacking
-../_images/reshaping_stack.png
-Closely related to the pivot() method are the related stack() and unstack() methods available on Series and DataFrame. These methods are designed to work together with MultiIndex objects (see the section on hierarchical indexing). Here are essentially what these methods do:
+Note that this returns a view on the underlying data in the case where the data
+are homogeneously-typed.
 
-stack: “pivot” a level of the (possibly hierarchical) column labels, returning a DataFrame with an index with a new inner-most level of row labels.
-unstack: (inverse operation of stack) “pivot” a level of the (possibly hierarchical) row index to the column axis, producing a reshaped DataFrame with a new inner-most level of column labels.
-../_images/reshaping_unstack.png
-The clearest way to explain is by example. Let’s take a prior example data set from the hierarchical indexing section:
+::: tip Note
 
+[``pivot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot.html#pandas.pivot) will error with a ``ValueError: Index contains duplicate
+entries, cannot reshape`` if the index/column pair is not unique. In this
+case, consider using [``pivot_table()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html#pandas.pivot_table) which is a generalization
+of pivot that can handle duplicate values for one index/column pair.
+
+:::
+
+## Reshaping by stacking and unstacking
+
+![reshaping_stack](/static/images/reshaping_stack.png)
+
+Closely related to the [``pivot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#pandas.DataFrame.pivot) method are the related
+[``stack()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.stack.html#pandas.DataFrame.stack) and [``unstack()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.unstack.html#pandas.DataFrame.unstack) methods available on
+``Series`` and ``DataFrame``. These methods are designed to work together with
+``MultiIndex`` objects (see the section on [hierarchical indexing](advanced.html#advanced-hierarchical)). Here are essentially what these methods do:
+
+- ``stack``: “pivot” a level of the (possibly hierarchical) column labels,
+returning a ``DataFrame`` with an index with a new inner-most level of row
+labels.
+- ``unstack``: (inverse operation of ``stack``) “pivot” a level of the
+(possibly hierarchical) row index to the column axis, producing a reshaped
+``DataFrame`` with a new inner-most level of column labels.
+
+![reshaping_unstack](/static/images/reshaping_unstack.png)
+
+The clearest way to explain is by example. Let’s take a prior example data set
+from the hierarchical indexing section:
+
+``` python
 In [8]: tuples = list(zip(*[['bar', 'bar', 'baz', 'baz',
    ...:                      'foo', 'foo', 'qux', 'qux'],
    ...:                     ['one', 'two', 'one', 'two',
@@ -118,12 +156,18 @@ bar   one     0.721555 -0.706771
       two    -1.039575  0.271860
 baz   one    -0.424972  0.567020
       two     0.276232 -1.087401
-The stack function “compresses” a level in the DataFrame’s columns to produce either:
+```
 
-A Series, in the case of a simple column Index.
-A DataFrame, in the case of a MultiIndex in the columns.
-If the columns have a MultiIndex, you can choose which level to stack. The stacked level becomes the new lowest level in a MultiIndex on the columns:
+The ``stack`` function “compresses” a level in the ``DataFrame``’s columns to
+produce either:
 
+- A ``Series``, in the case of a simple column Index.
+- A ``DataFrame``, in the case of a ``MultiIndex`` in the columns.
+
+If the columns have a ``MultiIndex``, you can choose which level to stack. The
+stacked level becomes the new lowest level in a ``MultiIndex`` on the columns:
+
+``` python
 In [13]: stacked = df2.stack()
 
 In [14]: stacked
@@ -138,8 +182,13 @@ baz    one     A   -0.424972
        two     A    0.276232
                B   -1.087401
 dtype: float64
-With a “stacked” DataFrame or Series (having a MultiIndex as the index), the inverse operation of stack is unstack, which by default unstacks the last level:
+```
 
+With a “stacked” ``DataFrame`` or ``Series`` (having a ``MultiIndex`` as the
+``index``), the inverse operation of ``stack`` is ``unstack``, which by default
+unstacks the **last level**:
+
+``` python
 In [15]: stacked.unstack()
 Out[15]: 
                      A         B
@@ -166,9 +215,14 @@ one    A  0.721555 -0.424972
        B -0.706771  0.567020
 two    A -1.039575  0.276232
        B  0.271860 -1.087401
-../_images/reshaping_unstack_1.png
-If the indexes have names, you can use the level names instead of specifying the level numbers:
+```
 
+![reshaping_unstack_1](/static/images/reshaping_unstack_1.png)
+
+If the indexes have names, you can use the level names instead of specifying
+the level numbers:
+
+``` python
 In [18]: stacked.unstack('second')
 Out[18]: 
 second        one       two
@@ -177,9 +231,15 @@ bar   A  0.721555 -1.039575
       B -0.706771  0.271860
 baz   A -0.424972  0.276232
       B  0.567020 -1.087401
-../_images/reshaping_unstack_0.png
-Notice that the stack and unstack methods implicitly sort the index levels involved. Hence a call to stack and then unstack, or vice versa, will result in a sorted copy of the original DataFrame or Series:
+```
 
+![reshaping_unstack_0](/static/images/reshaping_unstack_0.png)
+
+Notice that the ``stack`` and ``unstack`` methods implicitly sort the index
+levels involved. Hence a call to ``stack`` and then ``unstack``, or vice versa,
+will result in a **sorted** copy of the original ``DataFrame`` or ``Series``:
+
+``` python
 In [19]: index = pd.MultiIndex.from_product([[2, 1], ['a', 'b']])
 
 In [20]: df = pd.DataFrame(np.random.randn(4), index=index, columns=['A'])
@@ -194,11 +254,18 @@ Out[21]:
 
 In [22]: all(df.unstack().stack() == df.sort_index())
 Out[22]: True
-The above code will raise a TypeError if the call to sort_index is removed.
+```
 
-Multiple levels
-You may also stack or unstack more than one level at a time by passing a list of levels, in which case the end result is as if each level in the list were processed individually.
+The above code will raise a ``TypeError`` if the call to ``sort_index`` is
+removed.
 
+### Multiple levels
+
+You may also stack or unstack more than one level at a time by passing a list
+of levels, in which case the end result is as if each level in the list were
+processed individually.
+
+``` python
 In [23]: columns = pd.MultiIndex.from_tuples([
    ....:     ('A', 'cat', 'long'), ('B', 'cat', 'long'),
    ....:     ('A', 'dog', 'short'), ('B', 'dog', 'short')],
@@ -230,8 +297,12 @@ exp                          A         B
   dog    short        0.276662 -0.472035
 3 cat    long        -0.013960 -0.362543
   dog    short       -0.006154 -0.923061
-The list of levels can contain either level names or level numbers (but not a mixture of the two).
+```
 
+The list of levels can contain either level names or level numbers (but
+not a mixture of the two).
+
+``` python
 # df.stack(level=['animal', 'hair_length'])
 # from above is equivalent to:
 In [27]: df.stack(level=[1, 2])
@@ -246,9 +317,16 @@ exp                          A         B
   dog    short        0.276662 -0.472035
 3 cat    long        -0.013960 -0.362543
   dog    short       -0.006154 -0.923061
-Missing data
-These functions are intelligent about handling missing data and do not expect each subgroup within the hierarchical index to have the same set of labels. They also can handle the index being unsorted (but you can make it sorted by calling sort_index, of course). Here is a more complex example:
+```
 
+### Missing data
+
+These functions are intelligent about handling missing data and do not expect
+each subgroup within the hierarchical index to have the same set of labels.
+They also can handle the index being unsorted (but you can make it sorted by
+calling ``sort_index``, of course). Here is a more complex example:
+
+``` python
 In [28]: columns = pd.MultiIndex.from_tuples([('A', 'cat'), ('B', 'dog'),
    ....:                                      ('B', 'cat'), ('A', 'dog')],
    ....:                                     names=['exp', 'animal'])
@@ -274,8 +352,12 @@ baz   one     0.410835  0.813850  0.132003 -0.827317
 foo   one    -1.413681  1.607920  1.024180  0.569605
       two     0.875906 -2.211372  0.974466 -2.006747
 qux   two    -1.226825  0.769804 -1.281247 -0.727707
-As mentioned above, stack can be called with a level argument to select which level in the columns to stack:
+```
 
+As mentioned above, ``stack`` can be called with a ``level`` argument to select
+which level in the columns to stack:
+
+``` python
 In [33]: df2.stack('exp')
 Out[33]: 
 animal                 cat       dog
@@ -309,8 +391,15 @@ foo   one    cat    -1.413681  1.024180
              dog    -2.006747 -2.211372
 qux   two    cat    -1.226825 -1.281247
              dog    -0.727707  0.769804
-Unstacking can result in missing values if subgroups do not have the same set of labels. By default, missing values will be replaced with the default fill value for that data type, NaN for float, NaT for datetimelike, etc. For integer types, by default data will converted to float and missing values will be set to NaN.
+```
 
+Unstacking can result in missing values if subgroups do not have the same
+set of labels.  By default, missing values will be replaced with the default
+fill value for that data type, ``NaN`` for float, ``NaT`` for datetimelike,
+etc.  For integer types, by default data will converted to float and missing
+values will be set to ``NaN``.
+
+``` python
 In [35]: df3 = df.iloc[[0, 1, 4, 7], [1, 2]]
 
 In [36]: df3
@@ -332,10 +421,14 @@ first
 bar     0.805244  1.340309 -1.206412 -1.170299
 foo     1.607920       NaN  1.024180       NaN
 qux          NaN  0.769804       NaN -1.281247
-New in version 0.18.0.
+```
 
-Alternatively, unstack takes an optional fill_value argument, for specifying the value of missing data.
+*New in version 0.18.0.* 
 
+Alternatively, unstack takes an optional ``fill_value`` argument, for specifying
+the value of missing data.
+
+``` python
 In [38]: df3.unstack(fill_value=-1e9)
 Out[38]: 
 exp                B                                          
@@ -345,9 +438,14 @@ first
 bar     8.052440e-01  1.340309e+00 -1.206412e+00 -1.170299e+00
 foo     1.607920e+00 -1.000000e+09  1.024180e+00 -1.000000e+09
 qux    -1.000000e+09  7.698036e-01 -1.000000e+09 -1.281247e+00
-With a MultiIndex
-Unstacking when the columns are a MultiIndex is also careful about doing the right thing:
+```
 
+### With a MultiIndex
+
+Unstacking when the columns are a ``MultiIndex`` is also careful about doing
+the right thing:
+
+``` python
 In [39]: df[:3].unstack(0)
 Out[39]: 
 exp            A                   B                                      A          
@@ -367,12 +465,22 @@ bar     0.895717  1.431256  0.805244  1.340309 -1.206412 -1.170299  2.565646 -0.
 baz     0.410835       NaN  0.813850       NaN  0.132003       NaN -0.827317       NaN
 foo    -1.413681  0.875906  1.607920 -2.211372  1.024180  0.974466  0.569605 -2.006747
 qux          NaN -1.226825       NaN  0.769804       NaN -1.281247       NaN -0.727707
-Reshaping by Melt
-../_images/reshaping_melt.png
-The top-level melt() function and the corresponding DataFrame.melt() are useful to massage a DataFrame into a format where one or more columns are identifier variables, while all other columns, considered measured variables, are “unpivoted” to the row axis, leaving just two non-identifier columns, “variable” and “value”. The names of those columns can be customized by supplying the var_name and value_name parameters.
+```
+
+## Reshaping by Melt
+
+![reshaping_melt](/static/images/reshaping_melt.png)
+
+The top-level [``melt()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.melt.html#pandas.melt) function and the corresponding [``DataFrame.melt()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html#pandas.DataFrame.melt)
+are useful to massage a ``DataFrame`` into a format where one or more columns
+are *identifier variables*, while all other columns, considered *measured
+variables*, are “unpivoted” to the row axis, leaving just two non-identifier
+columns, “variable” and “value”. The names of those columns can be customized
+by supplying the ``var_name`` and ``value_name`` parameters.
 
 For instance,
 
+``` python
 In [41]: cheese = pd.DataFrame({'first': ['John', 'Mary'],
    ....:                        'last': ['Doe', 'Bo'],
    ....:                        'height': [5.5, 6.0],
@@ -400,8 +508,13 @@ Out[44]:
 1  Mary   Bo   height    6.0
 2  John  Doe   weight  130.0
 3  Mary   Bo   weight  150.0
-Another way to transform is to use the wide_to_long() panel data convenience function. It is less flexible than melt(), but more user-friendly.
+```
 
+Another way to transform is to use the [``wide_to_long()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.wide_to_long.html#pandas.wide_to_long) panel data
+convenience function. It is less flexible than [``melt()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.melt.html#pandas.melt), but more
+user-friendly.
+
+``` python
 In [45]: dft = pd.DataFrame({"A1970": {0: "a", 1: "b", 2: "c"},
    ....:                     "A1980": {0: "d", 1: "e", 2: "f"},
    ....:                     "B1970": {0: 2.5, 1: 1.2, 2: .7},
@@ -429,9 +542,15 @@ id year
 0  1980 -0.121306  d  3.2
 1  1980 -0.097883  e  1.3
 2  1980  0.695775  f  0.1
-Combining with stats and GroupBy
-It should be no shock that combining pivot / stack / unstack with GroupBy and the basic Series and DataFrame statistical functions can produce some very expressive and fast data manipulations.
+```
 
+## Combining with stats and GroupBy
+
+It should be no shock that combining ``pivot`` / ``stack`` / ``unstack`` with
+GroupBy and the basic Series and DataFrame statistical functions can produce
+some very expressive and fast data manipulations.
+
+``` python
 In [49]: df
 Out[49]: 
 exp                  A         B                   A
@@ -486,20 +605,31 @@ exp            A         B
 animal                    
 cat     0.060843  0.018596
 dog    -0.413580  0.232430
-Pivot tables
-While pivot() provides general purpose pivoting with various data types (strings, numerics, etc.), pandas also provides pivot_table() for pivoting with aggregation of numeric data.
+```
 
-The function pivot_table() can be used to create spreadsheet-style pivot tables. See the cookbook for some advanced strategies.
+## Pivot tables
+
+While [``pivot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#pandas.DataFrame.pivot) provides general purpose pivoting with various
+data types (strings, numerics, etc.), pandas also provides [``pivot_table()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html#pandas.pivot_table)
+for pivoting with aggregation of numeric data.
+
+The function [``pivot_table()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html#pandas.pivot_table) can be used to create spreadsheet-style
+pivot tables. See the [cookbook](cookbook.html#cookbook-pivot) for some advanced
+strategies.
 
 It takes a number of arguments:
 
-data: a DataFrame object.
-values: a column or a list of columns to aggregate.
-index: a column, Grouper, array which has the same length as data, or list of them. Keys to group by on the pivot table index. If an array is passed, it is being used as the same manner as column values.
-columns: a column, Grouper, array which has the same length as data, or list of them. Keys to group by on the pivot table column. If an array is passed, it is being used as the same manner as column values.
-aggfunc: function to use for aggregation, defaulting to numpy.mean.
+- ``data``: a DataFrame object.
+- ``values``: a column or a list of columns to aggregate.
+- ``index``: a column, Grouper, array which has the same length as data, or list of them.
+Keys to group by on the pivot table index. If an array is passed, it is being used as the same manner as column values.
+- ``columns``: a column, Grouper, array which has the same length as data, or list of them.
+Keys to group by on the pivot table column. If an array is passed, it is being used as the same manner as column values.
+- ``aggfunc``: function to use for aggregation, defaulting to ``numpy.mean``.
+
 Consider a data set like this:
 
+``` python
 In [54]: import datetime
 
 In [55]: df = pd.DataFrame({'A': ['one', 'one', 'two', 'three'] * 6,
@@ -527,8 +657,11 @@ Out[56]:
 23  three  C  bar  3.357427 -0.863838 2013-12-15
 
 [24 rows x 6 columns]
+```
+
 We can produce pivot tables from this data very easily:
 
+``` python
 In [57]: pd.pivot_table(df, values='D', index=['A', 'B'], columns=['C'])
 Out[57]: 
 C             bar       foo
@@ -563,8 +696,14 @@ B
 A  2.241830 -1.028115 -2.363137       NaN       NaN  2.001971  2.786113 -0.043211  1.922577       NaN       NaN  0.128491
 B -0.676843  0.005518       NaN  0.867024  0.316495       NaN  1.368280 -1.103384       NaN -2.128743 -0.194294       NaN
 C -1.077692  1.399070  1.177566       NaN       NaN  0.352360 -1.976883  1.495717 -0.263660       NaN       NaN  0.872482
-The result object is a DataFrame having potentially hierarchical indexes on the rows and columns. If the values column name is not given, the pivot table will include all of the data that can be aggregated in an additional level of hierarchy in the columns:
+```
 
+The result object is a ``DataFrame`` having potentially hierarchical indexes on the
+rows and columns. If the ``values`` column name is not given, the pivot table
+will include all of the data that can be aggregated in an additional level of
+hierarchy in the columns:
+
+``` python
 In [60]: pd.pivot_table(df, index=['A', 'B'], columns=['C'])
 Out[60]: 
                 D                   E          
@@ -579,8 +718,11 @@ three A -1.181568       NaN  0.961289       NaN
 two   A       NaN  1.000985       NaN  0.064245
       B  0.158248       NaN -0.097147       NaN
       C       NaN  0.176180       NaN  0.436241
-Also, you can use Grouper for index and columns keywords. For detail of Grouper, see Grouping with a Grouper specification.
+```
 
+Also, you can use ``Grouper`` for ``index`` and ``columns`` keywords. For detail of ``Grouper``, see [Grouping with a Grouper specification](groupby.html#groupby-specify).
+
+``` python
 In [61]: pd.pivot_table(df, values='D', index=pd.Grouper(freq='M', key='F'),
    ....:                columns='C')
    ....: 
@@ -599,8 +741,12 @@ F
 2013-10-31  1.120915       NaN
 2013-11-30  0.158248       NaN
 2013-12-31  0.588783       NaN
-You can render a nice output of the table omitting the missing values by calling to_string if you wish:
+```
 
+You can render a nice output of the table omitting the missing values by
+calling ``to_string`` if you wish:
+
+``` python
 In [62]: table = pd.pivot_table(df, index=['A', 'B'], columns=['C'])
 
 In [63]: print(table.to_string(na_rep=''))
@@ -616,11 +762,17 @@ three A -1.181568            0.961289
 two   A            1.000985            0.064245
       B  0.158248           -0.097147          
       C            0.176180            0.436241
-Note that pivot_table is also available as an instance method on DataFrame,
-i.e. DataFrame.pivot_table().
-Adding margins
-If you pass margins=True to pivot_table, special All columns and rows will be added with partial group aggregates across the categories on the rows and columns:
+```
 
+Note that ``pivot_table`` is also available as an instance method on DataFrame,
+
+### Adding margins
+
+If you pass ``margins=True`` to ``pivot_table``, special ``All`` columns and
+rows will be added with partial group aggregates across the categories on the
+rows and columns:
+
+``` python
 In [64]: df.pivot_table(index=['A', 'B'], columns='C', margins=True, aggfunc=np.std)
 Out[64]: 
                 D                             E                    
@@ -636,23 +788,35 @@ two   A       NaN  0.442998  0.442998       NaN  0.447104  0.447104
       B  0.202765       NaN  0.202765  0.560757       NaN  0.560757
       C       NaN  1.819408  1.819408       NaN  0.650439  0.650439
 All      1.556686  0.952552  1.246608  1.250924  0.899904  1.059389
-Cross tabulations
-Use crosstab() to compute a cross-tabulation of two (or more) factors. By default crosstab computes a frequency table of the factors unless an array of values and an aggregation function are passed.
+```
+
+## Cross tabulations
+
+Use [``crosstab()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.crosstab.html#pandas.crosstab) to compute a cross-tabulation of two (or more)
+factors. By default ``crosstab`` computes a frequency table of the factors
+unless an array of values and an aggregation function are passed.
 
 It takes a number of arguments
 
-index: array-like, values to group by in the rows.
-columns: array-like, values to group by in the columns.
-values: array-like, optional, array of values to aggregate according to the factors.
-aggfunc: function, optional, If no values array is passed, computes a frequency table.
-rownames: sequence, default None, must match number of row arrays passed.
-colnames: sequence, default None, if passed, must match number of column arrays passed.
-margins: boolean, default False, Add row/column margins (subtotals)
-normalize: boolean, {‘all’, ‘index’, ‘columns’}, or {0,1}, default False. Normalize by dividing all values by the sum of values.
-Any Series passed will have their name attributes used unless row or column names for the cross-tabulation are specified
+- ``index``: array-like, values to group by in the rows.
+- ``columns``: array-like, values to group by in the columns.
+- ``values``: array-like, optional, array of values to aggregate according to
+the factors.
+- ``aggfunc``: function, optional, If no values array is passed, computes a
+frequency table.
+- ``rownames``: sequence, default ``None``, must match number of row arrays passed.
+- ``colnames``: sequence, default ``None``, if passed, must match number of column
+arrays passed.
+- ``margins``: boolean, default ``False``, Add row/column margins (subtotals)
+- ``normalize``: boolean, {‘all’, ‘index’, ‘columns’}, or {0,1}, default ``False``.
+Normalize by dividing all values by the sum of values.
+
+Any ``Series`` passed will have their name attributes used unless row or column
+names for the cross-tabulation are specified
 
 For example:
 
+``` python
 In [65]: foo, bar, dull, shiny, one, two = 'foo', 'bar', 'dull', 'shiny', 'one', 'two'
 
 In [66]: a = np.array([foo, foo, bar, bar, foo, foo], dtype=object)
@@ -668,8 +832,11 @@ c   dull shiny dull shiny
 a                        
 bar    1     0    0     1
 foo    2     1    1     0
-If crosstab receives only two Series, it will provide a frequency table.
+```
 
+If ``crosstab`` receives only two Series, it will provide a frequency table.
+
+``` python
 In [70]: df = pd.DataFrame({'A': [1, 2, 2, 2, 2], 'B': [3, 3, 4, 4, 4],
    ....:                    'C': [1, 1, np.nan, 1, 1]})
    ....: 
@@ -689,8 +856,13 @@ B  3  4
 A      
 1  1  0
 2  1  3
-Any input passed containing Categorical data will have all of its categories included in the cross-tabulation, even if the actual data does not contain any instances of a particular category.
+```
 
+Any input passed containing ``Categorical`` data will have **all** of its
+categories included in the cross-tabulation, even if the actual data does
+not contain any instances of a particular category.
+
+``` python
 In [73]: foo = pd.Categorical(['a', 'b'], categories=['a', 'b', 'c'])
 
 In [74]: bar = pd.Categorical(['d', 'e'], categories=['d', 'e', 'f'])
@@ -701,36 +873,53 @@ col_0  d  e
 row_0      
 a      1  0
 b      0  1
-Normalization
-New in version 0.18.1.
+```
 
-Frequency tables can also be normalized to show percentages rather than counts using the normalize argument:
+### Normalization
 
+*New in version 0.18.1.* 
+
+Frequency tables can also be normalized to show percentages rather than counts
+using the ``normalize`` argument:
+
+``` python
 In [76]: pd.crosstab(df.A, df.B, normalize=True)
 Out[76]: 
 B    3    4
 A          
 1  0.2  0.0
 2  0.2  0.6
-normalize can also normalize values within each row or within each column:
+```
 
+``normalize`` can also normalize values within each row or within each column:
+
+``` python
 In [77]: pd.crosstab(df.A, df.B, normalize='columns')
 Out[77]: 
 B    3    4
 A          
 1  0.5  0.0
 2  0.5  1.0
-crosstab can also be passed a third Series and an aggregation function (aggfunc) that will be applied to the values of the third Series within each group defined by the first two Series:
+```
 
+``crosstab`` can also be passed a third ``Series`` and an aggregation function
+(``aggfunc``) that will be applied to the values of the third ``Series`` within
+each group defined by the first two ``Series``:
+
+``` python
 In [78]: pd.crosstab(df.A, df.B, values=df.C, aggfunc=np.sum)
 Out[78]: 
 B    3    4
 A          
 1  1.0  NaN
 2  1.0  2.0
-Adding margins
+```
+
+### Adding margins
+
 Finally, one can also add margins or normalize this output.
 
+``` python
 In [79]: pd.crosstab(df.A, df.B, values=df.C, aggfunc=np.sum, normalize=True,
    ....:             margins=True)
    ....: 
@@ -740,31 +929,52 @@ A
 1    0.25  0.0  0.25
 2    0.25  0.5  0.75
 All  0.50  0.5  1.00
-Tiling
-The cut() function computes groupings for the values of the input array and is often used to transform continuous variables to discrete or categorical variables:
+```
 
+## Tiling
+
+The [``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut) function computes groupings for the values of the input
+array and is often used to transform continuous variables to discrete or
+categorical variables:
+
+``` python
 In [80]: ages = np.array([10, 15, 13, 12, 23, 25, 28, 59, 60])
 
 In [81]: pd.cut(ages, bins=3)
 Out[81]: 
 [(9.95, 26.667], (9.95, 26.667], (9.95, 26.667], (9.95, 26.667], (9.95, 26.667], (9.95, 26.667], (26.667, 43.333], (43.333, 60.0], (43.333, 60.0]]
 Categories (3, interval[float64]): [(9.95, 26.667] < (26.667, 43.333] < (43.333, 60.0]]
-If the bins keyword is an integer, then equal-width bins are formed. Alternatively we can specify custom bin-edges:
+```
 
+If the ``bins`` keyword is an integer, then equal-width bins are formed.
+Alternatively we can specify custom bin-edges:
+
+``` python
 In [82]: c = pd.cut(ages, bins=[0, 18, 35, 70])
 
 In [83]: c
 Out[83]: 
 [(0, 18], (0, 18], (0, 18], (0, 18], (18, 35], (18, 35], (18, 35], (35, 70], (35, 70]]
 Categories (3, interval[int64]): [(0, 18] < (18, 35] < (35, 70]]
-New in version 0.20.0.
+```
 
-If the bins keyword is an IntervalIndex, then these will be used to bin the passed data.:
+*New in version 0.20.0.* 
 
+If the ``bins`` keyword is an ``IntervalIndex``, then these will be
+used to bin the passed data.:
+
+``` python
 pd.cut([25, 20, 50], bins=c.categories)
-Computing indicator / dummy variables
-To convert a categorical variable into a “dummy” or “indicator” DataFrame, for example a column in a DataFrame (a Series) which has k distinct values, can derive a DataFrame containing k columns of 1s and 0s using get_dummies():
+```
 
+## Computing indicator / dummy variables
+
+To convert a categorical variable into a “dummy” or “indicator” ``DataFrame``,
+for example a column in a ``DataFrame`` (a ``Series``) which has ``k`` distinct
+values, can derive a ``DataFrame`` containing ``k`` columns of 1s and 0s using
+[``get_dummies()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html#pandas.get_dummies):
+
+``` python
 In [84]: df = pd.DataFrame({'key': list('bbacab'), 'data1': range(6)})
 
 In [85]: pd.get_dummies(df['key'])
@@ -776,8 +986,12 @@ Out[85]:
 3  0  0  1
 4  1  0  0
 5  0  1  0
-Sometimes it’s useful to prefix the column names, for example when merging the result with the original DataFrame:
+```
 
+Sometimes it’s useful to prefix the column names, for example when merging the result
+with the original ``DataFrame``:
+
+``` python
 In [86]: dummies = pd.get_dummies(df['key'], prefix='key')
 
 In [87]: dummies
@@ -799,8 +1013,11 @@ Out[88]:
 3      3      0      0      1
 4      4      1      0      0
 5      5      0      1      0
-This function is often used along with discretization functions like cut:
+```
 
+This function is often used along with discretization functions like ``cut``:
+
+``` python
 In [89]: values = np.random.randn(10)
 
 In [90]: values
@@ -823,10 +1040,15 @@ Out[92]:
 7           1           0           0           0           0
 8           0           0           0           0           0
 9           0           0           1           0           0
-See also Series.str.get_dummies.
+```
 
-get_dummies() also accepts a DataFrame. By default all categorical variables (categorical in the statistical sense, those with object or categorical dtype) are encoded as dummy variables.
+See also [``Series.str.get_dummies``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get_dummies.html#pandas.Series.str.get_dummies).
 
+[``get_dummies()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html#pandas.get_dummies) also accepts a ``DataFrame``. By default all categorical
+variables (categorical in the statistical sense, those with *object* or
+*categorical* dtype) are encoded as dummy variables.
+
+``` python
 In [93]: df = pd.DataFrame({'A': ['a', 'b', 'a'], 'B': ['c', 'c', 'b'],
    ....:                    'C': [1, 2, 3]})
    ....: 
@@ -837,21 +1059,34 @@ Out[94]:
 0  1    1    0    0    1
 1  2    0    1    0    1
 2  3    1    0    1    0
-All non-object columns are included untouched in the output. You can control the columns that are encoded with the columns keyword.
+```
 
+All non-object columns are included untouched in the output. You can control
+the columns that are encoded with the ``columns`` keyword.
+
+``` python
 In [95]: pd.get_dummies(df, columns=['A'])
 Out[95]: 
    B  C  A_a  A_b
 0  c  1    1    0
 1  c  2    0    1
 2  b  3    1    0
-Notice that the B column is still included in the output, it just hasn’t been encoded. You can drop B before calling get_dummies if you don’t want to include it in the output.
+```
 
-As with the Series version, you can pass values for the prefix and prefix_sep. By default the column name is used as the prefix, and ‘_’ as the prefix separator. You can specify prefix and prefix_sep in 3 ways:
+Notice that the ``B`` column is still included in the output, it just hasn’t
+been encoded. You can drop ``B`` before calling ``get_dummies`` if you don’t
+want to include it in the output.
 
-string: Use the same value for prefix or prefix_sep for each column to be encoded.
-list: Must be the same length as the number of columns being encoded.
-dict: Mapping column name to prefix.
+As with the ``Series`` version, you can pass values for the ``prefix`` and
+``prefix_sep``. By default the column name is used as the prefix, and ‘_’ as
+the prefix separator. You can specify ``prefix`` and ``prefix_sep`` in 3 ways:
+
+- string: Use the same value for ``prefix`` or ``prefix_sep`` for each column
+to be encoded.
+- list: Must be the same length as the number of columns being encoded.
+- dict: Mapping column name to prefix.
+
+``` python
 In [96]: simple = pd.get_dummies(df, prefix='new_prefix')
 
 In [97]: simple
@@ -878,10 +1113,15 @@ Out[101]:
 0  1         1         0         0         1
 1  2         0         1         0         1
 2  3         1         0         1         0
-New in version 0.18.0.
+```
 
-Sometimes it will be useful to only keep k-1 levels of a categorical variable to avoid collinearity when feeding the result to statistical models. You can switch to this mode by turn on drop_first.
+*New in version 0.18.0.* 
 
+Sometimes it will be useful to only keep k-1 levels of a categorical
+variable to avoid collinearity when feeding the result to statistical models.
+You can switch to this mode by turn on ``drop_first``.
+
+``` python
 In [102]: s = pd.Series(list('abcaa'))
 
 In [103]: pd.get_dummies(s)
@@ -901,8 +1141,11 @@ Out[104]:
 2  0  1
 3  0  0
 4  0  0
+```
+
 When a column contains only one level, it will be omitted in the result.
 
+``` python
 In [105]: df = pd.DataFrame({'A': list('aaaaa'), 'B': list('ababc')})
 
 In [106]: pd.get_dummies(df)
@@ -922,8 +1165,12 @@ Out[107]:
 2    0    0
 3    1    0
 4    0    1
-By default new columns will have np.uint8 dtype. To choose another dtype, use the dtype argument:
+```
 
+By default new columns will have ``np.uint8`` dtype.
+To choose another dtype, use the ``dtype`` argument:
+
+``` python
 In [108]: df = pd.DataFrame({'A': list('abc'), 'B': [1.1, 2.2, 3.3]})
 
 In [109]: pd.get_dummies(df, dtype=bool).dtypes
@@ -933,11 +1180,15 @@ A_a       bool
 A_b       bool
 A_c       bool
 dtype: object
-New in version 0.23.0.
+```
 
-Factorizing values
-To encode 1-d values as an enumerated type use factorize():
+*New in version 0.23.0.* 
 
+## Factorizing values
+
+To encode 1-d values as an enumerated type use [``factorize()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.factorize.html#pandas.factorize):
+
+``` python
 In [110]: x = pd.Series(['A', 'A', np.nan, 'B', 3.14, np.inf])
 
 In [111]: x
@@ -957,9 +1208,20 @@ Out[113]: array([ 0,  0, -1,  1,  2,  3])
 
 In [114]: uniques
 Out[114]: Index(['A', 'B', 3.14, inf], dtype='object')
-Note that factorize is similar to numpy.unique, but differs in its handling of NaN:
+```
 
-Note The following numpy.unique will fail under Python 3 with a TypeError because of an ordering bug. See also here.
+Note that ``factorize`` is similar to ``numpy.unique``, but differs in its
+handling of NaN:
+
+::: tip Note
+
+The following ``numpy.unique`` will fail under Python 3 with a ``TypeError``
+because of an ordering bug. See also
+[here](https://github.com/numpy/numpy/issues/641).
+
+:::
+
+``` python
 In [1]: x = pd.Series(['A', 'A', np.nan, 'B', 3.14, np.inf])
 In [2]: pd.factorize(x, sort=True)
 Out[2]:
@@ -968,10 +1230,25 @@ Out[2]:
 
 In [3]: np.unique(x, return_inverse=True)[::-1]
 Out[3]: (array([3, 3, 0, 4, 1, 2]), array([nan, 3.14, inf, 'A', 'B'], dtype=object))
-Note If you just want to handle one column as a categorical variable (like R’s factor), you can use df["cat_col"] = pd.Categorical(df["col"]) or df["cat_col"] = df["col"].astype("category"). For full docs on Categorical, see the Categorical introduction and the API documentation.
-Examples
-In this section, we will review frequently asked questions and examples. The column names and relevant column values are named to correspond with how this DataFrame will be pivoted in the answers below.
+```
 
+::: tip Note
+
+If you just want to handle one column as a categorical variable (like R’s factor),
+you can use  ``df["cat_col"] = pd.Categorical(df["col"])`` or
+``df["cat_col"] = df["col"].astype("category")``. For full docs on [``Categorical``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical),
+see the [Categorical introduction](categorical.html#categorical) and the
+[API documentation](https://pandas.pydata.org/pandas-docs/stable/reference/arrays.html#api-arrays-categorical).
+
+:::
+
+## Examples
+
+In this section, we will review frequently asked questions and examples. The
+column names and relevant column values are named to correspond with how this
+DataFrame will be pivoted in the answers below.
+
+``` python
 In [115]: np.random.seed([3, 1415])
 
 In [116]: n = 20
@@ -1002,12 +1279,29 @@ Out[121]:
 19  key0  row2  item0  col4  0.37  0.70
 
 [20 rows x 6 columns]
-Pivoting with single aggregations
-Suppose we wanted to pivot df such that the col values are columns, row values are the index, and the mean of val0 are the values? In particular, the resulting DataFrame should look like:
+```
 
-Note col col0 col1 col2 col3 col4 row row0 0.77 0.605 NaN 0.860 0.65 row2 0.13 NaN 0.395 0.500 0.25 row3 NaN 0.310 NaN 0.545 NaN row4 NaN 0.100 0.395 0.760 0.24
-This solution uses pivot_table(). Also note that aggfunc='mean' is the default. It is included here to be explicit.
+### Pivoting with single aggregations
 
+Suppose we wanted to pivot ``df`` such that the ``col`` values are columns,
+``row`` values are the index, and the mean of ``val0`` are the values? In
+particular, the resulting DataFrame should look like:
+
+::: tip Note
+
+col   col0   col1   col2   col3  col4
+row
+row0  0.77  0.605    NaN  0.860  0.65
+row2  0.13    NaN  0.395  0.500  0.25
+row3   NaN  0.310    NaN  0.545   NaN
+row4   NaN  0.100  0.395  0.760  0.24
+
+:::
+
+This solution uses [``pivot_table()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html#pandas.pivot_table). Also note that
+``aggfunc='mean'`` is the default. It is included here to be explicit.
+
+``` python
 In [122]: df.pivot_table(
    .....:     values='val0', index='row', columns='col', aggfunc='mean')
    .....: 
@@ -1018,8 +1312,12 @@ row0  0.77  0.605    NaN  0.860  0.65
 row2  0.13    NaN  0.395  0.500  0.25
 row3   NaN  0.310    NaN  0.545   NaN
 row4   NaN  0.100  0.395  0.760  0.24
-Note that we can also replace the missing values by using the fill_value parameter.
+```
 
+Note that we can also replace the missing values by using the ``fill_value``
+parameter.
+
+``` python
 In [123]: df.pivot_table(
    .....:     values='val0', index='row', columns='col', aggfunc='mean', fill_value=0)
    .....: 
@@ -1030,8 +1328,12 @@ row0  0.77  0.605  0.000  0.860  0.65
 row2  0.13  0.000  0.395  0.500  0.25
 row3  0.00  0.310  0.000  0.545  0.00
 row4  0.00  0.100  0.395  0.760  0.24
-Also note that we can pass in other aggregation functions as well. For example, we can also pass in sum.
+```
 
+Also note that we can pass in other aggregation functions as well. For example,
+we can also pass in ``sum``.
+
+``` python
 In [124]: df.pivot_table(
    .....:     values='val0', index='row', columns='col', aggfunc='sum', fill_value=0)
    .....: 
@@ -1042,8 +1344,13 @@ row0  0.77  1.21  0.00  0.86  0.65
 row2  0.13  0.00  0.79  0.50  0.50
 row3  0.00  0.31  0.00  1.09  0.00
 row4  0.00  0.10  0.79  1.52  0.24
-Another aggregation we can do is calculate the frequency in which the columns and rows occur together a.k.a. “cross tabulation”. To do this, we can pass size to the aggfunc parameter.
+```
 
+Another aggregation we can do is calculate the frequency in which the columns
+and rows occur together a.k.a. “cross tabulation”. To do this, we can pass
+``size`` to the ``aggfunc`` parameter.
+
+``` python
 In [125]: df.pivot_table(index='row', columns='col', fill_value=0, aggfunc='size')
 Out[125]: 
 col   col0  col1  col2  col3  col4
@@ -1052,9 +1359,14 @@ row0     1     2     0     1     1
 row2     1     0     2     1     2
 row3     0     1     0     2     0
 row4     0     1     2     2     1
-Pivoting with multiple aggregations
-We can also perform multiple aggregations. For example, to perform both a sum and mean, we can pass in a list to the aggfunc argument.
+```
 
+### Pivoting with multiple aggregations
+
+We can also perform multiple aggregations. For example, to perform both a
+``sum`` and ``mean``, we can pass in a list to the ``aggfunc`` argument.
+
+``` python
 In [126]: df.pivot_table(
    .....:     values='val0', index='row', columns='col', aggfunc=['mean', 'sum'])
    .....: 
@@ -1066,8 +1378,12 @@ row0  0.77  0.605    NaN  0.860  0.65  0.77  1.21   NaN  0.86  0.65
 row2  0.13    NaN  0.395  0.500  0.25  0.13   NaN  0.79  0.50  0.50
 row3   NaN  0.310    NaN  0.545   NaN   NaN  0.31   NaN  1.09   NaN
 row4   NaN  0.100  0.395  0.760  0.24   NaN  0.10  0.79  1.52  0.24
-Note to aggregate over multiple value columns, we can pass in a list to the values parameter.
+```
 
+Note to aggregate over multiple value columns, we can pass in a list to the
+``values`` parameter.
+
+``` python
 In [127]: df.pivot_table(
    .....:     values=['val0', 'val1'], index='row', columns='col', aggfunc=['mean'])
    .....: 
@@ -1080,8 +1396,12 @@ row0  0.77  0.605    NaN  0.860  0.65  0.01  0.745   NaN  0.010  0.02
 row2  0.13    NaN  0.395  0.500  0.25  0.45    NaN  0.34  0.440  0.79
 row3   NaN  0.310    NaN  0.545   NaN   NaN  0.230   NaN  0.075   NaN
 row4   NaN  0.100  0.395  0.760  0.24   NaN  0.070  0.42  0.300  0.46
-Note to subdivide over multiple columns we can pass in a list to the columns parameter.
+```
 
+Note to subdivide over multiple columns we can pass in a list to the
+``columns`` parameter.
+
+``` python
 In [128]: df.pivot_table(
    .....:     values=['val0'], index='row', columns=['item', 'col'], aggfunc=['mean'])
    .....: 
@@ -1095,11 +1415,15 @@ row0   NaN   NaN   NaN  0.77   NaN   NaN   NaN   NaN   NaN  0.605  0.86  0.65
 row2  0.35   NaN  0.37   NaN   NaN  0.44   NaN   NaN  0.13    NaN  0.50  0.13
 row3   NaN   NaN   NaN   NaN  0.31   NaN  0.81   NaN   NaN    NaN  0.28   NaN
 row4  0.15  0.64   NaN   NaN  0.10  0.64  0.88  0.24   NaN    NaN   NaN   NaN
-Exploding a list-like column
-New in version 0.25.0.
+```
+
+## Exploding a list-like column
+
+*New in version 0.25.0.* 
 
 Sometimes the values in a column are list-like.
 
+``` python
 In [129]: keys = ['panda1', 'panda2', 'panda3']
 
 In [130]: values = [['eats', 'shoots'], ['shoots', 'leaves'], ['eats', 'leaves']]
@@ -1112,8 +1436,11 @@ Out[132]:
 0  panda1    [eats, shoots]
 1  panda2  [shoots, leaves]
 2  panda3    [eats, leaves]
-We can ‘explode’ the values column, transforming each list-like to a separate row, by using explode(). This will replicate the index values from the original row:
+```
 
+We can ‘explode’ the ``values`` column, transforming each list-like to a separate row, by using [``explode()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.explode.html#pandas.Series.explode). This will replicate the index values from the original row:
+
+``` python
 In [133]: df['values'].explode()
 Out[133]: 
 0      eats
@@ -1123,8 +1450,11 @@ Out[133]:
 2      eats
 2    leaves
 Name: values, dtype: object
-You can also explode the column in the DataFrame.
+```
 
+You can also explode the column in the ``DataFrame``.
+
+``` python
 In [134]: df.explode('values')
 Out[134]: 
      keys  values
@@ -1134,8 +1464,11 @@ Out[134]:
 1  panda2  leaves
 2  panda3    eats
 2  panda3  leaves
-Series.explode() will replace empty lists with np.nan and preserve scalar entries. The dtype of the resulting Series is always object.
+```
 
+[``Series.explode()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.explode.html#pandas.Series.explode) will replace empty lists with ``np.nan`` and preserve scalar entries. The dtype of the resulting ``Series`` is always ``object``.
+
+``` python
 In [135]: s = pd.Series([[1, 2, 3], 'foo', [], ['a', 'b']])
 
 In [136]: s
@@ -1156,8 +1489,11 @@ Out[137]:
 3      a
 3      b
 dtype: object
+```
+
 Here is a typical usecase. You have comma separated strings in a column and want to expand this.
 
+``` python
 In [138]: df = pd.DataFrame([{'var1': 'a,b,c', 'var2': 1},
    .....:                    {'var1': 'd,e,f', 'var2': 2}])
    .....: 
@@ -1167,8 +1503,11 @@ Out[139]:
     var1  var2
 0  a,b,c     1
 1  d,e,f     2
+```
+
 Creating a long form DataFrame is now straightforward using explode and chained operations
 
+``` python
 In [140]: df.assign(var1=df.var1.str.split(',')).explode('var1')
 Out[140]: 
   var1  var2
@@ -1178,3 +1517,4 @@ Out[140]:
 1    d     2
 1    e     2
 1    f     2
+```

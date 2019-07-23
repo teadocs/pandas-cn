@@ -13,8 +13,41 @@ module.exports = ctx => ({
     }
   },
   head: [
-    ['script', {src: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML', async: 'async'}],
-    ['script', {innerText: `MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})`}],
+    ['link', { rel: 'dns-prefetch', href: `//cdn.bootcss.com` }],
+    ['link', { rel: 'dns-prefetch', href: `//cdn.mathjax.org` }],
+    // 使主题能够支持数学公式
+    ['script', {type: 'text/x-mathjax-config'}, `
+    MathJax.Hub.Config({
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      tex2jax: {
+        "inlineMath": [["$", "$"], ["\\\\(", "\\\\)"]], 
+        "processEscapes": true, 
+        "ignoreClass": "document",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'a', 'td'],
+        "processClass": "math|output_area"
+      },
+      "HTML-CSS": {
+        showMathMenu: false
+      }
+    })
+    `],
+    ['script', {src: '//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML'}],
+    // 监听路由重新渲染数学公式
+    ['script', {}, `
+      (function() {
+        var url1 = window.location.href;
+        var url2 = window.location.href;
+        setInterval(function() {
+          if (url1 === url2) {
+            url2 = window.location.href;
+          } else {
+            url1 = url2;
+            if (window.MathJax) window.MathJax.Hub.Typeset();
+          }
+        }, 200);
+      })();
+    `],
     ['link', { rel: 'icon', href: `/logo.png` }],
     ['link', { rel: 'manifest', href: '/manifest.json' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
