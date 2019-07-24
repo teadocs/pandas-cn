@@ -2,6 +2,8 @@
 
 For MultiIndex-ed objects to be indexed and sliced effectively, they need to be sorted. As with any index, you can use ``sort_index``.
 
+对于拥有多层级索引的对象来说，你可以通过排序来是的索引或切片更为高效。就如同其他任何的索引操作一样，你可以使用 ``sort_index``方法来实现。
+
 ```python
 In [88]: import random; random.shuffle(tuples)
 
@@ -58,6 +60,8 @@ dtype: float64
 
 You may also pass a level name to ``sort_index`` if the MultiIndex levels are named.
 
+如果你的多层级索引都被命名了的话，你也可以向 ``sort_index`` 传入一个层级名称。
+
 ```python
 In [94]: s.index.set_names(['L1', 'L2'], inplace=True)
 
@@ -90,6 +94,8 @@ dtype: float64
 
 On higher dimensional objects, you can sort any of the other axes by level if they have a ``MultiIndex``:
 
+对于多维度的对象来说，你也可以对任意的的维度来进行索引，只要他们是具有多层级索引的，
+
 ```python
 In [97]: df.T.sort_index(level=1, axis=1)
 Out[97]: 
@@ -100,6 +106,8 @@ Out[97]:
 ```
 
 Indexing will work even if the data are not sorted, but will be rather inefficient (and show a ``PerformanceWarning``). It will also return a copy of the data rather than a view:
+
+即便数据没有排序，你仍然可以对他们进行索引，但是索引的效率会极大降低，并且也会抛出``PerformanceWarning``警告。而且，这将返回一个数据的副本而非一个数据的视图：
 
 ```python
 In [98]: dfm = pd.DataFrame({'jim': [0, 0, 1, 1],
@@ -131,12 +139,16 @@ jim joe
 
 Furthermore if you try to index something that is not fully lexsorted, this can raise:
 
+另外，如果你试图索引一个没有完全lexsorted的对象，你将会碰到如下的错误：
+
 ```python
 In [5]: dfm.loc[(0,'y'):(1, 'z')]
 UnsortedIndexError: 'Key length (2) was greater than MultiIndex lexsort depth (1)'
 ```
 
 The ``is_lexsorted()`` method on an ``Index`` show if the index is sorted, and the ``lexsort_depth`` property returns the sort depth:
+
+在``Index``上使用``is_lexsorted()``方法，你可以查看这个索引是否已经被排序。而使用``lexsort_depth`` 属性则可以返回排序的深度
 
 ```python
 In [101]: dfm.index.is_lexsorted()
@@ -166,6 +178,8 @@ Out[106]: 2
 ```
 
 And now selection works as expected.
+
+现在，你的选择就可以正常工作了。
 
 ```python
 In [107]: dfm.loc[(0,'y'):(1, 'z')]
