@@ -19,8 +19,8 @@
     "pandas",
     "pandas-cn"
   ],
-  "author": "Evan You",
-  "license": "MIT",
+  "author": "Zhi Bing",
+  "license": "BY-NC-SA 3.0 CN",
   "bugs": {
     "url": "https://github.com/teadocs/pandas-cn/issues"
   },
