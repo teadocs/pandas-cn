@@ -14,6 +14,10 @@
 
 在线编辑器推荐使用这个：[https://pandao.github.io/editor.md/](https://pandao.github.io/editor.md/)
 
+## Github 贡献指南
+
+想要贡献翻译，务必请熟知github的贡献规则，可以参看[怎么在GitHub上为开源项目作贡献？](https://zhuanlan.zhihu.com/p/23457016)。
+
 ## 文档如何在本地跑起来？
 
 Pandas 中文文档的最新版本使用的是 [VuePress](https://v1.vuepress.vuejs.org/zh/) 文档生成工具来驱动的。
