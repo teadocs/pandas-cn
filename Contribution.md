@@ -2,7 +2,7 @@
 
 想要参与翻译的小伙伴，请注意。
 
-参与翻译的提前技能有：[Git](https://zh.wikipedia.org/zh-hans/Git)、[Markdown](https://zh.wikipedia.org/wiki/Markdown)、[命令行操作](https://zh.wikipedia.org/wiki/%E5%91%BD%E4%BB%A4%E8%A1%8C)、[英语](https://zh.wikipedia.org/wiki/%E8%8B%B1%E8%AF%AD)（Google翻译也可）
+参与翻译的提前技能有：[GitHub](https://zh.wikipedia.org/wiki/Github)、[Git](https://zh.wikipedia.org/zh-hans/Git)、[Markdown](https://zh.wikipedia.org/wiki/Markdown)、[命令行操作](https://zh.wikipedia.org/wiki/%E5%91%BD%E4%BB%A4%E8%A1%8C)、[英语](https://zh.wikipedia.org/wiki/%E8%8B%B1%E8%AF%AD)（Google翻译也可）
 
 ## Git教程
 
