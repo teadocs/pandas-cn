@@ -1,16 +1,16 @@
-# pandas Ecosystem
+# Pandas 生态圈
 
-Increasingly, packages are being built on top of pandas to address specific needs in data preparation, analysis and visualization. This is encouraging because it means pandas is not only helping users to handle their data tasks but also that it provides a better starting point for developers to build powerful and more focused data tools. The creation of libraries that complement pandas’ functionality also allows pandas development to remain focused around it’s original requirements.
+越来越多的人在 Pandas的基础上构建包，以满足数据准备、分析和可视化方面的特定需求。这是令人激动的，因为这意味着 Pandas 不仅帮助用户处理他们的数据任务，而且它为开发人员提供了一个更好的起点，来构建功能强大和更有针对性的数据工具。创建扩充 Pandas 功能的类库也能让 Pandas 的发展保持围绕其初心不改的原则。
 
-This is an inexhaustive list of projects that build on pandas in order to provide tools in the PyData space. For a list of projects that depend on pandas, see the [libraries.io usage page for pandas](https://libraries.io/pypi/pandas/usage) or [search pypi for pandas](https://pypi.org/search/?q=pandas).
+这是一个不会断更的项目列表，它们给予 Pandas 构建，以便在PyData空间中能不断的提供新的工具。有关依赖 Pandas 的项目列表，请参阅 [Pandas 的 libraries.io 用法页面](https://libraries.io/pypi/pandas/usage) 或 [在pypi中搜索 Pandas](https://pypi.org/search/?q=pandas)。
 
-We’d like to make it easier for users to find these projects, if you know of other substantial projects that you feel should be on this list, please let us know.
+我们希望让用户更容易找到这些项目，如果您还知道您认为的应该在此列表中展示的其他不错的项目，请将它告诉我们。
 
-## Statistics and Machine Learning
+## 统计和机器学习
 
 ### [Statsmodels](https://www.statsmodels.org/)
 
-Statsmodels is the prominent Python “statistics and econometrics library” and it has a long-standing special relationship with pandas. Statsmodels provides powerful statistics, econometrics, analysis and modeling functionality that is out of pandas’ scope. Statsmodels leverages pandas objects as the underlying data container for computation.
+Statsmodels是着名的Python“统计和计量经济学库”，它与Pandas长期有着的特殊关系。Statsmodels提供了超出Pandas能力范围的强大的统计数据功能，包括计量经济学，分析和建模等功能。Statsmodels利用Pandas对象作为计算的底层数据容器。
 
 ### [sklearn-pandas](https://github.com/paulgb/sklearn-pandas)
 

@@ -1,4 +1,4 @@
-# Essential Basic Functionality
+# 基本使用方法
 
 Here we discuss a lot of the essential functionality common to the pandas data structures. Here’s how to create some of the objects used in the examples from the previous section:
 
@@ -148,7 +148,7 @@ array([[-0.1732,  0.1192, -1.0442],
 
 If a DataFrame or Panel contains homogeneously-typed data, the ndarray can actually be modified in-place, and the changes will be reflected in the data structure. For heterogeneous data (e.g. some of the DataFrame’s columns are not all the same dtype), this will not be the case. The values attribute itself, unlike the axis labels, cannot be assigned to.
 
-::: Tip Note
+::: tip Note
 When working with heterogeneous data, the dtype of the resulting ndarray will be chosen to accommodate all of the data involved. For example, if strings are involved, the result will be of object dtype. If there are only floats and integers, the resulting array will be of float dtype.
 ::: 
 
@@ -291,7 +291,7 @@ Minor_axis axis: A to D
 
 And similarly for ``axis="items"`` and ``axis="minor"``.
 
-::: Tip Note
+::: tip Note
 I could be convinced to make the **axis** argument in the DataFrame methods match the broadcasting behavior of Panel. Though it would require a transition period so users can change their code…
 :::
 
@@ -1025,7 +1025,7 @@ In [120]: df3['A'].idxmin()
 Out[120]: 'd'
 ```
 
-::: Tip Note
+::: tip Note
 ``idxmin`` and ``idxmax`` are called ``argmin`` and ``argmax`` in NumPy.
 :::
 

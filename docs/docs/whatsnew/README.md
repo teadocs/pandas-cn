@@ -1,8 +1,8 @@
-# Release Notes
+# 发布日志
 
-This is the list of changes to pandas between each release. For full details, see the commit logs at [http://github.com/pandas-dev/pandas](http://github.com/pandas-dev/pandas). For install and upgrade instructions, see [Installation](https://pandas.pydata.org/pandas-docs/stable/install.html#install).
+这是Pandas的每个发行版的更新列表。有关完整的详细信息，请参阅 [http://github.com/pandas-dev/pandas](http://github.com/pandas-dev/pandas) 上的提交日志。有关安装和升级说明，请参阅[Pandas 安装方法](/docs/installation.html#installation)。
 
-## Version 0.25
+## 版本 0.25
 
 - [What’s new in 0.25.0 (July 18, 2019)](v0.25.0.html)
   - [Enhancements](v0.25.0.html#enhancements)
@@ -13,7 +13,7 @@ This is the list of changes to pandas between each release. For full details, se
   - [Bug fixes](v0.25.0.html#bug-fixes)
   - [Contributors](v0.25.0.html#contributors)
 
-## Version 0.24
+## 版本 0.24
 
 - [Whats new in 0.24.2 (March 12, 2019)](v0.24.2.html)
   - [Fixed regressions](v0.24.2.html#fixed-regressions)
@@ -34,7 +34,7 @@ This is the list of changes to pandas between each release. For full details, se
   - [Bug fixes](v0.24.0.html#bug-fixes)
   - [Contributors](v0.24.0.html#contributors)
 
-## Version 0.23
+## 版本 0.23
 
 - What’s new in 0.23.4 (August 3, 2018)
   - Fixed regressions
@@ -63,14 +63,14 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.22
+## 版本 0.22
 
 - v0.22.0 (December 29, 2017)
   - Backwards incompatible API changes
   - Compatibility
   - Contributors
 
-## Version 0.21
+## 版本 0.21
 
 - v0.21.1 (December 12, 2017)
   - Restore Matplotlib datetime converter registration
@@ -89,7 +89,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.20
+## 版本 0.20
 
 - v0.20.3 (July 7, 2017)
   - Bug fixes
@@ -109,7 +109,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.19
+## 版本 0.19
 
 - v0.19.2 (December 24, 2016)
   - Enhancements
@@ -129,7 +129,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.18
+## 版本 0.18
 
 - v0.18.1 (May 3, 2016)
   - New features
@@ -145,7 +145,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug Fixes
   - Contributors
 
-## Version 0.17
+## 版本 0.17
 
 - v0.17.1 (November 21, 2015)
   - New features
@@ -161,7 +161,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.16
+## 版本 0.16
 
 - v0.16.2 (June 12, 2015)
   - New features
@@ -183,7 +183,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.15
+## 版本 0.15
 
 - v0.15.2 (December 12, 2014)
   - API changes
@@ -204,7 +204,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.14
+## 版本 0.14
 
 - v0.14.1 (July 11, 2014)
   - API changes
@@ -230,7 +230,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug Fixes
   - Contributors
 
-## Version 0.13
+## 版本 0.13
 
 - v0.13.1 (February 3, 2014)
   - Output formatting enhancements
@@ -256,7 +256,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.12
+## 版本 0.12
 
 - v0.12.0 (July 24, 2013)
   - API changes
@@ -266,7 +266,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Bug fixes
   - Contributors
 
-## Version 0.11
+## 版本 0.11
 
 - v0.11.0 (April 22, 2013)
   - Selection choices
@@ -279,7 +279,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Enhancements
   - Contributors
 
-## Version 0.10
+## 版本 0.10
 
 - v0.10.1 (January 22, 2013)
   - API changes
@@ -295,7 +295,7 @@ This is the list of changes to pandas between each release. For full details, se
   - N dimensional Panels (experimental)
   - Contributors
 
-## Version 0.9
+## 版本 0.9
 
 - v0.9.1 (November 14, 2012)
   - New features
@@ -306,7 +306,7 @@ This is the list of changes to pandas between each release. For full details, se
   - API changes
   - Contributors
 
-## Version 0.8
+## 版本 0.8
 
 - v0.8.1 (July 22, 2012)
   - New features
@@ -322,7 +322,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Potential porting issues for pandas <= 0.7.3 users
   - Contributors
 
-## Version 0.7
+## 版本 0.7
 
 - v.0.7.3 (April 12, 2012)
   - New features
@@ -346,7 +346,7 @@ This is the list of changes to pandas between each release. For full details, se
   - Performance improvements
   - Contributors
 
-## Version 0.6
+## 版本 0.6
 
 - v.0.6.1 (December 13, 2011)
   - New features
@@ -357,14 +357,14 @@ This is the list of changes to pandas between each release. For full details, se
   - Performance enhancements
   - Contributors
 
-## Version 0.5
+## 版本 0.5
 
 - v.0.5.0 (October 24, 2011)
   - New features
   - Performance enhancements
   - Contributors
 
-## Version 0.4
+## 版本 0.4
 
 - v.0.4.1 through v0.4.3 (September 25 - October 9, 2011)
   - New features

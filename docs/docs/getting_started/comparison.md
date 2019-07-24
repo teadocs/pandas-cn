@@ -1,4 +1,4 @@
-# Comparison with other tools
+# 与其他工具比较
 
 ## Comparison with R / R libraries
 

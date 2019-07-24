@@ -171,7 +171,7 @@ array([[1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'test', 'foo'],
        [1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'train', 'foo']], dtype=object)
 ```
 
-::: Tip Note
+::: tip Note
 [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy) does not include the index or column labels in the output.
 :::
 
@@ -233,7 +233,7 @@ Out[22]:
 
 ## Selection
 
-::: Tip Note
+::: tip Note
 While standard Python / Numpy expressions for selecting and setting are intuitive and come in handy for interactive work, for production code, we recommend the optimized pandas data access methods, .at, .iat, .loc and ``.iloc``.
 :::
 

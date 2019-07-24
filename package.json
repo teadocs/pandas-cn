@@ -2,7 +2,7 @@
   "private": true,
   "version": "0.25.0",
   "name": "pandas-cn",
-  "description": "pandas中文文档",
+  "description": "Pandas 中文文档",
   "scripts": {
     "dev": "vuepress dev docs --temp .temp",
     "build": "vuepress build docs --temp .temp",

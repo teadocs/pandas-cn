@@ -1,8 +1,8 @@
-# Tutorials
+# 教程
 
 This is a guide to many pandas tutorials, geared mainly for new users.
 
-## Internal Guides
+## 官方指南
 
 pandas’ own [10 Minutes to pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html#min).
 
@@ -10,7 +10,7 @@ More complex recipes are in the [Cookbook](https://pandas.pydata.org/pandas-docs
 
 A handy pandas [cheat sheet](https://pandas.pydata.org/pandas-docs/stable/user_guide/cookbook.html#cookbook).
 
-## Community Guides
+## 社区指南
 
 ### pandas Cookbook by Julia Evans
 

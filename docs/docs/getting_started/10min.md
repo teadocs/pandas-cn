@@ -1,4 +1,4 @@
-# 10 Minutes to pandas
+# 十分钟入门Pandas
 
 This is a short introduction to pandas, geared mainly for new users. You can see more complex recipes in the [Cookbook](https://pandas.pydata.org/pandas-docs/stable/user_guide/cookbook.html#cookbook).
 
@@ -171,7 +171,7 @@ array([[1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'test', 'foo'],
        [1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'train', 'foo']], dtype=object)
 ```
 
-::: Tip Note
+::: tip Note
 [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy) does not include the index or column labels in the output.
 :::
 
@@ -231,15 +231,15 @@ Out[22]:
 2013-01-05 -0.424972  0.567020  0.276232 -1.087401
 ```
 
-## Selection
+## 选择
 
-::: Tip Note
+::: tip Note
 While standard Python / Numpy expressions for selecting and setting are intuitive and come in handy for interactive work, for production code, we recommend the optimized pandas data access methods, .at, .iat, .loc and ``.iloc``.
 :::
 
 See the indexing documentation [Indexing and Selecting Data](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing) and [MultiIndex / Advanced Indexing](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced).
 
-### Getting
+### 获取
 
 Selecting a single column, which yields a ``Series``, equivalent to ``df.A``:
 

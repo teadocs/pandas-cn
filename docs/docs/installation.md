@@ -1,14 +1,14 @@
-# Installation
+# 安装
 
-The easiest way to install Pandas is to install it as part of the [Anaconda](http://docs.continuum.io/anaconda/) distribution, a cross platform distribution for data analysis and scientific computing. This is the recommended installation method for most users.
+安装Pandas的最简单方法是将其安装为[Anaconda](http://docs.continuum.io/anaconda/)发行版的一部分，这是一种用于数据分析和科学计算的跨平台发行版。这是大多数用户的推荐安装方法。
 
-Instructions for installing from source, [PyPI](https://pypi.org/project/Pandas), [ActivePython](https://www.activestate.com/activepython/downloads), various Linux distributions, or a [development version](http://github.com/Pandas-dev/Pandas) are also provided.
+还提供了从源，[PyPI](https://pypi.org/project/Pandas)，[ActivePython](https://www.activestate.com/activepython/downloads)，各种Linux发行版或[开发版本](http://github.com/Pandas-dev/Pandas)进行安装的说明。
 
-## Plan for dropping Python 2.7
+## 计划移除对Python 2.7的支持
 
-The Python core team plans to stop supporting Python 2.7 on January 1st, 2020. In line with NumPy’s plans, all Pandas releases through December 31, 2018 will support Python 2.
+Python核心团队计划在2020年1月1日停止支持Python 2.7。按照NumPy的计划，2018年12月31日之前的所有Pandas版本都仍支持Python 2（译者注：之后的版本将不再支持）。
 
-The final release before **December 31, 2018** will be the last release to support Python 2. The released package will continue to be available on PyPI and through conda.
+**2018年12月31日**之前的最终版本将是支持Python 2的最后一个版本。已发布的软件包将继续在PyPI和conda上提供。
 
   - Starting **January 1, 2019**, all releases will be Python 3 only.
 

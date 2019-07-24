@@ -14,7 +14,7 @@
 - [安装方法](install.html)
 - [快速入门](getting_started/index.html)
   - [包概述](getting_started/overview.html)
-  - [10分钟入门Pandas](getting_started/10min.html)
+  - [十分钟入门Pandas](getting_started/10min.html)
   - [基本使用方法](getting_started/basics.html)
   - [数据结构简介](getting_started/dsintro.html)
   - [与其他工具比较](getting_started/comparison/index.html)
