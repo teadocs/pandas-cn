@@ -32,7 +32,9 @@
 
 ## 文档生成
 
-本文档自豪的使用 [Teadocs](https://github.com/teadocs/teadocs) 文档生成工具生成。
+本文档使用 [VuePress](https://vuepress.vuejs.org/) 文档生成工具生成。
+
+翻译贡献者可以参考[翻译贡献指南](/Contribution.md)以获取更多帮助。
 
 ## 版权信息
 
