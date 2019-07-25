@@ -1,136 +1,136 @@
 # Pandas 安装
 
-The easiest way to install Pandas is to install it as part of the [Anaconda](http://docs.continuum.io/anaconda/) distribution, a cross platform distribution for data analysis and scientific computing. This is the recommended installation method for most users.
+安装Pandas最简单的方法是直接安装[Anaconda](http://docs.continuum.io/anaconda/)发行版。Anaconda是一个用于数据分析和科学计算的跨平台Python发行版本，其中包含了Pandas库等众多科学计算库。这是大多数用户的推荐安装方法。
 
-Instructions for installing from source, [PyPI](https://pypi.org/project/Pandas), [ActivePython](https://www.activestate.com/activepython/downloads), various Linux distributions, or a [development version](http://github.com/Pandas-dev/Pandas) are also provided.
+当然，文档也提供了从源码、[PyPI](https://pypi.org/project/Pandas)、[ActivePython](https://www.activestate.com/activepython/downloads)、各种Linux发行版或[开发版本](http://github.com/Pandas-dev/Pandas)进行安装的说明。
 
-## Plan for dropping Python 2.7
+## 不再支持python2.7
 
-The Python core team plans to stop supporting Python 2.7 on January 1st, 2020. In line with NumPy’s plans, all Pandas releases through December 31, 2018 will support Python 2.
+Python核心团队计划在2020年1月1日停止对Python2.7的维护。根据NumPy的计划表，在2018年12月31号前，Pandas的所有发行版都支持Python2。
 
-The final release before **December 31, 2018** will be the last release to support Python 2. The released package will continue to be available on PyPI and through conda.
+**2018年12月31**日之前的最终版本将是支持Python2的最后一个版本。已发布的Pandas将继续在PyPI和conda上提供下载。
 
-Starting **January 1, 2019**, all releases will be Python 3 only.
+从**2019年1月1日**起，所有的发行版均**只**支持Python3。
 
-If there are people interested in continued support for Python 2.7 past December 31, 2018 (either backporting bugfixes or funding) please reach out to the maintainers on the issue tracker.
+如果有人在2018年12月31日之后仍对Python2.7的支持感兴趣（修复错误或提供资金），请联系问题跟踪器上的维护人员。
 
-For more information, see the [Python 3 statement](http://python3statement.org/) and the [Porting to Python 3 guide](https://docs.python.org/3/howto/pyporting.html).
+更多相关信息，请参阅[Python3声明](http://python3statement.org/)和[Python3移植指南](https://docs.python.org/3/howto/pyporting.html)。
 
-## Python version support
+## 支持的Python版本
 
-Officially Python 2.7, 3.5, 3.6, and 3.7.
+官方的Python 2.7，3.5，3.6，和 3.7。
 
-## Installing Pandas
+## 安装Pandas
 
-### Installing with Anaconda
+### 使用Anaconda进行安装
 
-Installing Pandas and the rest of the [NumPy](http://www.numpy.org.cn/) and [SciPy](http://www.scipy.org/) stack can be a little difficult for inexperienced users.
+对于没有经验的用户来说，安装Pandas以及其它的[NumPy](http://www.numpy.org.cn/)和[SciPy](http://www.scipy.org/)库可能会有点困难。
 
-The simplest way to install not only Pandas, but Python and the most popular packages that make up the SciPy stack ([IPython](http://ipython.org/), [NumPy](http://www.numpy.org.cn/), [Matplotlib](http://matplotlib.org/), …) is with [Anaconda](http://docs.continuum.io/anaconda/), a cross-platform (Linux, Mac OS X, Windows) Python distribution for data analytics and scientific computing.
+最简单的安装Pandas和SciPy所需的依赖包([IPython](http://ipython.org/), [NumPy](http://www.numpy.org.cn/), [Matplotlib](http://matplotlib.org/), …)方法是使用[Anaconda](http://docs.continuum.io/anaconda/)，它一个跨平台的(Linux, Mac OS X, Windows)用于数据分析和科学计算的Python发行版。
 
-After running the installer, the user will have access to Pandas and the rest of the [SciPy](http://www.scipy.org/) stack without needing to install anything else, and without needing to wait for any software to be compiled.
+运行Anconda的安装程序后，用户可以访问Pandas和SciPy的所有部分，而无需安装任何其他内容，也无需等待任何软件编译。
 
-Installation instructions for [Anaconda](http://docs.continuum.io/anaconda/) [can be found here](http://docs.continuum.io/anaconda/).
+可以在[此处](http://docs.continuum.io/anaconda/)找到[Anaconda](http://docs.continuum.io/anaconda/)的安装说明。
 
-A full list of the packages available as part of the [Anaconda](http://docs.continuum.io/anaconda/) distribution [can be found here](http://docs.continuum.io/anaconda/pkg-docs.html).
+可以在[此处](http://docs.continuum.io/anaconda/pkg-docs.html)找到[Anaconda](http://docs.continuum.io/anaconda/)发行版提供的所有库的列表。
 
-Another advantage to installing Anaconda is that you don’t need admin rights to install it. Anaconda can install in the user’s home directory, which makes it trivial to delete Anaconda if you decide (just delete that folder).
+安装Anaconda的另一个好处是您不需要管理员权限来安装。Anaconda可以安装在用户的主目录中，这意味着删除Anaconda的文件夹是无足轻重的（除了删除通过Anaconda安装的python环境和库，不会造成额外的影响）。
 
-### Installing with Miniconda
+### 使用Miniconda进行安装
 
-The previous section outlined how to get Pandas installed as part of the [Anaconda](http://docs.continuum.io/anaconda/) distribution. However this approach means you will install well over one hundred packages and involves downloading the installer which is a few hundred megabytes in size.
+上一节概述了如何将Pandas作为[Anaconda](http://docs.continuum.io/anaconda/)发行版的一部分来安装。但是，使用Anaconda意味着您将安装上百个库，并且需要下载几百MB的安装程序。
 
-If you want to have more control on which packages, or have a limited internet bandwidth, then installing Pandas with [Miniconda](http://conda.pydata.org/miniconda.html) may be a better solution.
+如果您想要更自由地选择安装哪些库，或者您只有有限的网络带宽，那么使用[Miniconda](http://conda.pydata.org/miniconda.html)来安装Pandas可能是更好的解决方案。
 
-[Conda](http://conda.pydata.org/docs/) is the package manager that the [Anaconda](http://docs.continuum.io/anaconda/) distribution is built upon. It is a package manager that is both cross-platform and language agnostic (it can play a similar role to a pip and virtualenv combination).
+Anaconda发行版是使用Conda来实现Python库管理的，Conda是一个跨平台的且语言无关的库管理器（它可以起到与pip+virtualenv类似的作用）。
 
-[Miniconda](http://conda.pydata.org/miniconda.html) allows you to create a minimal self contained Python installation, and then use the [Conda](http://conda.pydata.org/docs/) command to install additional packages.
+[Miniconda](http://conda.pydata.org/miniconda.html)是一个只包含Python和Conda的Mini版本，安装之后可以使用Conda命令安装其他库。
 
-First you will need [Conda](http://conda.pydata.org/docs/) to be installed and downloading and running the [Miniconda](http://conda.pydata.org/miniconda.html) will do this for you. The installer [can be found here](http://conda.pydata.org/miniconda.html)
+首先您需要下载并安装[Miniconda](http://conda.pydata.org/miniconda.html)以使用 [Conda](http://conda.pydata.org/docs/)命令，下载请点击[此处](http://conda.pydata.org/miniconda.html)。
 
-The next step is to create a new conda environment. A conda environment is like a virtualenv that allows you to specify a specific version of Python and set of libraries. Run the following commands from a terminal window:
+接下来需要创建一个conda虚拟环境。使用conda创建的虚拟环境和使用virtualenv创建的虚拟环境是类似的，它允许您指定特定的Python版本和安装一系列的Python库。在终端窗口中运行以下命令创建一个虚拟环境：
 
 ```sh
 conda create -n name_of_my_env python
 ```
 
-This will create a minimal environment with only Python installed in it. To put your self inside this environment run:
+这行命令将会创建一个只包含Python的最小环境，进入这个环境请运行以下命令：
 
 ```sh
 source activate name_of_my_env
 ```
 
-On Windows the command is:
+Windows用户请运行：
 
 ```sh
 activate name_of_my_env
 ```
 
-The final step required is to install Pandas. This can be done with the following command:
+最后一步是安装Pandas，请使用以下命令：
 
 ```sh
 conda install Pandas
 ```
 
-To install a specific Pandas version:
+安装指定版本的Pandas：
 
 ```sh
 conda install Pandas=0.20.3
 ```
 
-To install other packages, IPython for example:
+安装其他库，例如IPython：
 
 ```sh
 conda install ipython
 ```
 
-To install the full Anaconda distribution:
+安装完整的Anaconda发行版：
 
 ```sh
 conda install anaconda
 ```
 
-If you need packages that are available to pip but not conda, then install pip, and then use pip to install those packages:
+如果你想要通过pip而不是conda来安装库，先安装pip，再通过pip来安装这些库：
 
 ```sh
 conda install pip
 pip install django
 ```
 
-### Installing from PyPI
+### 从PyPI安装
 
-Pandas can be installed via pip from [PyPI](https://pypi.org/project/Pandas).
+Pandas也可以使用pip从[PyPI](https://pypi.org/project/Pandas)上安装.
 
 ```sh
 pip install Pandas
 ```
 
-### Installing with ActivePython
+### 使用ActivePython进行安装
 
-Installation instructions for [ActivePython](https://www.activestate.com/activepython) can be found [here](https://www.activestate.com/activepython/downloads). Versions 2.7 and 3.5 include Pandas.
+可以在[此处](https://www.activestate.com/activepython/downloads)找到[ActivePython](https://www.activestate.com/activepython)的安装说明。版本2.7和3.5包括中包含了Pandas。
 
-### Installing using your Linux distribution’s package manager.
+### 使用Linux发行版的软件包管理器进行安装
 
-The commands in this table will install Pandas for Python 3 from your distribution. To install Pandas for Python 2, you may need to use the python-Pandas package.
+此表中的命令将根据您的Linux发行版本安装Pandas for Python 3。要安装Pandas for Python 2，您可能需要使用python-Pandas包。
 
-Distribution | Status | Download / Repository Link | Install method
+版本 | 状态 | 下载 / 软件库链接 | 安装方法
 ---|---|---|---
-Debian | stable | [official Debian repository](http://packages.debian.org/search?keywords=Pandas&searchon=names&suite=all&section=all) | sudo apt-get install | python3-Pandas
-Debian & Ubuntu | unstable (latest packages) | [NeuroDebian](http://neuro.debian.net/index.html#how-to-use-this-repository)	 | sudo apt-get install python3-Pandas
-Ubuntu | stable | [official Ubuntu repository](http://packages.ubuntu.com/search?keywords=Pandas&searchon=names&suite=all&section=all) | sudo apt-get install python3-Pandas
-OpenSuse | stable | [OpenSuse Repository](http://software.opensuse.org/package/python-Pandas?search_term=Pandas) | zypper in python3-Pandas
-Fedora | stable | [official Fedora repository](https://admin.fedoraproject.org/pkgdb/package/rpms/python-Pandas/) | dnf install python3-Pandas
-Centos/RHEL | stable | [EPEL repository](https://admin.fedoraproject.org/pkgdb/package/rpms/python-Pandas/) | yum install python3-Pandas
+Debian | 稳定 | [official Debian repository](http://packages.debian.org/search?keywords=Pandas&searchon=names&suite=all&section=all) | sudo apt-get install | python3-Pandas
+Debian & Ubuntu | 不稳定 (最新版) | [NeuroDebian](http://neuro.debian.net/index.html#how-to-use-this-repository)   | sudo apt-get install python3-Pandas
+Ubuntu | 稳定 | [official Ubuntu repository](http://packages.ubuntu.com/search?keywords=Pandas&searchon=names&suite=all&section=all) | sudo apt-get install python3-Pandas
+OpenSuse | 稳定 | [OpenSuse Repository](http://software.opensuse.org/package/python-Pandas?search_term=Pandas) | zypper in python3-Pandas
+Fedora | 稳定 | [official Fedora repository](https://admin.fedoraproject.org/pkgdb/package/rpms/python-Pandas/) | dnf install python3-Pandas
+Centos/RHEL | 稳定 | [EPEL repository](https://admin.fedoraproject.org/pkgdb/package/rpms/python-Pandas/) | yum install python3-Pandas
 
-**However**, the packages in the linux package managers are often a few versions behind, so to get the newest version of Pandas, it’s recommended to install using the pip or conda methods described above.
+**但是**，Linux软件包管理器中的包通常只有几个版本，所以为了获得最新版本的Pandas，建议使用上面描述的pip或conda方法进行安装。
 
-### Installing from source
+### 使用源码进行安装
 
-See the [contributing documentation](http://Pandas.pydata.org/Pandas-docs/stable/contributing.html#contributing) for complete instructions on building from the git source tree. Further, see [creating a development environment](http://Pandas.pydata.org/Pandas-docs/stable/contributing.html#contributing-dev-env) if you wish to create a Pandas development environment.
+有关从git源代码树构建库的完整说明，请参阅[参考文档](http://Pandas.pydata.org/Pandas-docs/stable/contributing.html#contributing)。此外，如果要创建Pandas开发环境，请参阅[创建开发环境](http://Pandas.pydata.org/Pandas-docs/stable/contributing.html#contributing-dev-env)。
 
-## Running the test suite
+## 运行测试套件
 
-Pandas is equipped with an exhaustive set of unit tests, covering about 97% of the codebase as of this writing. To run it on your machine to verify that everything is working (and that you have all of the dependencies, soft and hard, installed), make sure you have [pytest](http://doc.pytest.org/en/latest/) and run:
+Pandas配备了一套详尽的单元测试，在本文撰写时，已涵盖了约97％的代码。要在您的计算机上运行这些测试以验证一切正常（您已经安装了所有的软件和硬件依赖项），请确保您已有pytest库，并运行：
 
 ```python
 >>> import Pandas as pd
@@ -147,71 +147,73 @@ collected 12145 items / 3 skipped
 ==================== 12130 passed, 12 skipped in 368.339 seconds =====================
 ```
 
-## Dependencies
+## 依赖项
 
-- [setuptools](https://setuptools.readthedocs.io/en/latest/): 24.2.0 or higher
-- [NumPy](http://www.numpy.org.cn/): 1.9.0 or higher
-- [python-dateutil](http://https//dateutil.readthedocs.io/en/stable/): 2.5.0 or higher
+- [setuptools](https://setuptools.readthedocs.io/en/latest/)： 24.2.0或更高版本。
+- [NumPy](http://www.numpy.org.cn/)：1.9.0或更高版本。
+- [python-dateutil](http://https//dateutil.readthedocs.io/en/stable/)： 2.5.0或更高版本。
 - [pytz](http://pytz.sourceforge.net/)
 
-### Recommended Dependencies
+### 推荐的依赖项
 
-- [numexpr](https://github.com/pydata/numexpr): for accelerating certain numerical operations. numexpr uses multiple cores as well as smart chunking and caching to achieve large speedups. If installed, must be Version 2.4.6 or higher.
-- [bottleneck](https://github.com/kwgoodman/bottleneck): for accelerating certain types of nan evaluations. bottleneck uses specialized cython routines to achieve large speedups. If installed, must be Version 1.0.0 or higher.
+- [numexpr](https://github.com/pydata/numexpr)： 用于加速某些数值运算。numexpr使用多个内核以及智能分块和缓存技术来实现大型加速运算。如果已安装，必须是2.4.6或更高版本。
+- [bottleneck](https://github.com/kwgoodman/bottleneck)：用于加速某些包含空值的运算。bottleneck使用专门的cython程序来实现大型的加速。如果已安装，必须是1.0.0或更高版本。
 
-**Note**：You are highly encouraged to install these libraries, as they provide speed improvements, especially when working with large data sets.
+**注意**：强烈建议您安装这些库，因为它们可以提高速度，尤其是在处理大型数据集时。
 
-### Optional Dependencies
+### 可选的依赖项
 
-- [Cython](http://www.cython.org/): Only necessary to build development version. Version 0.24 or higher.
-- [SciPy](http://www.scipy.org/): miscellaneous statistical functions, Version 0.14.0 or higher
-- [xarray](http://xarray.pydata.org/): Pandas like handling for > 2 dims, needed for converting Panels to xarray objects. Version 0.7.0 or higher is recommended.
-- [PyTables](http://www.pytables.org/): necessary for HDF5-based storage. Version 3.0.0 or higher required, Version 3.2.1 or higher highly recommended.
-- [Feather Format](https://github.com/wesm/feather): necessary for feather-based storage, version 0.3.1 or higher.
-- [Apache Parquet](https://parquet.apache.org/), either [pyarrow](http://arrow.apache.org/docs/python/) (>= 0.4.1) or [fastparquet](https://fastparquet.readthedocs.io/en/latest) (>= 0.0.6) for parquet-based storage. The [snappy](https://pypi.org/project/python-snappy) and [brotli](https://pypi.org/project/brotlipy) are available for compression support.
-- [SQLAlchemy](http://www.sqlalchemy.org/): for SQL database support. Version 0.8.1 or higher recommended. Besides SQLAlchemy, you also need a database specific driver. You can find an overview of supported drivers for each SQL dialect in the [SQLAlchemy docs](http://docs.sqlalchemy.org/en/latest/dialects/index.html). Some common drivers are:
-    - [psycopg2](http://initd.org/psycopg/): for PostgreSQL
-    - [pymysql](https://github.com/PyMySQL/PyMySQL): for MySQL.
-    - [SQLite](https://docs.python.org/3/library/sqlite3.html): for SQLite, this is included in Python’s standard library by default.
-- matplotlib: for plotting, Version 1.4.3 or higher.
-- For Excel I/O:
-    - [xlrd/xlwt](http://www.python-excel.org/): Excel reading (xlrd) and writing (xlwt)
-    - [openpyxl](http://https//openpyxl.readthedocs.io/en/default/): openpyxl version 2.4.0 for writing .xlsx files (xlrd >= 0.9.0)
-    - [XlsxWriter](https://pypi.org/project/XlsxWriter): Alternative Excel writer
-- [Jinja2](http://jinja.pocoo.org/): Template engine for conditional HTML formatting.
-- [s3fs](http://s3fs.readthedocs.io/): necessary for Amazon S3 access (s3fs >= 0.0.7).
-- [blosc](https://pypi.org/project/blosc): for msgpack compression using blosc
-- One of [qtpy](https://github.com/spyder-ide/qtpy) (requires PyQt or PySide), [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5), [PyQt4](http://www.riverbankcomputing.com/software/pyqt/download), [pygtk](http://www.pygtk.org/), [xsel](http://www.vergenet.net/~conrad/software/xsel/), or [xclip](https://github.com/astrand/xclip/): necessary to use [read_clipboard()](http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.read_clipboard.html#Pandas.read_clipboard). Most package managers on Linux distributions will have xclip and/or xsel immediately available for installation.
-- [Pandas-gbq](https://Pandas-gbq.readthedocs.io/en/latest/install.html#dependencies): for Google BigQuery I/O.
-- [Backports.lzma](https://pypi.org/project/backports.lzma/): Only for Python 2, for writing to and/or reading from an xz compressed DataFrame in CSV; Python 3 support is built into the standard library.
-- One of the following combinations of libraries is needed to use the top-level read_html() function:
-    *Changed in version 0.23.0.*
+- [Cython](http://www.cython.org/)：只需要构建开发版本，0.24或更高版本。
+- [SciPy](http://www.scipy.org/)：使用其他的统计函数，0.14.0或更高版本。
+- [xarray](http://xarray.pydata.org/)：Pandas处理2维以上的数据时， 需要将Panel转换为xarray对象，推荐使用0.7.0或更高版本。
+- [PyTables](http://www.pytables.org/)：用于HDF5类型的存储， 需要3.0.0或更高版本，强烈建议使用版本3.2.1或更高版本。
+- [Feather Format](https://github.com/wesm/feather)：用于feather-based类型的存储， 必须是0.3.1或更高版本。
+- [Apache Parquet](https://parquet.apache.org/)，[pyarrow](http://arrow.apache.org/docs/python/) (>= 0.4.1) 和 [fastparquet](https://fastparquet.readthedocs.io/en/latest) (>= 0.0.6)用于 parquet-based类型的存储. [snappy](https://pypi.org/project/python-snappy) 和[brotli](https://pypi.org/project/brotlipy)可提供压缩支持。
+- [SQLAlchemy](http://www.sqlalchemy.org/)： 用于SQL数据库的支持。建议使用0.8.1或更高版本。除了SQLAlchemy之外，您还需要一个特定数据库的驱动程序。您可以在[SQLAlchemy文档](http://docs.sqlalchemy.org/en/latest/dialects/index.html)中找到每种SQL支持的驱动程序的概述。一些常见的驱动程序是：
+    - [psycopg2](http://initd.org/psycopg/): 用于PostgreSQL。
+    - [pymysql](https://github.com/PyMySQL/PyMySQL): 用于MySQL。
+    - [SQLite](https://docs.python.org/3/library/sqlite3.html):用于SQLite，对于SQLite，默认情况下它包含在Python的标准库中。
+- matplotlib: 用于绘图，1.4.3或更高版本。
+- 用于Excel读写：
+    - [xlrd/xlwt](http://www.python-excel.org/)：Excel读(xlrd)和写(xlwt)
+    - [openpyxl](http://https//openpyxl.readthedocs.io/en/default/)： 用于编写.xlsx文件，2.4.0版本(xlrd >= 0.9.0)。
+    - [XlsxWriter](https://pypi.org/project/XlsxWriter)： 可选的Excel编写器。
+- [Jinja2](http://jinja.pocoo.org/)：用于处理HTML格式的模板引擎。
+- [s3fs](http://s3fs.readthedocs.io/)：用于访问Amazon S3(s3fs >= 0.0.7)。
+- [blosc](https://pypi.org/project/blosc)：使用blosc进行msgpack的压缩
+- [read_clipboard()](http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.read_clipboard.html#Pandas.read_clipboard)函数需要用到[qtpy](https://github.com/spyder-ide/qtpy) (需要PyQt或者PySide)， [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5)， [PyQt4](http://www.riverbankcomputing.com/software/pyqt/download)， [pygtk](http://www.pygtk.org/)， [xsel](http://www.vergenet.net/~conrad/software/xsel/)或者 [xclip](https://github.com/astrand/xclip/)。Linux发行版上的大多数软件包管理器都可以立即安装xclip或xsel。
+- [Pandas-gbq](https://Pandas-gbq.readthedocs.io/en/latest/install.html#dependencies)：用于Google BigQuery I/O.
+- [Backports.lzma](https://pypi.org/project/backports.lzma/)： 仅适用于Python 2，用于以CSV格式写入和读取xz格式压缩的DataFrame；Python 3已内置于标准库中。
 
-    **Note**：If using BeautifulSoup4 a minimum version of 4.2.1 is required
+- 使用read_html()函数需要用到以下库组合中的一个。
+    *在0.23.0版本中已修改*
 
-    - [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup) and [html5lib](https://github.com/html5lib/html5lib-python) (Any recent version of [html5lib](https://github.com/html5lib/html5lib-python) is okay.)
-    - [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup) and [lxml](http://lxml.de/)
-    - [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup) and [html5lib](https://github.com/html5lib/html5lib-python) and [lxml](http://lxml.de/)
-    - Only [lxml](http://lxml.de/), although see [HTML Table Parsing](http://Pandas.pydata.org/Pandas-docs/stable/io.html#io-html-gotchas) for reasons as to why you should probably **not** take this approach.
+    **注意**：BeautifulSoup4是最低的要求版本。
+
+    - [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup) 和 [html5lib](https://github.com/html5lib/html5lib-python) (任何最近的[html5lib](https://github.com/html5lib/html5lib-python) 版本均可)
+    - [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup) 和 [lxml](http://lxml.de/)
+    - [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup)、[html5lib](https://github.com/html5lib/html5lib-python) 和 [lxml](http://lxml.de/)
+    - 只有[lxml](http://lxml.de/)，请浏览[HTML Table Parsing](http://Pandas.pydata.org/Pandas-docs/stable/io.html#io-html-gotchas)，了解为什么你应该不采取这种方法。
 
     <div class="warning-warp">
     <b>警告</b>
     <p>
     <ul>
-        <li>if you install <a href="http://www.crummy.com/software/BeautifulSoup">BeautifulSoup4</a> you must install either <a href="http://lxml.de/">lxml</a> or <a href="https://github.com/html5lib/html5lib-python">html5lib</a> or both.<a href="http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.read_html.html#Pandas.read_html">read_html()</a> will not work with only <a href="http://www.crummy.com/software/BeautifulSoup">BeautifulSoup4</a> installed.
+        <li>如果你安装了<a href="http://www.crummy.com/software/BeautifulSoup">BeautifulSoup4，</a>你应该安装 <a href="http://lxml.de/">lxml</a> 和<a href="https://github.com/html5lib/html5lib-python">html5lib</a>之中的一个或两个都安装。<a href="http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.read_html.html#Pandas.read_html">read_html()</a>无法在只安装<a href="http://www.crummy.com/software/BeautifulSoup">BeautifulSoup4</a>的情况下运行。
         </li>
-        <li>You are highly encouraged to read <a href="http://Pandas.pydata.org/Pandas-docs/stable/io.html#io-html-gotchas">HTML Table Parsing gotchas</a>. It explains issues surrounding the installation and usage of the above three libraries.
+        <li>我们强烈推荐您阅读<a href="http://Pandas.pydata.org/Pandas-docs/stable/io.html#io-html-gotchas">HTML Table Parsing gotchas</a> 。它解释了有关上述三个库的安装和使用问题。
         </li>
     </ul>
     </p>
     </div>
 
-    **Note**：
-    if you’re on a system with apt-get you can do
+    **注意**：
+    如果您使用的是apt-get系统，则可以执行以下命令：
 
     ```sh
     sudo apt-get build-dep python-lxml
     ```
-    to get the necessary dependencies for installation of lxml. This will prevent further headaches down the line.
+    获取安装lxml所需的依赖项，以将防止进一步的困扰。
 
-**Note**: Without the optional dependencies, many useful features will not work. Hence, it is highly recommended that you install these. A packaged distribution like [Anaconda](http://docs.continuum.io/anaconda/), [ActivePython](https://www.activestate.com/activepython/downloads) (version 2.7 or 3.5), or [Enthought Canopy](http://enthought.com/products/canopy) may be worth considering.
+**注意**：
+如果没有安装可选的依赖项，许多有用的功能将无法使用。因此，强烈建议您安装这些库。像[Anaconda](http://docs.continuum.io/anaconda/)，[ActivePython](https://www.activestate.com/activepython/downloads)（版本2.7或3.5）或[Enthought Canopy](http://enthought.com/products/canopy)这样的已经打包好的Python发行版是值得考虑的。
