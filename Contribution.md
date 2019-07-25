@@ -16,6 +16,8 @@
 
 ## Github 贡献指南
 
+了解github最好的方式是直接看[github官方的中文教程](https://help.github.com/cn)。
+
 想要贡献翻译，务必请熟知github的贡献规则，可以参看[怎么在GitHub上为开源项目作贡献？](https://zhuanlan.zhihu.com/p/23457016)。
 
 ## 文档如何在本地跑起来？
