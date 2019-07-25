@@ -26,11 +26,13 @@ Pandas 中文文档的最新版本使用的是 [VuePress](https://v1.vuepress.vu
 
 由于 [VuePress](https://v1.vuepress.vuejs.org/zh/) 是基于 [Nodejs](https://zh.wikipedia.org/wiki/Node.js) 编写的工具，如果你想让文档在本地运行调试，你首先需要安装 [Nodejs](http://nodejs.cn/)  在你的电脑上，非Windows操作系统推荐使用 [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md) 来安装 [Nodejs](http://nodejs.cn/) ，Windows操作系统的小伙伴可以直接下载最新版本的 Nodejs 的 [Windows 安装包](http://nodejs.cn/download/) 。
 
-## 命令教程
+### 文档命令行说明
 
 请先打开命令行或者终端工具，然后切换到文档所在的目录，然后运行以下功能命令。
 
-### 安装文档工具的依赖
+#### 安装文档工具的依赖
+
+这是拿到文档之后的第一步。
 
 这个命令的作用是安装工具的依赖包，这是拿到文档之后**第一次**必须要运行的命令，且**只需要运行一次**，之后再翻译**无需**运行此命令。
 
@@ -38,7 +40,7 @@ Pandas 中文文档的最新版本使用的是 [VuePress](https://v1.vuepress.vu
 $ npm install
 ```
 
-### 运行本地环境
+#### 运行本地环境
 
 想要查看翻译的效果，可以运行下面这个命令。
 
@@ -46,7 +48,7 @@ $ npm install
 $ npm run dev
 ```
 
-### 生成静态html文件
+#### 生成静态html文件
 
 ``` bash
 $ npm run build
