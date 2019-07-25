@@ -2,7 +2,7 @@
 
 想要参与翻译的小伙伴，请注意。
 
-参与翻译的提前技能有：[GitHub](https://zh.wikipedia.org/wiki/Github)、[Git](https://zh.wikipedia.org/zh-hans/Git)、[Markdown](https://zh.wikipedia.org/wiki/Markdown)、[命令行操作](https://zh.wikipedia.org/wiki/%E5%91%BD%E4%BB%A4%E8%A1%8C)、[英语](https://zh.wikipedia.org/wiki/%E8%8B%B1%E8%AF%AD)（Google翻译也可）
+参与翻译的提前技能有：[GitHub](https://zh.wikipedia.org/wiki/Github)、[Git](https://zh.wikipedia.org/zh-hans/Git)、[Markdown](https://zh.wikipedia.org/wiki/Markdown)、[命令行操作](https://zh.wikipedia.org/wiki/%E5%91%BD%E4%BB%A4%E8%A1%8C)、[英语](https://zh.wikipedia.org/wiki/%E8%8B%B1%E8%AF%AD)（[Google翻译](https://translate.google.cn/)也可）
 
 ## Git教程
 
@@ -24,7 +24,7 @@
 
 Pandas 中文文档的最新版本使用的是 [VuePress](https://v1.vuepress.vuejs.org/zh/) 文档生成工具来驱动的。
 
-由于 [VuePress](https://v1.vuepress.vuejs.org/zh/) 是基于 [Nodejs](https://zh.wikipedia.org/wiki/Node.js) 编写的工具，如果你想让文档在本地运行调试，你首先需要安装 [Nodejs](http://nodejs.cn/)  在你的电脑上，非Windows操作系统推荐使用[nvm](https://github.com/nvm-sh/nvm/blob/master/README.md) 来安装 [Nodejs](http://nodejs.cn/) ，Windows操作系统的小伙伴可以直接下载最新版本的Nodejs的 [Windows 安装包](http://nodejs.cn/download/) 。
+由于 [VuePress](https://v1.vuepress.vuejs.org/zh/) 是基于 [Nodejs](https://zh.wikipedia.org/wiki/Node.js) 编写的工具，如果你想让文档在本地运行调试，你首先需要安装 [Nodejs](http://nodejs.cn/)  在你的电脑上，非Windows操作系统推荐使用 [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md) 来安装 [Nodejs](http://nodejs.cn/) ，Windows操作系统的小伙伴可以直接下载最新版本的 Nodejs 的 [Windows 安装包](http://nodejs.cn/download/) 。
 
 ## 命令教程
 
@@ -40,7 +40,7 @@ $ npm install
 
 ### 运行本地环境
 
-查看翻译效果，可以运行这个命令。
+想要查看翻译的效果，可以运行下面这个命令。
 
 ``` bash
 $ npm run dev
