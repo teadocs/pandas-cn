@@ -1469,7 +1469,7 @@ major      minor
            d     -2.655452  1.032814 -2.277282
 ```
 
-## Deprecate Panel
+## 弃用面板
 
 Over the last few years, pandas has increased in both breadth and depth, with new features, datatype support, and manipulation routines. As a result, supporting efficient indexing and functional routines for ``Series``, ``DataFrame`` and Panel has contributed to an increasingly fragmented and difficult-to-understand code base.
 

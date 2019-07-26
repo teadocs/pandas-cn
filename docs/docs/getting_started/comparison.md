@@ -1,6 +1,6 @@
 # 与其他工具比较
 
-## Comparison with R / R libraries
+## 与R/R库的比较
 
 Since ``pandas`` aims to provide a lot of the data manipulation and analysis functionality that people use [R](http://www.r-project.org/) for, this page was started to provide a more detailed look at the [R language](http://en.wikipedia.org/wiki/R_(programming_language)) and its many third party libraries as they relate to ``pandas``. In comparisons with R and CRAN libraries, we care about the following things:
 
@@ -656,7 +656,7 @@ Categories (3, int64): [1, 2, 3]
 
 For more details and examples see [categorical introduction](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) and the [API documentation](https://pandas.pydata.org/pandas-docs/stable/reference/arrays.html#api-arrays-categorical). There is also a documentation regarding the [differences to R’s factor](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical-rfactor).
 
-## Comparison with SQL
+## 与SQL比较
 
 Since many potential pandas users have some familiarity with [SQL](https://en.wikipedia.org/wiki/SQL), this page is meant to provide some examples of how various SQL operations would be performed using pandas.
 
@@ -1303,7 +1303,7 @@ In pandas we select the rows that should remain, instead of deleting them
 In [39]: tips = tips.loc[tips['tip'] <= 9]
 ```
 
-## Comparison with SAS
+## 与SAS比较
 
 For potential users coming from [SAS](https://en.wikipedia.org/wiki/SAS_(software)) this page is meant to demonstrate how different SAS operations would be performed in pandas.
 
@@ -2140,7 +2140,7 @@ In [9]: %time df = pd.read_csv('big.csv')
 Wall time: 4.86 s
 ```
 
-## Comparison with Stata
+## 与Stata比较
 
 For potential users coming from [Stata](https://en.wikipedia.org/wiki/Stata) this page is meant to demonstrate how different Stata operations would be performed in pandas.
 

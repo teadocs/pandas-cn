@@ -1,6 +1,6 @@
 # 基本使用方法
 
-Here we discuss a lot of the essential functionality common to the pandas data structures. Here’s how to create some of the objects used in the examples from the previous section:
+在这里，我们讨论了 Pandas 数据结构常见的许多基本功能。以下是如何创建上一节示例中使用的一些对象：
 
 ``` python
 In [1]: index = pd.date_range('1/1/2000', periods=8)
@@ -17,7 +17,7 @@ In [4]: wp = pd.Panel(np.random.randn(2, 5, 4), items=['Item1', 'Item2'],
    ...: 
 ```
 
-## Head and Tail
+## 头和尾部
 
 To view a small sample of a Series or DataFrame object, use the [head()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head) and [tail()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.tail.html#pandas.DataFrame.tail) methods. The default number of elements to display is five, but you may pass a custom number.
 
@@ -41,7 +41,7 @@ Out[7]:
 dtype: float64
 ```
 
-## Attributes and Underlying Data
+## 属性和基础数据
 
 pandas objects have a number of attributes enabling you to access the metadata
 
@@ -157,7 +157,7 @@ In the past, pandas recommended [Series.values](https://pandas.pydata.org/pandas
   1. When your Series contains an [extension type](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types), it’s unclear whether [Series.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values) returns a NumPy array or the extension array. [Series.array](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array) will always return an [ExtensionArray](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray), and will never copy data. [Series.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) will always return a NumPy array, potentially at the cost of copying / coercing values.
   1. When your DataFrame contains a mixture of data types, [DataFrame.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values) may involve copying data and coercing values to a common dtype, a relatively expensive operation. [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy), being a method, makes it clearer that the returned NumPy array may not be a view on the same data in the DataFrame.
 
-## Accelerated operations
+## 加速操作
 
 pandas has support for accelerating certain types of binary numerical and boolean operations using the numexpr library and the ``bottleneck`` libraries.
 
@@ -182,7 +182,7 @@ pd.set_option('compute.use_bottleneck', False)
 pd.set_option('compute.use_numexpr', False)
 ```
 
-## Flexible binary operations
+## 灵活的二进制操作
 
 With binary operations between pandas data structures, there are two key points of interest:
 
@@ -690,7 +690,7 @@ In [80]: def combiner(x, y):
    ....: 
 ```
 
-## Descriptive statistics
+## 描述性统计
 
 There exists a large number of methods for computing descriptive statistics and other related operations on [Series](https://pandas.pydata.org/pandas-docs/stable/reference/series.html#api-series-stats), [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/frame.html#api-dataframe-stats), and [Panel](https://pandas.pydata.org/pandas-docs/stable/reference/panel.html#api-panel-stats). Most of these are aggregations (hence producing a lower-dimensional result) like [sum()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sum.html#pandas.DataFrame.sum), [mean()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.mean.html#pandas.DataFrame.mean), and [quantile()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.quantile.html#pandas.DataFrame.quantile), but some of them, like [cumsum()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.cumsum.html#pandas.DataFrame.cumsum) and [cumprod()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.cumprod.html#pandas.DataFrame.cumprod), produce an object of the same size. Generally speaking, these methods take an **axis** argument, just like ndarray *.{sum, std, …}*, but the axis can be specified by name or integer:
 
@@ -1149,7 +1149,7 @@ Length: 20
 Categories (2, interval[float64]): [(-inf, 0.0] < (0.0, inf]]
 ```
 
-## Function application
+## 功能的应用
 
 To apply your own or another library’s functions to pandas objects, you should be aware of the three methods below. The appropriate method to use depends on whether your function expects to operate on an entire ``DataFrame`` or ``Series``, row- or column-wise, or elementwise.
 
@@ -1813,7 +1813,7 @@ e    6.0
 dtype: float64
 ```
 
-## Reindexing and altering labels
+## 重新索引和更改标签
 
 [reindex()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.reindex.html#pandas.Series.reindex) is the fundamental data alignment method in pandas. It is used to implement nearly all other features relying on label-alignment functionality. To reindex means to conform the data to match a given set of labels along a particular axis. This accomplishes several things:
 
@@ -2354,7 +2354,7 @@ c   1    5  50
     2    6  60
 ```
 
-## Iteration
+## 迭代
 
 The behavior of basic iteration over pandas objects depends on the type. When iterating over a Series, it is regarded as array-like, and basic iteration produces the values. Other data structures, like DataFrame and Panel, follow the dict-like convention of iterating over the “keys” of the objects.
 
@@ -2545,7 +2545,7 @@ This method does not convert the row to a Series object; it merely returns the v
 The column names will be renamed to positional names if they are invalid Python identifiers, repeated, or start with an underscore. With a large number of columns (>255), regular tuples are returned.
 :::
 
-## .dt accessor
+## .dt 存取器
 
 Series has an accessor to succinctly return datetime like properties for the values of the Series, if it is a datetime/period like Series. This will return a Series, indexed like the existing Series.
 
@@ -2740,7 +2740,7 @@ Out[292]:
 ``Series.dt`` will raise a ``TypeError`` if you access with a non-datetime-like values.
 :::
 
-## Vectorized string methods
+## 矢量化的字符串方法
 
 Series is equipped with a set of string processing methods that make it easy to operate on each element of the array. Perhaps most importantly, these methods exclude missing/NA values automatically. These are accessed via the Series’s str attribute and generally have names matching the equivalent (scalar) built-in string methods. For example:
 
@@ -2765,7 +2765,7 @@ Powerful pattern-matching methods are provided as well, but note that pattern-ma
 
 Please see [Vectorized String Methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#text-string-methods) for a complete description.
 
-## Sorting
+## 排序
 
 Pandas supports three kinds of sorting: sorting by index labels, sorting by column values, and sorting by a combination of both.
 
@@ -3076,7 +3076,7 @@ Out[331]:
 3   1   4     2
 ```
 
-## Copying
+## 复制
 
 The [copy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.copy.html#pandas.DataFrame.copy) method on pandas objects copies the underlying data (though not the axis indexes, since they are immutable) and returns a new object. Note that **it is seldom necessary to copy objects**. For example, there are only a handful of ways to alter a DataFrame *in-place*:
 
@@ -3086,7 +3086,7 @@ The [copy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.D
 
 To be clear, no pandas method has the side effect of modifying your data; almost every method returns a new object, leaving the original object untouched. If the data is modified, it is because you did so explicitly.
 
-## dtypes
+## dtypes数据类型
 
 For the most part, pandas uses NumPy arrays and dtypes for Series or individual columns of a DataFrame. NumPy provides support for ``float``, ``int``, ``bool``, ``timedelta64[ns]`` and ``datetime64[ns]`` (note that NumPy does not support timezone-aware datetimes).
 
@@ -3667,7 +3667,7 @@ C    float64
 dtype: object
 ```
 
-## Selecting columns based on ``dtype``
+## 根据``dtype``选择列
 
 The [select_dtypes()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.select_dtypes.html#pandas.DataFrame.select_dtypes) method implements subsetting of columns based on their dtype.
 
