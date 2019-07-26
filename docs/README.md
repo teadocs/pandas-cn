@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /hero.png
+heroImage: /logo.png
 actionText: 快速开始 →
 actionLink: /docs/
 footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
@@ -49,4 +49,3 @@ Index: []
 
 * [粤ICP备16025085号-8](http://www.beian.miit.gov.cn/)
 * [Logo 捐赠名单](/logo/)
-
