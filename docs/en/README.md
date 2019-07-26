@@ -1,5 +1,10 @@
 ---
 home: true
+meta:
+  - name: keywords
+    content: pandas documentation, pandas api,pandas Manual, pandas tutorial, pandas download and installation, pandas
+  - name: description
+    content: Pandas, Python Data Analysis Library.
 heroImage: /logo.png
 actionText: Get Started →
 actionLink: /guide/
@@ -41,9 +46,25 @@ Columns: []
 Index: []
 ```
 
+### Contact information
+
+- 📮**Email**: l@numpy.org.cn
+- 📩**WeChat**: iamnotahacker(If you want to join our group)
+
+### Contribution translation ✍
+
+感谢[这些小伙伴](https://github.com/teadocs/pandas-cn/graphs/contributors)对数据科学汉化事业的做出的翻译贡献！🙏
+
+想参与翻译的小伙伴，可以参看[《本文档翻译贡献指南》](https://github.com/teadocs/pandas-cn/blob/v0.25.0/Contribution.md)。
+
 ::: warning NOTE
 This site is recommended to use [Python 3.x](https://www.python.org/downloads/) and above.
 :::
+
+### Brothers
+
+- [NumPy 中文文档](https://www.numpy.org.cn/)
+- [Matplotlib 中文文档](https://www.matplotlib.org.cn/)
 
 ### Publicity
 

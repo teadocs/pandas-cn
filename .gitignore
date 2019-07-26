@@ -1,4 +1,5 @@
 build/
+dist/
 docs/user_guide/.DS_Store
 docs/.DS_Store
 static/.DS_Store
