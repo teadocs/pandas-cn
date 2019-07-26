@@ -1,17 +1,17 @@
 # 包概述
 
-**pandas** is a [Python](https://www.python.org/) package providing fast, flexible, and expressive data structures designed to make working with “relational” or “labeled” data both easy and intuitive. It aims to be the fundamental high-level building block for doing practical, **real world** data analysis in Python. Additionally, it has the broader goal of becoming **the most powerful and flexible open source data analysis / manipulation tool available in any language**. It is already well on its way toward this goal.
+**Pandas** 是一个 [Python](https://www.python.org/) 的包，提供快速、灵活和富有表现力的数据结构，旨在使“关系”或“标记”数据的使用既简单又直观。它旨在成为在Python中进行实际，**真实世界**数据分析的基础高级构建模块。此外，**它还有更宏远的目标，即成为超过任何语言的最强大，最灵活的开源数据分析/操作工具。**它已朝着这个目标迈进。
 
-pandas is well suited for many different kinds of data:
+pandas非常适合许多不同类型的数据：
 
-- Tabular data with heterogeneously-typed columns, as in an SQL table or Excel spreadsheet
-- Ordered and unordered (not necessarily fixed-frequency) time series data.
-- Arbitrary matrix data (homogeneously typed or heterogeneous) with row and column labels
-- Any other form of observational / statistical data sets. The data actually need not be labeled at all to be placed into a pandas data structure
+ - 具有异构类型列的表格数据，如SQL表或Excel电子表格。
+ - 有序和无序（不一定是固定频率）时间序列数据。
+ - 具有行和列标签的任意矩阵数据（均匀类型或异构）。
+ - 任何其他形式的观察/统计数据集。 实际上不需要将数据标记为放置在Pandas数据结构中。
 
-The two primary data structures of pandas, [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series) (1-dimensional) and [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) (2-dimensional), handle the vast majority of typical use cases in finance, statistics, social science, and many areas of engineering. For R users, DataFrame provides everything that R’s ``data.frame`` provides and much more. pandas is built on top of [NumPy](https://www.numpy.org/) and is intended to integrate well within a scientific computing environment with many other 3rd party libraries.
+大熊猫的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)（1维）和[DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)（2维），处理金融，统计，社会科学和许多工程领域中的绝大多数典型用例。 对于R用户，DataFrame提供R的data.frame提供的所有内容以及更多内容。 pandas建立在[NumPy](https://www.numpy.org/)之上，旨在与许多其他第三方库完美地集成在科学计算环境中。
 
-Here are just a few of the things that pandas does well:
+以下是Pandas做够胜任的一些事情：
 
 - Easy handling of **missing data** (represented as NaN) in floating point as well as non-floating point data
 - Size mutability: columns can be **inserted and deleted** from DataFrame and higher dimensional objects
@@ -33,14 +33,14 @@ Some other notes
 - Pandas is a dependency of [statsmodels](https://www.statsmodels.org/stable/index.html), making it an important part of the statistical computing ecosystem in Python.
 - Pandas has been used extensively in production in financial applications.
 
-## Data Structures
+## 数据结构
 
 Dimensions | Name | Description
 ---|---|---
 1 | Series | 1D labeled homogeneously-typed array
 2 | DataFrame | General 2D labeled, size-mutable tabular structure with potentially heterogeneously-typed column
 
-### Why more than one data structure?
+### 为什么有多个数据结构？
 
 The best way to think about the Pandas data structures is as flexible containers for lower dimensional data. For example, DataFrame is a container for Series, and Series is a container for scalars. We would like to be able to insert and remove objects from these containers in a dictionary-like fashion.
 
@@ -54,15 +54,15 @@ for col in df.columns:
     # do something with series
 ```
 
-## Mutability and copying of data
+## 数据的可变性和拷贝
 
 All Pandas data structures are value-mutable (the values they contain can be altered) but not always size-mutable. The length of a Series cannot be changed, but, for example, columns can be inserted into a DataFrame. However, the vast majority of methods produce new objects and leave the input data untouched. In general we like to **favor immutability** where sensible.
 
-## Getting Support
+## 获得支持
 
 The first stop for Pandas issues and ideas is the [Github Issue Tracker](https://github.com/Pandas-dev/Pandas/issues). If you have a general question, Pandas community experts can answer through [Stack Overflow](https://stackoverflow.com/questions/tagged/Pandas).
 
-## Community
+## 社区
 
 Pandas is actively supported today by a community of like-minded individuals around the world who contribute their valuable time and energy to help make open source Pandas possible. Thanks to [all of our contributors](https://github.com/Pandas-dev/Pandas/graphs/contributors).
 
@@ -70,21 +70,21 @@ If you’re interested in contributing, please visit the [contributing guide](ht
 
 Pandas is a [NumFOCUS](https://www.numfocus.org/open-source-projects/) sponsored project. This will help ensure the success of development of Pandas as a world-class open-source project, and makes it possible to [donate](https://Pandas.pydata.org/donate.html) to the project.
 
-## Project Governance
+## 项目治理
 
 The governance process that Pandas project has used informally since its inception in 2008 is formalized in [Project Governance documents](https://github.com/Pandas-dev/Pandas-governance). The documents clarify how decisions are made and how the various elements of our community interact, including the relationship between open source collaborative development and work that may be funded by for-profit or non-profit entities.
 
 Wes McKinney is the Benevolent Dictator for Life (BDFL).
 
-## Development Team
+## 开发团队
 
 The list of the Core Team members and more detailed information can be found on the [people’s page](https://github.com/Pandas-dev/Pandas-governance/blob/master/people.md) of the governance repo.
 
-## Institutional Partners
+## 机构合作伙伴
 
 The information about current institutional partners can be found on [Pandas website page](https://Pandas.pydata.org/about.html).
 
-## License
+## 许可协议
 
 ```
 BSD 3-Clause License

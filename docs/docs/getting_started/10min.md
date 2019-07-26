@@ -1,8 +1,8 @@
 # 十分钟入门Pandas
 
-This is a short introduction to pandas, geared mainly for new users. You can see more complex recipes in the [Cookbook](https://pandas.pydata.org/pandas-docs/stable/user_guide/cookbook.html#cookbook).
+这是对Pandas的简短介绍，主要面向新手。你可以在[烹饪指南](/docs/user_guide/cookbook.html)中看到更复杂的用法教程。
 
-Customarily, we import as follows:
+通常，我们按如下方式导入 Pandas：
 
 ``` python
 In [1]: import numpy as np
@@ -10,11 +10,11 @@ In [1]: import numpy as np
 In [2]: import pandas as pd
 ```
 
-## Object Creation
+## 对象创建
 
-See the [Data Structure Intro section](https://pandas.pydata.org/pandas-docs/stable/getting_started/dsintro.html#dsintro).
+请参阅 [数据结构简介的部分](/docs/getting_started/dsintro.html#dsintro)。
 
-Creating a [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series) by passing a list of values, letting pandas create a default integer index:
+通过传入一些值的列表来创建一个[Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)，Pandas会自动创建一个默认的整数索引：
 
 ``` python
 In [3]: s = pd.Series([1, 3, 5, np.nan, 6, 8])
@@ -30,7 +30,7 @@ Out[4]:
 dtype: float64
 ```
 
-Creating a [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) by passing a NumPy array, with a datetime index and labeled columns:
+通过传递带有日期时间索引和带标签列的NumPy数组来创建[DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)：
 
 ``` python
 In [5]: dates = pd.date_range('20130101', periods=6)
@@ -54,7 +54,7 @@ Out[8]:
 2013-01-06 -0.673690  0.113648 -1.478427  0.524988
 ```
 
-Creating a DataFrame by passing a dict of objects that can be converted to series-like.
+通过传递可以转化为类似Series的dict对象来创建``DataFrame``:
 
 ``` python
 In [9]: df2 = pd.DataFrame({'A': 1.,
@@ -108,7 +108,7 @@ df2.D
 
 As you can see, the columns ``A, B, C``, and D are automatically tab completed. E is there as well; the rest of the attributes have been truncated for brevity.
 
-## Viewing Data
+## 查看数据
 
 See the [Basics section](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics).
 
@@ -534,7 +534,7 @@ Out[54]:
 2013-01-06 -0.673690 -0.113648 -1.478427 -5 -5.0
 ```
 
-## Missing Data
+## 缺失值
 
 pandas primarily uses the value ``np.nan`` to represent missing data. It is by default not included in computations. See the [Missing Data section](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data).
 
@@ -587,7 +587,7 @@ Out[60]:
 2013-01-04  False  False  False  False  False   True
 ```
 
-## Operations
+## 操作
 
 See the [Basic section on Binary Ops](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-binop).
 
@@ -724,7 +724,7 @@ Out[72]:
 dtype: object
 ```
 
-## Merge
+## 合并（Merge）
 
 ### Concat
 
@@ -860,7 +860,7 @@ Out[90]:
 8  1.453749  1.208843 -0.080952 -0.264610
 ```
 
-## Grouping
+## 分组（Grouping）
 
 By “group by” we are referring to a process involving one or more of the following steps:
 
@@ -918,7 +918,7 @@ foo one   -1.195665 -0.616981
     two    2.414034  1.600434
 ```
 
-## Reshaping
+## 重塑（Reshaping）
 
 See the sections on [Hierarchical Indexing](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-hierarchical) and [Reshaping](https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html#reshaping-stacking).
 
@@ -1044,7 +1044,7 @@ two   A       NaN  0.100900
       C       NaN  0.536826
 ```
 
-## Time Series
+## 时间序列（Time Series）
 
 pandas has simple, powerful, and efficient functionality for performing resampling operations during frequency conversion (e.g., converting secondly data into 5-minutely data). This is extremely common in, but not limited to, financial applications. See the [Time Series section](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries).
 
@@ -1156,7 +1156,7 @@ Out[126]:
 Freq: H, dtype: float64
 ```
 
-## Categoricals
+## 分类（Categoricals）
 
 pandas can include categorical data in a ``DataFrame``. For full docs, see the [categorical introduction](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) and the [API documentation](https://pandas.pydata.org/pandas-docs/stable/reference/arrays.html#api-arrays-categorical).
 
@@ -1236,7 +1236,7 @@ very good    3
 dtype: int64
 ```
 
-## Plotting
+## 绘图
 
 See the [Plotting](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#visualization) docs.
 
@@ -1274,7 +1274,7 @@ Out[142]: <matplotlib.legend.Legend at 0x7f2b539728d0>
 
 ![plotting](/static/images/frame_plot_basic.png)
 
-## Getting Data In/Out
+## 数据输入/输出
 
 ### CSV
 
@@ -1379,7 +1379,7 @@ Out[148]:
 [1000 rows x 5 columns]
 ```
 
-## Gotchas
+## 坑（Gotchas）
 
 If you are attempting to perform an operation you might see an exception like:
 

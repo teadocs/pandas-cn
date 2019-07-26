@@ -10,19 +10,19 @@ Python核心团队计划在2020年1月1日停止支持Python 2.7。按照NumPy�
 
 **2018年12月31日**之前的最终版本将是支持Python 2的最后一个版本。已发布的软件包将继续在PyPI和conda上提供。
 
-  - Starting **January 1, 2019**, all releases will be Python 3 only.
+  - 从 **2019年1月1日** 开始，所有版本都只支持Python 3。
 
-If there are people interested in continued support for Python 2.7 past December 31, 2018 (either backporting bugfixes or funding) please reach out to the maintainers on the issue tracker.
+如果有人对2018年12月31日之后对Python 2.7的持续支持感兴趣（反向移植错误修正或资金支持），请联系问题跟踪器上的维护人员。
 
-For more information, see the [Python 3 statement](http://python3statement.org/) and the [Porting to Python 3 guide](https://docs.python.org/3/howto/pyporting.html).
+有关更多信息，请参见 [Python 3 语法](http://python3statement.org/) 和 [移植到Python 3指南](https://docs.python.org/3/howto/pyporting.html)。
 
-## Python version support
+## Python版本支持
 
-Officially Python 2.7, 3.5, 3.6, and 3.7.
+正式的 Python 2.7、3.5、3.6和3.7 版本。
 
-## Installing Pandas
+## 安装 Pandas
 
-### Installing with Anaconda
+### 通过Anaconda安装
 
 Installing Pandas and the rest of the [NumPy](http://www.numpy.org.cn/) and [SciPy](http://www.scipy.org/) stack can be a little difficult for inexperienced users.
 
@@ -36,7 +36,7 @@ A full list of the packages available as part of the [Anaconda](http://docs.cont
 
 Another advantage to installing Anaconda is that you don’t need admin rights to install it. Anaconda can install in the user’s home directory, which makes it trivial to delete Anaconda if you decide (just delete that folder).
 
-### Installing with Miniconda
+### 通过Miniconda安装
 
 The previous section outlined how to get Pandas installed as part of the [Anaconda](http://docs.continuum.io/anaconda/) distribution. However this approach means you will install well over one hundred packages and involves downloading the installer which is a few hundred megabytes in size.
 
@@ -97,7 +97,7 @@ $ conda install pip
 $ pip install django
 ```
 
-### Installing from PyPI
+### 从PyPI安装
 
 Pandas can be installed via pip from [PyPI](https://pypi.org/project/Pandas).
 
@@ -105,11 +105,11 @@ Pandas can be installed via pip from [PyPI](https://pypi.org/project/Pandas).
 $ pip install Pandas
 ```
 
-### Installing with ActivePython
+### 通过ActivePython安装
 
 Installation instructions for [ActivePython](https://www.activestate.com/activepython) can be found [here](https://www.activestate.com/activepython/downloads). Versions 2.7 and 3.5 include Pandas.
 
-### Installing using your Linux distribution’s package manager.
+### 使用Linux发行版的包管理器进行安装。
 
 The commands in this table will install Pandas for Python 3 from your distribution. To install Pandas for Python 2, you may need to use the ``python-Pandas`` package.
 
@@ -124,11 +124,11 @@ Centos/RHEL | stable | [EPEL repository](https://admin.fedoraproject.org/pkgdb/p
 
 **However**, the packages in the linux package managers are often a few versions behind, so to get the newest version of Pandas, it’s recommended to install using the ``pip`` or ``conda`` methods described above.
 
-### Installing from source
+### 从源码安装
 
 See the [contributing documentation](http://Pandas.pydata.org/Pandas-docs/stable/contributing.html#contributing) for complete instructions on building from the git source tree. Further, see [creating a development environment](http://Pandas.pydata.org/Pandas-docs/stable/contributing.html#contributing-dev-env) if you wish to create a Pandas development environment.
 
-## Running the test suite
+## 运行测试套件
 
 pandas is equipped with an exhaustive set of unit tests, covering about 97% of the code base as of this writing. To run it on your machine to verify that everything is working (and that you have all of the dependencies, soft and hard, installed), make sure you have [pytest](http://docs.pytest.org/en/latest/) >= 3.6 and [Hypothesis](https://hypothesis.readthedocs.io/) >= 3.58, then run:
 
@@ -147,14 +147,14 @@ collected 12145 items / 3 skipped
 ==================== 12130 passed, 12 skipped in 368.339 seconds =====================
 ```
 
-## Dependencies
+## 依赖
 
 - [setuptools](https://setuptools.readthedocs.io/en/latest/): 24.2.0 or higher
 - [NumPy](http://www.numpy.org.cn/): 1.9.0 or higher
 - [python-dateutil](http://https//dateutil.readthedocs.io/en/stable/): 2.5.0 or higher
 - [pytz](http://pytz.sourceforge.net/)
 
-### Recommended Dependencies
+### 推荐的依赖关系
 
 - [numexpr](https://github.com/pydata/numexpr): for accelerating certain numerical operations. ``numexpr`` uses multiple cores as well as smart chunking and caching to achieve large speedups. If installed, must be Version 2.4.6 or higher.
 - [bottleneck](https://github.com/kwgoodman/bottleneck): for accelerating certain types of ``nan`` evaluations. ``bottleneck`` uses specialized cython routines to achieve large speedups. If installed, must be Version 1.0.0 or higher.
@@ -163,7 +163,7 @@ collected 12145 items / 3 skipped
 You are highly encouraged to install these libraries, as they provide speed improvements, especially when working with large data sets.
 :::
 
-### Optional Dependencies
+### 可选的依赖项
 
 - [Cython](http://www.cython.org/): Only necessary to build development version. Version 0.24 or higher.
 - [SciPy](http://www.scipy.org/): miscellaneous statistical functions, Version 0.14.0 or higher
