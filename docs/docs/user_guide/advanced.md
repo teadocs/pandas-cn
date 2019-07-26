@@ -1507,11 +1507,13 @@ In the following sub-sections we will highlight some other index types.
 
 ### CategoricalIndex
 
-### 类别索引
+### 分类索引
 
 [``CategoricalIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalIndex.html#pandas.CategoricalIndex) is a type of index that is useful for supporting
 indexing with duplicates. This is a container around a [``Categorical``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical)
 and allows efficient indexing and storage of an index with a large number of duplicated elements.
+
+[``CategoricalIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalIndex.html#pandas.CategoricalIndex) 分类索引 这种索引类型非常适合有重复的索引。这是一个围绕 [``Categorical``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical) 而创建的容器。这可以非常高效地存储和索引的具有大量重复元素的索引。
 
 ``` python
 In [139]: from pandas.api.types import CategoricalDtype
@@ -1544,6 +1546,8 @@ Out[144]: Index(['c', 'a', 'b'], dtype='object')
 
 Setting the index will create a ``CategoricalIndex``.
 
+通过设置索引将会建立一个 ``CategoricalIndex`` 分类索引.
+
 ``` python
 In [145]: df2 = df.set_index('B')
 
@@ -1553,6 +1557,8 @@ Out[146]: CategoricalIndex(['a', 'a', 'b', 'b', 'c', 'a'], categories=['c', 'a',
 
 Indexing with ``__getitem__/.iloc/.loc`` works similarly to an ``Index`` with duplicates.
 The indexers **must** be in the category or the operation will raise a ``KeyError``.
+
+使用 ``__getitem__/.iloc/.loc`` 进行索引，在含有重复值的做索引上的工作原理相似。索引值必须在一个分类中，否者将会引发``KeyError``错误。
 
 ``` python
 In [147]: df2.loc['a']
@@ -1566,6 +1572,8 @@ a  5
 
 The ``CategoricalIndex`` is **preserved** after indexing:
 
+``CategoricalIndex`` 在索引之后也会被**保留**:
+
 ``` python
 In [148]: df2.loc['a'].index
 Out[148]: CategoricalIndex(['a', 'a', 'a'], categories=['c', 'a', 'b'], ordered=False, name='B', dtype='category')
@@ -1574,6 +1582,8 @@ Out[148]: CategoricalIndex(['a', 'a', 'a'], categories=['c', 'a', 'b'], ordered=
 Sorting the index will sort by the order of the categories (recall that we
 created the index with ``CategoricalDtype(list('cab'))``, so the sorted
 order is ``cab``).
+
+索引排序将会按照类别清单中的顺序进行（我们已经基于 ``CategoricalDtype(list('cab'))``建立了一个索引，因此排序的顺序是``cab``）
 
 ``` python
 In [149]: df2.sort_index()
@@ -1589,6 +1599,8 @@ b  3
 ```
 
 Groupby operations on the index will preserve the index nature as well.
+
+分组操作（Groupby）也会保留索引的全部信息。
 
 ``` python
 In [150]: df2.groupby(level=0).sum()
