@@ -56,7 +56,21 @@ module.exports = ctx => ({
     ['link', { rel: 'apple-touch-icon', href: `/icons/apple-touch-icon-152x152.png` }],
     ['link', { rel: 'mask-icon', href: '/icons/safari-pinned-tab.svg', color: '#3eaf7c' }],
     ['meta', { name: 'msapplication-TileImage', content: '/icons/msapplication-icon-144x144.png' }],
-    ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
+    ['meta', { name: 'msapplication-TileColor', content: '#000000' }],
+    // 百度统计
+    ['script', {}, `
+      (function() {
+        var onDocumentComplete = function() { 
+          if(document.readyState =='complete') {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?198a327b7394c4873952b3dc378df8c0";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+          }
+        }
+        document.onreadystatechange = onDocumentComplete; //当页面加载状态改变的时候执行这个方法. 
+      })();
+    `],
   ],
   theme: 'teadocs',
   themeConfig: {
