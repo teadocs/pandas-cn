@@ -5,7 +5,7 @@ meta:
     content: pandas中文文档,pandas中文api,pandas中文手册,pandas教程,pandas下载安装,pandas
   - name: description
     content: Pandas中文网、Pandas官方中文文档。
-heroImage: /logo.png
+heroImage: /logo.svg
 actionText: 快速开始 →
 actionLink: /docs/
 footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
@@ -49,7 +49,7 @@ Index: []
 ### 联系方式
 
 1. 📮发起人**邮箱**：l@numpy.org.cn
-1. 📩发起人**微信号**：iamnotahacker（想进微信交流群可加）
+1. 📩发起人**微信号**：iamnotahacker（捐赠或想进微信交流群可加）
 
 ### 贡献翻译 ✍
 
