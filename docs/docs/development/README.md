@@ -1,4 +1,4 @@
-# Development
+# 开发者文档
 
 - [Contributing to pandas](https://pandas.pydata.org/pandas-docs/stable/development/contributing.html)
   - [Where to start?](https://pandas.pydata.org/pandas-docs/stable/development/contributing.html#where-to-start)
