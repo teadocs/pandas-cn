@@ -20,6 +20,8 @@
 
 想要贡献翻译，务必请熟知github的贡献规则，可以参看[怎么在GitHub上为开源项目作贡献？](https://zhuanlan.zhihu.com/p/23457016)。
 
+关于与原作者仓库同步的问题，强烈推荐一篇由Pandas中文文档翻译小组团队成员 [@Y-sir](https://github.com/Y-sir) 编写的文章：[Github上Fork别人的仓库，怎么保持自己的仓库内容和原始仓库同步](http://www.ysir308.com/archives/827)。
+
 ## 文档如何在本地跑起来？
 
 Pandas 中文文档的最新版本使用的是 [VuePress](https://v1.vuepress.vuejs.org/zh/) 文档生成工具来驱动的。
