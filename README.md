@@ -1,4 +1,8 @@
-# 关于中文文档
+<p align="center">
+  <img width="200" height="200" src="/_logo/512.png" alt="pandas中文文档logo" />
+</p>
+
+# Pandas 中文文档
 
 这里是Pandas官方中文文档的仓库。
 域名访问：https://www.pypandas.cn
@@ -17,7 +21,7 @@
 
 ## 贡献翻译
 
-会使用git工具的小伙伴可以加入贡献翻译，如果您想贡献翻译，可以前往[Teadocs文档生成工具](https://github.com/teadocs/teadocs)仓库查看使用帮助，然后将你翻译的内容提交PR（包括不限于校对、翻译纠错），审核通过后我会把您加入贡献者/译者名单，感谢您对国内机器学习开源社区的贡献。
+翻译贡献者可以参考[翻译贡献指南](/Contribution.md)以获取更多帮助。
 
 ## Pandas中文文档翻译贡献者名单
 
@@ -33,7 +37,7 @@
 
 ## 文档生成
 
-本文档自豪的使用 [Teadocs](https://github.com/teadocs/teadocs) 文档生成工具生成。
+本文档使用 [VuePress](https://vuepress.vuejs.org/) 文档生成工具生成。
 
 ## 版权信息
 
