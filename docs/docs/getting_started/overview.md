@@ -9,25 +9,25 @@ pandas非常适合许多不同类型的数据：
  - 具有行和列标签的任意矩阵数据（均匀类型或异构）。
  - 任何其他形式的观察/统计数据集。 实际上不需要将数据标记为放置在Pandas数据结构中。
 
-大熊猫的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)（1维）和[DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)（2维），处理金融，统计，社会科学和许多工程领域中的绝大多数典型用例。 对于R用户，DataFrame提供R的data.frame提供的所有内容以及更多内容。 pandas建立在[NumPy](https://www.numpy.org/)之上，旨在与许多其他第三方库完美地集成在科学计算环境中。
+大熊猫的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)（1维）和[DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)（2维），处理金融，统计，社会科学和许多工程领域中的绝大多数典型用例。 对于R用户，DataFrame提供R的data.frame提供的所有内容以及更多内容。 Pandas建立在[NumPy](https://www.numpy.org/)之上，旨在与许多其他第三方库完美地集成在科学计算环境中。
 
 以下是Pandas做够胜任的一些事情：
 
-- Easy handling of **missing data** (represented as NaN) in floating point as well as non-floating point data
-- Size mutability: columns can be **inserted and deleted** from DataFrame and higher dimensional objects
-- Automatic and explicit **data alignment**: objects can be explicitly aligned to a set of labels, or the user can simply ignore the labels and let Series, DataFrame, etc. automatically align the data for you in computations
-- Powerful, flexible **group by** functionality to perform split-apply-combine operations on data sets, for both aggregating and transforming data
-- Make it **easy to convert** ragged, differently-indexed data in other Python and NumPy data structures into DataFrame objects
-- Intelligent label-based **slicing**, **fancy indexing**, and **subsetting** of large data sets
-- Intuitive **merging** and **joining** data sets
-- Flexible **reshaping** and pivoting of data sets
-- **Hierarchical** labeling of axes (possible to have multiple labels per tick)
-- Robust IO tools for loading data from **flat files** (CSV and delimited), Excel files, databases, and saving / loading data from the ultrafast **HDF5 format**
-- **Time series**-specific functionality: date range generation and frequency conversion, moving window statistics, moving window linear regressions, date shifting and lagging, etc.
+ - 在浮点和非浮点数据中轻松处理**缺失数据**（表示为NaN）。
+ - 大小可变性：可以从DataFrame和更高维度的对象中**插入和删除**。
+ - 自动和显式**数据对齐**：对象可以明确地与一组标签对齐，或者用户可以简单地忽略标签，让Series，DataFrame等在计算中自动对齐数据
+ - 强大，灵活的**组（group by）**功能，可对数据集执行拆分应用组合操作，用于聚合和转换数据。
+ - **轻松**将其他Python和NumPy数据结构中的不规则，不同索引数据转换为DataFrame对象。
+ - 基于智能标签的**切片**，**花式索引**和**子集**大数据集。
+ - 直观**合并**和**加入**数据集。
+ - 灵活的**重塑**和数据集的旋转。 
+ -  **轴的分层**标记（每个刻度可能有多个标签）。
+ - 强大的IO工具，用于从**平面文件**（CSV和分隔）、Excel文件、数据库以及能从超快的**HDF5格式**中保存或加载数据。
+ -  **特定时间序列**功能：日期范围生成和频率转换、移动窗口统计、移动窗口线性回归、日期转换和滞后等。
 
-Many of these principles are here to address the shortcomings frequently experienced using other languages / scientific research environments. For data scientists, working with data is typically divided into multiple stages: munging and cleaning data, analyzing / modeling it, then organizing the results of the analysis into a form suitable for plotting or tabular display. Pandas is the ideal tool for all of these tasks.
+其中许多技术都是为了解决使用其他语言/科研环境时经常遇到的缺点。对于数据科学家来说，处理数据通常分为多个阶段：整理和清理数据，分析/建模数据，然后将分析结果组织成适合绘图或表格显示的形式。Pandas 是完成所有这些任务的理想工具。
 
-Some other notes
+其他一些说明
 
 - Pandas is **fast**. Many of the low-level algorithmic bits have been extensively tweaked in [Cython](https://cython.org/) code. However, as with anything else generalization usually sacrifices performance. So if you focus on one feature for your application you may be able to create a faster specialized tool.
 - Pandas is a dependency of [statsmodels](https://www.statsmodels.org/stable/index.html), making it an important part of the statistical computing ecosystem in Python.

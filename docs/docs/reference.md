@@ -1,17 +1,13 @@
-# API Reference
+# API 参考手册
 
-This page gives an overview of all public pandas objects, functions and
-methods. All classes and functions exposed in ``pandas.*`` namespace are public.
+本页面概述了所有公共的Pandas对象、功能和。
+方法。``pandas.*``命名空间中公开的所有类和函数都是公共的。
 
-Some subpackages are public which include ``pandas.errors``,
-``pandas.plotting``, and ``pandas.testing``. Public functions in
-``pandas.io`` and ``pandas.tseries`` submodules are mentioned in
-the documentation. ``pandas.api.types`` subpackage holds some
-public functions related to data types in pandas.
+有些子模块是公开的，其中包括``pandas.error``、``pandas.plotting``和``pandas.testing``。``pandas.io``和``pandas.tseries``系列子模块中的公共函数在文档中有所提及。``pandas.api.types``子模块含一些与pandas中的数据类型相关的公共函数。
 
-::: danger Warning
+::: danger 警告
 
-The ``pandas.core``, ``pandas.compat``, and ``pandas.util`` top-level modules are PRIVATE. Stable functionality in such modules is not guaranteed.
+``pandas.core``、``pandas.compat``和``pandas.util`` 顶级模块是PRIVATE（私有的）。此类模块的功能稳定性无法保证。
 
 :::
 
