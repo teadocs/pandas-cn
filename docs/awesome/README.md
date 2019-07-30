@@ -12,7 +12,7 @@ sidebar: auto
 <p></p>
 <p></p>
 <center>
-<img style="width: 180px" src="/logo.svg">
+<img style="width: 180px" src="/logo_glasses.svg">
 <h1>Pandas 精选资源</h1>
 </center>
 

@@ -35,10 +35,10 @@ Pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-d
 
 ## 数据结构
 
-Dimensions | Name | Description
+维数 | 名称 | 描述
 ---|---|---
-1 | Series | 1D labeled homogeneously-typed array
-2 | DataFrame | General 2D labeled, size-mutable tabular structure with potentially heterogeneously-typed column
+1 | Series | 可以看做有标签（默认是整数序列RangeIndex；可以重复）的一维数组（同类型）。是scalars的集合，同时也是DataFrame的元素。
+2 | DataFrame | 一般是二维标签，尺寸可变的表格结构，具有潜在的异质型列。
 
 ### 为什么有多个数据结构？
 
