@@ -66,6 +66,12 @@ Index: []
 - [NumPy 中文文档](https://www.numpy.org.cn/)
 - [Matplotlib 中文文档](https://www.matplotlib.org.cn/)
 
+### 友情链接
+
+可以添加发起人微信申请加入友情链接。
+
+- [AI研习社](https://ai.yanxishe.com/?from=pandas)
+
 ### 站点相关
 
 * [粤ICP备16025085号-8](http://www.beian.miit.gov.cn/)
