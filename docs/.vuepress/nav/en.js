@@ -16,6 +16,10 @@ module.exports = [
     link: '/en/docs/'
   },
   {
+    text: 'Awesome',
+    link: '/en/awesome/'
+  },
+  {
     text: 'Learn More',
     items: [
       { text: 'Community', link: '/en/community/' },
