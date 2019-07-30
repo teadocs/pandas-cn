@@ -65,7 +65,7 @@ If you find a better tutorial to share, please [let us know]((https://github.com
   },
   {
     tag: '简书',
-    name: 'Pandas实现Hive中的窗口函数',
+    name: 'pandas实现Hive中的窗口函数',
     href: 'https://www.jianshu.com/p/6ef54e943ad0'
   },
   {
@@ -97,6 +97,31 @@ If you find a better tutorial to share, please [let us know]((https://github.com
     tag: 'CSDN',
     name: 'pandas 中的 series',
     href: 'https://blog.csdn.net/zhangzejia/article/details/79558399'
+  },
+  {
+    tag: '微信公号',
+    name: 'pandas学习笔记详版',
+    href: 'https://mp.weixin.qq.com/s/GPaSz4viebOik_XeGMmq4A'
+  },
+  {
+    tag: '微信公号',
+    name: 'pandas爬取历史天气数据',
+    href: 'https://mp.weixin.qq.com/s/BBR2JvvRmjPVCODWjI7BkQ'
+  },
+  {
+    tag: '微信公号',
+    name: '10个提高工作效率的pandas小技巧',
+    href: 'https://mp.weixin.qq.com/s/cH7glwk_YrBJ-48tY-hnFQ'
+  },
+  {
+    tag: '微信公号',
+    name: '23种Pandas核心操作',
+    href: 'https://mp.weixin.qq.com/s/L95slIQ8so5IWpIpy7ZHEQ'
+  },
+  {
+    tag: '微信公号',
+    name: 'pandas 入门教程',
+    href: 'https://mp.weixin.qq.com/s/Ac0lud4alum3Kq3BhH4VLg'
   }
 ]"></awesome>
 
