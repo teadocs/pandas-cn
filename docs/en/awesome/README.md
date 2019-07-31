@@ -12,7 +12,7 @@ sidebar: auto
 <p></p>
 <p></p>
 <center>
-<img style="width: 180px" src="/logo_glasses.svg">
+<img style="width: 180px" src="/logo_awesome.svg">
 <h1>Awesome Pandas</h1>
 </center>
 
@@ -69,21 +69,6 @@ If you find a better tutorial to share, please [let us know]((https://github.com
     href: 'https://www.jianshu.com/p/6ef54e943ad0'
   },
   {
-    tag: '博客园',
-    name: 'python数据分析之pandas学习',
-    href: 'https://www.cnblogs.com/nxld/p/6058591.html'
-  },
-  {
-    tag: '博客园',
-    name: '用scikit-learn和pandas学习线性回归',
-    href: 'https://www.cnblogs.com/pinard/p/6016029.html'
-  },
-  {
-    tag: '博客园',
-    name: 'pandas基础（附思维导图）',
-    href: 'https://www.cnblogs.com/woaielf/p/5566820.html'
-  },
-  {
     tag: 'CSDN',
     name: 'pandas常用知识点总结',
     href: 'https://blog.csdn.net/wangpei1949/article/details/80472000'
@@ -97,6 +82,21 @@ If you find a better tutorial to share, please [let us know]((https://github.com
     tag: 'CSDN',
     name: 'pandas 中的 series',
     href: 'https://blog.csdn.net/zhangzejia/article/details/79558399'
+  },
+  {
+    tag: '博客园',
+    name: 'python数据分析之pandas学习',
+    href: 'https://www.cnblogs.com/nxld/p/6058591.html'
+  },
+  {
+    tag: '博客园',
+    name: '用scikit-learn和pandas学习线性回归',
+    href: 'https://www.cnblogs.com/pinard/p/6016029.html'
+  },
+  {
+    tag: '博客园',
+    name: 'pandas基础（附思维导图）',
+    href: 'https://www.cnblogs.com/woaielf/p/5566820.html'
   },
   {
     tag: '微信公号',
@@ -156,6 +156,8 @@ If you find a better tutorial to share, please [let us know]((https://github.com
 ]"></awesome>
 
 ## Books
+
+Here is the download address of the learning version. If you have the conditions, please also support the genuine.
 
 <awesome :data="[
   {
