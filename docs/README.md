@@ -49,7 +49,7 @@ Index: []
 ### 联系方式
 
 1. 📮发起人**邮箱**：l@numpy.org.cn
-1. 📩发起人**微信号**：iamnotahacker（捐赠或想进微信交流群可加）
+1. 📩发起人**微信号**：iamnotahacker（进微信交流群可加）
 
 ### 贡献翻译 ✍
 
@@ -61,18 +61,4 @@ Index: []
 本网站推荐使用[Python3.x](https://www.python.org/downloads/)及以上版本。
 :::
 
-### 兄弟文档
-
-- [NumPy 中文文档](https://www.numpy.org.cn/)
-- [Matplotlib 中文文档](https://www.matplotlib.org.cn/)
-
-### 友情链接
-
-可以添加发起人微信申请加入友情链接。
-
-- [AI研习社](https://ai.yanxishe.com/?from=pandas)
-
-### 站点相关
-
-* [粤ICP备16025085号-8](http://www.beian.miit.gov.cn/)
-* [Pandas Logo 捐赠名单](/logo/)
+<ahome-footer></ahome-footer>
