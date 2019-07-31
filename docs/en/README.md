@@ -63,9 +63,5 @@ This site is recommended to use [Python 3.x](https://www.python.org/downloads/) 
 
 ### Brothers
 
-- [NumPy 中文文档](https://www.numpy.org.cn/)
-- [Matplotlib 中文文档](https://www.matplotlib.org.cn/)
-
-### Publicity
-
-* [Logo donation list](/en/logo/)
+- [Numpy of Chinese documents](https://www.numpy.org.cn/)
+- [Matplotlibof Chinese documents](https://www.matplotlib.org.cn/)

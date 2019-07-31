@@ -12,7 +12,7 @@ sidebar: auto
 <p></p>
 <p></p>
 <center>
-<img style="width: 180px" src="/logo_glasses.svg">
+<img style="width: 180px" src="/logo_awesome.svg">
 <h1>Awesome Pandas</h1>
 </center>
 
@@ -65,8 +65,23 @@ If you find a better tutorial to share, please [let us know]((https://github.com
   },
   {
     tag: '简书',
-    name: 'Pandas实现Hive中的窗口函数',
+    name: 'pandas实现Hive中的窗口函数',
     href: 'https://www.jianshu.com/p/6ef54e943ad0'
+  },
+  {
+    tag: 'CSDN',
+    name: 'pandas常用知识点总结',
+    href: 'https://blog.csdn.net/wangpei1949/article/details/80472000'
+  },
+  {
+    tag: 'CSDN',
+    name: '使用pandas读取文件',
+    href: 'https://blog.csdn.net/sinat_29957455/article/details/79054126'
+  },
+  {
+    tag: 'CSDN',
+    name: 'pandas 中的 series',
+    href: 'https://blog.csdn.net/zhangzejia/article/details/79558399'
   },
   {
     tag: '博客园',
@@ -84,19 +99,29 @@ If you find a better tutorial to share, please [let us know]((https://github.com
     href: 'https://www.cnblogs.com/woaielf/p/5566820.html'
   },
   {
-    tag: 'CSDN',
-    name: 'pandas常用知识点总结',
-    href: 'https://blog.csdn.net/wangpei1949/article/details/80472000'
+    tag: '微信公号',
+    name: 'pandas学习笔记详版',
+    href: 'https://mp.weixin.qq.com/s/GPaSz4viebOik_XeGMmq4A'
   },
   {
-    tag: 'CSDN',
-    name: '使用pandas读取文件',
-    href: 'https://blog.csdn.net/sinat_29957455/article/details/79054126'
+    tag: '微信公号',
+    name: 'pandas爬取历史天气数据',
+    href: 'https://mp.weixin.qq.com/s/BBR2JvvRmjPVCODWjI7BkQ'
   },
   {
-    tag: 'CSDN',
-    name: 'pandas 中的 series',
-    href: 'https://blog.csdn.net/zhangzejia/article/details/79558399'
+    tag: '微信公号',
+    name: '10个提高工作效率的pandas小技巧',
+    href: 'https://mp.weixin.qq.com/s/cH7glwk_YrBJ-48tY-hnFQ'
+  },
+  {
+    tag: '微信公号',
+    name: '23种Pandas核心操作',
+    href: 'https://mp.weixin.qq.com/s/L95slIQ8so5IWpIpy7ZHEQ'
+  },
+  {
+    tag: '微信公号',
+    name: 'pandas 入门教程',
+    href: 'https://mp.weixin.qq.com/s/Ac0lud4alum3Kq3BhH4VLg'
   }
 ]"></awesome>
 
@@ -131,6 +156,8 @@ If you find a better tutorial to share, please [let us know]((https://github.com
 ]"></awesome>
 
 ## Books
+
+Here is the download address of the learning version. If you have the conditions, please also support the genuine.
 
 <awesome :data="[
   {
