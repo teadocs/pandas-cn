@@ -171,9 +171,11 @@ array([[1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'test', 'foo'],
        [1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'train', 'foo']], dtype=object)
 ```
 
-> **Note**
->
-> [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy) 的输出不包含行索引和列索引。
+::: tip **提醒**
+
+[DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy) 的输出不包含行索引和列索引。
+
+:::
 
 [describe()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html#pandas.DataFrame.describe) 方法显示数据的快速统计摘要：
 
@@ -233,7 +235,11 @@ Out[22]:
 
 ## 选择
 
-> **注意**：虽然用于选择和赋值的标准Python / Numpy表达式非常直观，并且便于交互工作，但是对于生产环境的代码，我们推荐优化的Pandas数据访问方法.at、.iat、.loc和.iloc。
+::: tip **提醒**
+
+虽然用于选择和赋值的标准Python / Numpy表达式非常直观，并且便于交互工作，但是对于生产环境的代码，我们推荐优化的Pandas数据访问方法.at、.iat、.loc和.iloc。
+
+:::
 
 参见索引[索引和选择数据](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing)、[多索引/高级索引](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced)。
 
