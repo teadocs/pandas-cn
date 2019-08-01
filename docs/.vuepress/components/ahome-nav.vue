@@ -15,7 +15,7 @@
       </div>
       <div class="qr-item">
         <img src="/home/wx-qr.jpg" alt />
-        <span class="text">站长个人微信二维码（可拉微信群）</span>
+        <span class="text">站长微信（可拉微信群，备注：pandas）</span>
       </div>
       <div class="qr-item">
         <img src="/home/qqqun-qr.jpg" alt />
@@ -66,7 +66,7 @@
     <div class="block" :class="{'show': navId === 4}">
       <p>如果您想要交换友情链接、广告赞助、转载内容、咨询网站主题、或者其他合作适宜，可以通过以下联系方式联系到站长。</p>
       <ul>
-        <li>🍀微信个人号：iamnotahacker</li>
+        <li>🍀微信个人号：iamnotahacker（备注：合作）</li>
         <li>🍁QQ号：17560235</li>
         <li>🌿邮箱：l@numpy.org.cn</li>
       </ul>
