@@ -177,13 +177,14 @@ export default {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 395px) {
   .ahome-nav {
     margin-top: 0.5rem;
 
     a {
       &.btn-home-nav {
         margin: 2px;
+        margin-bottom 6px;
       }
     }
   }

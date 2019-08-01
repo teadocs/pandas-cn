@@ -68,4 +68,9 @@
 
   .right-box
     float right
+
+@media (max-width: 650px)
+  .home-footer
+    .item
+      width 100%;
 </style>
