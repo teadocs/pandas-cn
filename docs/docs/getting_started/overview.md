@@ -58,33 +58,33 @@ for col in df.columns:
 
 ## 数据的可变性和拷贝
 
-All Pandas data structures are value-mutable (the values they contain can be altered) but not always size-mutable. The length of a Series cannot be changed, but, for example, columns can be inserted into a DataFrame. However, the vast majority of methods produce new objects and leave the input data untouched. In general we like to **favor immutability** where sensible.
+所有的Pandas数据结构都是值可变的（它们包含的值可以改变），但并不总是大小可变的。Series的长度不能更改，但例如，列可以插入到DataFrame中。然而，绝大多数方法产生新的对象并保持输入数据不变。 一般来说，我们喜欢在合情合理的情况下**支持不变性**。
 
 ## 获得支持
 
-The first stop for Pandas issues and ideas is the [Github Issue Tracker](https://github.com/Pandas-dev/Pandas/issues). If you have a general question, Pandas community experts can answer through [Stack Overflow](https://stackoverflow.com/questions/tagged/Pandas).
+如果你有Pandas 问题和想法的，第一个应该想到的是[Github问题跟踪器](https://github.com/Pandas-dev/Pandas/issues)。如果您有常规问题，Pandas的社区专家可以通过[Stack Overflow](https://stackoverflow.com/questions/tagged/Pandas)来回答。
 
 ## 社区
 
-Pandas is actively supported today by a community of like-minded individuals around the world who contribute their valuable time and energy to help make open source Pandas possible. Thanks to [all of our contributors](https://github.com/Pandas-dev/Pandas/graphs/contributors).
+如今 Pandas 得到了世界各地志同道合的人们的积极支持，他们贡献了宝贵的时间和精力来帮助开源 Pandas 成为可能。感谢我们[所有的贡献者](https://github.com/Pandas-dev/Pandas/graphs/contributors)。
 
-If you’re interested in contributing, please visit the [contributing guide](https://Pandas.pydata.org/Pandas-docs/stable/development/contributing.html#contributing).
+如果您对贡献感兴趣，请访问[贡献指南](https://Pandas.pydata.org/Pandas-docs/stable/development/contributing.html#contributing)。
 
-Pandas is a [NumFOCUS](https://www.numfocus.org/open-source-projects/) sponsored project. This will help ensure the success of development of Pandas as a world-class open-source project, and makes it possible to [donate](https://Pandas.pydata.org/donate.html) to the project.
+Pandas是[NumFOCUS](https://www.numfocus.org/open-source-projects/)赞助的项目。 这将有助于确保Pandas作为世界级开源项目的成功发展，并有可能为该项目[捐款](https://Pandas.pydata.org/donate.html)。
 
 ## 项目治理
 
-The governance process that Pandas project has used informally since its inception in 2008 is formalized in [Project Governance documents](https://github.com/Pandas-dev/Pandas-governance). The documents clarify how decisions are made and how the various elements of our community interact, including the relationship between open source collaborative development and work that may be funded by for-profit or non-profit entities.
+Pandas 项目自2008年成立以来非正式使用的治理流程已在[项目治理文档](https://github.com/Pandas-dev/Pandas-governance)中正式确定。这些文件阐明了如何制定决策以及我们社区的各种要素如何相互作用，包括开源协作开发与可能由营利或非营利实体资助的工作之间的关系。
 
-Wes McKinney is the Benevolent Dictator for Life (BDFL).
+Wes McKinney 是仁慈的生活独裁者（BDFL）。
 
 ## 开发团队
 
-The list of the Core Team members and more detailed information can be found on the [people’s page](https://github.com/Pandas-dev/Pandas-governance/blob/master/people.md) of the governance repo.
+可以在治理仓库的[人员页面](https://github.com/Pandas-dev/Pandas-governance/blob/master/people.md)上找到核心团队成员列表和更详细的信息。
 
 ## 机构合作伙伴
 
-The information about current institutional partners can be found on [Pandas website page](https://Pandas.pydata.org/about.html).
+有关当前机构合作伙伴的信息可以在[Pandas网站页面](/about/)上找到。
 
 ## 许可协议
 
