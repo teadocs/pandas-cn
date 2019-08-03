@@ -172,6 +172,7 @@ export default {
 
     a {
       &.btn-home-nav {
+        font-size 16px;
       }
     }
   }
@@ -184,7 +185,7 @@ export default {
     a {
       &.btn-home-nav {
         margin: 2px;
-        margin-bottom 6px;
+        margin-bottom 10px;
       }
     }
   }
