@@ -1,10 +1,6 @@
 # IO工具（文本，CSV，HDF5，…）
 
-The pandas I/O API is a set of top level ``reader`` functions accessed like
-[``pandas.read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv) that generally return a pandas object. The corresponding
-``writer`` functions are object methods that are accessed like
-[``DataFrame.to_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv). Below is a table containing available ``readers`` and
-``writers``.
+pandas的I/O API是一组``read``函数，比如[``pandas.read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv)函数。这类函数可以返回pandas对象。相应的``write``函数是像[``DataFrame.to_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv)一样的对象方法。下面是一个方法列表，包含了这里面的所有``readers``函数和``writer``函数。  
 
 Format Type | Data Description | Reader | Writer
 ---|---|---|---
@@ -12,8 +8,8 @@ text | [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) | [read_csv](
 text | [JSON](https://www.json.org/) | [read_json](#io-json-reader) | [to_json](#io-json-writer)
 text | [HTML](https://en.wikipedia.org/wiki/HTML) | [read_html](#io-read-html) | [to_html](#io-html)
 text | Local clipboard | [read_clipboard](#io-clipboard) | [to_clipboard](#io-clipboard)
-binary | [MS Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) | [[read_excel](#io-ods)](#io-excel-reader) | [to_excel](#io-excel-writer)
-binary | [OpenDocument](http://www.opendocumentformat.org) | read_excel |  
+binary | [MS Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) | [read_excel](#io-excel-reader) | [to_excel](#io-excel-writer)
+binary | [OpenDocument](http://www.opendocumentformat.org) | [read_excel](#io-ods) |  
 binary | [HDF5 Format](https://support.hdfgroup.org/HDF5/whatishdf5.html) | [read_hdf](#io-hdf5) | [to_hdf](#io-hdf5)
 binary | [Feather Format](https://github.com/wesm/feather) | [read_feather](#io-feather) | [to_feather](#io-feather)
 binary | [Parquet Format](https://parquet.apache.org/) | [read_parquet](#io-parquet) | [to_parquet](#io-parquet)
@@ -26,24 +22,22 @@ SQL | [Google Big Query](https://en.wikipedia.org/wiki/BigQuery) | [read_gbq](#i
 
 [Here](#io-perf) is an informal performance comparison for some of these IO methods.
 
-::: tip Note
+::: tip 注意
 
-For examples that use the ``StringIO`` class, make sure you import it
-according to your Python version, i.e. ``from StringIO import StringIO`` for
-Python 2 and ``from io import StringIO`` for Python 3.
+比如在使用 ``StringIO`` 类时, 请先确定python的版本信息。也就是说，是使用python2的``from StringIO import StringIO``还是python3的``from io import StringIO``。
 
 :::
 
-## CSV & text files
+## CSV & 文本文件
 
-The workhorse function for reading text files (a.k.a. flat files) is
-[``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv). See the [cookbook](cookbook.html#cookbook-csv) for some advanced strategies.
+读文本文件 (a.k.a. flat files)的主要方法 is
+[``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv). 关于一些更高级的用法请参阅[cookbook](cookbook.html#cookbook-csv)。
 
-### Parsing options
+### 方法解析(Parsing options)
 
-[``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv) accepts the following common arguments:
+[``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv) 可接受以下常用参数:
 
-#### Basic
+#### 基础
 
 filepath_or_buffer : *various* 
 

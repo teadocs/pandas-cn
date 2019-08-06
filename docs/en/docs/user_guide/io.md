@@ -13,8 +13,8 @@ text | [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) | [read_csv](
 text | [JSON](https://www.json.org/) | [read_json](#io-json-reader) | [to_json](#io-json-writer)
 text | [HTML](https://en.wikipedia.org/wiki/HTML) | [read_html](#io-read-html) | [to_html](#io-html)
 text | Local clipboard | [read_clipboard](#io-clipboard) | [to_clipboard](#io-clipboard)
-binary | [MS Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) | [[read_excel](#io-ods)](#io-excel-reader) | [to_excel](#io-excel-writer)
-binary | [OpenDocument](http://www.opendocumentformat.org) | read_excel |  
+binary | [MS Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) | [read_excel](#io-excel-reader) | [to_excel](#io-excel-writer)
+binary | [OpenDocument](http://www.opendocumentformat.org) | [read_excel](#io-ods) |  
 binary | [HDF5 Format](https://support.hdfgroup.org/HDF5/whatishdf5.html) | [read_hdf](#io-hdf5) | [to_hdf](#io-hdf5)
 binary | [Feather Format](https://github.com/wesm/feather) | [read_feather](#io-feather) | [to_feather](#io-feather)
 binary | [Parquet Format](https://parquet.apache.org/) | [read_parquet](#io-parquet) | [to_parquet](#io-parquet)

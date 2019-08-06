@@ -303,7 +303,7 @@
   window.c = new Convert({
     baseUrl: 'https://pandas.pydata.org/pandas-docs/stable',
     baseImgDir: '/static/images/',
-    el: `#v0-20-1-may-5-2017`,
+    el: `#installation`,
     $: window.$
   });
 
