@@ -1,12 +1,12 @@
 # 多层级索引和高级索引
 
-本章节将介绍如何使用``MultiIndex`` 以及更多的高级索引功能来进行索引。
+本章节包含了[使用多层级索引](#advanced-hierarchical) 以及 [其他高级索引特性](#indexing-index-types)。
 
-请参阅 [Indexing and Selecting Data](http://Pandas.pydata.org/Pandas-docs/stable/indexing.html#indexing) 来获得更多的通用索引方面的帮助文档
+请参阅 [索引与选择数据](indexing.html#indexing)来获得更多的通用索引方面的帮助文档
 
 ::: danger 警告
 
-基于实际的使用场景不同，返回的内容也会不尽相同（返回一个数据的副本，或者返回数据的引用）有时，这种情况被称作连锁赋值，但是这种情况应当被尽力避免。参见 返回视图or返回副本.
+基于实际的使用场景不同，返回的内容也会不尽相同（返回一个数据的副本，或者返回数据的引用）。有时，这种情况被称作连锁赋值，但是这种情况应当被尽力避免。参见[返回视图or返回副本](indexing.html#indexing-view-versus-copy)。
 
 ::: 
 
@@ -18,11 +18,12 @@
 
 分层/多级索引在处理复杂的数据分析和数据操作方面为开发者奠定了基础，尤其是在处理高纬度数据处理上。本质上，它使您能够在较低维度的数据结构(如 ``Series``(1d)和``DataFrame`` (2d))中存储和操作任意维数的数据。
 
-在本节中，我们将展示“层次”索引的确切含义，以及它如何与上面和前面部分描述的所有panda索引功能集成。稍后，在讨论[group by](http://pandas.pydata.org/pandas-docs/stable/groupby.html#groupby)和[pivoting and ping data](http://pandas.pydata.org/pandas- docs/stable/ping.html # ping)时，我们将展示一些重要的应用程序，以说明它如何帮助构建分析数据的结构。
+在本节中，我们将展示“层次”索引的确切含义，以及它如何与上面和前面部分描述的所有panda索引功能集成。稍后，在讨论[分组](groupby.html#groupby) 和[数据透视与重塑性数据](reshaping.html#reshaping)时，我们将展示一些重要的应用程序，以说明它如何帮助构建分析数据的结构。
 
-请参阅[cookbook]((/document/cookbook/index.html))，查看一些高级策略.
+请参阅[cookbook](cookbook.html#cookbook-multi-index)，查看一些高级策略.
 
-在0.24.0版本中的改变:**MultIndex.labels**被更名为**MultIndex.codes**,同时**MultIndex.set_labes**更名为**MultiIndex.set_codes**
+*在0.24.0版本中的改变:*``MultIndex.labels``被更名为[``MultiIndex.codes``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.codes.html#pandas.MultiIndex.codes)
+，同时 ``MultiIndex.set_labels`` 更名为 [``MultiIndex.set_codes``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.set_codes.html#pandas.MultiIndex.set_codes).
 
 
 
