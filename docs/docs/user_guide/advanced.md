@@ -25,11 +25,11 @@
 *在0.24.0版本中的改变:*``MultIndex.labels``被更名为[``MultiIndex.codes``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.codes.html#pandas.MultiIndex.codes)
 ，同时 ``MultiIndex.set_labels`` 更名为 [``MultiIndex.set_codes``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.set_codes.html#pandas.MultiIndex.set_codes).
 
-
-
 ### 创建多级索引和分层索引对象
 
-`MultiIndex`对象是标准索引对象的分层模拟，标准`index`对象通常将axis标签存储在panda对象中。您可以将` MultiIndex`看作一个元组数组，其中每个元组都是惟一的。可以从数组列表(使用``MultiIndex.from_arrays()``)、元组数组(使用``MultiIndex.from_tuples()``或交叉迭代器集(使用``MultiIndex.from_product()``)或者将一个``DataFrame``(使用``MultiIndex.from_frame()``)创建多索引。当传递一个元组列表时，索引构造函数将尝试返回一个``MultiIndex``。下面的示例演示了初始化多索引的不同方法。
+ [``MultiIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex) 对象是[``标准索引对象``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) 的分层模拟，标准索引对象通常将axis标签存储在panda对象中。您可以将``MultiIndex``看作一个元组数组，其中每个元组都是惟一的。可以从数组列表(使用
+[``MultiIndex.from_arrays()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.from_arrays.html#pandas.MultiIndex.from_arrays))、元组数组(使用[``MultiIndex.from_tuples()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.from_tuples.html#pandas.MultiIndex.from_tuples))或交叉迭代器集(使用[``MultiIndex.from_product()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.from_product.html#pandas.MultiIndex.from_product))或者将一个 [``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)(使用using
+[``MultiIndex.from_frame()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.from_frame.html#pandas.MultiIndex.from_frame))创建多索引。当传递一个元组列表时，``索引``构造函数将尝试返回一个``MultiIndex``。下面的示例演示了初始化多索引的不同方法。
 
 ``` python
 In [1]: arrays = [['bar', 'bar', 'baz', 'baz', 'foo', 'foo', 'qux', 'qux'],
@@ -79,7 +79,7 @@ qux    one       0.119209
 dtype: float64
 ```
 
-当您想要在两个迭代器中对每个元素进行配对时，可以更容易地使用`MultiIndex.from_product()`函数:
+当您想要在两个迭代器中对每个元素进行配对时，可以更容易地使用 [``MultiIndex.from_product()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.from_product.html#pandas.MultiIndex.from_product)方法:
 
 ``` python
 In [8]: iterables = [['bar', 'baz', 'foo', 'qux'], ['one', 'two']]
@@ -97,7 +97,7 @@ MultiIndex([('bar', 'one'),
            names=['first', 'second'])
 ```
 
-还可以使用`MultiIndex.from_frame()`方法直接将一个`DataFrame`对象构造一个多索引。这是`MultiIndex.to_frame()`的一个补充方法。
+还可以使用 [``MultiIndex.from_frame()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.from_frame.html#pandas.MultiIndex.from_frame)方法直接将一个``DataFrame``对象构造一个``多索引``。这是[``MultiIndex.to_frame()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.to_frame.html#pandas.MultiIndex.to_frame)的一个补充方法。
 
 *0.24.0版本新增。*
 
@@ -211,11 +211,9 @@ dtype: float64
 
 `MultiIndex`之所以重要，是因为它允许您进行分组、选择和重新构造操作，我们将在下面的文档和后续部分中进行描述。正如您将在后面的部分中看到的，您可以发现自己使用分层索引的数据，而不需要显式地创建一个`MultiIndex`。然而，当从文件中加载数据时，您可能希望在准备数据集时生成自己的`MultiIndex`。
 
-### 
-
 ### 重构层次标签
 
-方法 [``get_level_values()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.get_level_values.html#pandas.MultiIndex.get_level_values)将返回特定级别每个位置的标签向量:
+[``get_level_values()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.get_level_values.html#pandas.MultiIndex.get_level_values)方法将返回特定级别每个位置的标签向量:
 
 ``` python
 In [23]: index.get_level_values(0)
@@ -224,8 +222,6 @@ Out[23]: Index(['bar', 'bar', 'baz', 'baz', 'foo', 'foo', 'qux', 'qux'], dtype='
 In [24]: index.get_level_values('second')
 Out[24]: Index(['one', 'two', 'one', 'two', 'one', 'two', 'one', 'two'], dtype='object', name='second')
 ```
-
-
 
 ### 基本索引轴上的多索引
 
@@ -260,13 +256,11 @@ two    0.271860
 dtype: float64
 ```
 
-有关如何在更深层次上进行选择，请参见[具有层次索引的横截面](http://pandas.pydata.org/pandas- docs/stable/advance.html #advanced-xs)。
-
-### 
+有关如何在更深层次上进行选择，请参见[具有层次索引的横切](http://pandas.pydata.org/pandas- docs/stable/advance.html #advanced-xs)。
 
 ### 定义不同层次索引
 
-`MultiIndex`的repr显示了一个索引的所有定义级别，即使它们实际上没有被使用。在切割索引时，您可能会注意到这一点。例如:
+ [``MultiIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex) 保存了所有被定义的索引层级，即使它们实际上没有被使用。在切割索引时，您可能会注意到这一点。例如:
 
 ``` python
 In [29]: df.columns.levels  # original MultiIndex
@@ -276,7 +270,8 @@ In [30]: df[['foo','qux']].columns.levels  # sliced
 Out[30]: FrozenList([['bar', 'baz', 'foo', 'qux'], ['one', 'two']])
 ```
 
-这样做是为了避免重新计算级别，从而使切片具有很高的性能。如果只想查看使用的级别，可以使用[MultiIndex.get_level_values() ](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.MultiIndex.get_level_values.html#pandas.MultiIndex.get_level_values)方法。
+这样做是为了避免重新计算级别，从而使切片具有很高的性能。如果只想查看使用的级别，可以使用[``remove_unused_levels()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.remove_unused_levels.html#pandas.MultiIndex.remove_unused_levels)方法。
+
 
 ``` python
 In [31]: df[['foo', 'qux']].columns.to_numpy()
@@ -289,9 +284,9 @@ In [32]: df[['foo', 'qux']].columns.get_level_values(0)
 Out[32]: Index(['foo', 'foo', 'qux', 'qux'], dtype='object', name='first')
 ```
 
-若要仅使用已使用的级别来重构`MultiIndex `，可以使用`remove_unused_levels()`方法。
+若要仅使用已使用的级别来重构`MultiIndex `，可以使用[``remove_unused_levels()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.remove_unused_levels.html#pandas.MultiIndex.remove_unused_levels)方法。
 
-*新版本0.20.0*。
+*0.20.0.中更新*。
 
 ``` python
 In [33]: new_mi = df[['foo', 'qux']].columns.remove_unused_levels()
@@ -299,8 +294,6 @@ In [33]: new_mi = df[['foo', 'qux']].columns.remove_unused_levels()
 In [34]: new_mi.levels
 Out[34]: FrozenList([['foo', 'qux'], ['one', 'two']])
 ```
-
-### 
 
 ### 数据对齐和使用 ``reindex``
 
@@ -332,7 +325,7 @@ qux  one   -2.079150
 dtype: float64
 ```
 
-``Series/DataFrames``对象的``reindex()`` 方法可以调用另一个``MultiIndex`` ，甚至一个列表或数组元组:
+``Series/DataFrames``对象的 [``reindex()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reindex.html#pandas.DataFrame.reindex)  方法可以调用另一个``MultiIndex`` ，甚至一个列表或数组元组:
 
 ``` python
 In [37]: s.reindex(index[:3])
@@ -442,7 +435,7 @@ bar   two     0.805244  0.813850  1.607920
 qux   one    -1.170299  1.130127  0.974466
 ```
 
-::: 小技巧
+::: tip 小技巧
 
 在pandas中，元组和列表，在索引时，是有区别的。一个元组会被识别为一个多层级的索引值（key），而列表被用于表明多个不同的索引值（several keys）。换句话说，元组是按照横向展开的，即水平层级（trasvering levels），而列表是纵向的，即扫描层级（scanning levels）。
 
@@ -470,20 +463,19 @@ B  c    4
 dtype: int64
 ```
 
-### 
 ### 使用切片器
 
 
 你可以使用多级索引器来切片一个``多级索引
 
-你可以提供任意的选择器，就仿佛你按照标签索引一样，参见[按照标签索引](http://Pandas.pydata.org/Pandas-docs/stable/indexing.html#indexing-label), 包含切片，标签构成的列表，标签，和布尔值索引器。
+你可以提供任意的选择器，就仿佛你按照标签索引一样，参见[按照标签索引](indexing.html#indexing-label), 包含切片，标签构成的列表，标签，和布尔值索引器。
 
 你可以使用``slice(None)``来选择所有的该级别的内容。你不需要指明所有的*深层级别*，他们将按照``slice(None)``的方式来做默认推测。
 
 一如既往，切片器的**两侧**都会被包含进来，因为这是按照标签索引的方式进行的。
 
 ::: danger 警告
-你需要在.loc中声明所有的维度，这意味着同时包含行索引以及列索引。在一些情况下，索引器中的数据有可能会被错误地识别为在两个维度同时进行索引，而不是只对行进行多层级索引。
+你需要在``.loc``中声明所有的维度，这意味着同时包含**行索引**以及**列索引**。在一些情况下，索引器中的数据有可能会被错误地识别为在两个维度*同时*进行索引，而不是只对行进行多层级索引。
 
 建议使用下列的方式：
 
@@ -562,7 +554,7 @@ A3 B0 C3 D1  221  220  223  222
 [24 rows x 4 columns]
 ```
 
-你可以使用[pandas.IndexSlice](http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.IndexSlice.html#Pandas.IndexSlice)，即使用‘：’，一个更为符合习惯的语法，而不是使用slice(None)。
+你可以使用 [``pandas.IndexSlice``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IndexSlice.html#pandas.IndexSlice)，即使用``:``，一个更为符合习惯的语法，而不是使用slice(None)。
 
 ``` python
 In [56]: idx = pd.IndexSlice
@@ -587,6 +579,7 @@ A3 B0 C3 D1  220  222
 ```
 
 您可以使用这种方法在两个维度上同时实现非常复杂的选择。
+
 ``` python
 In [58]: dfmi.loc['A1', (slice(None), 'foo')]
 Out[58]: 
@@ -625,7 +618,8 @@ A3 B0 C3 D1  220  222
 [32 rows x 2 columns]
 ```
 
-使用布尔索引器，您可以对数值进行选择。
+使用布尔索引器，您可以对*数值*进行选择。
+
 ``` python
 In [60]: mask = dfmi[('a', 'foo')] > 200
 
@@ -642,7 +636,8 @@ A3 B0 C1 D1  204  206
          D1  252  254
 ```
 
-您也可以使用``.loc``来明确您所希望的``维度``，从而只在一个维度上来进行切片。
+您也可以使用``.loc``来明确您所希望的``维度``(``axis``)，从而只在一个维度上来进行切片。
+
 ``` python
 In [62]: dfmi.loc(axis=0)[:, :, ['C1', 'C3']]
 Out[62]: 
@@ -663,7 +658,7 @@ A3 B0 C3 D1  221  220  223  222
 [32 rows x 4 columns]
 ```
 
-进一步，您可以使用下列的方式来赋值
+进一步，您可以使用下列的方式来*赋值*
 ``` python
 In [63]: df2 = dfmi.copy()
 
@@ -713,10 +708,9 @@ A3 B1 C1 D1  237000  236000  239000  238000
 [64 rows x 4 columns]
 ```
 
-### 
 ### 交叉选择
 
-``DataFrame`` 的``xs``方法接受一个额外的参数，从而可以简便地在某个特定的多级索引中的某一个层级进行数据的选取。
+``DataFrame`` 的 [``xs()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.xs.html#pandas.DataFrame.xs)方法接受一个额外的参数，从而可以简便地在某个特定的``多级索引``中的某一个层级进行数据的选取。
 
 ``` python
 In [69]: df
@@ -754,7 +748,8 @@ foo   one     1.431256 -0.076467  0.875906
 qux   one    -1.170299  1.130127  0.974466
 ```
 
-您也可以用``xs()`并填写坐标参数来选择列。
+您也可以用``xs()``并填写坐标参数来选择列。
+
 ``` python
 In [72]: df = df.T
 
@@ -777,7 +772,7 @@ B       0.410835  0.132003 -0.076467  1.130127
 C      -1.413681  1.024180  0.875906  0.974466
 ```
 
-xs() 也接受多个键（keys）来进行选取
+``xs``也接受多个键（keys）来进行选取
 
 ``` python
 In [75]: df.xs(('one', 'bar'), level=('second', 'first'), axis=1)
@@ -799,7 +794,7 @@ C   -1.413681
 Name: (bar, one), dtype: float64
 ```
 
-您可以向``xs()``传入 ``drop_level=False`` 来保留那些已经选取的层级。
+您可以向``xs``传入 ``drop_level=False`` 来保留那些已经选取的层级。
 
 ``` python
 In [77]: df.xs('one', level='second', axis=1, drop_level=False)
@@ -811,7 +806,7 @@ B       0.410835  0.132003 -0.076467  1.130127
 C      -1.413681  1.024180  0.875906  0.974466
 ```
 
-请比较上面，使用drop_level=True (默认值)的结果。
+请比较上面，使用 ``drop_level=True``(默认值)的结果。
 
 ``` python
 In [78]: df.xs('one', level='second', axis=1, drop_level=True)
@@ -822,11 +817,9 @@ B      0.410835  0.132003 -0.076467  1.130127
 C     -1.413681  1.024180  0.875906  0.974466
 ```
 
-### 
-
 ### 高级重命名索引及对齐
 
-``level``参数已经被加入到pandas对象中的 ``reindex`` 和 ``align``方法中。这将有助于沿着一个层级来广播值（broadcast values）。例如：
+``level``参数已经被加入到pandas对象中的 [``reindex()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reindex.html#pandas.DataFrame.reindex)  和 [``align()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.align.html#pandas.DataFrame.align) 方法中。这将有助于沿着一个层级来广播值（broadcast values）。例如：
 
 ``` python
 In [79]: midx = pd.MultiIndex(levels=[['zero', 'one'], ['x', 'y']],
@@ -879,11 +872,9 @@ zero y  1.271532  0.713416
      x  1.271532  0.713416
 ```
 
-### 
-
 ### 使用``swaplevel``来交换层级
 
-``swaplevel()``函数可以用来交换两个层级
+[``swaplevel()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.swaplevel.html#pandas.MultiIndex.swaplevel)函数可以用来交换两个层级
 
 ``` python
 In [88]: df[:5]
@@ -903,11 +894,9 @@ y zero  0.132885 -0.023688
 x zero  2.410179  1.450520
 ```
 
-### 
-
 ### 使用``reorder_levels``来进行层级重排序
 
-``reorder_levels()``是一个更一般化的 ``swaplevel``方法，允许您用简单的一步来重排列索引的层级：
+[``reorder_levels()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.reorder_levels.html#pandas.MultiIndex.reorder_levels)是一个更一般化的 ``swaplevel``方法，允许您用简单的一步来重排列索引的层级：
 
 ``` python
 In [90]: df[:5].reorder_levels([1, 0], axis=0)
@@ -919,10 +908,9 @@ y zero  0.132885 -0.023688
 x zero  2.410179  1.450520
 ```
 
-### 
 ### 对``索引``和``多层索``引进行重命名
 
- [``rename()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas.DataFrame.rename) 方法可以用来重命名``多层索引``，并且他经常被用于``DataFrame``的列名重命名。``renames``的``columns``参数可以接受一个字典，从而仅仅重命名你希望更改名字的列。
+  [``rename()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas.DataFrame.rename)方法可以用来重命名``多层索引``，并且他经常被用于``DataFrame``的列名重命名。``renames``的``columns``参数可以接受一个字典，从而仅仅重命名你希望更改名字的列。
 
 ``` python
 In [91]: df.rename(columns={0: "col0", 1: "col1"})
@@ -946,7 +934,7 @@ zero z  0.132885 -0.023688
      x  2.410179  1.450520
 ```
 
-[``rename_axis()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename_axis.html#pandas.DataFrame.rename_axis) 方法可以用于对``Index`` 或者 ``MultiIndex``进行重命名。尤其的，你可以明确``MultiIndex``中的不同层级的名称，这可以被用于在之后使用 ``reset_index()`` ，把多层级索引的值转换为一个列
+[``rename_axis()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename_axis.html#pandas.DataFrame.rename_axis) 方法可以用于对``Index`` 或者 ``MultiIndex``进行重命名。尤其的，你可以明确``MultiIndex``中的不同层级的名称，这可以被用于在之后使用 ``reset_index()`` ，把``多层级索引``的值转换为一个列
 
 ``` python
 In [93]: df.rename_axis(index=['abc', 'def'])
@@ -967,9 +955,6 @@ Out[94]: RangeIndex(start=0, stop=2, step=1, name='Cols')
 ```
 
 ``rename`` 和``rename_axis``都支持一个明确的字典，``Series`` 或者一个映射函数，将标签，名称映射为新的值
-
-
-
 
 ## 对``多索引``进行排序
 
@@ -1031,7 +1016,7 @@ qux  two    0.408204
 dtype: float64
 ```
 
-如果你的多层级索引都被命名了的话，你也可以向 ``sort_index`` 传入一个层级名称。
+如果你的``多层级索引``都被命名了的话，你也可以向 ``sort_index`` 传入一个层级名称。
 
 ``` python
 In [102]: s.index.set_names(['L1', 'L2'], inplace=True)
@@ -1063,7 +1048,7 @@ qux  two    0.408204
 dtype: float64
 ```
 
-对于多维度的对象来说，你也可以对任意的的维度来进行索引，只要他们是具有多层级索引的：
+对于多维度的对象来说，你也可以对任意的的维度来进行索引，只要他们是具有``多层级索引``的：
 
 ``` python
 In [105]: df.T.sort_index(level=1, axis=1)
@@ -1111,7 +1096,7 @@ In [5]: dfm.loc[(0, 'y'):(1, 'z')]
 UnsortedIndexError: 'Key length (2) was greater than MultiIndex lexsort depth (1)'
 ```
 
-在``Index``上使用``is_lexsorted()``方法，你可以查看这个索引是否已经被排序。而使用``lexsort_depth`` 属性则可以返回排序的深度
+在``MultiIndex``上使用 [``is_lexsorted()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.is_lexsorted.html#pandas.MultiIndex.is_lexsorted) 方法，你可以查看这个索引是否已经被排序。而使用``lexsort_depth`` 属性则可以返回排序的深度
 
 ``` python
 In [109]: dfm.index.is_lexsorted()
@@ -1151,9 +1136,7 @@ jim joe
     z    0.537020
 ```
 
-
-
-## ``Take``方法
+## Take方法
 
 与``NumPy``的``ndarrays``相似，pandas的 ``Index``， ``Series``，和``DataFrame`` 也提供 [``take()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.take.html#pandas.DataFrame.take) 方法。他可以沿着某个维度，按照给定的索引取回所有的元素。这个给定的索引必须要是一个由整数组成的列表或者ndarray，用以指明在索引中的位置。``take`` 也可以接受负整数，作为相对于结尾的相对位置。
 
@@ -1274,11 +1257,9 @@ In the following sub-sections we will highlight some other index types.
 
 下面的一个子章节，我们将会着重探讨另外的一些索引的类型。
 
-### 
-
 ### 分类索引
 
-[``CategoricalIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalIndex.html#pandas.CategoricalIndex) 分类索引 这种索引类型非常适合有重复的索引。这是一个围绕 [``Categorical``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical) 而创建的容器。这可以非常高效地存储和索引的具有大量重复元素的索引。
+[``CategoricalIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalIndex.html#pandas.CategoricalIndex)分类索引 这种索引类型非常适合有重复的索引。这是一个围绕  [``Categorical``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical) 而创建的容器。这可以非常高效地存储和索引的具有大量重复元素的索引。
 
 ``` python
 In [139]: from pandas.api.types import CategoricalDtype
@@ -1318,7 +1299,7 @@ In [146]: df2.index
 Out[146]: CategoricalIndex(['a', 'a', 'b', 'b', 'c', 'a'], categories=['c', 'a', 'b'], ordered=False, name='B', dtype='category')
 ```
 
-使用 ``__getitem__/.iloc/.loc`` 进行索引，在含有重复值的做索引上的工作原理相似。索引值必须在一个分类中，否者将会引发``KeyError``错误。
+使用 ``__getitem__/.iloc/.loc`` 进行索引，在含有重复值的``索引``上的工作原理相似。索引值**必须**在一个分类中，否者将会引发``KeyError``错误。
 
 ``` python
 In [147]: df2.loc['a']
@@ -1367,7 +1348,7 @@ In [151]: df2.groupby(level=0).sum().index
 Out[151]: CategoricalIndex(['c', 'a', 'b'], categories=['c', 'a', 'b'], ordered=False, name='B', dtype='category')
 ```
 
-重设索引的操作将会根据输入的索引值返回一个索引。传入一个列表，将会返回一个最普通的``Index``；如果使用类别对象``Categorical``，则会返回一个分类索引``CategoricalIndex``，按照其中的类别值``Categorical`` dtype来进行索引。正如同你可以对**任意**pandas的索引进行重新索引一样，这将允许你随意索引任意的索引值，即便它们并不存在在你的类别对象中。
+重设索引的操作将会根据输入的索引值返回一个索引。传入一个列表，将会返回一个最普通的``Index``；如果使用类别对象``Categorical``，则会返回一个分类索引``CategoricalIndex``，按照其中**传入的**的类别值``Categorical`` dtype来进行索引。正如同你可以对**任意**pandas的索引进行重新索引一样，这将允许你随意索引任意的索引值，即便它们并**不存在**在你的类别对象中。
 ``` python
 In [152]: df2.reindex(['a', 'e'])
 Out[152]: 
@@ -1396,7 +1377,7 @@ Out[155]: CategoricalIndex(['a', 'a', 'a', 'e'], categories=['a', 'b', 'c', 'd',
 
 ::: danger 警告
 
-对于一个分类索引的对象进行变形或者比较操作，一定要确保他们的索引包含相同的列别，否则将会出发类型错误``TypeError`` 
+对于一个``分类索引``的对象进行变形或者比较操作，一定要确保他们的索引包含相同的列别，否则将会出发类型错误``TypeError`` 
 
 ``` python
 In [9]: df3 = pd.DataFrame({'A': np.arange(6), 'B': pd.Series(list('aabbca')).astype('category')})
@@ -1412,23 +1393,21 @@ TypeError: categories must match existing categories when appending
 
 :::
 
-### Int64Index and RangeIndex
 ### 64位整型索引和范围索引
 
 ::: danger 警告
 
-使用浮点数进行基于数值的索引已经再0.18.0的版本中进行了声明。想查看更改的汇总，请参见 [这里](https://pandas.pydata.org/pandas-docs/stable/whatsnew/v0.18.0.html#whatsnew-0180-float-indexers).
+使用浮点数进行基于数值的索引已经再0.18.0的版本中进行了声明。想查看更改的汇总，请参见 [这里](https://pandas.pydata.org/pandas-docs/stable/whatsnew/v0.18.0.html#whatsnew-0180-float-indexers)。
 :::
 
 [``Int64Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Int64Index.html#pandas.Int64Index) 64位整型索引是pandas中的一种非常基本的索引操作。这是一个不可变的数组组成的一个有序的，可切片的集合。再0.18.0之前，``Int64Index``是会为所有``NDFrame`` 对象提供默认的索引。
 
-[``RangeIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.RangeIndex.html#pandas.RangeIndex) 范围索引是64位整型索引的子集，在v0.18.0版本加入。现在由范围索引来为所有的``NDFrame``对象提供默认索引。
+[``RangeIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.RangeIndex.html#pandas.RangeIndex)  范围索引是``64位整型索引``的子集，在v0.18.0版本加入。现在由范围索引来为所有的``NDFrame``对象提供默认索引。
 ``RangeIndex``是一个对于 ``Int64Index`` 的优化版本，能够提供一个有序且严格单调的集合。这个索引与python的 [range types](https://docs.python.org/3/library/stdtypes.html#typesseq-range)是相似的
 
-### 
 ### 64位浮点索引
 
-默认情况下，当传入浮点数、或者浮点整型混合数的时候，一个64位浮点索引 [``Float64Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Float64Index.html#pandas.Float64Index) 将会自动被建立。这样将能够确保一个存粹而统一的基于标签的索引切片行为，这样``[],ix,loc``对于标量索引和切片的工作行为将会完全一致。
+默认情况下，当传入浮点数、或者浮点整型混合数的时候，一个64位浮点索引 [``Float64Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Float64Index.html#pandas.Float64Index)将会自动被建立。这样将能够确保一个存粹而统一的基于标签的索引切片行为，这样``[],ix,loc``对于标量索引和切片的工作行为将会完全一致。
 
 ``` python
 In [156]: indexf = pd.Index([1.5, 2, 3, 4.5, 5])
@@ -1471,7 +1450,7 @@ In [164]: sf.iloc[3]
 Out[164]: 3
 ```
 
-一个找不到的标量索引会触发一个``KeyError``错误。当使用``[],ix,loc``是，切片操作优先会选择索引的值，但是``iloc``永远都会按位置索引。唯一的例外是使用布尔索引，此时将始终按位置选择。
+一个找不到的标量索引会触发一个``KeyError``错误。当使用``[],ix,loc``是，切片操作优先会选择索引的值，但是``iloc``**永远**都会按位置索引。唯一的例外是使用布尔索引，此时将始终按位置选择。
 
 ``` python
 In [165]: sf[2:4]
@@ -1613,15 +1592,13 @@ Out[176]:
 1000.0  1.162969 -0.287725
 ```
 
-### 
 ### 间隔索引
 
 *0.20.0中新加入*
-[``IntervalIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalIndex.html#pandas.IntervalIndex) 和它自己特有的``IntervalDtype``以及 [``Interval``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Interval.html#pandas.Interval) 标量类型，在pandas中，间隔数据是获得头等支持的。
+[``IntervalIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalIndex.html#pandas.IntervalIndex)和它自己特有的``IntervalDtype``以及 [``Interval``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Interval.html#pandas.Interval) 标量类型，在pandas中，间隔数据是获得头等支持的。
 
- ``IntervalIndex``间隔索引允许一些唯一的索引，并且也是[``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut) 和 [``qcut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.qcut.html#pandas.qcut)的返回类型
+ ``IntervalIndex``间隔索引允许一些唯一的索引，并且也是 [``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut) 和[``qcut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.qcut.html#pandas.qcut)的返回类型
 
-#### 
 #### 使用``间隔索引``来进行数据索引
 
 ``` python
@@ -1685,7 +1662,7 @@ In [7]: df.loc[pd.Interval(0.5, 2.5)]
 KeyError: Interval(0.5, 2.5, closed='right')
 ```
 
-可以使用[``overlaps()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalIndex.overlaps.html#pandas.IntervalIndex.overlaps) 来创建一个布尔选择器，来选中所有与给定区间``Interval``重复的所有区间。
+可以使用[``overlaps()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalIndex.overlaps.html#pandas.IntervalIndex.overlaps)来创建一个布尔选择器，来选中所有与``给定区间``(``Interval``)重复的所有区间。
 
 ``` python
 In [184]: idxr = df.index.overlaps(pd.Interval(0.5, 2.5))
@@ -1701,10 +1678,9 @@ Out[186]:
 (2, 3]  3
 ```
 
-#### 
 #### 使用 ``cut`` 和 ``qcut``来为数据分块
 
-[``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut) 和 [``qcut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.qcut.html#pandas.qcut) 都将返回一个分类``Categorical`` 对象，并且每个分块区域都会以 分类索引``IntervalIndex``的方式被创建并保存在它的``.categories``属性中。
+[``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut) 和 [``qcut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.qcut.html#pandas.qcut)  都将返回一个分类``Categorical`` 对象，并且每个分块区域都会以 分类索引``IntervalIndex``的方式被创建并保存在它的``.categories``属性中。
 
 ``` python
 In [187]: c = pd.cut(range(4), bins=2)
@@ -1721,8 +1697,8 @@ IntervalIndex([(-0.003, 1.5], (1.5, 3.0]],
               dtype='interval[float64]')
 ```
 
-[``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut)也可以接受一个 ``IntervalIndex`` 作为他的 ``bins`` 参数，这样可以使用一个非常有用的pandas的写法。
-首先，我们调用 [``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut) 在一些数据上面，并且将 ``bins``设置为某一个固定的数 ，从而生成bins。
+[``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut) 也可以接受一个 ``IntervalIndex`` 作为他的 ``bins`` 参数，这样可以使用一个非常有用的pandas的写法。
+首先，我们调用 [``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut)  在一些数据上面，并且将 ``bins``设置为某一个固定的数 ，从而生成bins。
 
 随后，我们可以在其他的数据上调用 [``cut()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut)，并传入``.categories`` 的值，作为 ``bins``参数。这样新的数据就也将会被分配到同样的bins里面
 
@@ -1735,10 +1711,9 @@ Categories (2, interval[float64]): [(-0.003, 1.5] < (1.5, 3.0]]
 
 任何落在bins之外的数据都将会被设为 ``NaN`` 
 
-#### 
 #### 生成一定区间内的间隔
 
-如果我们需要经常地使用步进区间，我们可以使用 [``interval_range()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.interval_range.html#pandas.interval_range) 函数，结合 ``start``, ``end``, 和 ``periods``来建立一个 ``IntervalIndex``
+如果我们需要经常地使用步进区间，我们可以使用  [``interval_range()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.interval_range.html#pandas.interval_range)  函数，结合 ``start``, ``end``, 和 ``periods``来建立一个 ``IntervalIndex``
 对于数值型的间隔，默认的 ``interval_range``间隔频率是1，对于datetime类型的间隔则是日历日。
 
 ``` python
@@ -1819,12 +1794,11 @@ IntervalIndex([(2018-01-01, 2018-01-20 08:00:00], (2018-01-20 08:00:00, 2018-02-
 ```
 
 
-
 ## 其他索引常见问题
 
 ### 数值索引
 
-使用数值作为各维度的标签，再基于标签进行索引是一个非常痛苦的话题。在Scientific Python社区的邮件列表中，进行着剧烈的争论。在Pandas中，我们一般性的观点是，标签比实际的（用数值表示的）位置更为重要。因此，对于使用数值作为标签的的对象来说，只有基于标签的索引才可以在标准工具，例如``.loc``方法，中正常使用。下面的代码将引发错误：
+使用数值作为各维度的标签，再基于标签进行索引是一个非常痛苦的话题。在Scientific Python社区的邮件列表中，进行着剧烈的争论。在Pandas中，我们一般性的观点是，标签比实际的（用数值表示的）位置更为重要。因此，对于使用数值作为标签的的对象来说，*只有*基于标签的索引才可以在标准工具，例如``.loc``方法，中正常使用。下面的代码将引发错误：
 
 ``` python
 In [201]: s = pd.Series(range(5))
@@ -1884,10 +1858,9 @@ Out[205]:
 
 我们特意地做了这样的设计，是为了阻止歧义性以及一些难以避免的小bug（当我们修改了函数，从而阻止了“滚回”到基于位置的索引方式以后，许多用户报告说，他们发现了bug）。
 
-### 
 ### 非单调索引要求严格匹配
 
-如果一个  ``序列`` 或者 ``数据表``是单调递增或递减的，那么基于标签的切片行为的边界是可以超出索引的，这与普通的python``列表``的索引切片非常相似。索引的单调性可以使用 [``is_monotonic_increasing()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.is_monotonic_increasing.html#pandas.Index.is_monotonic_increasing)  和[``is_monotonic_decreasing()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.is_monotonic_decreasing.html#pandas.Index.is_monotonic_decreasing)属性来检查
+如果一个  ``序列`` 或者 ``数据表``是单调递增或递减的，那么基于标签的切片行为的边界是可以超出索引的，这与普通的python``列表``的索引切片非常相似。索引的单调性可以使用 [``is_monotonic_increasing()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.is_monotonic_increasing.html#pandas.Index.is_monotonic_increasing) 和[``is_monotonic_decreasing()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.is_monotonic_decreasing.html#pandas.Index.is_monotonic_decreasing) 属性来检查
 
 ``` python
 In [206]: df = pd.DataFrame(index=[2, 3, 3, 4, 5], columns=['data'], data=list(range(5)))
@@ -1912,7 +1885,7 @@ Columns: [data]
 Index: []
 ```
 
-另一方面，如果索引不是单调的，那么切片的两侧边界都必须是索引值中的唯一值。
+另一方面，如果索引不是单调的，那么切片的两侧边界都必须是索引值中的*唯一*值。
 
 ``` python
 In [210]: df = pd.DataFrame(index=[2, 3, 1, 4, 3, 5],
@@ -1942,7 +1915,7 @@ In [11]: df.loc[2:3, :]
 KeyError: 'Cannot get right slice bound for non-unique label: 3'
 ```
 
-[Index.is_monotonic_increasing()](http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.Index.is_monotonic_increasing.html#Pandas.Index.is_monotonic_increasing) 和[Index.is_monotonic_decreasing()](http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.Index.is_monotonic_decreasing.html#Pandas.Index.is_monotonic_decreasing) 方法只能进行弱单调性的检查。要进行严格的单调性检查，你可以配合[Index.is_unique()](http://Pandas.pydata.org/Pandas-docs/stable/generated/Pandas.Index.is_unique.html#Pandas.Index.is_unique)方法一起使用。
+``Index.is_monotonic_increasing``和``Index.is_monotonic_decreasing``方法只能进行弱单调性的检查。要进行严格的单调性检查，你可以配合 [``is_unique()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.is_unique.html#pandas.Index.is_unique) 方法一起使用。
 
 ``` python
 In [213]: weakly_monotonic = pd.Index(['a', 'b', 'c', 'c'])
@@ -1957,10 +1930,9 @@ In [216]: weakly_monotonic.is_monotonic_increasing & weakly_monotonic.is_unique
 Out[216]: False
 ```
 
-### 
 ### 终止点被包含在内
 
-与表中的python序列切片中，终止点不被包含不同，基于标签的切片在Pandas中，终止点是被**包含在内**的。最主要的原因是因为，我们很难准确地确定在索引中的“下一个”标签“到底是什么。例如下面这个序列：
+与表中的python序列切片中，终止点不被包含不同，基于标签的切片在Pandas中，终止点是被**包含在内**的。最主要的原因是因为，我们很难准确地确定在索引中的“下一个”标签“到底是什么。例如下面这个``序列``：
 
 ``` python
 In [217]: s = pd.Series(np.random.randn(6), index=list('abcdef'))
@@ -1976,7 +1948,7 @@ f   -0.819549
 dtype: float64
 ```
 
-如果我们希望从c选取到e，如果我们使用基于数值的索引，那将会由如下操作：
+如果我们希望从``c``选取到``e``，如果我们使用基于数值的索引，那将会由如下操作：
 
 ``` python
 In [219]: s[2:5]
@@ -1987,7 +1959,7 @@ e   -1.658747
 dtype: float64
 ```
 
-然而，如果你只有c和e，确定下一个索引中的元素将会是比较困难的。例如，下面的这种方法完全是行不通的：
+然而，如果你只有``c``和``e``，确定下一个索引中的元素将会是比较困难的。例如，下面的这种方法完全是行不通的：
 
 ``` python
 s.loc['c':'e' + 1]
@@ -2006,7 +1978,6 @@ dtype: float64
 
 这是一个非常典型的“显示战胜理想”的情况，但是如果你仅仅是想当然的认为基于标签的索引应该会和标准python中的整数型索引有着相同的行为时，你也确实需要多加留意。
 
-### 
 ### 索引会潜在地改变序列的dtype
 
 不同的索引操作有可能会潜在地改变一个``序列``的dtypes
@@ -2048,6 +2019,6 @@ Out[230]:
 dtype: object
 ```
 
-这是因为上述（重新）索引的操作悄悄地插入了NaN，因此dtype也就随之发生改变了。如果你在使用一些numpy的ufunc，如 ``numpy.logical_and``是，将会导致一些问题。
+这是因为上述（重新）索引的操作悄悄地插入了 ``NaNs`` ，因此dtype也就随之发生改变了。如果你在使用一些``numpy``的``ufuncs``，如 ``numpy.logical_and``时，将会导致一些问题。
 
-参见 [this old issue](https://github.com/pydata/Pandas/issues/2388) 了解更详细的讨论过程
+参见 [this old issue](https://github.com/pydata/pandas/issues/2388)了解更详细的讨论过程
