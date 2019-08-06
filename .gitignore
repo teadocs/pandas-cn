@@ -8,3 +8,5 @@ static/images/.DS_Store
 .DS_Store
 .temp
 node_modules
+package-lock.json
+yarn.lock

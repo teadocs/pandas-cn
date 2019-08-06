@@ -29,9 +29,9 @@ Pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-d
 
 其他一些说明
 
-- Pandas is **fast**. Many of the low-level algorithmic bits have been extensively tweaked in [Cython](https://cython.org/) code. However, as with anything else generalization usually sacrifices performance. So if you focus on one feature for your application you may be able to create a faster specialized tool.
-- Pandas is a dependency of [statsmodels](https://www.statsmodels.org/stable/index.html), making it an important part of the statistical computing ecosystem in Python.
-- Pandas has been used extensively in production in financial applications.
+- Pandas 的开发速度**很快**。许多低级算法位已经在[Cython](https://cython.org/)代码中进行了大量优化。然而，与其他任何事物一样，这样做通常会牺牲性能。 因此，如果您专注于应用程序的一个功能，您可以更快创建一个专用的工具。
+- Pandas 是[statsmodels](https://www.statsmodels.org/stable/index.html)的依赖，使其成为Python中统计计算生态系统的重要组成部分。
+- Pandas 已广泛用于金融领域的应用和生产。
 
 ## 数据结构
 
@@ -42,11 +42,13 @@ Pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-d
 
 ### 为什么有多个数据结构？
 
-The best way to think about the Pandas data structures is as flexible containers for lower dimensional data. For example, DataFrame is a container for Series, and Series is a container for scalars. We would like to be able to insert and remove objects from these containers in a dictionary-like fashion.
+考虑Pandas数据结构的最佳方式是作为低维数据的灵活容器。例如，DataFrame是Series的容器，Series是scalars的容器。我们希望能够以类似字典的方式从这些容器中插入和删除对象。
 
-Also, we would like sensible default behaviors for the common API functions which take into account the typical orientation of time series and cross-sectional data sets. When using ndarrays to store 2- and 3-dimensional data, a burden is placed on the user to consider the orientation of the data set when writing functions; axes are considered more or less equivalent (except when C- or Fortran-contiguousness matters for performance). In Pandas, the axes are intended to lend more semantic meaning to the data; i.e., for a particular data set there is likely to be a “right” way to orient the data. The goal, then, is to reduce the amount of mental effort required to code up data transformations in downstream functions.
+此外，我们希望通用API函数的合理默认行为考虑到时间序列和横截面数据集的典型方向。当使用ndarrays存储2维和3维数据时，在编写函数时会给用户带来负担以考虑数据集的方向; 轴被认为或多或少相等（除非C-或Fortran-连续性对性能有影响）。在Pandas中，轴旨在为数据提供更多的语义含义; 即，对于特定数据集，可能存在定向数据的“正确”方式。因此，目标是减少在下游功能中编码数据转换所需的心理努力量。
 
-For example, with tabular data (DataFrame) it is more semantically helpful to think of the **index** (the rows) and the **columns** rather than axis 0 and axis 1. Iterating through the columns of the DataFrame thus results in more readable code:
+此外，我们希望公共API函数的合理默认行为考虑到时间序列和横截面数据集的典型方向。当使用ndarray存储2维和3维数据时，用户在编写函数时需要考虑数据集的方向；轴被认为或多或少是等价的(除非C或Fortran邻接关系到性能)。在Pandas中，轴旨在为数据提供更多的语义含义；即，对于特定的数据集，可能会有一种“正确”的方式来确定数据的方向。因此，目标是减少在下游函数中编写数据转换代码所需的脑力劳动。
+
+举个例子，对于表格数据(DataFrame)，考虑***索引**(行)和**列**(而不是轴0和轴1)在语义上更有帮助。因此，迭代DataFrame的列会产生更具可读性的代码：
 
 ``` python
 for col in df.columns:
@@ -56,33 +58,33 @@ for col in df.columns:
 
 ## 数据的可变性和拷贝
 
-All Pandas data structures are value-mutable (the values they contain can be altered) but not always size-mutable. The length of a Series cannot be changed, but, for example, columns can be inserted into a DataFrame. However, the vast majority of methods produce new objects and leave the input data untouched. In general we like to **favor immutability** where sensible.
+所有的Pandas数据结构都是值可变的（它们包含的值可以改变），但并不总是大小可变的。Series的长度不能更改，但例如，列可以插入到DataFrame中。然而，绝大多数方法产生新的对象并保持输入数据不变。 一般来说，我们喜欢在合情合理的情况下**支持不变性**。
 
 ## 获得支持
 
-The first stop for Pandas issues and ideas is the [Github Issue Tracker](https://github.com/Pandas-dev/Pandas/issues). If you have a general question, Pandas community experts can answer through [Stack Overflow](https://stackoverflow.com/questions/tagged/Pandas).
+如果你有Pandas 问题和想法的，第一个应该想到的是[Github问题跟踪器](https://github.com/Pandas-dev/Pandas/issues)。如果您有常规问题，Pandas的社区专家可以通过[Stack Overflow](https://stackoverflow.com/questions/tagged/Pandas)来回答。
 
 ## 社区
 
-Pandas is actively supported today by a community of like-minded individuals around the world who contribute their valuable time and energy to help make open source Pandas possible. Thanks to [all of our contributors](https://github.com/Pandas-dev/Pandas/graphs/contributors).
+如今 Pandas 得到了世界各地志同道合的人们的积极支持，他们贡献了宝贵的时间和精力来帮助开源 Pandas 成为可能。感谢我们[所有的贡献者](https://github.com/Pandas-dev/Pandas/graphs/contributors)。
 
-If you’re interested in contributing, please visit the [contributing guide](https://Pandas.pydata.org/Pandas-docs/stable/development/contributing.html#contributing).
+如果您对贡献感兴趣，请访问[贡献指南](https://Pandas.pydata.org/Pandas-docs/stable/development/contributing.html#contributing)。
 
-Pandas is a [NumFOCUS](https://www.numfocus.org/open-source-projects/) sponsored project. This will help ensure the success of development of Pandas as a world-class open-source project, and makes it possible to [donate](https://Pandas.pydata.org/donate.html) to the project.
+Pandas是[NumFOCUS](https://www.numfocus.org/open-source-projects/)赞助的项目。 这将有助于确保Pandas作为世界级开源项目的成功发展，并有可能为该项目[捐款](https://Pandas.pydata.org/donate.html)。
 
 ## 项目治理
 
-The governance process that Pandas project has used informally since its inception in 2008 is formalized in [Project Governance documents](https://github.com/Pandas-dev/Pandas-governance). The documents clarify how decisions are made and how the various elements of our community interact, including the relationship between open source collaborative development and work that may be funded by for-profit or non-profit entities.
+Pandas 项目自2008年成立以来非正式使用的治理流程已在[项目治理文档](https://github.com/Pandas-dev/Pandas-governance)中正式确定。这些文件阐明了如何制定决策以及我们社区的各种要素如何相互作用，包括开源协作开发与可能由营利或非营利实体资助的工作之间的关系。
 
-Wes McKinney is the Benevolent Dictator for Life (BDFL).
+Wes McKinney 是仁慈的生活独裁者（BDFL）。
 
 ## 开发团队
 
-The list of the Core Team members and more detailed information can be found on the [people’s page](https://github.com/Pandas-dev/Pandas-governance/blob/master/people.md) of the governance repo.
+可以在治理仓库的[人员页面](https://github.com/Pandas-dev/Pandas-governance/blob/master/people.md)上找到核心团队成员列表和更详细的信息。
 
 ## 机构合作伙伴
 
-The information about current institutional partners can be found on [Pandas website page](https://Pandas.pydata.org/about.html).
+有关当前机构合作伙伴的信息可以在[Pandas网站页面](/about/)上找到。
 
 ## 许可协议
 
