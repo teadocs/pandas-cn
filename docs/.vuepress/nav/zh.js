@@ -16,6 +16,10 @@ module.exports = [
     link: '/docs/'
   },
   {
+    text: '精选资源',
+    link: '/awesome/'
+  },
+  {
     text: '了解更多',
     items: [
       { text: '社区', link: '/community/' },

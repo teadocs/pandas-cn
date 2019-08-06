@@ -46,27 +46,10 @@ Columns: []
 Index: []
 ```
 
-### 联系方式
-
-1. 📮发起人**邮箱**：l@numpy.org.cn
-1. 📩发起人**微信号**：iamnotahacker（捐赠或想进微信交流群可加）
-
-### 贡献翻译 ✍
-
-感谢[这些小伙伴](https://github.com/teadocs/pandas-cn/graphs/contributors)对数据科学汉化事业的做出的翻译贡献！🙏
-
-想参与翻译的小伙伴，可以参看[《本文档翻译贡献指南》](https://github.com/teadocs/pandas-cn/blob/v0.25.0/Contribution.md)。
-
 ::: warning 提醒
 本网站推荐使用[Python3.x](https://www.python.org/downloads/)及以上版本。
 :::
 
-### 兄弟文档
+<ahome-nav></ahome-nav>
 
-- [NumPy 中文文档](https://www.numpy.org.cn/)
-- [Matplotlib 中文文档](https://www.matplotlib.org.cn/)
-
-### 站点相关
-
-* [粤ICP备16025085号-8](http://www.beian.miit.gov.cn/)
-* [Pandas Logo 捐赠名单](/logo/)
+<ahome-footer></ahome-footer>
