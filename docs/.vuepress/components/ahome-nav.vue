@@ -2,14 +2,26 @@
   <div class="ahome-nav">
     <div class="nav-bar">
       <b class="name">我想要</b>
-      <a class="btn-home-nav" :class="{'active': navId === 1}" @click="navId=1">加入群聊</a>
-      <a class="btn-home-nav" :class="{'active': navId === 2}" @click="navId=2">贡献翻译</a>
-      <a class="btn-home-nav" :class="{'active': navId === 3}" @click="navId=3">捐赠文档</a>
-      <a class="btn-home-nav" :class="{'active': navId === 4}" @click="navId=4">赞助合作</a>
+      <a class="btn-home-nav" :class="{'active': navId === 1}" @click="navId=1">关注公众号</a>
+      <a class="btn-home-nav" :class="{'active': navId === 2}" @click="navId=2">加入群聊</a>
+      <a class="btn-home-nav" :class="{'active': navId === 3}" @click="navId=3">贡献翻译</a>
+      <a class="btn-home-nav" :class="{'active': navId === 4}" @click="navId=4">捐赠文档</a>
+      <a class="btn-home-nav" :class="{'active': navId === 5}" @click="navId=5">赞助合作</a>
+    </div>
+
+    <!-- 关注公众号 -->
+    <div class="block" :class="{'show': navId === 1}">
+      <div class>
+        <p>数据科学爱好者的最终归属地，关注公众号获取各种Python的奇淫技巧、赚钱技巧，更有机会获得大厂内推。</p>
+      </div>
+      <div class="qr-item">
+        <img src="/home/wx-gzh.png" alt />
+        <span class="text">或搜索“<b>数量集</b>”</span>
+      </div>
     </div>
 
     <!-- 加入群聊 -->
-    <div class="block" :class="{'show': navId === 1}">
+    <div class="block" :class="{'show': navId === 2}">
       <div class>
         <p>欢迎加入我们的交流群，群内有BAT公司大牛、常春藤校友、中国顶尖高校的各类学霸，以及众多事业有成者！</p>
       </div>
@@ -24,7 +36,7 @@
     </div>
 
     <!-- 贡献翻译 -->
-    <div class="block" :class="{'show': navId === 2}">
+    <div class="block" :class="{'show': navId === 3}">
       <p>
         首先感谢
         <a href="https://github.com/teadocs/pandas-cn/graphs/contributors" target="_blank">这些小伙伴</a> 对数据科学汉化事业的做出的翻译贡献！🙏
@@ -40,7 +52,7 @@
     </div>
 
     <!-- 捐赠文档 -->
-    <div class="block" :class="{'show': navId === 3}">
+    <div class="block" :class="{'show': navId === 4}">
       <p>
         维护公益项目不易，你们的支持是我
         <b>坚持翻译</b>，不断优化
@@ -63,7 +75,7 @@
     </div>
 
     <!-- 赞助合作 -->
-    <div class="block" :class="{'show': navId === 4}">
+    <div class="block" :class="{'show': navId === 5}">
       <p>如果您想要交换友情链接、广告赞助、转载内容、咨询网站主题、或者其他合作适宜，可以通过以下联系方式联系到站长。</p>
       <ul>
         <li>🍀微信个人号：iamnotahacker（备注：合作）</li>
@@ -172,6 +184,7 @@ export default {
 
     a {
       &.btn-home-nav {
+        font-size 16px;
       }
     }
   }
@@ -184,7 +197,7 @@ export default {
     a {
       &.btn-home-nav {
         margin: 2px;
-        margin-bottom 6px;
+        margin-bottom 10px;
       }
     }
   }
