@@ -171,6 +171,8 @@ array([[1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'test', 'foo'],
        [1.0, Timestamp('2013-01-02 00:00:00'), 1.0, 3, 'train', 'foo']], dtype=object)
 ```
 
+
+
 ::: tip 提醒
 
 [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy) 的输出不包含行索引和列索引。
@@ -234,6 +236,8 @@ Out[22]:
 ```
 
 ## 选择
+
+
 
 ::: tip 提醒
 

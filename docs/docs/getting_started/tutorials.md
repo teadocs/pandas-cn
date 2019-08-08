@@ -63,4 +63,3 @@
   - [Pandas DataFrames Tutorial, by Karlijn Willems](http://www.datacamp.com/community/tutorials/Pandas-tutorial-dataframe-python)
   - [A concise tutorial with real life examples](https://tutswiki.com/Pandas-cookbook/chapter1)
 
-- https://tutswiki.com/pandas-cookbook/chapter1)

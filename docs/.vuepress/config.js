@@ -127,7 +127,9 @@ module.exports = ctx => ({
         editLinkText: '在 GitHub 上编辑此页',
         lastUpdated: '上次更新',
         nav: require('./nav/zh'),
-        sidebar: require('./sidebar/zh')()
+        sidebar: {
+          '/docs/': require('./sidebar/docs_zh')()
+        }
       },
       '/en/': {
         label: 'English',
@@ -135,7 +137,9 @@ module.exports = ctx => ({
         editLinkText: 'Edit this page on GitHub',
         lastUpdated: 'Last Updated',
         nav: require('./nav/en'),
-        sidebar: require('./sidebar/en')()
+        sidebar: {
+          '/en/docs/': require('./sidebar/docs_en')()
+        }
       }
     }
   },
