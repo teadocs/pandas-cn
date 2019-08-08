@@ -256,7 +256,7 @@ two    0.271860
 dtype: float64
 ```
 
-有关如何在更深层次上进行选择，请参见[具有层次索引的横切](http://pandas.pydata.org/pandas- docs/stable/advance.html #advanced-xs)。
+有关如何在更深层次上进行选择，请参见[具有层次索引的横切](#advanced-xs)。
 
 ### 定义不同层次索引
 
