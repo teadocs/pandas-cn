@@ -57,7 +57,7 @@ delimiter : *str, default ``None``*
 
 delim_whitespace : *boolean, default False* 
 
-- 指定是否将空格 (e.g. ``' '`` or ``'\t'``)视为delimiter。
+- 指定是否将空格 (e.g. ``' '`` or ``'\t'``)当作delimiter。
 等价于设置 ``sep='\s+'``.
 如果这个选项被设置为 ``True``,就不要给
 ``delimiter`` 传参了.
