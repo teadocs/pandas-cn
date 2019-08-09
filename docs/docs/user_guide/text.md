@@ -1,10 +1,6 @@
 # Working with text data
 
-Series and Index are equipped with a set of string processing methods
-that make it easy to operate on each element of the array. Perhaps most
-importantly, these methods exclude missing/NA values automatically. These are
-accessed via the ``str`` attribute and generally have names matching
-the equivalent (scalar) built-in string methods:
+序列和索引包含一些列的字符操作方法，这可以使我们轻易操作数组中的各个元素。最重要的是，这些方法可以自动跳过 缺失/NA 值。这些方法可以在``str``属性中访问到，并且基本上和python内建的（标量）字符串方法同名：
 
 ``` python
 In [1]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
@@ -62,9 +58,7 @@ In [8]: idx.str.rstrip()
 Out[8]: Index([' jack', 'jill', ' jesse', 'frank'], dtype='object')
 ```
 
-The string methods on Index are especially useful for cleaning up or
-transforming DataFrame columns. For instance, you may have columns with
-leading or trailing whitespace:
+索引的字符串方法在清理或者转换数据表列的时候非常有用。例如，你的列中或许会包含首位的白空格：
 
 ``` python
 In [9]: df = pd.DataFrame(np.random.randn(3, 2),
@@ -89,9 +83,7 @@ In [12]: df.columns.str.lower()
 Out[12]: Index([' column a ', ' column b '], dtype='object')
 ```
 
-These string methods can then be used to clean up the columns as needed.
-Here we are removing leading and trailing whitespaces, lower casing all names,
-and replacing any remaining whitespaces with underscores:
+这些字符串方法可以被用来清理需要的列。这里，我们想清理开头和结尾的白空格，将所有的名称都换为小写，并且将其余的空格都替换为下划线：
 
 ``` python
 In [13]: df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
@@ -104,37 +96,27 @@ Out[14]:
 2  1.212112 -0.173215
 ```
 
-::: tip Note
+::: tip 小贴士
 
-If you have a ``Series`` where lots of elements are repeated
-(i.e. the number of unique elements in the ``Series`` is a lot smaller than the length of the
-``Series``), it can be faster to convert the original ``Series`` to one of type
-``category`` and then use ``.str.`` or ``.dt.`` on that.
-The performance difference comes from the fact that, for ``Series`` of type ``category``, the
-string operations are done on the ``.categories`` and not on each element of the
-``Series``.
+如果你有一个序列，里面有很多重复的值
+（即，序列中唯一元素的数量远小于``序列``的长度），将原有序列转换为一种分类类型，然后使用``.str.`` 或者 ``.dt.``方法，则会获得更快的速度。
+速度的差异来源于，在``分类类型``的``序列``中，字符操作只是在``categories``中完成的，而不是针对``序列``中的每一个元素。
 
-Please note that a ``Series`` of type ``category`` with string ``.categories`` has
-some limitations in comparison to ``Series`` of type string (e.g. you can’t add strings to
-each other: ``s + " " + s`` won’t work if ``s`` is a ``Series`` of type ``category``). Also,
-``.str`` methods which operate on elements of type ``list`` are not available on such a
-``Series``.
+请注意，相比于字符串类型的``序列``，带``.categories``类型的 ``分类`` 类别的 ``序列``有一些限制（例如，你不能像其中的元素追加其他的字串：``s + " " + s`` 将不能正确工作，如果s是一个``分类``类型的序列。并且，``.str`` 中，那些可以对 ``列表（list）`` 类型的元素进行操作的方法，在分类序列中也无法使用。
 
 :::
 
-::: danger Warning
+::: danger 警告
 
-Before v.0.25.0, the ``.str``-accessor did only the most rudimentary type checks. Starting with
-v.0.25.0, the type of the Series is inferred and the allowed types (i.e. strings) are enforced more rigorously.
+v.0.25.0版以前， ``.str``访问器只会进行最基本的类型检查。
+从v.0.25.0起，序列的类型会被自动推断出来，并且会更为激进地使用恰当的类型。
 
-Generally speaking, the ``.str`` accessor is intended to work only on strings. With very few
-exceptions, other uses are not supported, and may be disabled at a later point.
-
+一般来说 ``.str`` 访问器只倾向于针对字符串类型工作。只有在个别的情况下，才能对非字符串类型工作，但是这也将会在未来的版本中被逐步修正
 :::
 
-## Splitting and replacing strings
+## 拆分和替换字符串
 
-Methods like ``split`` return a Series of lists:
+类似``split``的方法返回一个列表类型的序列：
 
 ``` python
 In [15]: s2 = pd.Series(['a_b_c', 'c_d_e', np.nan, 'f_g_h'])
@@ -148,7 +130,7 @@ Out[16]:
 dtype: object
 ```
 
-Elements in the split lists can be accessed using ``get`` or ``[]`` notation:
+切分后的列表中的元素可以通过 ``get`` 方法或者 ``[]`` 方法进行读取：
 
 ``` python
 In [17]: s2.str.split('_').str.get(1)
@@ -168,7 +150,7 @@ Out[18]:
 dtype: object
 ```
 
-It is easy to expand this to return a DataFrame using ``expand``.
+使用``expand``方法可以轻易地将这种返回展开为一个数据表.
 
 ``` python
 In [19]: s2.str.split('_', expand=True)
@@ -180,7 +162,7 @@ Out[19]:
 3    f    g    h
 ```
 
-It is also possible to limit the number of splits:
+同样，我们也可以限制切分的次数：
 
 ``` python
 In [20]: s2.str.split('_', expand=True, n=1)
@@ -192,8 +174,7 @@ Out[20]:
 3    f  g_h
 ```
 
-``rsplit`` is similar to ``split`` except it works in the reverse direction,
-i.e., from the end of the string to the beginning of the string:
+``rsplit``与``split``相似，不同的是，这个切分的方向是反的。即，从字串的尾端向首段切分：
 
 ``` python
 In [21]: s2.str.rsplit('_', expand=True, n=1)
@@ -205,7 +186,7 @@ Out[21]:
 3  f_g    h
 ```
 
-``replace`` by default replaces [regular expressions](https://docs.python.org/3/library/re.html):
+``replace`` 方法默认使用 [正则表达式](https://docs.python.org/3/library/re.html):
 
 ``` python
 In [22]: s3 = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca',
@@ -241,9 +222,7 @@ Out[24]:
 dtype: object
 ```
 
-Some caution must be taken to keep regular expressions in mind! For example, the
-following code will cause trouble because of the regular expression meaning of
-*$*:
+一定要时时记得，是正则表达式，因此要格外小心。例如，因为正则表达式中的*$*符号,下列代码将会导致一些麻烦：
 
 ``` python
 # Consider the following badly formatted financial data
@@ -274,12 +253,10 @@ Out[28]:
 dtype: object
 ```
 
-*New in version 0.23.0.* 
+*v0.23.0. 新加入* 
 
-If you do want literal replacement of a string (equivalent to
-[``str.replace()``](https://docs.python.org/3/library/stdtypes.html#str.replace)), you can set the optional ``regex`` parameter to
-``False``, rather than escaping each character. In this case both ``pat``
-and ``repl`` must be strings:
+I如果你只是向单纯地替换字符 (等价于python中的
+[``str.replace()``](https://docs.python.org/3/library/stdtypes.html#str.replace))，你可以将可选参数 ``regex`` 设置为 ``False``，而不是傻傻地转义所有符号。这种情况下，``pat`` 和 ``repl`` 就都将作为普通字符对待：
 
 ``` python
 # These lines are equivalent
@@ -298,11 +275,9 @@ Out[30]:
 dtype: object
 ```
 
-*New in version 0.20.0.* 
+*v0.20.0. 新加入* 
 
-The ``replace`` method can also take a callable as replacement. It is called
-on every ``pat`` using [``re.sub()``](https://docs.python.org/3/library/re.html#re.sub). The callable should expect one
-positional argument (a regex object) and return a string.
+``replace`` 方法也可以传入一个可调用对象作为替换值。它针对每一个 ``pat`` 通过[``re.sub()``](https://docs.python.org/3/library/re.html#re.sub)来调用。可调用对象应只具有一个形参（一个正则表达式对象）并且返回一个字符串。
 
 ``` python
 # Reverse every lowercase alphabetic word
@@ -333,11 +308,9 @@ Out[36]:
 dtype: object
 ```
 
-*New in version 0.20.0.* 
+*v0.20.0. 新加入* 
 
-The ``replace`` method also accepts a compiled regular expression object
-from [``re.compile()``](https://docs.python.org/3/library/re.html#re.compile) as a pattern. All flags should be included in the
-compiled regular expression object.
+ ``replace`` 方法也可以接受一个来自[``re.compile()``](https://docs.python.org/3/library/re.html#re.compile) 编译过的正则表达式对象，来做为``表达式``。所有的标记都应该被包含在这个已经编译好的正则表达式对象中。
 
 ``` python
 In [37]: import re
@@ -359,8 +332,7 @@ Out[39]:
 dtype: object
 ```
 
-Including a ``flags`` argument when calling ``replace`` with a compiled
-regular expression object will raise a ``ValueError``.
+如果在已经使用编译的正则对象中继续传入``flags`` 参数，并进行替换，将会导致``ValueError``。
 
 ``` python
 In [40]: s3.str.replace(regex_pat, 'XX-XX ', flags=re.IGNORECASE)
@@ -368,14 +340,14 @@ In [40]: s3.str.replace(regex_pat, 'XX-XX ', flags=re.IGNORECASE)
 ValueError: case and flags cannot be set when pat is a compiled regex
 ```
 
-## Concatenation
+## 拼接
 
-There are several ways to concatenate a ``Series`` or ``Index``, either with itself or others, all based on [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat),
+Pandas提供了不同的方法将``序列``或``索引``与他们自己或者其他的对象进行拼接，所有的方法都是基于各自的[``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat),
 resp. ``Index.str.cat``.
 
-### Concatenating a single Series into a string
+### 将单个序列拼接为一个完整字符串
 
-The content of a ``Series`` (or ``Index``) can be concatenated:
+``序列``或``索引``的内容可以进行拼接：
 
 ``` python
 In [41]: s = pd.Series(['a', 'b', 'c', 'd'])
@@ -384,14 +356,14 @@ In [42]: s.str.cat(sep=',')
 Out[42]: 'a,b,c,d'
 ```
 
-If not specified, the keyword ``sep`` for the separator defaults to the empty string, ``sep=''``:
+如果没有额外声明，``sep`` 即分隔符默认为空字串，即``sep=''``：
 
 ``` python
 In [43]: s.str.cat()
 Out[43]: 'abcd'
 ```
 
-By default, missing values are ignored. Using ``na_rep``, they can be given a representation:
+默认情况下，缺失值会被忽略。使用``na_rep``参数，可以对缺失值进行赋值：
 
 ``` python
 In [44]: t = pd.Series(['a', 'b', np.nan, 'd'])
@@ -403,9 +375,9 @@ In [46]: t.str.cat(sep=',', na_rep='-')
 Out[46]: 'a,b,-,d'
 ```
 
-### Concatenating a Series and something list-like into a Series
+### 拼接序列和其他类列表型对象为新的序列
 
-The first argument to [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) can be a list-like object, provided that it matches the length of the calling ``Series`` (or ``Index``).
+[``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat)  的第一个参数为类列表对象，但必须要确保长度与``序列``或``索引``相同.
 
 ``` python
 In [47]: s.str.cat(['A', 'B', 'C', 'D'])
@@ -417,7 +389,8 @@ Out[47]:
 dtype: object
 ```
 
-Missing values on either side will result in missing values in the result as well, *unless* ``na_rep`` is specified:
+
+任何一端的缺失值都会导致之中结果为缺失值，*除非*使用``na_rep``：
 
 ``` python
 In [48]: s.str.cat(t)
@@ -437,11 +410,11 @@ Out[49]:
 dtype: object
 ```
 
-### Concatenating a Series and something array-like into a Series
+### 拼接序列与类数组对象为新的序列
 
-*New in version 0.23.0.* 
+*v0.23.0. 新加入* 
 
-The parameter ``others`` can also be two-dimensional. In this case, the number or rows must match the lengths of the calling ``Series`` (or ``Index``).
+``others`` 参数可以是二维的。此时，行数需要与``序列``或``索引``的长度相同。
 
 ``` python
 In [50]: d = pd.concat([t, s], axis=1)
@@ -471,12 +444,11 @@ Out[53]:
 dtype: object
 ```
 
-### Concatenating a Series and an indexed object into a Series, with alignment
+### 对齐拼接序列与带索引的对象成为新的序列
 
-*New in version 0.23.0.* 
+*v0.23.0.新加入* 
 
-For concatenation with a ``Series`` or ``DataFrame``, it is possible to align the indexes before concatenation by setting
-the ``join``-keyword.
+对于拼接``序列``或者``数据表``，我们可以使用 ``join``关键字来对齐索引。
 
 ``` python
 In [54]: u = pd.Series(['b', 'd', 'a', 'c'], index=[1, 3, 0, 2])
@@ -514,15 +486,15 @@ Out[58]:
 dtype: object
 ```
 
-::: danger Warning
+::: danger 警告
 
-If the ``join`` keyword is not passed, the method [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) will currently fall back to the behavior before version 0.23.0 (i.e. no alignment),
-but a ``FutureWarning`` will be raised if any of the involved indexes differ, since this default will change to ``join='left'`` in a future version.
+如果不使用``join`` 关键字， [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) 方法将会滚回到0.23.0版之前，即（无对齐）模式。但如果任何的索引不一致时，将会抛出一个
+``FutureWarning``  警告，因为在未来的版本中，默认行为将改为join='left' 。
 
 :::
 
-The usual options are available for ``join`` (one of ``'left', 'outer', 'inner', 'right'``).
-In particular, alignment also means that the different lengths do not need to coincide anymore.
+``join`` 的选项为（``'left'``, ``'outer'``, ``'inner'``, ``'right'``）中的一个。
+特别的，对齐操作使得两个对象可以是不同的长度。
 
 ``` python
 In [59]: v = pd.Series(['z', 'a', 'b', 'd', 'e'], index=[-1, 0, 1, 3, 4])
@@ -563,7 +535,7 @@ Out[63]:
 dtype: object
 ```
 
-The same alignment can be used when ``others`` is a ``DataFrame``:
+当``others``是一个``数据表``时，也可以执行相同的对齐操作：
 
 ``` python
 In [64]: f = d.loc[[3, 2, 1, 0], :]
@@ -593,10 +565,9 @@ Out[67]:
 dtype: object
 ```
 
-### Concatenating a Series and many objects into a Series
+### 将一个序列与多个对象拼接为一个新的序列
 
-Several array-like items (specifically: ``Series``, ``Index``, and 1-dimensional variants of ``np.ndarray``)
-can be combined in a list-like container (including iterators, ``dict``-views, etc.).
+所有的一维，类列表对象都可以任意组合进一个类列表的容器（包括迭代器，dict-视图等）：
 
 ``` python
 In [68]: s
@@ -626,6 +597,8 @@ dtype: object
 
 All elements without an index (e.g. ``np.ndarray``) within the passed list-like must match in length to the calling ``Series`` (or ``Index``),
 but ``Series`` and ``Index`` may have arbitrary length (as long as alignment is not disabled with ``join=None``):
+除了那些有索引的，所有传入没有索引的元素（如``np.ndarray``）必须与``序列``或``索引``有相同的长度。但是，只要禁用对齐``join=None``，那么``序列``或``索引``就可以是任意长度。
+
 
 ``` python
 In [71]: v
@@ -648,8 +621,7 @@ Out[72]:
 dtype: object
 ```
 
-If using ``join='right'`` on a list-like of ``others`` that contains different indexes,
-the union of these indexes will be used as the basis for the final concatenation:
+如果在一个包含不同的索引的``others``列表上使用``join='right'``，所有索引的并集将会被作为最终拼接的基础：
 
 ``` python
 In [73]: u.loc[[3]]
