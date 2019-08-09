@@ -643,10 +643,9 @@ Out[75]:
 dtype: object
 ```
 
-## Indexing with ``.str``
+## 使用.str进行索引
 
-You can use ``[]`` notation to directly index by position locations. If you index past the end
-of the string, the result will be a ``NaN``.
+你可以使用 ``[]``方法来直接索引定位。如果你的索引超过了字符串的结尾，将返回``NaN``。
 
 ``` python
 In [76]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan,
@@ -680,11 +679,11 @@ Out[78]:
 dtype: object
 ```
 
-## Extracting substrings
+## 提取子字符串
 
-### Extract first match in each subject (extract)
+### 提取第一个匹配的对象  (extract)
 
-::: danger Warning
+::: danger 警告
 
 In version 0.18.0, ``extract`` gained the ``expand`` argument. When
 ``expand=False`` it returns a ``Series``, ``Index``, or
@@ -693,14 +692,13 @@ pattern (same behavior as pre-0.18.0). When ``expand=True`` it
 always returns a ``DataFrame``, which is more consistent and less
 confusing from the perspective of a user. ``expand=True`` is the
 default since version 0.23.0.
+在 0.18.0中，``extract``拥有了 ``expand`` 参数。当 ``expand=False``时， 将返回一个序列，索引或者数据表， 这取决于原对象和正则表达式（之前的版本也是如此）。当 ``expand=True``时，它则总是返回一个``DataFrame``，这样可以更加一致，并且减少用户的混淆。 ``Expand=True`` 从0.23.0版本之后成为默认值。
 
 :::
 
-The ``extract`` method accepts a [regular expression](https://docs.python.org/3/library/re.html) with at least one
-capture group.
+``extract`` 方法接受一个至少含有一个捕获组的 [正则表达式](https://docs.python.org/3/library/re.html)。
 
-Extracting a regular expression with more than one group returns a
-DataFrame with one column per group.
+使用超过一个捕获组的正则表达式则会提取并返回一个数据表，每一列为一个捕获组。
 
 ``` python
 In [79]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'([ab])(\d)', expand=False)
@@ -711,14 +709,9 @@ Out[79]:
 2  NaN  NaN
 ```
 
-Elements that do not match return a row filled with ``NaN``. Thus, a
-Series of messy strings can be “converted” into a like-indexed Series
-or DataFrame of cleaned-up or more useful strings, without
-necessitating ``get()`` to access tuples or ``re.match`` objects. The
-dtype of the result is always object, even if no match is found and
-the result only contains ``NaN``.
+没有成功匹配的元素将会返回一行``NaN``。因此，一个序列的混乱的字符串可以被‘转换’为一个类似索引的序列或数据表。返回的内容会更为清爽，而且不需要使用``get()``方法来访问元组中的成员或者``re.match``对象。返回的类型将总是``object``类，即使匹配失败，返回的全是``NaN``。
 
-Named groups like
+有名称的捕获组，如：
 
 ``` python
 In [80]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'(?P<letter>[ab])(?P<digit>\d)',
@@ -731,7 +724,7 @@ Out[80]:
 2    NaN   NaN
 ```
 
-and optional groups like
+可选组类似，如：
 
 ``` python
 In [81]: pd.Series(['a1', 'b2', '3']).str.extract(r'([ab])?(\d)', expand=False)
@@ -741,13 +734,9 @@ Out[81]:
 1    b  2
 2  NaN  3
 ```
+也可以被使用。注意，任何有名称的捕获组，其名称都会被用做列名，否则将会直接使用数字。
 
-can also be used. Note that any capture group names in the regular
-expression will be used for column names; otherwise capture group
-numbers will be used.
-
-Extracting a regular expression with one group returns a ``DataFrame``
-with one column if ``expand=True``.
+如果仅使用正则表达式捕获一个组，而``expand=True``，那么仍然将返回一个``数据表``。
 
 ``` python
 In [82]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'[ab](\d)', expand=True)
@@ -758,7 +747,7 @@ Out[82]:
 2  NaN
 ```
 
-It returns a Series if ``expand=False``.
+如果``expand=False``，则会返回一个``序列``。
 
 ``` python
 In [83]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'[ab](\d)', expand=False)
@@ -769,8 +758,7 @@ Out[83]:
 dtype: object
 ```
 
-Calling on an ``Index`` with a regex with exactly one capture group
-returns a ``DataFrame`` with one column if ``expand=True``.
+在``索引``上使用正则表达式，并且仅捕获一个组时，将会返回一个``数据表``，如果``expand=True``。
 
 ``` python
 In [84]: s = pd.Series(["a1", "b2", "c3"], ["A11", "B22", "C33"])
@@ -790,15 +778,14 @@ Out[86]:
 2      C
 ```
 
-It returns an ``Index`` if ``expand=False``.
+如果``expand=False``，则返回一个``Index``。
 
 ``` python
 In [87]: s.index.str.extract("(?P<letter>[a-zA-Z])", expand=False)
 Out[87]: Index(['A', 'B', 'C'], dtype='object', name='letter')
 ```
 
-Calling on an ``Index`` with a regex with more than one capture group
-returns a ``DataFrame`` if ``expand=True``.
+如果在``索引``上使用正则并捕获多个组，则返回一个``数据表``，如果``expand=True``。
 
 ``` python
 In [88]: s.index.str.extract("(?P<letter>[a-zA-Z])([0-9]+)", expand=True)
@@ -809,27 +796,25 @@ Out[88]:
 2      C  33
 ```
 
-It raises ``ValueError`` if ``expand=False``.
+如果 ``expand=False``，则抛出``ValueError``。
 
 ``` python
 >>> s.index.str.extract("(?P<letter>[a-zA-Z])([0-9]+)", expand=False)
 ValueError: only one regex group is supported with Index
 ```
 
-The table below summarizes the behavior of ``extract(expand=False)``
-(input subject in first column, number of groups in regex in
-first row)
+下面的表格总结了``extract (expand=False)``时的行为（输入对象在第一列，捕获组的数量在第一行）
 
   | 1 group | >1 group
 ---|---|---
 Index | Index | ValueError
 Series | Series | DataFrame
 
-### Extract all matches in each subject (extractall)
+### 提取所有的匹配 (extractall)
 
-*New in version 0.18.0.* 
+*v0.18.0. 新加入* 
 
-Unlike ``extract`` (which returns only the first match),
+不同于 ``extract``（只返回第一个匹配），
 
 ``` python
 In [89]: s = pd.Series(["a1a2", "b1", "c1"], index=["A", "B", "C"])
@@ -851,10 +836,7 @@ B      b     1
 C      c     1
 ```
 
-the ``extractall`` method returns every match. The result of
-``extractall`` is always a ``DataFrame`` with a ``MultiIndex`` on its
-rows. The last level of the ``MultiIndex`` is named ``match`` and
-indicates the order in the subject.
+··``extractall``方法返回所有的匹配。``extractall``总是返回一个带有行。``多重索引。``的。``数据表。``，最后一级。``多重索引。``被命名为``match``，它指出匹配的顺序
 
 ``` python
 In [93]: s.str.extractall(two_groups)
@@ -867,7 +849,7 @@ B 0          b     1
 C 0          c     1
 ```
 
-When each subject string in the Series has exactly one match,
+当所有的对象字串都只有一个匹配时，
 
 ``` python
 In [94]: s = pd.Series(['a3', 'b3', 'c2'])
@@ -880,8 +862,7 @@ Out[95]:
 dtype: object
 ```
 
-then ``extractall(pat).xs(0, level='match')`` gives the same result as
-``extract(pat)``.
+``extractall(pat).xs(0, level='match')`` 的返回与``extract(pat)``相同。
 
 ``` python
 In [96]: extract_result = s.str.extract(two_groups, expand=True)
@@ -911,10 +892,9 @@ Out[100]:
 2      c     2
 ```
 
-``Index`` also supports ``.str.extractall``. It returns a ``DataFrame`` which has the
-same result as a ``Series.str.extractall`` with a default index (starts from 0).
+``索引``也支持``.str.extractall``。 它返回一个``数据表``，其中包含与``Series.str.estractall``相同的结果，使用默认索引（从0开始）
 
-*New in version 0.19.0.* 
+*v0.19.0. 新加入* 
 
 ``` python
 In [101]: pd.Index(["a1a2", "b1", "c1"]).str.extractall(two_groups)
@@ -936,9 +916,9 @@ Out[102]:
 2 0          c     1
 ```
 
-## Testing for Strings that match or contain a pattern
+## 测试匹配或包含模式的字符串
 
-You can check whether elements contain a pattern:
+你可以检查是否一个元素包含一个可以匹配到的正则表达式：
 
 ``` python
 In [103]: pattern = r'[0-9][a-z]'
@@ -953,7 +933,7 @@ Out[104]:
 dtype: bool
 ```
 
-Or whether elements match a pattern:
+或者是否元素完整匹配一个正则表达式
 
 ``` python
 In [105]: pd.Series(['1', '2', '3a', '3b', '03c']).str.match(pattern)
@@ -966,11 +946,9 @@ Out[105]:
 dtype: bool
 ```
 
-The distinction between ``match`` and ``contains`` is strictness: ``match``
-relies on strict ``re.match``, while ``contains`` relies on ``re.search``.
+``match``和``contains``的区别是是否严格匹配。``match``严格基于``re.match``，而``contains``基于``re.search``。
 
-Methods like ``match``, ``contains``, ``startswith``, and ``endswith`` take
-an extra ``na`` argument so missing values can be considered True or False:
+类似``match``, ``contains``, ``startswith`` 和 ``endswith`` 可以传入一个额外的``na``参数，因此，因此缺失值在匹配时可以被认为是``True``或者``False``：
 
 ``` python
 In [106]: s4 = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
@@ -989,10 +967,9 @@ Out[107]:
 dtype: bool
 ```
 
-## Creating indicator variables
+## 建立一个指示变量
 
-You can extract dummy variables from string columns.
-For example if they are separated by a ``'|'``:
+你从字符串列可以抽出一个哑变量。例如，是否他们由``|``分割:
 
 ``` python
 In [108]: s = pd.Series(['a', 'a|b', np.nan, 'a|c'])
@@ -1006,9 +983,9 @@ Out[109]:
 3  1  0  1
 ```
 
-String ``Index`` also supports ``get_dummies`` which returns a ``MultiIndex``.
+索引也支持``get_dummies``，它返回一个多重索引：
 
-*New in version 0.18.1.* 
+*v0.18.1. 新加入* 
 
 ``` python
 In [110]: idx = pd.Index(['a', 'a|b', np.nan, 'a|c'])
@@ -1022,59 +999,59 @@ MultiIndex([(1, 0, 0),
            names=['a', 'b', 'c'])
 ```
 
-See also [``get_dummies()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html#pandas.get_dummies).
+参见 [``get_dummies()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html#pandas.get_dummies).
 
-## Method summary
+## 方法总览
 
-Method | Description
+方法 | 描述
 ---|---
-[cat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) | Concatenate strings
-[split()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.split.html#pandas.Series.str.split) | Split strings on delimiter
-[rsplit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rsplit.html#pandas.Series.str.rsplit) | Split strings on delimiter working from the end of the string
-[get()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get.html#pandas.Series.str.get) | Index into each element (retrieve i-th element)
-[join()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.join.html#pandas.Series.str.join) | Join strings in each element of the Series with passed separator
-[get_dummies()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get_dummies.html#pandas.Series.str.get_dummies) | Split strings on the delimiter returning DataFrame of dummy variables
-[contains()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html#pandas.Series.str.contains) | Return boolean array if each string contains pattern/regex
-[replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.replace.html#pandas.Series.str.replace) | Replace occurrences of pattern/regex/string with some other string or the return value of a callable given the occurrence
-[repeat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.repeat.html#pandas.Series.str.repeat) | Duplicate values (s.str.repeat(3) equivalent to x * 3)
-[pad()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.pad.html#pandas.Series.str.pad) | Add whitespace to left, right, or both sides of strings
-[center()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.center.html#pandas.Series.str.center) | Equivalent to str.center
-[ljust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.ljust.html#pandas.Series.str.ljust) | Equivalent to str.ljust
-[rjust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rjust.html#pandas.Series.str.rjust) | Equivalent to str.rjust
-[zfill()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.zfill.html#pandas.Series.str.zfill) | Equivalent to str.zfill
-[wrap()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.wrap.html#pandas.Series.str.wrap) | Split long strings into lines with length less than a given width
-[slice()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice.html#pandas.Series.str.slice) | Slice each string in the Series
-[slice_replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice_replace.html#pandas.Series.str.slice_replace) | Replace slice in each string with passed value
-[count()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.count.html#pandas.Series.str.count) | Count occurrences of pattern
-[startswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.startswith.html#pandas.Series.str.startswith) | Equivalent to str.startswith(pat) for each element
-[endswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.endswith.html#pandas.Series.str.endswith) | Equivalent to str.endswith(pat) for each element
-[findall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.findall.html#pandas.Series.str.findall) | Compute list of all occurrences of pattern/regex for each string
-[match()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.match.html#pandas.Series.str.match) | Call re.match on each element, returning matched groups as list
-[extract()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extract.html#pandas.Series.str.extract) | Call re.search on each element, returning DataFrame with one row for each element and one column for each regex capture group
-[extractall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extractall.html#pandas.Series.str.extractall) | Call re.findall on each element, returning DataFrame with one row for each match and one column for each regex capture group
-[len()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.len.html#pandas.Series.str.len) | Compute string lengths
-[strip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.strip.html#pandas.Series.str.strip) | Equivalent to str.strip
-[rstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rstrip.html#pandas.Series.str.rstrip) | Equivalent to str.rstrip
-[lstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lstrip.html#pandas.Series.str.lstrip) | Equivalent to str.lstrip
-[partition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.partition.html#pandas.Series.str.partition) | Equivalent to str.partition
-[rpartition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rpartition.html#pandas.Series.str.rpartition) | Equivalent to str.rpartition
-[lower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lower.html#pandas.Series.str.lower) | Equivalent to str.lower
-[casefold()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.casefold.html#pandas.Series.str.casefold) | Equivalent to str.casefold
-[upper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.upper.html#pandas.Series.str.upper) | Equivalent to str.upper
-[find()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.find.html#pandas.Series.str.find) | Equivalent to str.find
-[rfind()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rfind.html#pandas.Series.str.rfind) | Equivalent to str.rfind
-[index()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.index.html#pandas.Series.str.index) | Equivalent to str.index
-[rindex()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rindex.html#pandas.Series.str.rindex) | Equivalent to str.rindex
-[capitalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.capitalize.html#pandas.Series.str.capitalize) | Equivalent to str.capitalize
-[swapcase()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.swapcase.html#pandas.Series.str.swapcase) | Equivalent to str.swapcase
-[normalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.normalize.html#pandas.Series.str.normalize) | Return Unicode normal form. Equivalent to unicodedata.normalize
-[translate()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.translate.html#pandas.Series.str.translate) | Equivalent to str.translate
-[isalnum()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalnum.html#pandas.Series.str.isalnum) | Equivalent to str.isalnum
-[isalpha()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalpha.html#pandas.Series.str.isalpha) | Equivalent to str.isalpha
-[isdigit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdigit.html#pandas.Series.str.isdigit) | Equivalent to str.isdigit
-[isspace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isspace.html#pandas.Series.str.isspace) | Equivalent to str.isspace
-[islower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.islower.html#pandas.Series.str.islower) | Equivalent to str.islower
-[isupper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isupper.html#pandas.Series.str.isupper) | Equivalent to str.isupper
-[istitle()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.istitle.html#pandas.Series.str.istitle) | Equivalent to str.istitle
-[isnumeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isnumeric.html#pandas.Series.str.isnumeric) | Equivalent to str.isnumeric
-[isdecimal()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdecimal.html#pandas.Series.str.isdecimal) | Equivalent to str.isdecimal
+[cat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) | 拼接字符串
+[split()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.split.html#pandas.Series.str.split) | 基于分隔符切分字符串
+[rsplit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rsplit.html#pandas.Series.str.rsplit) | 基于分隔符，逆向切分字符串
+[get()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get.html#pandas.Series.str.get) | 索引每一个元素（返回第i个元素）
+[join()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.join.html#pandas.Series.str.join) | 使用传入的分隔符依次拼接每一个元素
+[get_dummies()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get_dummies.html#pandas.Series.str.get_dummies) | 用分隔符切分字符串，并返回一个含有哑变量的数据表 
+[contains()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html#pandas.Series.str.contains) | 返回一个布尔矩阵表明是每个元素包含字符串或正则表达式
+[replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.replace.html#pandas.Series.str.replace) | 将匹配到的子串或正则表达式替换为另外的字符串，或者一个可调用对象的返回值
+[repeat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.repeat.html#pandas.Series.str.repeat) | 值复制（s.str.repeat(3)等价于x * 3）
+[pad()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.pad.html#pandas.Series.str.pad) | 将白空格插入到字符串的左、右或者两端
+[center()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.center.html#pandas.Series.str.center) | 等价于``str.center`` 
+[ljust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.ljust.html#pandas.Series.str.ljust) | 等价于``str.ljust``
+[rjust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rjust.html#pandas.Series.str.rjust) | 等价于``str.rjust`` 
+[zfill()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.zfill.html#pandas.Series.str.zfill) | 等价于``str.zfill``
+[wrap()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.wrap.html#pandas.Series.str.wrap) | 将长字符串转换为不长于给定长度的行
+[slice()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice.html#pandas.Series.str.slice) | 将序列中的每一个字符串切片
+[slice_replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice_replace.html#pandas.Series.str.slice_replace) | 用传入的值替换每一个字串中的切片
+[count()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.count.html#pandas.Series.str.count) | 对出现符合的规则进行计数
+[startswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.startswith.html#pandas.Series.str.startswith) | 等价于``str.startswith(pat)`` 
+[endswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.endswith.html#pandas.Series.str.endswith) | 等价于 ``str.endswith(pat)`` 
+[findall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.findall.html#pandas.Series.str.findall) | 返回每一个字串中出现的所有满足样式或正则的匹配
+[match()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.match.html#pandas.Series.str.match) | 素调用 ``re.match``，并以列表形式返回匹配到的组
+[extract()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extract.html#pandas.Series.str.extract) | Call 对每一个元素调用 ``re.search``, 并以数据表的形式返回。行对应原有的一个元素，列对应所有捕获的组
+[extractall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extractall.html#pandas.Series.str.extractall) | 一个元素调用 ``re.findall``, 并以数据表的形式返回。行对应原有的一个元素，列对应所有捕获的组
+[len()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.len.html#pandas.Series.str.len) | 计算字符串长度
+[strip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.strip.html#pandas.Series.str.strip) | 等价于``str.strip`` 
+[rstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rstrip.html#pandas.Series.str.rstrip) | 等价于``str.rstrip``
+[lstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lstrip.html#pandas.Series.str.lstrip) | 等价于``str.lstrip``
+[partition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.partition.html#pandas.Series.str.partition) | 等价于 ``str.partition``
+[rpartition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rpartition.html#pandas.Series.str.rpartition) | 等价于 ``str.rpartition``
+[lower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lower.html#pandas.Series.str.lower) | 等价于 ``str.lower``
+[casefold()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.casefold.html#pandas.Series.str.casefold) | 等价于 ``str.casefold``
+[upper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.upper.html#pandas.Series.str.upper) | 等价于 ``str.upper`` 
+[find()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.find.html#pandas.Series.str.find) | 等价于``str.find``
+[rfind()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rfind.html#pandas.Series.str.rfind) | 等价于 ``str.rfind`` 
+[index()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.index.html#pandas.Series.str.index) | 等价于 ``str.index``
+[rindex()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rindex.html#pandas.Series.str.rindex) | 等价于 ``str.rindex``
+[capitalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.capitalize.html#pandas.Series.str.capitalize) | 等价于 ``str.capitalize``
+[swapcase()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.swapcase.html#pandas.Series.str.swapcase) | 等价于 ``str.swapcase``
+[normalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.normalize.html#pandas.Series.str.normalize) | 返回Unicode 标注格式。等价于 unicodedata.normalize
+[translate()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.translate.html#pandas.Series.str.translate) | 等价于 ``str.translate``
+[isalnum()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalnum.html#pandas.Series.str.isalnum) | 等价于 ``str.isalnum`` 
+[isalpha()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalpha.html#pandas.Series.str.isalpha) | 等价于 ``str.isalpha`` 
+[isdigit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdigit.html#pandas.Series.str.isdigit) | 等价于 ``str.isdigit``
+[isspace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isspace.html#pandas.Series.str.isspace) |  等价于 ``str.isspace``
+[islower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.islower.html#pandas.Series.str.islower) | 等价于 ``str.islower``
+[isupper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isupper.html#pandas.Series.str.isupper) | 等价于 ``str.isupper``
+[istitle()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.istitle.html#pandas.Series.str.istitle) | Equivalent 等价于 ``str.istitle``
+[isnumeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isnumeric.html#pandas.Series.str.isnumeric) | 等价于 ``str.isnumeric``
+[isdecimal()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdecimal.html#pandas.Series.str.isdecimal) |  等价于 ``str.isdecimal``
