@@ -115,7 +115,7 @@ sidebar: auto
   },
   {
     tag: '微信公号',
-    name: '23种Pandas核心操作',
+    name: '23种pandas核心操作',
     href: 'https://mp.weixin.qq.com/s/L95slIQ8so5IWpIpy7ZHEQ'
   },
   {
