@@ -1,4 +1,4 @@
-# Working with text data
+# Pandas 处理文本字符串
 
 序列和索引包含一些列的字符操作方法，这可以使我们轻易操作数组中的各个元素。最重要的是，这些方法可以自动跳过 缺失/NA 值。这些方法可以在``str``属性中访问到，并且基本上和python内建的（标量）字符串方法同名：
 
@@ -685,13 +685,6 @@ dtype: object
 
 ::: danger 警告
 
-In version 0.18.0, ``extract`` gained the ``expand`` argument. When
-``expand=False`` it returns a ``Series``, ``Index``, or
-``DataFrame``, depending on the subject and regular expression
-pattern (same behavior as pre-0.18.0). When ``expand=True`` it
-always returns a ``DataFrame``, which is more consistent and less
-confusing from the perspective of a user. ``expand=True`` is the
-default since version 0.23.0.
 在 0.18.0中，``extract``拥有了 ``expand`` 参数。当 ``expand=False``时， 将返回一个序列，索引或者数据表， 这取决于原对象和正则表达式（之前的版本也是如此）。当 ``expand=True``时，它则总是返回一个``DataFrame``，这样可以更加一致，并且减少用户的混淆。 ``Expand=True`` 从0.23.0版本之后成为默认值。
 
 :::
@@ -836,7 +829,7 @@ B      b     1
 C      c     1
 ```
 
-··``extractall``方法返回所有的匹配。``extractall``总是返回一个带有行。``多重索引。``的。``数据表。``，最后一级。``多重索引。``被命名为``match``，它指出匹配的顺序
+``extractall``方法返回所有的匹配。``extractall``总是返回一个带有行``多重索引``的``数据表``，最后一级``多重索引``被命名为``match``，它指出匹配的顺序
 
 ``` python
 In [93]: s.str.extractall(two_groups)
@@ -1052,6 +1045,6 @@ MultiIndex([(1, 0, 0),
 [isspace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isspace.html#pandas.Series.str.isspace) |  等价于 ``str.isspace``
 [islower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.islower.html#pandas.Series.str.islower) | 等价于 ``str.islower``
 [isupper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isupper.html#pandas.Series.str.isupper) | 等价于 ``str.isupper``
-[istitle()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.istitle.html#pandas.Series.str.istitle) | Equivalent 等价于 ``str.istitle``
+[istitle()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.istitle.html#pandas.Series.str.istitle) | 等价于 ``str.istitle``
 [isnumeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isnumeric.html#pandas.Series.str.isnumeric) | 等价于 ``str.isnumeric``
 [isdecimal()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdecimal.html#pandas.Series.str.isdecimal) |  等价于 ``str.isdecimal``
