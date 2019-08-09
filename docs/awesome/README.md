@@ -120,7 +120,7 @@ sidebar: auto
   },
   {
     tag: '程序员虾说',
-    name: 'pandas教程',
+    name: 'pandas 系列教程',
     href: 'http://www.ysir308.com/archives/category/tutorial/pandas-tutorial'
   }
 ]"></awesome>
