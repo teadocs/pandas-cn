@@ -41,85 +41,57 @@ SQL | [Google Big Query](https://en.wikipedia.org/wiki/BigQuery) | [read_gbq](#i
 
 filepath_or_buffer : *various* 
 
-- Either a path to a file (a [``str``](https://docs.python.org/3/library/stdtypes.html#str), [``pathlib.Path``](https://docs.python.org/3/library/pathlib.html#pathlib.Path),
+- 文件路径 (a [``str``](https://docs.python.org/3/library/stdtypes.html#str), [``pathlib.Path``](https://docs.python.org/3/library/pathlib.html#pathlib.Path),
 or ``py._path.local.LocalPath``), URL (including http, ftp, and S3
-locations), or any object with a ``read()`` method (such as an open file or
+locations), 或者具有 ``read()`` 方法的任何对象 (such as an open file or
 [``StringIO``](https://docs.python.org/3/library/io.html#io.StringIO)).
 
-sep : *str, defaults to ``','`` for [``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv), ``\t`` for [``read_table()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_table.html#pandas.read_table)* 
+sep : *str, 默认   [``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv)分隔符为``','``, [``read_table()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_table.html#pandas.read_table)方法，分隔符为 ``\t``* 
 
-- Delimiter to use. If sep is ``None``, the C engine cannot automatically detect
-the separator, but the Python parsing engine can, meaning the latter will be
-used and automatically detect the separator by Python’s builtin sniffer tool,
-[``csv.Sniffer``](https://docs.python.org/3/library/csv.html#csv.Sniffer). In addition, separators longer than 1 character and
-different from ``'s+'`` will be interpreted as regular expressions and
-will also force the use of the Python parsing engine. Note that regex
-delimiters are prone to ignoring quoted data. Regex example: ``'\r\t'``.
+- 分隔符的使用. 如果分隔符为``None``，虽然C不能解析，但python解析引擎可解析，这意味着python将被使用，通过内置的sniffer tool自动检测分隔符,
+[``csv.Sniffer``](https://docs.python.org/3/library/csv.html#csv.Sniffer). 除此之外,字符长度超过１并且不同于 ``'s+'`` 的将被视为正则表达式，并且将强制使用python解析引擎。需要注意的是，正则表达式易于忽略引用数据<font color='red'>（主要注意转义字符的使用）</font> 例如: ``'\\r\\t'``.
 
 delimiter : *str, default ``None``* 
 
-- Alternative argument name for sep.
+- sep的替代参数.
 
 delim_whitespace : *boolean, default False* 
 
-- Specifies whether or not whitespace (e.g. ``' '`` or ``'\t'``)
-will be used as the delimiter. Equivalent to setting ``sep='\s+'``.
-If this option is set to ``True``, nothing should be passed in for the
-``delimiter`` parameter.
+- 指定是否将空格 (e.g. ``' '`` or ``'\t'``)视为delimiter。
+等价于设置 ``sep='\s+'``.
+如果这个选项被设置为 ``True``,就不要给
+``delimiter`` 传参了.
 
-*New in version 0.18.1:* support for the Python parser.
+*version 0.18.1:* 支持Python解析器.
 
-#### Column and index locations and names
+#### 列、索引、名称
 
 header : *int or list of ints, default ``'infer'``* 
 
-- Row number(s) to use as the column names, and the start of the
-data. Default behavior is to infer the column names: if no names are
-passed the behavior is identical to ``header=0`` and column names
-are inferred from the first line of the file, if column names are
-passed explicitly then the behavior is identical to
-``header=None``. Explicitly pass ``header=0`` to be able to replace
-existing names.
+- 当选择默认值或``header=0``时，将首行设为列名。如果列名被传入明确值就令``header=None``。注意，当``header=0``时，即使列名被传参也会被覆盖。
 
-- The header can be a list of ints that specify row locations
-for a MultiIndex on the columns e.g. ``[0,1,3]``. Intervening rows
-that are not specified will be skipped (e.g. 2 in this example is
-skipped). Note that this parameter ignores commented lines and empty
-lines if ``skip_blank_lines=True``, so header=0 denotes the first
-line of data rather than the first line of the file.
+
+- 标题可以是指定列上的MultiIndex的行位置的整数列表，例如 ``[0,1,3]``。在列名指定时，若某列未被指定，读取时将跳过该列 (例如 在下面的例子中第二列将被跳过).注意，如果 ``skip_blank_lines=True``，此参数将忽略空行和注释行, 因此 header=0 表示第一行数据而非文件的第一行.
 
 names : *array-like, default ``None``* 
 
-- List of column names to use. If file contains no header row, then you should
-explicitly pass ``header=None``. Duplicates in this list are not allowed.
+- 列名列表的使用. 如果文件不包含列名，那么应该设置``header=None``。 列名列表中不允许有重复值.
 
 index_col : *int, str, sequence of int / str, or False, default ``None``* 
 
-- Column(s) to use as the row labels of the ``DataFrame``, either given as
-string name or column index. If a sequence of int / str is given, a
-MultiIndex is used.
+-  ``DataFrame``的行索引列表, 既可以是字符串名称也可以是列索引. 如果传入一个字符串序列或者整数序列,那么一定要使用多级索引（MultiIndex）.
 
-- Note: ``index_col=False`` can be used to force pandas to not use the first
-column as the index, e.g. when you have a malformed file with delimiters at
-the end of each line.
+- 注意: 当``index_col=False`` ，pandas不再使用首列作为索引。例如， 当你的文件是一个每行末尾都带有一个分割符的格式错误的文件时.
 
 usecols : *list-like or callable, default ``None``* 
 
-- Return a subset of the columns. If list-like, all elements must either
-be positional (i.e. integer indices into the document columns) or strings
-that correspond to column names provided either by the user in *names* or
-inferred from the document header row(s). For example, a valid list-like
-*usecols* parameter would be ``[0, 1, 2]`` or ``['foo', 'bar', 'baz']``.
+- 返回列名列表的子集. 如果该参数为列表形式, 那么所有元素应全为位置（即文档列中的整数索引）或者 全为相应列的列名字符串（这些列名字符串为*names*参数给出的或者文档的``header``行内容）.例如，一个有效的列表型参数
+*usecols* 将会是是 ``[0, 1, 2]`` 或者 ``['foo', 'bar', 'baz']``.
 
-- Element order is ignored, so ``usecols=[0, 1]`` is the same as ``[1, 0]``. To
-instantiate a DataFrame from ``data`` with element order preserved use
-``pd.read_csv(data, usecols=['foo', 'bar'])[['foo', 'bar']]`` for columns
-in ``['foo', 'bar']`` order or
-``pd.read_csv(data, usecols=['foo', 'bar'])[['bar', 'foo']]`` for
-``['bar', 'foo']`` order.
+- 元素顺序可忽略，因此 ``usecols=[0, 1]``等价于 ``[1, 0]``。如果想实例化一个自定义列顺序的DataFrame，请使用``pd.read_csv(data, usecols=['foo', 'bar'])[['foo', 'bar']]`` ，这样列的顺序为 ``['foo', 'bar']`` 。如果设置``pd.read_csv(data, usecols=['foo', 'bar'])[['bar', 'foo']]`` 那么列的顺序为``['bar', 'foo']`` 。
 
-- If callable, the callable function will be evaluated against the column names,
-returning names where the callable function evaluates to True:
+- 如果使用callable的方式, 可调用函数将根据列名计算，
+返回可调用函数计算结果为True的名称:
 
 ``` python
 In [1]: from io import StringIO, BytesIO
@@ -146,34 +118,32 @@ Out[4]:
 
 ```
 
-Using this parameter results in much faster parsing time and lower memory usage.
+使用此参数可以大大加快解析时间并降低内存使用率。
 
 squeeze : *boolean, default ``False``* 
 
-- If the parsed data only contains one column then return a ``Series``.
+- 如果解析的数据仅包含一个列，那么结果将以 ``Series``的形式返回.
 
 prefix : *str, default ``None``* 
 
-- Prefix to add to column numbers when no header, e.g. ‘X’ for X0, X1, …
+- 当没有header时，可通过该参数为数字列名添加前缀, e.g. ‘X’ for X0, X1, …
 
 mangle_dupe_cols : *boolean, default ``True``* 
 
-- Duplicate columns will be specified as ‘X’, ‘X.1’…’X.N’, rather than ‘X’…’X’. Passing in ``False`` will cause data to be overwritten if there are duplicate names in the columns.
+- 当列名有重复时，解析列名将变为 ‘X’, ‘X.1’…’X.N’而不是 ‘X’…’X’。 如果该参数为 ``False`` ，那么当列名中有重复时，前列将会被后列覆盖。
 
-#### General parsing configuration
+#### 常规解析配置
 
 dtype : *Type name or dict of column -> type, default ``None``* 
 
-- Data type for data or columns. E.g. ``{'a': np.float64, 'b': np.int32}``
-(unsupported with ``engine='python'``). Use *str* or *object* together
-with suitable ``na_values`` settings to preserve and
-not interpret dtype.
+- 指定某列或整体数据的数据类型. E.g. ``{'a': np.float64, 'b': np.int32}``
+(不支持 ``engine='python'``).将*str*或*object*与合适的设置一起使用以保留和不解释dtype。
 
-- *New in version 0.20.0:* support for the Python parser.
+- *New in version 0.20.0:* 支持python解析器.
 
 engine : *{``'c'``, ``'python'``}* 
 
-- Parser engine to use. The C engine is faster while the Python engine is currently more feature-complete.
+- 解析引擎的使用。 尽管C引擎速度更快，但是目前python引擎功能更加完美。
 
 converters : *dict, default ``None``* 
 
