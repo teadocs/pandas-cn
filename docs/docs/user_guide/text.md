@@ -595,8 +595,6 @@ Out[70]:
 dtype: object
 ```
 
-All elements without an index (e.g. ``np.ndarray``) within the passed list-like must match in length to the calling ``Series`` (or ``Index``),
-but ``Series`` and ``Index`` may have arbitrary length (as long as alignment is not disabled with ``join=None``):
 除了那些有索引的，所有传入没有索引的元素（如``np.ndarray``）必须与``序列``或``索引``有相同的长度。但是，只要禁用对齐``join=None``，那么``序列``或``索引``就可以是任意长度。
 
 
