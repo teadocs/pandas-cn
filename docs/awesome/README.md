@@ -115,13 +115,13 @@ sidebar: auto
   },
   {
     tag: '微信公号',
-    name: '23种Pandas核心操作',
+    name: '23种pandas核心操作',
     href: 'https://mp.weixin.qq.com/s/L95slIQ8so5IWpIpy7ZHEQ'
   },
   {
-    tag: '微信公号',
-    name: 'pandas 入门教程',
-    href: 'https://mp.weixin.qq.com/s/Ac0lud4alum3Kq3BhH4VLg'
+    tag: '程序员虾说',
+    name: 'pandas 系列教程',
+    href: 'http://www.ysir308.com/archives/category/tutorial/pandas-tutorial'
   }
 ]"></awesome>
 
