@@ -94,9 +94,9 @@ Out[12]:
 Length: 5, dtype: object
 ```
 
-[array](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array) will always be an [ExtensionArray](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray). The exact details of what an ExtensionArray is and why pandas uses them is a bit beyond the scope of this introduction. See [dtypes](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes) for more.
+[array](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array)总是一种[ExtensionArray](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray)。对于具体的扩展数组（ExtensionArray）的细节，以及pandas为什么使用他们，则超出了本介绍的范畴。 参见 [dtypes](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes) 获得更多的信息。
 
-If you know you need a NumPy array, use [to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) or ``numpy.asarray()``.
+如果你确定你需要一个NumPy的数组，请使用[to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) 或者 ``numpy.asarray()``.
 
 ``` python
 In [13]: s.to_numpy()
@@ -106,14 +106,12 @@ In [14]: np.asarray(s)
 Out[14]: array([ 0.4691, -0.2829, -1.5091, -1.1356,  1.2121])
 ```
 
-When the Series or Index is backed by an [ExtensionArray](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray), [to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) may involve copying data and coercing values. See [dtypes](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes) for more.
+当一个序列或者索引由 [ExtensionArray](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray)返回， [to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) 将有可能包含数据复制及强制数值。参见 [dtypes](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes) 获得更多的信息。
 
-[to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) gives some control over the dtype of the resulting [numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray). For example, consider datetimes with timezones. NumPy doesn’t have a dtype to represent timezone-aware datetimes, so there are two possibly useful representations:
+[to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) 提供了一些对于[numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray)的dtype的操控。例如,含有时区的时间。NumPy并不原生支持含有时区的时间，因此这里由两个比较有帮助的表达方法：
 
-1. An object-dtype [numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray) with [Timestamp](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html#pandas.Timestamp) objects, each with the correct tz
-1. A ``datetime64[ns]`` -dtype [numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray), where the values have been converted to UTC and the timezone discarded
-
-Timezones may be preserved with ``dtype=object``
+1. 一个包含有 [Timestamp](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html#pandas.Timestamp) 对象的dtype[numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray) ，每一个都有各自对应的时区
+2. 一个``datetime64[ns]`` dtype [numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray)，以此，所有的时间都会被转换位UTC，而时区则会被遗弃，时区则可以通过 ``dtype=object``来保存
 
 ``` python
 In [15]: ser = pd.Series(pd.date_range('2000', periods=2, tz="CET"))
@@ -123,15 +121,14 @@ Out[16]:
 array([Timestamp('2000-01-01 00:00:00+0100', tz='CET', freq='D'),
        Timestamp('2000-01-02 00:00:00+0100', tz='CET', freq='D')], dtype=object)
 ```
-
-Or thrown away with ``dtype='datetime64[ns]'``
+或者使用``dtype='datetime64[ns]'``来抛弃时区
 
 ``` python
 In [17]: ser.to_numpy(dtype="datetime64[ns]")
 Out[17]: array(['1999-12-31T23:00:00.000000000', '2000-01-01T23:00:00.000000000'], dtype='datetime64[ns]')
 ```
 
-Getting the “raw data” inside a [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) is possibly a bit more complex. When your ``DataFrame`` only has a single data type for all the columns, [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy) will return the underlying data:
+从 [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) 中获得“原数据”可能有些复杂。如果你的``DataFrame``中的所有列都只含有一种数据类型，那么 [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy) 将会返回底层的数据：
 
 ``` python
 In [18]: df.to_numpy()
@@ -146,24 +143,23 @@ array([[-0.1732,  0.1192, -1.0442],
        [-1.715 , -1.0393, -0.3706]])
 ```
 
-If a DataFrame or Panel contains homogeneously-typed data, the ndarray can actually be modified in-place, and the changes will be reflected in the data structure. For heterogeneous data (e.g. some of the DataFrame’s columns are not all the same dtype), this will not be the case. The values attribute itself, unlike the axis labels, cannot be assigned to.
+如果一个数据表或面板包含同质数据，那么ndarray将可以在原对象中直接修改，并且改变将会被反映在数据结构上。对于异质数据（例如，某个数据表的列中包含不一样的dtype）来说，不同于维度标签，数据的属性将不能够被随意赋值
 
-::: tip Note
-When working with heterogeneous data, the dtype of the resulting ndarray will be chosen to accommodate all of the data involved. For example, if strings are involved, the result will be of object dtype. If there are only floats and integers, the resulting array will be of float dtype.
+::: tip 小贴士
+当处理异质数据时，结果的ndarray的dtype将会被自动选择，从而适应所有的数据。例如，如果包含字符串，那么结果将会是object dtype。如果数据中是由浮点和整型，那么结果将会时浮点dtype
 ::: 
 
-In the past, pandas recommended [Series.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values) or [DataFrame.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values) for extracting the data from a Series or DataFrame. You’ll still find references to these in old code bases and online. Going forward, we recommend avoiding ``.values`` and using ``.array`` or ``.to_numpy().`` ``.values`` has the following drawbacks:
-
-  1. When your Series contains an [extension type](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types), it’s unclear whether [Series.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values) returns a NumPy array or the extension array. [Series.array](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array) will always return an [ExtensionArray](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray), and will never copy data. [Series.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) will always return a NumPy array, potentially at the cost of copying / coercing values.
-  1. When your DataFrame contains a mixture of data types, [DataFrame.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values) may involve copying data and coercing values to a common dtype, a relatively expensive operation. [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy), being a method, makes it clearer that the returned NumPy array may not be a view on the same data in the DataFrame.
+在旧版本中，pandas建议使用 [Series.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values) 或 [DataFrame.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values) 来取出序列或着数据表中的数据。你现在仍然在代码库或网上可以找到这样的用法和参考。但在未来，我们将建议避免使用 ``.values``，转而使用 ``.array`` 或者 ``.to_numpy().``。 ``.values``有着以下的一些不足：
+  1. 当你的序列包含有[extension type](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types)，, it’s unclear whether [Series.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values)将需要返回一个NumPy数组还是一个扩展数组将会非常不明确。 [Series.array](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array) 将永远返回 [ExtensionArray](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray)，并且永远都不会复制数据。 [Series.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy) 将总是返回一个NumPy数组，但这将同时会导致数据的复制和数据强制转换。
+  2. 如果你的数据表包含混合数据的dtype，[DataFrame.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values) 讲会需要复制数据以及强制将数据转换为更为兼容的dtype，而这是一个开销非常大的操作。 [DataFrame.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy)，作为一个操作，使得一切的操作更为清晰明了。他总是会返回一个NumPy数组，而不一定是同一个数据表中数据的一个视图。
 
 ## 加速操作
 
-pandas has support for accelerating certain types of binary numerical and boolean operations using the numexpr library and the ``bottleneck`` libraries.
+使用 numexpr库和 ``bottleneck`` 库，pandas可以对于特定的二进制数值和布尔操作进行加速。
 
-These libraries are especially useful when dealing with large data sets, and provide large speedups. numexpr uses smart chunking, caching, and multiple cores. ``bottleneck`` is a set of specialized cython routines that are especially fast when dealing with arrays that have ``nans``.
+这些库在处理极大的数据集时时非常有帮助的，并且能够提供极大的加速。numexpr可以聪明地进行分块，缓存，以及使用多核。``bottleneck``是一个专用的cython代码，它在处理含有``nans``的数组时的速度非常快。
 
-Here is a sample (using 100 column x 100,000 row ``DataFrames``):
+一个示例 (使用100列 x 100,000 行的``DataFrames``):
 
 Operation | 0.11.0 (ms) | Prior Version (ms) | Ratio to Prior
 ---|---|---|---
@@ -171,7 +167,7 @@ df1 > df2 | 13.32 | 125.35 | 0.1063
 df1 * df2 | 21.71 | 36.63 | 0.5928
 df1 + df2 | 22.04 | 36.50 | 0.6039
 
-You are highly encouraged to install both libraries. See the section [Recommended Dependencies](https://pandas.pydata.org/pandas-docs/stable/install.html#install-recommended-dependencies) for more installation info.
+我们强烈建议你安装这两个库。参见[Recommended Dependencies](https://pandas.pydata.org/pandas-docs/stable/install.html#install-recommended-dependencies) 获得关于如何安装的更多信息。
 
 These are both enabled to be used by default, you can control this by setting the options:
 
