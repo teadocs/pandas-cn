@@ -169,9 +169,9 @@ df1 + df2 | 22.04 | 36.50 | 0.6039
 
 我们强烈建议你安装这两个库。参见[Recommended Dependencies](https://pandas.pydata.org/pandas-docs/stable/install.html#install-recommended-dependencies) 获得关于如何安装的更多信息。
 
-These are both enabled to be used by default, you can control this by setting the options:
+这两个库都时默认使用，你可以通过设定一些选项来控制：
 
-*New in version 0.20.0.*
+*v0.20.0. 新加入*
 
 ``` python
 pd.set_option('compute.use_bottleneck', False)
