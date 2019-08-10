@@ -19,7 +19,7 @@ In [4]: wp = pd.Panel(np.random.randn(2, 5, 4), items=['Item1', 'Item2'],
 
 ## 头和尾部
 
-To view a small sample of a Series or DataFrame object, use the [head()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head) and [tail()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.tail.html#pandas.DataFrame.tail) methods. The default number of elements to display is five, but you may pass a custom number.
+你可以使用 [head()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head) 和 [tail()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.tail.html#pandas.DataFrame.tail)方法来检视数据表的头部和尾部的数据。默认的行数是5，但是你可以任意的数值。
 
 ``` python
 In [5]: long_series = pd.Series(np.random.randn(1000))
@@ -43,15 +43,15 @@ dtype: float64
 
 ## 属性和基础数据
 
-pandas objects have a number of attributes enabling you to access the metadata
+pandas的对象有许多的属性，你可以用这些属性来查看元数据。
 
-  - **shape**: gives the axis dimensions of the object, consistent with ndarray
-  - Axis labels
-    - **Series**: *index* (only axis)
-    - **DataFrame**: *index* (rows) and *columns*
-    - **Panel**: *items*, *major_axis*, and *minor_axis*
+  - **shape**: 返回对象的维数，与ndarray一致
+  - 维度标签
+    - **Series**: *索引* (仅有的维度)
+    - **DataFrame**: *索引* (行) 和*列*
+    - **Panel**: *条目*, *主要维度*（major_axis）,和*次要维度*（minor_axis）
 
-Note, **these attributes can be safely assigned to**!
+注意, **这些属性可以被安全的赋值**!
 
 ``` python
 In [8]: df[:2]
@@ -75,9 +75,9 @@ Out[10]:
 2000-01-08 -1.715002 -1.039268 -0.370647
 ```
 
-Pandas objects ([Index](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index), [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series), [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)) can be thought of as containers for arrays, which hold the actual data and do the actual computation. For many types, the underlying array is a [numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray). However, pandas and 3rd party libraries may extend NumPy’s type system to add support for custom arrays (see [dtypes](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes)).
+Pandas 的对象 ([Index](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index), [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series), [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)) 可以被认为是数组的容器, 数组中保存着实际的数据以及实际的计算。对于许多类型来说，其底层的数组是[numpy.ndarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray)。然而，pandas和其他第三方库有可能会拓展NumPy的类型系统，从而支持可以自定以的数组（参见 [dtypes](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes)）。
 
-To get the actual data inside a [Index](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) or [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series), use the ``.array`` property
+访问 [Index](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) 或 [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)中的实际数据，请使用``.array``属性
 
 ``` python
 In [11]: s.array
