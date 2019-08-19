@@ -1,126 +1,86 @@
-# Indexing and selecting data
+# 索引和数据选择器
 
-The axis labeling information in pandas objects serves many purposes:
+Pandas对象中的轴标记信息有多种用途：
 
-- Identifies data (i.e. provides metadata) using known indicators,
-important for analysis, visualization, and interactive console display.
-- Enables automatic and explicit data alignment.
-- Allows intuitive getting and setting of subsets of the data set.
+- 使用已知指标识别数据（即提供*元数据*），这对于分析，可视化和交互式控制台显示非常重要。
+- 启用自动和显式数据对齐。
+- 允许直观地获取和设置数据集的子集。
 
-In this section, we will focus on the final point: namely, how to slice, dice,
-and generally get and set subsets of pandas objects. The primary focus will be
-on Series and DataFrame as they have received more development attention in
-this area.
+在本节中，我们将重点关注最后一点：即如何切片，切块，以及通常获取和设置pandas对象的子集。主要关注的是Series和DataFrame，因为他们在这个领域受到了更多的开发关注。
 
-::: tip Note
+::: tip 注意
 
-The Python and NumPy indexing operators ``[]`` and attribute operator ``.``
-provide quick and easy access to pandas data structures across a wide range
-of use cases. This makes interactive work intuitive, as there’s little new
-to learn if you already know how to deal with Python dictionaries and NumPy
-arrays. However, since the type of the data to be accessed isn’t known in
-advance, directly using standard operators has some optimization limits. For
-production code, we recommended that you take advantage of the optimized
-pandas data access methods exposed in this chapter.
+Python和NumPy索引运算符``[]``和属性运算符``.``
+可以在各种用例中快速轻松地访问pandas数据结构。这使得交互式工作变得直观，因为如果您已经知道如何处理Python字典和NumPy数组，那么几乎没有新的东西需要学习。但是，由于预先不知道要访问的数据类型，因此直接使用标准运算符会有一些优化限制。对于生产代码，我们建议您利用本章中介绍的优化的pandas数据访问方法。
 
 :::
 
-::: danger Warning
+::: danger 警告
 
-Whether a copy or a reference is returned for a setting operation, may
-depend on the context. This is sometimes called ``chained assignment`` and
-should be avoided. See [Returning a View versus Copy](#indexing-view-versus-copy).
+是否为设置操作返回副本或引用可能取决于上下文。这有时被称为应该避免。请参阅[返回视图与复制](#indexing-view-versus-copy)。``chained assignment``[](#indexing-view-versus-copy)
 
 :::
 
-::: danger Warning
+::: danger 警告
 
-Indexing on an integer-based Index with floats has been clarified in 0.18.0, for a summary of the changes, see [here](https://pandas.pydata.org/pandas-docs/stable/whatsnew/v0.18.0.html#whatsnew-0180-float-indexers).
+使用浮点数对基于整数的索引进行索引已在0.18.0中进行了说明，有关更改的摘要，请参见[此处](https://pandas.pydata.org/pandas-docs/stable/whatsnew/v0.18.0.html#whatsnew-0180-float-indexers)。
 
 :::
 
-See the [MultiIndex / Advanced Indexing](advanced.html#advanced) for ``MultiIndex`` and more advanced indexing documentation.
+见[多指标/高级索引](advanced.html#advanced)的``MultiIndex``和更先进的索引文件。
 
-See the [cookbook](cookbook.html#cookbook-selection) for some advanced strategies.
-## Different choices for indexing
+有关一些高级策略，请参阅[食谱](cookbook.html#cookbook-selection)。
 
-Object selection has had a number of user-requested additions in order to
-support more explicit location based indexing. Pandas now supports three types
-of multi-axis indexing.
+## 索引的不同选择
 
-- ``.loc`` is primarily label based, but may also be used with a boolean array. ``.loc`` will raise ``KeyError`` when the items are not found. Allowed inputs are:
+对象选择已经有许多用户请求的添加，以支持更明确的基于位置的索引。Pandas现在支持三种类型的多轴索引。
 
-  - A single label, e.g. ``5`` or ``'a'`` (Note that ``5`` is interpreted as a
-  label of the index. This use is **not** an integer position along the
-  index.).
-  - A list or array of labels ``['a', 'b', 'c']``.
-  - A slice object with labels ``'a':'f'`` (Note that contrary to usual python
-  slices, **both** the start and the stop are included, when present in the
-  index! See [Slicing with labels](#indexing-slicing-with-labels)
-  and [Endpoints are inclusive](advanced.html#advanced-endpoints-are-inclusive).)
-  - A boolean array
-  - A ``callable`` function with one argument (the calling Series or DataFrame) and
-  that returns valid output for indexing (one of the above).
+- ``.loc``主要是基于标签的，但也可以与布尔数组一起使用。当找不到物品时``.loc``会提高``KeyError``。允许的输入是：
+   - 单个标签，例如``5``或``'a'``（注意，它``5``被解释为索引的
+   *标签*。此用法**不是**索引的整数位置。）。
+   - 列表或标签数组。``['a', 'b', 'c']``
+   - 带标签的切片对象``'a':'f'``（注意，相反普通的Python片，**都**开始和停止都包括在内，当存在于索引中！见[有标签切片](#indexing-slicing-with-labels) 
+   和[端点都包括在内](advanced.html#advanced-endpoints-are-inclusive)。）
+   - 布尔数组
+   - 一个``callable``带有一个参数的函数（调用Series或DataFrame）并返回有效的索引输出（上面的一个）。
 
-  *New in version 0.18.1.*
+   *版本0.18.1中的新功能。*
 
-  See more at [Selection by Label](#indexing-label).
-  
-- ``.iloc`` is primarily integer position based (from ``0`` to
-``length-1`` of the axis), but may also be used with a boolean
-array.  ``.iloc`` will raise ``IndexError`` if a requested
-indexer is out-of-bounds, except slice indexers which allow
-out-of-bounds indexing.  (this conforms with Python/NumPy slice
-semantics).  Allowed inputs are:
+   在[标签选择中](#indexing-label)查看更多信息。
+   
+- ``.iloc``是基于主要的整数位置（从``0``到 ``length-1``所述轴的），但也可以用布尔阵列使用。  如果请求的索引器超出范围，``.iloc``则会引发``IndexError``，但允许越界索引的*切片*索引器除外。（这符合Python / NumPy *切片* 
+语义）。允许的输入是：
+   - 一个整数，例如``5``。
+   - 整数列表或数组。``[4, 3, 0]``
+   - 带有整数的切片对象``1:7``。
+   - 布尔数组。
+   - 一个``callable``带有一个参数的函数（调用Series或DataFrame）并返回有效的索引输出（上面的一个）。
 
-  - An integer e.g. ``5``.
-  - A list or array of integers ``[4, 3, 0]``.
-  - A slice object with ints ``1:7``.
-  - A boolean array.
-  - A ``callable`` function with one argument (the calling Series or DataFrame) and
-  that returns valid output for indexing (one of the above).
+   *版本0.18.1中的新功能。*
 
-  *New in version 0.18.1.*
+   有关详细信息，请参阅[按位置选择](#indexing-integer)，[高级索引](advanced.html#advanced)和[高级层次结构](advanced.html#advanced-advanced-hierarchical)。
 
-  See more at [Selection by Position](#indexing-integer),
-[Advanced Indexing](advanced.html#advanced) and [Advanced
-Hierarchical](advanced.html#advanced-advanced-hierarchical).
-  - An integer e.g. ``5``.
-  - A list or array of integers ``[4, 3, 0]``.
-  - A slice object with ints ``1:7``.
-  - A boolean array.
-  - A ``callable`` function with one argument (the calling Series or DataFrame) and
-  that returns valid output for indexing (one of the above).
+- ``.loc``，``.iloc``以及``[]``索引也可以接受一个``callable``索引器。在[Select By Callable中](#indexing-callable)查看更多信息。
 
-  *New in version 0.18.1.*
+从具有多轴选择的对象获取值使用以下表示法（使用``.loc``作为示例，但以下也适用``.iloc``）。任何轴访问器可以是空切片``:``。假设超出规范的轴是``:``，例如``p.loc['a']``相当于
+ 。``p.loc['a', :, :]``
 
-- ``.loc``, ``.iloc``, and also ``[]`` indexing can accept a ``callable`` as indexer. See more at [Selection By Callable](#indexing-callable).
-
-Getting values from an object with multi-axes selection uses the following
-notation (using ``.loc`` as an example, but the following applies to ``.iloc`` as
-well). Any of the axes accessors may be the null slice ``:``. Axes left out of
-the specification are assumed to be ``:``, e.g. ``p.loc['a']`` is equivalent to
-``p.loc['a', :, :]``.
-
-Object Type | Indexers
+对象类型 | 索引
 ---|---
-Series | s.loc[indexer]
-DataFrame | df.loc[row_indexer,column_indexer]
+系列 | s.loc[indexer]
+数据帧 | df.loc[row_indexer,column_indexer]
 
-## Basics
+## 基础知识
 
-As mentioned when introducing the data structures in the [last section](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics), the primary function of indexing with ``[]`` (a.k.a. ``__getitem__``
-for those familiar with implementing class behavior in Python) is selecting out
-lower-dimensional slices. The following table shows return type values when
-indexing pandas objects with ``[]``:
+正如在[上一节中](/docs/getting_started/basics.html)介绍数据结构时所提到的，索引的主要功能``[]``（也就是``__getitem__``
+那些熟悉在Python中实现类行为的人）是选择低维切片。下表显示了使用以下方法索引pandas对象时的返回类型值``[]``：
 
-Object Type | Selection | Return Value Type
+对象类型 | 选择 | 返回值类型
 ---|---|---
-Series | series[label] | scalar value
-DataFrame | frame[colname] | Series corresponding to colname
+系列 | series[label] | 标量值
+数据帧 | frame[colname] | Series 对应于colname
 
-Here we construct a simple time series data set to use for illustrating the
-indexing functionality:
+在这里，我们构建一个简单的时间序列数据集，用于说明索引功能：
 
 ``` python
 In [1]: dates = pd.date_range('1/1/2000', periods=8)
@@ -142,14 +102,13 @@ Out[3]:
 2000-01-08 -0.370647 -1.157892 -1.344312  0.844885
 ```
 
-::: tip Note
+::: tip 注意
 
-None of the indexing functionality is time series specific unless
-specifically stated.
+除非特别说明，否则索引功能都不是时间序列特定的。
 
 :::
 
-Thus, as per above, we have the most basic indexing using ``[]``:
+因此，如上所述，我们使用最基本的索引``[]``：
 
 ``` python
 In [4]: s = df['A']
@@ -158,9 +117,7 @@ In [5]: s[dates[5]]
 Out[5]: -0.6736897080883706
 ```
 
-You can pass a list of columns to ``[]`` to select columns in that order.
-If a column is not contained in the DataFrame, an exception will be
-raised. Multiple columns can also be set in this manner:
+您可以传递列表列表``[]``以按该顺序选择列。如果DataFrame中未包含列，则会引发异常。也可以这种方式设置多列：
 
 ``` python
 In [6]: df
@@ -190,14 +147,13 @@ Out[8]:
 2000-01-08 -1.157892 -0.370647 -1.344312  0.844885
 ```
 
-You may find this useful for applying a transform (in-place) to a subset of the
-columns.
+您可能会发现这对于将变换（就地）应用于列的子集非常有用。
 
-::: danger Warning
+::: danger 警告
 
-pandas aligns all AXES when setting ``Series`` and ``DataFrame`` from ``.loc``, and ``.iloc``.
+pandas在设置``Series``和``DataFrame``来自``.loc``和时对齐所有AXES ``.iloc``。
 
-This will **not** modify ``df`` because the column alignment is before value assignment.
+这**不会**修改，``df``因为列对齐在赋值之前。
 
 ``` python
 In [9]: df[['A', 'B']]
@@ -227,7 +183,7 @@ Out[11]:
 2000-01-08 -1.157892 -0.370647
 ```
 
-The correct way to swap column values is by using raw values:
+交换列值的正确方法是使用原始值：
 
 ``` python
 In [12]: df.loc[:, ['B', 'A']] = df[['A', 'B']].to_numpy()
@@ -247,10 +203,9 @@ Out[13]:
 
 :::
 
-## Attribute access
+## 属性访问
 
-You may access an index on a ``Series`` or  column on a ``DataFrame`` directly
-as an attribute:
+您可以直接访问某个``Series``或列上的索引``DataFrame``作为属性：
 
 ``` python
 In [14]: sa = pd.Series([1, 2, 3], index=list('abc'))
@@ -314,22 +269,19 @@ Out[23]:
 2000-01-08  7 -1.157892 -1.344312  0.844885
 ```
 
-::: danger Warning
+::: danger 警告
 
-- You can use this access only if the index element is a valid Python identifier, e.g. ``s.1`` is not allowed.
-See [here for an explanation of valid identifiers](https://docs.python.org/3/reference/lexical_analysis.html#identifiers).
-- The attribute will not be available if it conflicts with an existing method name, e.g. ``s.min`` is not allowed.
-- Similarly, the attribute will not be available if it conflicts with any of the following list: ``index``,
-``major_axis``, ``minor_axis``, ``items``.
-- In any of these cases, standard indexing will still work, e.g. ``s['1']``, ``s['min']``, and ``s['index']`` will
-access the corresponding element or column.
+- 仅当index元素是有效的Python标识符时才可以使用此访问权限，例如``s.1``，不允许。有关[有效标识符的说明，](https://docs.python.org/3/reference/lexical_analysis.html#identifiers)请参见[此处](https://docs.python.org/3/reference/lexical_analysis.html#identifiers)。
+- 如果该属性与现有方法名称冲突，则该属性将不可用，例如``s.min``，不允许。
+- 同样的，如果它与任何下面的列表冲突的属性将不可用：``index``，
+ ``major_axis``，``minor_axis``，``items``。
+- 在任何一种情况下，标准索引仍然可以工作，例如``s['1']``，``s['min']``和``s['index']``将访问相应的元素或列。
 
 :::
 
-If you are using the IPython environment, you may also use tab-completion to
-see these accessible attributes.
+如果您使用的是IPython环境，则还可以使用tab-completion来查看这些可访问的属性。
 
-You can also assign a ``dict`` to a row of a ``DataFrame``:
+您还可以将a分配``dict``给一行``DataFrame``：
 
 ``` python
 In [24]: x = pd.DataFrame({'x': [1, 2, 3], 'y': [3, 4, 5]})
@@ -344,9 +296,7 @@ Out[26]:
 2  3   5
 ```
 
-You can use attribute access to modify an existing element of a Series or column of a DataFrame, but be careful;
-if you try to use attribute access to create a new column, it creates a new attribute rather than a
-new column. In 0.21.0 and later, this will raise a ``UserWarning``:
+您可以使用属性访问来修改DataFrame的Series或列的现有元素，但要小心; 如果您尝试使用属性访问权来创建新列，则会创建新属性而不是新列。在0.21.0及更高版本中，这将引发``UserWarning``：
 
 ``` python
 In [1]: df = pd.DataFrame({'one': [1., 2., 3.]})
@@ -360,14 +310,11 @@ Out[3]:
 2  3.0
 ```
 
-## Slicing ranges
+## 切片范围
 
-The most robust and consistent way of slicing ranges along arbitrary axes is
-described in the [Selection by Position](#indexing-integer) section
-detailing the ``.iloc`` method. For now, we explain the semantics of slicing using the ``[]`` operator.
+沿着任意轴切割范围的最稳健和一致的方法在详细说明该方法的“ [按位置选择”](#indexing-integer)部分中描述``.iloc``。现在，我们解释使用``[]``运算符切片的语义。
 
-With Series, the syntax works exactly as with an ndarray, returning a slice of
-the values and the corresponding labels:
+使用Series，语法与ndarray完全一样，返回值的一部分和相应的标签：
 
 ``` python
 In [27]: s[:5]
@@ -400,7 +347,7 @@ Out[29]:
 Freq: -1D, Name: A, dtype: float64
 ```
 
-Note that setting works as well:
+请注意，设置也适用：
 
 ``` python
 In [30]: s2 = s.copy()
@@ -420,8 +367,7 @@ Out[32]:
 Freq: D, Name: A, dtype: float64
 ```
 
-With DataFrame, slicing inside of ``[]`` **slices the rows**. This is provided
-largely as a convenience since it is such a common operation.
+使用DataFrame，切片内部``[]`` **切片**。这主要是为了方便而提供的，因为它是如此常见的操作。
 
 ``` python
 In [33]: df[:3]
@@ -444,17 +390,15 @@ Out[34]:
 2000-01-01  0.469112 -0.282863 -1.509059 -1.135632
 ```
 
-## Selection by label
+## 按标签选择
 
-::: danger Warning
+::: danger 警告
 
-Whether a copy or a reference is returned for a setting operation, may depend on the context.
-This is sometimes called ``chained assignment`` and should be avoided.
-See [Returning a View versus Copy](#indexing-view-versus-copy).
+是否为设置操作返回副本或引用可能取决于上下文。这有时被称为应该避免。请参阅[返回视图与复制](#indexing-view-versus-copy)。``chained assignment``[](#indexing-view-versus-copy)
 
 :::
 
-::: danger Warning
+::: danger 警告
 
 ``` python
 In [35]: dfl = pd.DataFrame(np.random.randn(5, 4),
@@ -477,7 +421,7 @@ In [4]: dfl.loc[2:3]
 TypeError: cannot do slice indexing on <class 'pandas.tseries.index.DatetimeIndex'> with these indexers [2] of <type 'int'>
 ```
 
-String likes in slicing can be convertible to the type of the index and lead to natural slicing.
+切片中的字符串喜欢*可以*转换为索引的类型并导致自然切片。
 
 ``` python
 In [37]: dfl.loc['20130102':'20130104']
@@ -490,27 +434,21 @@ Out[37]:
 
 :::
 
-::: danger Warning
+::: danger 警告
 
-Starting in 0.21.0, pandas will show a ``FutureWarning`` if indexing with a list with missing labels. In the future
-this will raise a ``KeyError``. See [list-like Using loc with missing keys in a list is Deprecated](#indexing-deprecate-loc-reindex-listlike).
+从0.21.0开始，pandas将显示``FutureWarning``带有缺少标签的列表的if索引。将来这会提高一个``KeyError``。请参阅[list-like使用列表中缺少键的loc是不推荐使用](#indexing-deprecate-loc-reindex-listlike)。
 
 :::
 
-pandas provides a suite of methods in order to have **purely label based indexing**. This is a strict inclusion based protocol.
-Every label asked for must be in the index, or a ``KeyError`` will be raised.
-When slicing, both the start bound **AND** the stop bound are included, if present in the index.
-Integers are valid labels, but they refer to the label **and not the position**.
+pandas提供了一套方法，以便拥有**纯粹基于标签的索引**。这是一个严格的包含协议。要求的每个标签必须在索引中，否则``KeyError``将被提出。切片时，如果索引中存在，则*包括*起始绑定**和**停止边界。整数是有效标签，但它们是指标签**而不是位置**。******
 
-The ``.loc`` attribute is the primary access method. The following are valid inputs:
+该``.loc``属性是主要访问方法。以下是有效输入：
 
-- A single label, e.g. ``5`` or ``'a'`` (Note that ``5`` is interpreted as a label of the index. This use is **not** an integer position along the index.).
-- A list or array of labels ``['a', 'b', 'c']``.
-- A slice object with labels ``'a':'f'`` (Note that contrary to usual python
-slices, **both** the start and the stop are included, when present in the
-index! See [Slicing with labels](#indexing-slicing-with-labels).
-- A boolean array.
-- A ``callable``, see [Selection By Callable](#indexing-callable).
+- 单个标签，例如``5``或``'a'``（注意，它``5``被解释为索引的*标签*。此用法**不是**索引的整数位置。）。
+- 列表或标签数组。``['a', 'b', 'c']``
+- 带有标签的切片对象``'a':'f'``（注意，与通常的python切片相反，**包括**起始和停止，当存在于索引中时！请参见[切片标签](#indexing-slicing-with-labels)。
+- 布尔数组。
+- A ``callable``，参见[按可调用选择](#indexing-callable)。
 
 ``` python
 In [38]: s1 = pd.Series(np.random.randn(6), index=list('abcdef'))
@@ -537,7 +475,7 @@ In [41]: s1.loc['b']
 Out[41]: 1.3403088497993827
 ```
 
-Note that setting works as well:
+请注意，设置也适用：
 
 ``` python
 In [42]: s1.loc['c':] = 0
@@ -553,7 +491,7 @@ f    0.000000
 dtype: float64
 ```
 
-With a DataFrame:
+使用DataFrame：
 
 ``` python
 In [44]: df1 = pd.DataFrame(np.random.randn(6, 4),
@@ -579,7 +517,7 @@ b  1.130127 -1.436737 -1.413681  1.607920
 d  0.974466 -2.006747 -0.410001 -0.078638
 ```
 
-Accessing via label slices:
+通过标签切片访问：
 
 ``` python
 In [47]: df1.loc['d':, 'A':'C']
@@ -590,7 +528,7 @@ e  0.545952 -1.219217 -1.226825
 f -1.281247 -0.727707 -0.121306
 ```
 
-For getting a cross section using a label (equivalent to ``df.xs('a')``):
+使用标签获取横截面（相当于``df.xs('a')``）：
 
 ``` python
 In [48]: df1.loc['a']
@@ -602,7 +540,7 @@ D   -1.187678
 Name: a, dtype: float64
 ```
 
-For getting values with a boolean array:
+要使用布尔数组获取值：
 
 ``` python
 In [49]: df1.loc['a'] > 0
@@ -624,7 +562,7 @@ e  0.545952
 f -1.281247
 ```
 
-For getting a value explicitly (equivalent to deprecated ``df.get_value('a','A')``):
+要明确获取值（相当于已弃用``df.get_value('a','A')``）：
 
 ``` python
 # this is also equivalent to ``df1.at['a','A']``
@@ -632,11 +570,9 @@ In [51]: df1.loc['a', 'A']
 Out[51]: 0.13200317033032932
 ```
 
-### Slicing with labels
+### 用标签切片
 
-When using ``.loc`` with slices, if both the start and the stop labels are
-present in the index, then elements located between the two (including them)
-are returned:
+使用``.loc``切片时，如果索引中存在开始和停止标签，则返回*位于*两者之间的元素（包括它们）：
 
 ``` python
 In [52]: s = pd.Series(list('abcde'), index=[0, 3, 2, 5, 4])
@@ -649,9 +585,7 @@ Out[53]:
 dtype: object
 ```
 
-If at least one of the two is absent, but the index is sorted, and can be
-compared against start and stop labels, then slicing will still work as
-expected, by selecting labels which rank between the two:
+如果两个中至少有一个不存在，但索引已排序，并且可以与开始和停止标签进行比较，那么通过选择在两者之间*排名的*标签，切片仍将按预期工作：
 
 ``` python
 In [54]: s.sort_index()
@@ -672,33 +606,28 @@ Out[55]:
 dtype: object
 ```
 
-However, if at least one of the two is absent and the index is not sorted, an
-error will be raised (since doing otherwise would be computationally expensive,
-as well as potentially ambiguous for mixed type indexes). For instance, in the
-above example, ``s.loc[1:6]`` would raise ``KeyError``.
+然而，如果两个中的至少一个不存在*并且*索引未被排序，则将引发错误（因为否则将是计算上昂贵的，并且对于混合类型索引可能是模糊的）。例如，在上面的例子中，``s.loc[1:6]``会提高``KeyError``。
 
-For the rationale behind this behavior, see
-[Endpoints are inclusive](advanced.html#advanced-endpoints-are-inclusive).
+有关此行为背后的基本原理，请参阅
+ [端点包含](advanced.html#advanced-endpoints-are-inclusive)。
 
-## Selection by position
+## 按位置选择
 
-::: danger Warning
+::: danger 警告
 
-Whether a copy or a reference is returned for a setting operation, may depend on the context.
-This is sometimes called ``chained assignment`` and should be avoided.
-See [Returning a View versus Copy](#indexing-view-versus-copy).
+是否为设置操作返回副本或引用可能取决于上下文。这有时被称为应该避免。请参阅[返回视图与复制](#indexing-view-versus-copy)。``chained assignment``[](#indexing-view-versus-copy)
 
 :::
 
-Pandas provides a suite of methods in order to get **purely integer based indexing**. The semantics follow closely Python and NumPy slicing. These are ``0-based`` indexing. When slicing, the start bound is included, while the upper bound is excluded. Trying to use a non-integer, even a **valid** label will raise an ``IndexError``.
+Pandas提供了一套方法，以获得**纯粹基于整数的索引**。语义紧跟Python和NumPy切片。这些是``0-based``索引。切片时，所结合的开始被*包括*，而上限是*排除*。尝试使用非整数，甚至是**有效的**标签都会引发一个问题``IndexError``。
 
-The ``.iloc`` attribute is the primary access method. The following are valid inputs:
+该``.iloc``属性是主要访问方法。以下是有效输入：
 
-- An integer e.g. ``5``.
-- A list or array of integers ``[4, 3, 0]``.
-- A slice object with ints ``1:7``.
-- A boolean array.
-- A ``callable``, see [Selection By Callable](#indexing-callable).
+- 一个整数，例如``5``。
+- 整数列表或数组。``[4, 3, 0]``
+- 带有整数的切片对象``1:7``。
+- 布尔数组。
+- A ``callable``，参见[按可调用选择](#indexing-callable)。
 
 ``` python
 In [56]: s1 = pd.Series(np.random.randn(5), index=list(range(0, 10, 2)))
@@ -723,7 +652,7 @@ In [59]: s1.iloc[3]
 Out[59]: -1.110336102891167
 ```
 
-Note that setting works as well:
+请注意，设置也适用：
 
 ``` python
 In [60]: s1.iloc[:3] = 0
@@ -738,7 +667,7 @@ Out[61]:
 dtype: float64
 ```
 
-With a DataFrame:
+使用DataFrame：
 
 ``` python
 In [62]: df1 = pd.DataFrame(np.random.randn(6, 4),
@@ -757,7 +686,7 @@ Out[63]:
 10 -0.317441 -1.236269  0.896171 -0.487602
 ```
 
-Select via integer slicing:
+通过整数切片选择：
 
 ``` python
 In [64]: df1.iloc[:3]
@@ -776,7 +705,7 @@ Out[65]:
 8  0.014871  3.357427
 ```
 
-Select via integer list:
+通过整数列表选择：
 
 ``` python
 In [66]: df1.iloc[[1, 3, 5], [1, 3]]
@@ -813,7 +742,7 @@ In [69]: df1.iloc[1, 1]
 Out[69]: -0.1549507744249032
 ```
 
-For getting a cross section using an integer position (equiv to ``df.xs(1)``):
+使用整数位置（等效``df.xs(1)``）得到横截面：
 
 ``` python
 In [70]: df1.iloc[1]
@@ -825,7 +754,7 @@ Out[70]:
 Name: 2, dtype: float64
 ```
 
-Out of range slice indexes are handled gracefully just as in Python/Numpy.
+超出范围的切片索引正如Python / Numpy中一样优雅地处理。
 
 ``` python
 # these are allowed in python/numpy.
@@ -862,8 +791,7 @@ In [78]: s.iloc[8:10]
 Out[78]: Series([], dtype: object)
 ```
 
-Note that using slices that go out of bounds can result in
-an empty axis (e.g. an empty DataFrame being returned).
+请注意，使用超出边界的切片可能会导致空轴（例如，返回一个空的DataFrame）。
 
 ``` python
 In [79]: dfl = pd.DataFrame(np.random.randn(5, 2), columns=list('AB'))
@@ -898,9 +826,8 @@ Out[83]:
 4  0.27423  0.132885
 ```
 
-A single indexer that is out of bounds will raise an ``IndexError``.
-A list of indexers where any element is out of bounds will raise an
-``IndexError``.
+一个超出范围的索引器会引发一个``IndexError``。任何元素超出范围的索引器列表都会引发
+ ``IndexError``。
 
 ``` python
 >>> dfl.iloc[[4, 5, 6]]
@@ -910,12 +837,11 @@ IndexError: positional indexers are out-of-bounds
 IndexError: single positional indexer is out-of-bounds
 ```
 
-## Selection by callable
+## 通过可调用选择
 
-*New in version 0.18.1.* 
+*版本0.18.1中的新功能。* 
 
-``.loc``, ``.iloc``, and also ``[]`` indexing can accept a ``callable`` as indexer.
-The ``callable`` must be a function with one argument (the calling Series or DataFrame) that returns valid output for indexing.
+``.loc``，``.iloc``以及``[]``索引也可以接受一个``callable``索引器。在``callable``必须与一个参数（调用系列或数据帧）返回的有效输出索引功能。
 
 ``` python
 In [84]: df1 = pd.DataFrame(np.random.randn(6, 4),
@@ -970,7 +896,7 @@ f   -0.489682
 Name: A, dtype: float64
 ```
 
-You can use callable indexing in ``Series``.
+您可以使用可调用索引``Series``。
 
 ``` python
 In [90]: df1.A.loc[lambda s: s > 0]
@@ -980,8 +906,7 @@ e    1.289997
 Name: A, dtype: float64
 ```
 
-Using these methods / indexers, you can chain data selection operations
-without using a temporary variable.
+使用这些方法/索引器，您可以在不使用临时变量的情况下链接数据选择操作。
 
 ``` python
 In [91]: bb = pd.read_csv('data/baseball.csv', index_col='id')
@@ -1002,23 +927,21 @@ year team
      TOR       4  459  1408  187  378   96    2  58  223.0   4.0  2.0  190  265.0  16.0  12.0   4.0  16.0  38.0
 ```
 
-## IX indexer is deprecated
+## 不推荐使用IX索引器
 
-::: danger Warning
+::: danger 警告
 
-Starting in 0.20.0, the ``.ix`` indexer is deprecated, in favor of the more strict ``.iloc``
-and ``.loc`` indexers.
+在0.20.0开始，``.ix``索引器已被弃用，赞成更加严格``.iloc``
+和``.loc``索引。
 
 :::
 
-``.ix`` offers a lot of magic on the inference of what the user wants to do. To wit, ``.ix`` can decide
-to index positionally OR via labels depending on the data type of the index. This has caused quite a
-bit of user confusion over the years.
+``.ix``在推断用户想要做的事情上提供了很多魔力。也就是说，``.ix``可以根据索引的数据类型决定按*位置*或通过*标签*进行索引。多年来，这引起了相当多的用户混淆。
 
-The recommended methods of indexing are:
+建议的索引方法是：
 
-- ``.loc`` if you want to label index.
-- ``.iloc`` if you want to positionally index.
+- ``.loc``如果你想*标记*索引。
+- ``.iloc``如果你想要*定位*索引。
 
 ``` python
 In [93]: dfd = pd.DataFrame({'A': [1, 2, 3],
@@ -1034,7 +957,7 @@ b  2  5
 c  3  6
 ```
 
-Previous behavior, where you wish to get the 0th and the 2nd elements from the index in the ‘A’ column.
+以前的行为，您希望从“A”列中获取索引中的第0个和第2个元素。
 
 ``` python
 In [3]: dfd.ix[[0, 2], 'A']
@@ -1044,7 +967,7 @@ c    3
 Name: A, dtype: int64
 ```
 
-Using ``.loc``. Here we will select the appropriate indexes from the index, then use label indexing.
+用``.loc``。这里我们将从索引中选择适当的索引，然后使用*标签*索引。
 
 ``` python
 In [95]: dfd.loc[dfd.index[[0, 2]], 'A']
@@ -1054,8 +977,8 @@ c    3
 Name: A, dtype: int64
 ```
 
-This can also be expressed using ``.iloc``, by explicitly getting locations on the indexers, and using
-positional indexing to select things.
+这也可以``.iloc``通过在索引器上显式获取位置，并使用
+ *位置*索引来选择事物来表达。
 
 ``` python
 In [96]: dfd.iloc[[0, 2], dfd.columns.get_loc('A')]
@@ -1065,7 +988,7 @@ c    3
 Name: A, dtype: int64
 ```
 
-For getting multiple indexers, using ``.get_indexer``:
+要获得*多个*索引器，请使用``.get_indexer``：
 
 ``` python
 In [97]: dfd.iloc[[0, 2], dfd.columns.get_indexer(['A', 'B'])]
@@ -1075,19 +998,17 @@ a  1  4
 c  3  6
 ```
 
-## Indexing with list with missing labels is deprecated
+## 不推荐使用缺少标签的列表进行索引
 
-::: danger Warning
+::: danger 警告
 
-Starting in 0.21.0, using ``.loc`` or ``[]`` with a list with one or more missing labels, is deprecated, in favor of ``.reindex``.
+从0.21.0开始，使用``.loc``或``[]``包含一个或多个缺少标签的列表，不赞成使用``.reindex``。
 
 :::
 
-In prior versions, using ``.loc[list-of-labels]`` would work as long as at least 1 of the keys was found (otherwise it
-would raise a ``KeyError``). This behavior is deprecated and will show a warning message pointing to this section. The
-recommended alternative is to use ``.reindex()``.
+在以前的版本中，``.loc[list-of-labels]``只要找到*至少1*个密钥，使用就可以工作（否则会引起a ``KeyError``）。不推荐使用此行为，并将显示指向此部分的警告消息。推荐的替代方案是使用``.reindex()``。
 
-For example.
+例如。
 
 ``` python
 In [98]: s = pd.Series([1, 2, 3])
@@ -1100,7 +1021,7 @@ Out[99]:
 dtype: int64
 ```
 
-Selection with all keys found is unchanged.
+找到所有键的选择保持不变。
 
 ``` python
 In [100]: s.loc[[1, 2]]
@@ -1110,7 +1031,7 @@ Out[100]:
 dtype: int64
 ```
 
-Previous behavior
+以前的行为
 
 ``` python
 In [4]: s.loc[[1, 2, 3]]
@@ -1121,7 +1042,7 @@ Out[4]:
 dtype: float64
 ```
 
-Current behavior
+目前的行为
 
 ``` python
 In [4]: s.loc[[1, 2, 3]]
@@ -1138,9 +1059,9 @@ Out[4]:
 dtype: float64
 ```
 
-### Reindexing
+### 重新索引
 
-The idiomatic way to achieve selecting potentially not-found elements is via ``.reindex()``. See also the section on [reindexing](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-reindexing).
+实现选择潜在的未找到元素的惯用方法是通过``.reindex()``。另请参阅[重建索引](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-reindexing)部分。
 
 ``` python
 In [101]: s.reindex([1, 2, 3])
@@ -1151,7 +1072,7 @@ Out[101]:
 dtype: float64
 ```
 
-Alternatively, if you want to select only valid keys, the following is idiomatic and efficient; it is guaranteed to preserve the dtype of the selection.
+或者，如果您只想选择*有效的*密钥，则以下是惯用且有效的; 保证保留选择的dtype。
 
 ``` python
 In [102]: labels = [1, 2, 3]
@@ -1163,7 +1084,7 @@ Out[103]:
 dtype: int64
 ```
 
-Having a duplicated index will raise for a ``.reindex()``:
+拥有重复索引会引发``.reindex()``：
 
 ``` python
 In [104]: s = pd.Series(np.arange(4), index=['a', 'a', 'b', 'c'])
@@ -1176,8 +1097,7 @@ In [17]: s.reindex(labels)
 ValueError: cannot reindex from a duplicate axis
 ```
 
-Generally, you can intersect the desired labels with the current
-axis, and then reindex.
+通常，您可以将所需标签与当前轴相交，然后重新索引。
 
 ``` python
 In [106]: s.loc[s.index.intersection(labels)].reindex(labels)
@@ -1187,7 +1107,7 @@ d    NaN
 dtype: float64
 ```
 
-However, this would still raise if your resulting index is duplicated.
+但是，如果生成的索引重复，这*仍然会*提高。
 
 ``` python
 In [41]: labels = ['a', 'd']
@@ -1196,9 +1116,9 @@ In [42]: s.loc[s.index.intersection(labels)].reindex(labels)
 ValueError: cannot reindex from a duplicate axis
 ```
 
-## Selecting random samples
+## 选择随机样本
 
-A random selection of rows or columns from a Series or DataFrame with the [``sample()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sample.html#pandas.DataFrame.sample) method. The method will sample rows by default, and accepts a specific number of rows/columns to return, or a fraction of rows.
+使用该[``sample()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sample.html#pandas.DataFrame.sample)方法随机选择Series或DataFrame中的行或列。默认情况下，该方法将对行进行采样，并接受要返回的特定行数/列数或一小部分行。
 
 ``` python
 In [107]: s = pd.Series([0, 1, 2, 3, 4, 5])
@@ -1226,8 +1146,7 @@ Out[110]:
 dtype: int64
 ```
 
-By default, ``sample`` will return each row at most once, but one can also sample with replacement
-using the ``replace`` option:
+默认情况下，``sample``最多会返回每行一次，但也可以使用以下``replace``选项进行替换：
 
 ``` python
 In [111]: s = pd.Series([0, 1, 2, 3, 4, 5])
@@ -1255,9 +1174,8 @@ Out[113]:
 dtype: int64
 ```
 
-By default, each row has an equal probability of being selected, but if you want rows
-to have different probabilities, you can pass the ``sample`` function sampling weights as
-``weights``. These weights can be a list, a NumPy array, or a Series, but they must be of the same length as the object you are sampling. Missing values will be treated as a weight of zero, and inf values are not allowed. If weights do not sum to 1, they will be re-normalized by dividing all weights by the sum of the weights. For example:
+默认情况下，每行具有相同的选择概率，但如果您希望行具有不同的概率，则可以将``sample``函数采样权重作为
+ ``weights``。这些权重可以是列表，NumPy数组或系列，但它们的长度必须与您采样的对象的长度相同。缺失的值将被视为零的权重，并且不允许使用inf值。如果权重不总和为1，则通过将所有权重除以权重之和来对它们进行重新规范化。例如：
 
 ``` python
 In [114]: s = pd.Series([0, 1, 2, 3, 4, 5])
@@ -1280,9 +1198,7 @@ Out[118]:
 dtype: int64
 ```
 
-When applied to a DataFrame, you can use a column of the DataFrame as sampling weights
-(provided you are sampling rows and not columns) by simply passing the name of the column
-as a string.
+应用于DataFrame时，只需将列的名称作为字符串传递，就可以使用DataFrame的列作为采样权重（假设您要对行而不是列进行采样）。
 
 ``` python
 In [119]: df2 = pd.DataFrame({'col1': [9, 8, 7, 6],
@@ -1297,7 +1213,7 @@ Out[120]:
 2     7            0.1
 ```
 
-``sample`` also allows users to sample columns instead of rows using the ``axis`` argument.
+``sample``还允许用户使用``axis``参数对列而不是行进行采样。
 
 ``` python
 In [121]: df3 = pd.DataFrame({'col1': [1, 2, 3], 'col2': [2, 3, 4]})
@@ -1310,7 +1226,7 @@ Out[122]:
 2     3
 ```
 
-Finally, one can also set a seed for ``sample``’s random number generator using the ``random_state`` argument, which will accept either an integer (as a seed) or a NumPy RandomState object.
+最后，还可以``sample``使用``random_state``参数为随机数生成器设置种子，该参数将接受整数（作为种子）或NumPy RandomState对象。
 
 ``` python
 In [123]: df4 = pd.DataFrame({'col1': [1, 2, 3], 'col2': [2, 3, 4]})
@@ -1329,11 +1245,11 @@ Out[125]:
 1     2     3
 ```
 
-## Setting with enlargement
+## 用放大设定
 
-The ``.loc/[]`` operations can perform enlargement when setting a non-existent key for that axis.
+``.loc/[]``当为该轴设置不存在的键时，操作可以执行放大。
 
-In the ``Series`` case this is effectively an appending operation.
+在这种``Series``情况下，这实际上是一种附加操作。
 
 ``` python
 In [126]: se = pd.Series([1, 2, 3])
@@ -1356,7 +1272,7 @@ Out[129]:
 dtype: float64
 ```
 
-A ``DataFrame`` can be enlarged on either axis via ``.loc``.
+A ``DataFrame``可以在任一轴上放大``.loc``。
 
 ``` python
 In [130]: dfi = pd.DataFrame(np.arange(6).reshape(3, 2),
@@ -1380,7 +1296,7 @@ Out[133]:
 2  4  5  4
 ```
 
-This is like an ``append`` operation on the ``DataFrame``.
+这就像是一个``append``操作``DataFrame``。
 
 ``` python
 In [134]: dfi.loc[3] = 5
@@ -1394,15 +1310,11 @@ Out[135]:
 3  5  5  5
 ```
 
-## Fast scalar value getting and setting
+## 快速标量值获取和设置
 
-Since indexing with ``[]`` must handle a lot of cases (single-label access,
-slicing, boolean indexing, etc.), it has a bit of overhead in order to figure
-out what you’re asking for. If you only want to access a scalar value, the
-fastest way is to use the ``at`` and ``iat`` methods, which are implemented on
-all of the data structures.
+因为索引``[]``必须处理很多情况（单标签访问，切片，布尔索引等），所以它有一些开销以便弄清楚你要求的是什么。如果您只想访问标量值，最快的方法是使用在所有数据结构上实现的``at``和``iat``方法。
 
-Similarly to ``loc``, ``at`` provides **label** based scalar lookups, while, ``iat`` provides **integer** based lookups analogously to ``iloc``
+与之类似``loc``，``at``提供基于**标签**的标量查找，同时``iat``提供类似于基于**整数**的查找``iloc``
 
 ``` python
 In [136]: s.iat[5]
@@ -1415,7 +1327,7 @@ In [138]: df.iat[3, 0]
 Out[138]: 0.7215551622443669
 ```
 
-You can also set using these same indexers.
+您也可以使用这些相同的索引器进行设置。
 
 ``` python
 In [139]: df.at[dates[5], 'E'] = 7
@@ -1423,7 +1335,7 @@ In [139]: df.at[dates[5], 'E'] = 7
 In [140]: df.iat[3, 0] = 7
 ```
 
-``at`` may enlarge the object in-place as above if the indexer is missing.
+``at`` 如果索引器丢失，可以如上所述放大对象。
 
 ``` python
 In [141]: df.at[dates[-1] + pd.Timedelta('1 day'), 0] = 7
@@ -1442,16 +1354,13 @@ Out[142]:
 2000-01-09       NaN       NaN       NaN       NaN  NaN  7.0
 ```
 
-## Boolean indexing
+## 布尔索引
 
-Another common operation is the use of boolean vectors to filter the data.
-The operators are: ``|`` for ``or``, ``&`` for ``and``, and ``~`` for ``not``.
-These **must** be grouped by using parentheses, since by default Python will
-evaluate an expression such as ``df.A > 2 & df.B < 3`` as
-``df.A > (2 & df.B) < 3``, while the desired evaluation order is
-``(df.A > 2) & (df.B < 3)``.
+另一种常见操作是使用布尔向量来过滤数据。运营商是：``|``for ``or``，``&``for ``and``和``~``for ``not``。**必须**使用括号对这些进行分组，因为默认情况下，Python将评估表达式，例如as
+ ，而期望的评估顺序是
+ 。``df.A > 2 & df.B < 3````df.A > (2 & df.B) < 3````(df.A > 2) & (df.B < 3)``
 
-Using a boolean vector to index a Series works exactly as in a NumPy ndarray:
+使用布尔向量索引系列的工作方式与NumPy ndarray完全相同：
 
 ``` python
 In [143]: s = pd.Series(range(-3, 4))
@@ -1492,9 +1401,7 @@ Out[147]:
 dtype: int64
 ```
 
-You may select rows from a DataFrame using a boolean vector the same length as
-the DataFrame’s index (for example, something derived from one of the columns
-of the DataFrame):
+您可以使用与DataFrame索引长度相同的布尔向量从DataFrame中选择行（例如，从DataFrame的其中一列派生的东西）：
 
 ``` python
 In [148]: df[df['A'] > 0]
@@ -1506,8 +1413,7 @@ Out[148]:
 2000-01-07  0.404705  0.577046 -1.715002 -1.039268 NaN NaN
 ```
 
-List comprehensions and the ``map`` method of Series can also be used to produce
-more complex criteria:
+列表推导和``map``系列方法也可用于产生更复杂的标准：
 
 ``` python
 In [149]: df2 = pd.DataFrame({'a': ['one', 'one', 'two', 'three', 'two', 'one', 'six'],
@@ -1540,8 +1446,7 @@ Out[153]:
 3  three  x  0.361719
 ```
 
-With the choice methods [Selection by Label](#indexing-label), [Selection by Position](#indexing-integer),
-and [Advanced Indexing](advanced.html#advanced) you may select along more than one axis using boolean vectors combined with other indexing expressions.
+随着选择方法[通过标签选择](#indexing-label)，[通过位置选择](#indexing-integer)和[高级索引](advanced.html#advanced)，你可以沿着使用布尔向量与其他索引表达式中组合选择多个轴。
 
 ``` python
 In [154]: df2.loc[criterion & (df2['b'] == 'x'), 'b':'c']
@@ -1550,11 +1455,9 @@ Out[154]:
 3  x  0.361719
 ```
 
-## Indexing with isin
+## 使用isin进行索引
 
-Consider the [``isin()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isin.html#pandas.Series.isin) method of ``Series``, which returns a boolean
-vector that is true wherever the ``Series`` elements exist in the passed list.
-This allows you to select rows where one or more columns have values you want:
+考虑一下[``isin()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isin.html#pandas.Series.isin)方法``Series``，该方法返回一个布尔向量，只要``Series``元素存在于传递列表中，该向量就为真。这允许您选择一列或多列具有所需值的行：
 
 ``` python
 In [155]: s = pd.Series(np.arange(5), index=np.arange(5)[::-1], dtype='int64')
@@ -1584,8 +1487,7 @@ Out[158]:
 dtype: int64
 ```
 
-The same method is available for ``Index`` objects and is useful for the cases
-when you don’t know which of the sought labels are in fact present:
+``Index``对象可以使用相同的方法，当您不知道哪些搜索标签实际存在时，它们非常有用：
 
 ``` python
 In [159]: s[s.index.isin([2, 4, 6])]
@@ -1603,8 +1505,7 @@ Out[160]:
 dtype: float64
 ```
 
-In addition to that, ``MultiIndex`` allows selecting a separate level to use
-in the membership check:
+除此之外，还``MultiIndex``允许选择在成员资格检查中使用的单独级别：
 
 ``` python
 In [161]: s_mi = pd.Series(np.arange(6),
@@ -1636,10 +1537,7 @@ Out[164]:
 dtype: int64
 ```
 
-DataFrame also has an [``isin()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin) method.  When calling ``isin``, pass a set of
-values as either an array or dict.  If values is an array, ``isin`` returns
-a DataFrame of booleans that is the same shape as the original DataFrame, with True
-wherever the element is in the sequence of values.
+DataFrame也有一个[``isin()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin)方法。调用时``isin``，将一组值作为数组或字典传递。如果values是一个数组，则``isin``返回与原始DataFrame形状相同的布尔数据框，并在元素序列中的任何位置使用True。
 
 ``` python
 In [165]: df = pd.DataFrame({'vals': [1, 2, 3, 4], 'ids': ['a', 'b', 'f', 'n'],
@@ -1657,9 +1555,7 @@ Out[167]:
 3  False  False  False
 ```
 
-Oftentimes you’ll want to match certain values with certain columns.
-Just make values a ``dict`` where the key is the column, and the value is
-a list of items you want to check for.
+通常，您需要将某些值与某些列匹配。只需将值设置``dict``为键为列的位置，值即为要检查的项目列表。
 
 ``` python
 In [168]: values = {'ids': ['a', 'b'], 'vals': [1, 3]}
@@ -1673,9 +1569,7 @@ Out[169]:
 3  False  False  False
 ```
 
-Combine DataFrame’s ``isin`` with the ``any()`` and ``all()`` methods to
-quickly select subsets of your data that meet a given criteria.
-To select a row where each column meets its own criterion:
+结合数据帧的``isin``同``any()``和``all()``方法来快速选择符合给定的标准对数据子集。要选择每列符合其自己标准的行：
 
 ``` python
 In [170]: values = {'ids': ['a', 'b'], 'ids2': ['a', 'c'], 'vals': [1, 3]}
@@ -1688,13 +1582,11 @@ Out[172]:
 0     1   a    a
 ```
 
-## The ``where()`` Method and Masking
+## 该``where()``方法和屏蔽
 
-Selecting values from a Series with a boolean vector generally returns a
-subset of the data. To guarantee that selection output has the same shape as
-the original data, you can use the ``where`` method in ``Series`` and ``DataFrame``.
+从具有布尔向量的Series中选择值通常会返回数据的子集。为了保证选择输出与原始数据具有相同的形状，您可以``where``在``Series``和中使用该方法``DataFrame``。
 
-To return only the selected rows:
+仅返回选定的行：
 
 ``` python
 In [173]: s[s > 0]
@@ -1706,7 +1598,7 @@ Out[173]:
 dtype: int64
 ```
 
-To return a Series of the same shape as the original:
+要返回与原始形状相同的系列：
 
 ``` python
 In [174]: s.where(s > 0)
@@ -1719,9 +1611,7 @@ Out[174]:
 dtype: float64
 ```
 
-Selecting values from a DataFrame with a boolean criterion now also preserves
-input data shape. ``where`` is used under the hood as the implementation.
-The code below is equivalent to ``df.where(df < 0)``.
+现在，使用布尔标准从DataFrame中选择值也可以保留输入数据形状。``where``在引擎盖下用作实现。下面的代码相当于。``df.where(df < 0)``
 
 ``` python
 In [175]: df[df < 0]
@@ -1737,8 +1627,7 @@ Out[175]:
 2000-01-08       NaN       NaN -0.048788 -0.808838
 ```
 
-In addition, ``where`` takes an optional ``other`` argument for replacement of
-values where the condition is False, in the returned copy.
+此外，在返回的副本中，``where``使用可选``other``参数替换条件为False的值。
 
 ``` python
 In [176]: df.where(df < 0, -df)
@@ -1754,8 +1643,7 @@ Out[176]:
 2000-01-08 -0.801196 -1.392071 -0.048788 -0.808838
 ```
 
-You may wish to set values based on some boolean criteria.
-This can be done intuitively like so:
+您可能希望根据某些布尔条件设置值。这可以直观地完成，如下所示：
 
 ``` python
 In [177]: s2 = s.copy()
@@ -1788,9 +1676,7 @@ Out[182]:
 2000-01-08  0.801196  1.392071  0.000000  0.000000
 ```
 
-By default, ``where`` returns a modified copy of the data. There is an
-optional parameter ``inplace`` so that the original data can be modified
-without creating a copy:
+默认情况下，``where``返回数据的修改副本。有一个可选参数，``inplace``以便可以在不创建副本的情况下修改原始数据：
 
 ``` python
 In [183]: df_orig = df.copy()
@@ -1810,10 +1696,9 @@ Out[185]:
 2000-01-08  0.801196  1.392071  0.048788  0.808838
 ```
 
-::: tip Note
+::: tip 注意
 
-The signature for [``DataFrame.where()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.where.html#pandas.DataFrame.where) differs from [``numpy.where()``](https://docs.scipy.org/doc/numpy/reference/generated/numpy.where.html#numpy.where).
-Roughly ``df1.where(m, df2)`` is equivalent to ``np.where(m, df1, df2)``.
+签名[``DataFrame.where()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.where.html#pandas.DataFrame.where)不同于[``numpy.where()``](https://docs.scipy.org/doc/numpy/reference/generated/numpy.where.html#numpy.where)。大致相当于。``df1.where(m, df2)````np.where(m, df1, df2)``
 
 ``` python
 In [186]: df.where(df < 0, -df) == np.where(df < 0, df, -df)
@@ -1831,11 +1716,9 @@ Out[186]:
 
 :::
 
-**Alignment**
+**对准**
 
-Furthermore, ``where`` aligns the input boolean condition (ndarray or DataFrame),
-such that partial selection with setting is possible. This is analogous to
-partial setting via ``.loc`` (but on the contents rather than the axis labels).
+此外，``where``对齐输入布尔条件（ndarray或DataFrame），以便可以使用设置进行部分选择。这类似于部分设置通过``.loc``（但是在内容而不是轴标签上）。
 
 ``` python
 In [187]: df2 = df.copy()
@@ -1855,8 +1738,7 @@ Out[189]:
 2000-01-08  0.801196  1.392071 -0.048788 -0.808838
 ```
 
-Where can also accept ``axis`` and ``level`` parameters to align the input when
-performing the ``where``.
+哪里也可以接受``axis``和``level``参数在执行时对齐输入``where``。
 
 ``` python
 In [190]: df2 = df.copy()
@@ -1874,7 +1756,7 @@ Out[191]:
 2000-01-08  0.801196  1.392071  0.801196  0.801196
 ```
 
-This is equivalent to (but faster than) the following.
+这相当于（但快于）以下内容。
 
 ``` python
 In [192]: df2 = df.copy()
@@ -1892,11 +1774,9 @@ Out[193]:
 2000-01-08  0.801196  1.392071  0.801196  0.801196
 ```
 
-*New in version 0.18.1.* 
+*版本0.18.1中的新功能。* 
 
-Where can accept a callable as condition and ``other`` arguments. The function must
-be with one argument (the calling Series or DataFrame) and that returns valid output
-as condition and ``other`` argument.
+哪里可以接受一个可调用的条件和``other``参数。该函数必须带有一个参数（调用Series或DataFrame），并返回有效的输出作为条件和``other``参数。
 
 ``` python
 In [194]: df3 = pd.DataFrame({'A': [1, 2, 3],
@@ -1912,9 +1792,9 @@ Out[195]:
 2  13   6  9
 ```
 
-### Mask
+### 面具
 
-[``mask()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.mask.html#pandas.DataFrame.mask) is the inverse boolean operation of ``where``.
+[``mask()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.mask.html#pandas.DataFrame.mask)是的反布尔运算``where``。
 
 ``` python
 In [196]: s.mask(s >= 0)
@@ -1939,13 +1819,12 @@ Out[197]:
 2000-01-08       NaN       NaN -0.048788 -0.808838
 ```
 
-## The ``query()`` Method
+## 该``query()``方法
 
-[``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) objects have a [``query()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query)
-method that allows selection using an expression.
+[``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)对象有一个[``query()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query)
+允许使用表达式进行选择的方法。
 
-You can get the value of the frame where column ``b`` has values
-between the values of columns ``a`` and ``c``. For example:
+您可以获取列的值，其中列``b``具有列值``a``和值之间的值``c``。例如：
 
 ``` python
 In [198]: n = 10
@@ -1985,8 +1864,7 @@ Out[202]:
 7  0.397890  0.454131  0.915716
 ```
 
-Do the same thing but fall back on a named index if there is no column
-with the name ``a``.
+如果没有名称的列，则执行相同的操作但返回命名索引``a``。
 
 ``` python
 In [203]: df = pd.DataFrame(np.random.randint(n / 2, size=(n, 2)), columns=list('bc'))
@@ -2015,8 +1893,8 @@ a
 2  3  4
 ```
 
-If instead you don’t want to or cannot name your index, you can use the name
-``index`` in your query expression:
+如果您不希望或不能命名索引，则可以``index``在查询表达式中使用该名称
+ ：
 
 ``` python
 In [207]: df = pd.DataFrame(np.random.randint(n, size=(n, 2)), columns=list('bc'))
@@ -2041,10 +1919,9 @@ Out[209]:
 2  5  6
 ```
 
-::: tip Note
+::: tip 注意
 
-If the name of your index overlaps with a column name, the column name is
-given precedence. For example,
+如果索引的名称与列名称重叠，则列名称优先。例如，
 
 ``` python
 In [210]: df = pd.DataFrame({'a': np.random.randint(5, size=5)})
@@ -2059,8 +1936,7 @@ a
 3  3
 ```
 
-You can still use the index in a query expression by using the special
-identifier ‘index’:
+您仍然可以使用特殊标识符'index'在查询表达式中使用索引：
 
 ``` python
 In [213]: df.query('index > 2')
@@ -2071,16 +1947,14 @@ a
 4  2
 ```
 
-If for some reason you have a column named ``index``, then you can refer to
-the index as ``ilevel_0`` as well, but at this point you should consider
-renaming your columns to something less ambiguous.
+如果由于某种原因你有一个名为列的列``index``，那么你也可以引用索引``ilevel_0``，但是此时你应该考虑将列重命名为不那么模糊的列。
 
 :::
 
-### ``MultiIndex`` ``query()`` Syntax
+### ``MultiIndex`` ``query()``语法
 
-You can also use the levels of a ``DataFrame`` with a
-[``MultiIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex) as if they were columns in the frame:
+您还可以使用的水平``DataFrame``带
+ [``MultiIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex)，好像他们是在框架柱：
 
 ``` python
 In [214]: n = 10
@@ -2127,8 +2001,7 @@ red   ham   0.194889 -0.381994
       eggs -0.728293 -0.090255
 ```
 
-If the levels of the ``MultiIndex`` are unnamed, you can refer to them using
-special names:
+如果``MultiIndex``未命名的级别，您可以使用特殊名称引用它们：
 
 ``` python
 In [223]: df.index.names = [None, None]
@@ -2155,15 +2028,13 @@ red ham   0.194889 -0.381994
     eggs -0.728293 -0.090255
 ```
 
-The convention is ``ilevel_0``, which means “index level 0” for the 0th level
-of the ``index``.
+约定是``ilevel_0``，这意味着第0级的“索引级别0” ``index``。
 
-### ``query()`` Use Cases
+### ``query()``用例
 
-A use case for [``query()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query) is when you have a collection of
-[``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) objects that have a subset of column names (or index
-levels/names) in common. You can pass the same query to both frames without
-having to specify which frame you’re interested in querying
+用例[``query()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query)是当您拥有一组具有共同
+ [``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)列名（或索引级别/名称）子集的对象时。您可以将相同的查询传递给两个帧，*而* 
+无需指定您对查询感兴趣的帧
 
 ``` python
 In [226]: df = pd.DataFrame(np.random.rand(n, 3), columns=list('abc'))
@@ -2206,9 +2077,9 @@ In [231]: map(lambda frame: frame.query(expr), [df, df2])
 Out[231]: <map at 0x7f65f7952d30>
 ```
 
-### ``query()`` Python versus pandas Syntax Comparison
+### ``query()``Python与pandas语法比较
 
-Full numpy-like syntax:
+完全类似numpy的语法：
 
 ``` python
 In [232]: df = pd.DataFrame(np.random.randint(n, size=(n, 3)), columns=list('abc'))
@@ -2238,8 +2109,7 @@ Out[235]:
 0  7  8  9
 ```
 
-Slightly nicer by removing the parentheses (by binding making comparison
-operators bind tighter than ``&`` and ``|``).
+通过删除括号略微更好（通过绑定使比较运算符绑定比``&``和更紧``|``）。
 
 ``` python
 In [236]: df.query('a < b & b < c')
@@ -2248,7 +2118,7 @@ Out[236]:
 0  7  8  9
 ```
 
-Use English instead of symbols:
+使用英语而不是符号：
 
 ``` python
 In [237]: df.query('a < b and b < c')
@@ -2257,7 +2127,7 @@ Out[237]:
 0  7  8  9
 ```
 
-Pretty close to how you might write it on paper:
+非常接近你如何在纸上写它：
 
 ``` python
 In [238]: df.query('a < b < c')
@@ -2266,11 +2136,11 @@ Out[238]:
 0  7  8  9
 ```
 
-### The ``in`` and ``not in`` operators
+### 在``in``与运营商``not in``
 
-[``query()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query) also supports special use of Python’s ``in`` and
-``not in`` comparison operators, providing a succinct syntax for calling the
-``isin`` method of a ``Series`` or ``DataFrame``.
+[``query()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query)还支持Python ``in``和
+ 比较运算符的特殊用法，为调用或的方法提供了简洁的语法
+ 。``not in````isin````Series````DataFrame``
 
 ``` python
 # get all rows where columns "a" and "b" have overlapping values
@@ -2338,7 +2208,7 @@ Out[244]:
 11  f  c  1  2
 ```
 
-You can combine this with other expressions for very succinct queries:
+您可以将此与其他表达式结合使用，以获得非常简洁的查询：
 
 ``` python
 # rows where cols a and b have overlapping values
@@ -2365,27 +2235,24 @@ Out[246]:
 11  f  c  1  2
 ```
 
-::: tip Note
+::: tip 注意
 
-Note that ``in`` and ``not in`` are evaluated in Python, since ``numexpr``
-has no equivalent of this operation. However, **only the** ``in``/``not in``
-**expression itself** is evaluated in vanilla Python. For example, in the
-expression
+请注意``in``并在Python中进行评估，因为
+它没有相应的操作。但是，**只有** / **expression本身**在vanilla Python中进行评估。例如，在表达式中``not in````numexpr``**** ``in````not in``
+****
 
 ``` python
 df.query('a in b + c + d')
 ```
 
-``(b + c + d)`` is evaluated by ``numexpr`` and then the ``in``
-operation is evaluated in plain Python. In general, any operations that can
-be evaluated using ``numexpr`` will be.
+``(b + c + d)``通过评估``numexpr``和*然后*的``in``
+操作在普通的Python评价。通常，任何可以使用的评估操作``numexpr``都是。
 
 :::
 
-### Special use of the ``==`` operator with ``list`` objects
+### ``==``运算符与``list``对象的特殊用法
 
-Comparing a ``list`` of values to a column using ``==``/``!=`` works similarly
-to ``in``/``not in``.
+一个比较``list``值的使用列``==``/ ``!=``工程，以类似``in``/ 。``not in``
 
 ``` python
 In [247]: df.query('b == ["a", "b", "c"]')
@@ -2474,9 +2341,9 @@ Out[253]:
 11  f  c  1  2
 ```
 
-### Boolean operators
+### 布尔运算符
 
-You can negate boolean expressions with the word ``not`` or the ``~`` operator.
+您可以使用单词``not``或``~``运算符否定布尔表达式。
 
 ``` python
 In [254]: df = pd.DataFrame(np.random.rand(n, 3), columns=list('abc'))
@@ -2505,7 +2372,7 @@ Out[258]:
 8  True  True  True   True
 ```
 
-Of course, expressions can be arbitrarily complex too:
+当然，表达式也可以是任意复杂的：
 
 ``` python
 # short query syntax
@@ -2530,41 +2397,34 @@ Out[263]:
 7  True  True  True   True
 ```
 
-### Performance of ``query()``
+### 的表现¶``query()``
 
-``DataFrame.query()`` using ``numexpr`` is slightly faster than Python for
-large frames.
+``DataFrame.query()````numexpr``对于大型帧，使用比Python略快。
 
 ![query-perf](/static/images/query-perf.png)
 
-::: tip Note
+::: tip 注意
 
-You will only see the performance benefits of using the ``numexpr`` engine
-with ``DataFrame.query()`` if your frame has more than approximately 200,000
-rows.
+如果您的框架超过大约200,000行，您将只看到使用``numexpr``引擎的性能优势``DataFrame.query()``。
 
 ![query-perf-small](/static/images/query-perf-small.png)
 
 :::
 
-This plot was created using a ``DataFrame`` with 3 columns each containing
-floating point values generated using ``numpy.random.randn()``.
+此图是使用``DataFrame``3列创建的，每列包含使用生成的浮点值``numpy.random.randn()``。
 
-## Duplicate data
+## 重复数据
 
-If you want to identify and remove duplicate rows in a DataFrame,  there are
-two methods that will help: ``duplicated`` and ``drop_duplicates``. Each
-takes as an argument the columns to use to identify duplicated rows.
+如果要识别和删除DataFrame中的重复行，有两种方法可以提供帮助：``duplicated``和``drop_duplicates``。每个都将用于标识重复行的列作为参数。
 
-- ``duplicated`` returns a boolean vector whose length is the number of rows, and which indicates whether a row is duplicated.
-- ``drop_duplicates`` removes duplicate rows.
+- ``duplicated`` 返回一个布尔向量，其长度为行数，表示行是否重复。
+- ``drop_duplicates`` 删除重复的行。
 
-By default, the first observed row of a duplicate set is considered unique, but
-each method has a ``keep`` parameter to specify targets to be kept.
+默认情况下，重复集的第一个观察行被认为是唯一的，但每个方法都有一个``keep``参数来指定要保留的目标。
 
-- ``keep='first'`` (default): mark / drop duplicates except for the first occurrence.
-- ``keep='last'``: mark / drop duplicates except for the last occurrence.
-- ``keep=False``: mark  / drop all duplicates.
+- ``keep='first'`` （默认值）：标记/删除重复项，第一次出现除外。
+- ``keep='last'``：标记/删除重复项，除了最后一次出现。
+- ``keep=False``：标记/删除所有重复项。
 
 ``` python
 In [264]: df2 = pd.DataFrame({'a': ['one', 'one', 'two', 'two', 'two', 'three', 'four'],
@@ -2639,7 +2499,7 @@ Out[271]:
 6   four  x  1.298329
 ```
 
-Also, you can pass a list of columns to identify duplications.
+此外，您可以传递列表列表以识别重复。
 
 ``` python
 In [272]: df2.duplicated(['a', 'b'])
@@ -2664,8 +2524,7 @@ Out[273]:
 6   four  x  1.298329
 ```
 
-To drop duplicates by index value, use ``Index.duplicated`` then perform slicing.
-The same set of options are available for the ``keep`` parameter.
+要按索引值删除重复项，请使用``Index.duplicated``然后执行切片。``keep``参数可以使用相同的选项集。
 
 ``` python
 In [274]: df3 = pd.DataFrame({'a': np.arange(6),
@@ -2706,10 +2565,9 @@ Out[279]:
 c  3 -0.894409
 ```
 
-## Dictionary-like ``get()`` method
+## 类字典``get()``方法
 
-Each of Series or DataFrame have a ``get`` method which can return a
-default value.
+Series或DataFrame中的每一个都有一个``get``可以返回默认值的方法。
 
 ``` python
 In [280]: s = pd.Series([1, 2, 3], index=['a', 'b', 'c'])
@@ -2721,11 +2579,9 @@ In [282]: s.get('x', default=-1)
 Out[282]: -1
 ```
 
-## The ``lookup()`` method
+## 该``lookup()``方法
 
-Sometimes you want to extract a set of values given a sequence of row labels
-and column labels, and the ``lookup`` method allows for this and returns a
-NumPy array.  For instance:
+有时，您希望在给定一系列行标签和列标签的情况下提取一组值，并且该``lookup``方法允许此操作并返回NumPy数组。例如：
 
 ``` python
 In [283]: dflookup = pd.DataFrame(np.random.rand(20, 4), columns = ['A', 'B', 'C', 'D'])
@@ -2734,17 +2590,14 @@ In [284]: dflookup.lookup(list(range(0, 10, 2)), ['B', 'C', 'A', 'B', 'D'])
 Out[284]: array([0.3506, 0.4779, 0.4825, 0.9197, 0.5019])
 ```
 
-## Index objects
+## 索引对象
 
-The pandas [``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) class and its subclasses can be viewed as
-implementing an ordered multiset. Duplicates are allowed. However, if you try
-to convert an [``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) object with duplicate entries into a
-``set``, an exception will be raised.
+pandas [``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index)类及其子类可以视为实现*有序的多集合*。允许重复。但是，如果您尝试将[``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index)具有重复条目的对象转换为a
+ ``set``，则会引发异常。
 
-[``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) also provides the infrastructure necessary for
-lookups, data alignment, and reindexing. The easiest way to create an
-[``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) directly is to pass a ``list`` or other sequence to
-[``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index):
+[``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index)还提供了查找，数据对齐和重建索引所需的基础结构。[``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index)直接创建的最简单方法
+ 是将一个``list``或其他序列传递给
+ [``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index)：
 
 ``` python
 In [285]: index = pd.Index(['e', 'd', 'a', 'b'])
@@ -2756,7 +2609,7 @@ In [287]: 'd' in index
 Out[287]: True
 ```
 
-You can also pass a ``name`` to be stored in the index:
+您还可以传递一个``name``存储在索引中：
 
 ``` python
 In [288]: index = pd.Index(['e', 'd', 'a', 'b'], name='something')
@@ -2765,7 +2618,7 @@ In [289]: index.name
 Out[289]: 'something'
 ```
 
-The name, if set, will be shown in the console display:
+名称（如果已设置）将显示在控制台显示中：
 
 ``` python
 In [290]: index = pd.Index(list(range(5)), name='rows')
@@ -2795,17 +2648,15 @@ rows
 Name: A, dtype: float64
 ```
 
-### Setting metadata
+### 设置元数据
 
-Indexes are “mostly immutable”, but it is possible to set and change their
-metadata, like the index ``name`` (or, for ``MultiIndex``, ``levels`` and
-``codes``).
+索引是“不可改变的大多是”，但它可以设置和改变它们的元数据，如指数``name``（或为``MultiIndex``，``levels``和
+ ``codes``）。
 
-You can use the ``rename``, ``set_names``, ``set_levels``, and ``set_codes``
-to set these attributes directly. They default to returning a copy; however,
-you can specify ``inplace=True`` to have the data change in place.
+您可以使用``rename``，``set_names``，``set_levels``，和``set_codes``
+直接设置这些属性。他们默认返回一份副本; 但是，您可以指定``inplace=True``使数据更改到位。
 
-See [Advanced Indexing](advanced.html#advanced) for usage of MultiIndexes.
+有关MultiIndexes的使用，请参阅[高级索引](advanced.html#advanced)。
 
 ``` python
 In [295]: ind = pd.Index([1, 2, 3])
@@ -2824,8 +2675,8 @@ In [300]: ind
 Out[300]: Int64Index([1, 2, 3], dtype='int64', name='bob')
 ```
 
-``set_names``, ``set_levels``, and ``set_codes`` also take an optional
-``level`` argument
+``set_names``，``set_levels``并且``set_codes``还采用可选
+ ``level``参数
 
 ``` python
 In [301]: index = pd.MultiIndex.from_product([range(3), ['one', 'two']], names=['first', 'second'])
@@ -2854,11 +2705,9 @@ MultiIndex([(0, 'a'),
            names=['first', 'second'])
 ```
 
-### Set operations on Index objects
+### 在Index对象上设置操作
 
-The two main operations are ``union (|)`` and ``intersection (&)``.
-These can be directly called as instance methods or used via overloaded
-operators. Difference is provided via the ``.difference()`` method.
+两个主要业务是和。这些可以直接称为实例方法，也可以通过重载运算符使用。通过该方法提供差异。``union (|)````intersection (&)````.difference()``
 
 ``` python
 In [305]: a = pd.Index(['c', 'b', 'a'])
@@ -2875,10 +2724,7 @@ In [309]: a.difference(b)
 Out[309]: Index(['a', 'b'], dtype='object')
 ```
 
-Also available is the ``symmetric_difference (^)`` operation, which returns elements
-that appear in either ``idx1`` or ``idx2``, but not in both. This is
-equivalent to the Index created by ``idx1.difference(idx2).union(idx2.difference(idx1))``,
-with duplicates dropped.
+同时还提供了操作，它返回出现在任一元件或，但不是在两者。这相当于创建的索引，删除了重复项。``symmetric_difference (^)````idx1````idx2````idx1.difference(idx2).union(idx2.difference(idx1))``
 
 ``` python
 In [310]: idx1 = pd.Index([1, 2, 3, 4])
@@ -2892,16 +2738,13 @@ In [313]: idx1 ^ idx2
 Out[313]: Int64Index([1, 5], dtype='int64')
 ```
 
-::: tip Note
+::: tip 注意
 
-The resulting index from a set operation will be sorted in ascending order.
+来自设置操作的结果索引将按升序排序。
 
 :::
 
-When performing [``Index.union()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.union.html#pandas.Index.union) between indexes with different dtypes, the indexes
-must be cast to a common dtype. Typically, though not always, this is object dtype. The
-exception is when performing a union between integer and float data. In this case, the
-integer values are converted to float
+在[``Index.union()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.union.html#pandas.Index.union)具有不同dtypes的索引之间执行时，必须将索引强制转换为公共dtype。通常，虽然并非总是如此，但这是对象dtype。例外是在整数和浮点数据之间执行联合。在这种情况下，整数值将转换为float
 
 ``` python
 In [314]: idx1 = pd.Index([0, 1, 2])
@@ -2912,13 +2755,11 @@ In [316]: idx1 | idx2
 Out[316]: Float64Index([0.0, 0.5, 1.0, 1.5, 2.0], dtype='float64')
 ```
 
-### Missing values
+### 缺少值
 
-Even though ``Index`` can hold missing values (``NaN``), it should be avoided
-if you do not want any unexpected results. For example, some operations
-exclude missing values implicitly.
+即使``Index``可以保存缺失值（``NaN``），但如果您不想要任何意外结果，也应该避免使用。例如，某些操作会隐式排除缺失值。
 
-``Index.fillna`` fills missing values with specified scalar value.
+``Index.fillna`` 使用指定的标量值填充缺失值。
 
 ``` python
 In [317]: idx1 = pd.Index([1, np.nan, 3, 4])
@@ -2941,17 +2782,13 @@ In [322]: idx2.fillna(pd.Timestamp('2011-01-02'))
 Out[322]: DatetimeIndex(['2011-01-01', '2011-01-02', '2011-01-03'], dtype='datetime64[ns]', freq=None)
 ```
 
-## Set / reset index
+## 设置/重置索引
 
-Occasionally you will load or create a data set into a DataFrame and want to
-add an index after you’ve already done so. There are a couple of different
-ways.
+有时您会将数据集加载或创建到DataFrame中，并希望在您已经完成之后添加索引。有几种不同的方式。
 
-### Set an index
+### 设置索引
 
-DataFrame has a [``set_index()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index) method which takes a column name
-(for a regular ``Index``) or a list of column names (for a ``MultiIndex``).
-To create a new, re-indexed DataFrame:
+DataFrame有一个[``set_index()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index)方法，它采用列名（对于常规``Index``）或列名列表（对于a ``MultiIndex``）。要创建新的重新索引的DataFrame：
 
 ``` python
 In [323]: data
@@ -2985,8 +2822,7 @@ foo one  x  3.0
     two  w  4.0
 ```
 
-The ``append`` keyword option allow you to keep the existing index and append
-the given columns to a MultiIndex:
+该``append``关键字选项让你保持现有索引并追加给列一个多指标：
 
 ``` python
 In [328]: frame = data.set_index('c', drop=False)
@@ -3003,8 +2839,7 @@ x foo one  x  3.0
 w foo two  w  4.0
 ```
 
-Other options in ``set_index`` allow you not drop the index columns or to add
-the index in-place (without creating a new object):
+其他选项``set_index``允许您不删除索引列或就地添加索引（不创建新对象）：
 
 ``` python
 In [331]: data.set_index('c', drop=False)
@@ -3028,12 +2863,10 @@ foo one  x  3.0
     two  w  4.0
 ```
 
-### Reset the index
+### 重置索引
 
-As a convenience, there is a new function on DataFrame called
-[``reset_index()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#pandas.DataFrame.reset_index) which transfers the index values into the
-DataFrame’s columns and sets a simple integer index.
-This is the inverse operation of [``set_index()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index).
+为方便起见，DataFrame上有一个新函数，它将
+ [``reset_index()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#pandas.DataFrame.reset_index)索引值传输到DataFrame的列中并设置一个简单的整数索引。这是反向操作[``set_index()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index)。
 
 ``` python
 In [334]: data
@@ -3054,10 +2887,9 @@ Out[335]:
 3  foo  two  w  4.0
 ```
 
-The output is more similar to a SQL table or a record array. The names for the
-columns derived from the index are the ones stored in the ``names`` attribute.
+输出更类似于SQL表或记录数组。从索引派生的列的名称是存储在``names``属性中的名称。
 
-You can use the ``level`` keyword to remove only a portion of the index:
+您可以使用``level``关键字仅删除索引的一部分：
 
 ``` python
 In [336]: frame
@@ -3079,21 +2911,20 @@ x one  foo  x  3.0
 w two  foo  w  4.0
 ```
 
-``reset_index`` takes an optional parameter ``drop`` which if true simply
-discards the index, instead of putting index values in the DataFrame’s columns.
+``reset_index``采用一个可选参数``drop``，如果为true，则只丢弃索引，而不是将索引值放在DataFrame的列中。
 
-### Adding an ad hoc index
+### 添加ad hoc索引
 
-If you create an index yourself, you can just assign it to the ``index`` field:
+如果您自己创建索引，则可以将其分配给``index``字段：
 
 ``` python
 data.index = index
 ```
 
-## Returning a view versus a copy
+## 返回视图与副本
 
-When setting values in a pandas object, care must be taken to avoid what is called
-``chained indexing``. Here is an example.
+在pandas对象中设置值时，必须注意避免调用所谓的对象
+ 。这是一个例子。``chained indexing``
 
 ``` python
 In [338]: dfmi = pd.DataFrame([list('abcd'),
@@ -3114,7 +2945,7 @@ Out[339]:
 3     m      n     o      p
 ```
 
-Compare these two access methods:
+比较这两种访问方法：
 
 ``` python
 In [340]: dfmi['one']['second']
@@ -3136,27 +2967,18 @@ Out[341]:
 Name: (one, second), dtype: object
 ```
 
-These both yield the same results, so which should you use? It is instructive to understand the order
-of operations on these and why method 2 (``.loc``) is much preferred over method 1 (chained ``[]``).
+这两者都产生相同的结果，所以你应该使用哪个？理解这些操作的顺序以及为什么方法2（``.loc``）比方法1（链接``[]``）更受欢迎是有益的。
 
-``dfmi['one']`` selects the first level of the columns and returns a DataFrame that is singly-indexed.
-Then another Python operation ``dfmi_with_one['second']`` selects the series indexed by ``'second'``.
-This is indicated by the variable ``dfmi_with_one`` because pandas sees these operations as separate events.
-e.g. separate calls to ``__getitem__``, so it has to treat them as linear operations, they happen one after another.
+``dfmi['one']``选择列的第一级并返回单索引的DataFrame。然后另一个Python操作``dfmi_with_one['second']``选择索引的系列``'second'``。这由变量指示，``dfmi_with_one``因为pandas将这些操作视为单独的事件。例如，单独调用``__getitem__``，因此它必须将它们视为线性操作，它们一个接一个地发生。
 
-Contrast this to ``df.loc[:,('one','second')]`` which passes a nested tuple of ``(slice(None),('one','second'))`` to a single call to
-``__getitem__``. This allows pandas to deal with this as a single entity. Furthermore this order of operations can be significantly
-faster, and allows one to index both axes if so desired.
+对比这个``df.loc[:,('one','second')]``将一个嵌套的元组传递``(slice(None),('one','second'))``给一个单独的调用
+ ``__getitem__``。这允许pandas将其作为单个实体来处理。此外，这种操作顺序*可以*明显更快，并且如果需要，允许人们对*两个*轴进行索引。
 
-### Why does assignment fail when using chained indexing?
+### 使用链式索引时为什么分配失败？
 
-The problem in the previous section is just a performance issue. What’s up with
-the ``SettingWithCopy`` warning? We don’t **usually** throw warnings around when
-you do something that might cost a few extra milliseconds!
+上一节中的问题只是一个性能问题。这是怎么回事与``SettingWithCopy``警示？当你做一些可能花费几毫秒的事情时，我们**通常**不会发出警告！
 
-But it turns out that assigning to the product of chained indexing has
-inherently unpredictable results. To see this, think about how the Python
-interpreter executes this code:
+但事实证明，分配链式索引的产品具有固有的不可预测的结果。要看到这一点，请考虑Python解释器如何执行此代码：
 
 ``` python
 dfmi.loc[:, ('one', 'second')] = value
@@ -3164,7 +2986,7 @@ dfmi.loc[:, ('one', 'second')] = value
 dfmi.loc.__setitem__((slice(None), ('one', 'second')), value)
 ```
 
-But this code is handled differently:
+但是这个代码的处理方式不同：
 
 ``` python
 dfmi['one']['second'] = value
@@ -3172,27 +2994,20 @@ dfmi['one']['second'] = value
 dfmi.__getitem__('one').__setitem__('second', value)
 ```
 
-See that ``__getitem__`` in there? Outside of simple cases, it’s very hard to
-predict whether it will return a view or a copy (it depends on the memory layout
-of the array, about which pandas makes no guarantees), and therefore whether
-the ``__setitem__`` will modify ``dfmi`` or a temporary object that gets thrown
-out immediately afterward. **That’s** what ``SettingWithCopy`` is warning you
-about!
+看到``__getitem__``那里？除了简单的情况之外，很难预测它是否会返回一个视图或一个副本（它取决于数组的内存布局，关于哪些pandas不能保证），因此是否``__setitem__``会修改``dfmi``或者是一个临时对象之后立即抛出。**那**什么``SettingWithCopy``是警告你！
 
-::: tip Note
+::: tip 注意
 
-You may be wondering whether we should be concerned about the ``loc``
-property in the first example. But ``dfmi.loc`` is guaranteed to be ``dfmi``
-itself with modified indexing behavior, so ``dfmi.loc.__getitem__`` /
-``dfmi.loc.__setitem__`` operate on ``dfmi`` directly. Of course,
-``dfmi.loc.__getitem__(idx)`` may be a view or a copy of ``dfmi``.
+您可能想知道我们是否应该关注``loc``
+第一个示例中的属性。但``dfmi.loc``保证``dfmi``
+本身具有修改的索引行为，因此``dfmi.loc.__getitem__``/
+ 直接``dfmi.loc.__setitem__``操作``dfmi``。当然，
+ ``dfmi.loc.__getitem__(idx)``可能是一个视图或副本``dfmi``。
 
 :::
 
-Sometimes a ``SettingWithCopy`` warning will arise at times when there’s no
-obvious chained indexing going on. **These** are the bugs that
-``SettingWithCopy`` is designed to catch! Pandas is probably trying to warn you
-that you’ve done this:
+有时``SettingWithCopy``，当没有明显的链式索引时，会出现警告。**这些**``SettingWithCopy``是旨在捕获的错误
+ ！熊猫可能会试图警告你，你已经这样做了：
 
 ``` python
 def do_something(df):
@@ -3203,26 +3018,21 @@ def do_something(df):
     return foo
 ```
 
-Yikes!
+哎呀！
 
-### Evaluation order matters
+### 评估订单事项
 
-When you use chained indexing, the order and type of the indexing operation
-partially determine whether the result is a slice into the original object, or
-a copy of the slice.
+使用链式索引时，索引操作的顺序和类型会部分确定结果是原始对象的切片还是切片的副本。
 
-Pandas has the ``SettingWithCopyWarning`` because assigning to a copy of a
-slice is frequently not intentional, but a mistake caused by chained indexing
-returning a copy where a slice was expected.
+Pandas有，``SettingWithCopyWarning``因为分配一个切片的副本通常不是故意的，而是由链式索引引起的错误返回一个预期切片的副本。
 
-If you would like pandas to be more or less trusting about assignment to a
-chained indexing expression, you can set the [option](options.html#options)
-``mode.chained_assignment`` to one of these values:
+如果您希望pandas或多或少地信任链接索引表达式的赋值，则可以将[选项](options.html#options)
+设置``mode.chained_assignment``为以下值之一：
 
-- ``'warn'``, the default, means a ``SettingWithCopyWarning`` is printed.
-- ``'raise'`` means pandas will raise a ``SettingWithCopyException``
-you have to deal with.
-- ``None`` will suppress the warnings entirely.
+- ``'warn'``，默认值表示``SettingWithCopyWarning``打印。
+- ``'raise'``意味着大熊猫会提出``SettingWithCopyException``
+你必须处理的事情。
+- ``None`` 将完全压制警告。
 
 ``` python
 In [342]: dfb = pd.DataFrame({'a': ['one', 'one', 'two',
@@ -3235,7 +3045,7 @@ In [342]: dfb = pd.DataFrame({'a': ['one', 'one', 'two',
 In [343]: dfb['c'][dfb.a.str.startswith('o')] = 42
 ```
 
-This however is operating on a copy and will not work.
+然而，这是在副本上运行，不起作用。
 
 ``` python
 >>> pd.set_option('mode.chained_assignment','warn')
@@ -3247,15 +3057,15 @@ SettingWithCopyWarning:
      Try using .loc[row_index,col_indexer] = value instead
 ```
 
-A chained assignment can also crop up in setting in a mixed dtype frame.
+链式分配也可以在混合dtype帧中进行设置。
 
-::: tip Note
+::: tip 注意
 
-These setting rules apply to all of ``.loc/.iloc``.
+这些设置规则适用于所有``.loc/.iloc``。
 
 :::
 
-This is the correct access method:
+这是正确的访问方法：
 
 ``` python
 In [344]: dfc = pd.DataFrame({'A': ['aaa', 'bbb', 'ccc'], 'B': [1, 2, 3]})
@@ -3270,7 +3080,7 @@ Out[346]:
 2  ccc  3
 ```
 
-This *can* work at times, but it is not guaranteed to, and therefore should be avoided:
+这有时*会*起作用，但不能保证，因此应该避免：
 
 ``` python
 In [347]: dfc = dfc.copy()
@@ -3285,7 +3095,7 @@ Out[349]:
 2  ccc  3
 ```
 
-This will **not** work at all, and so should be avoided:
+这**根本**不起作用，所以应该避免：
 
 ``` python
 >>> pd.set_option('mode.chained_assignment','raise')
@@ -3297,10 +3107,8 @@ SettingWithCopyException:
      Try using .loc[row_index,col_indexer] = value instead
 ```
 
-::: danger Warning
+::: danger 警告
 
-The chained assignment warnings / exceptions are aiming to inform the user of a possibly invalid
-assignment. There may be false positives; situations where a chained assignment is inadvertently
-reported.
+链式分配警告/异常旨在通知用户可能无效的分配。可能存在误报; 无意中报告链式作业的情况。
 
 :::
