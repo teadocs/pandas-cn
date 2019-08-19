@@ -1,10 +1,6 @@
-# Working with text data
+# Pandas 处理文本字符串
 
-Series and Index are equipped with a set of string processing methods
-that make it easy to operate on each element of the array. Perhaps most
-importantly, these methods exclude missing/NA values automatically. These are
-accessed via the ``str`` attribute and generally have names matching
-the equivalent (scalar) built-in string methods:
+序列和索引包含一些列的字符操作方法，这可以使我们轻易操作数组中的各个元素。最重要的是，这些方法可以自动跳过 缺失/NA 值。这些方法可以在``str``属性中访问到，并且基本上和python内建的（标量）字符串方法同名：
 
 ``` python
 In [1]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
@@ -62,9 +58,7 @@ In [8]: idx.str.rstrip()
 Out[8]: Index([' jack', 'jill', ' jesse', 'frank'], dtype='object')
 ```
 
-The string methods on Index are especially useful for cleaning up or
-transforming DataFrame columns. For instance, you may have columns with
-leading or trailing whitespace:
+索引的字符串方法在清理或者转换数据表列的时候非常有用。例如，你的列中或许会包含首位的白空格：
 
 ``` python
 In [9]: df = pd.DataFrame(np.random.randn(3, 2),
@@ -89,9 +83,7 @@ In [12]: df.columns.str.lower()
 Out[12]: Index([' column a ', ' column b '], dtype='object')
 ```
 
-These string methods can then be used to clean up the columns as needed.
-Here we are removing leading and trailing whitespaces, lower casing all names,
-and replacing any remaining whitespaces with underscores:
+这些字符串方法可以被用来清理需要的列。这里，我们想清理开头和结尾的白空格，将所有的名称都换为小写，并且将其余的空格都替换为下划线：
 
 ``` python
 In [13]: df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
@@ -104,37 +96,27 @@ Out[14]:
 2  1.212112 -0.173215
 ```
 
-::: tip Note
+::: tip 小贴士
 
-If you have a ``Series`` where lots of elements are repeated
-(i.e. the number of unique elements in the ``Series`` is a lot smaller than the length of the
-``Series``), it can be faster to convert the original ``Series`` to one of type
-``category`` and then use ``.str.`` or ``.dt.`` on that.
-The performance difference comes from the fact that, for ``Series`` of type ``category``, the
-string operations are done on the ``.categories`` and not on each element of the
-``Series``.
+如果你有一个序列，里面有很多重复的值
+（即，序列中唯一元素的数量远小于``序列``的长度），将原有序列转换为一种分类类型，然后使用``.str.`` 或者 ``.dt.``方法，则会获得更快的速度。
+速度的差异来源于，在``分类类型``的``序列``中，字符操作只是在``categories``中完成的，而不是针对``序列``中的每一个元素。
 
-Please note that a ``Series`` of type ``category`` with string ``.categories`` has
-some limitations in comparison to ``Series`` of type string (e.g. you can’t add strings to
-each other: ``s + " " + s`` won’t work if ``s`` is a ``Series`` of type ``category``). Also,
-``.str`` methods which operate on elements of type ``list`` are not available on such a
-``Series``.
+请注意，相比于字符串类型的``序列``，带``.categories``类型的 ``分类`` 类别的 ``序列``有一些限制（例如，你不能像其中的元素追加其他的字串：``s + " " + s`` 将不能正确工作，如果s是一个``分类``类型的序列。并且，``.str`` 中，那些可以对 ``列表（list）`` 类型的元素进行操作的方法，在分类序列中也无法使用。
 
 :::
 
-::: danger Warning
+::: danger 警告
 
-Before v.0.25.0, the ``.str``-accessor did only the most rudimentary type checks. Starting with
-v.0.25.0, the type of the Series is inferred and the allowed types (i.e. strings) are enforced more rigorously.
+v.0.25.0版以前， ``.str``访问器只会进行最基本的类型检查。
+从v.0.25.0起，序列的类型会被自动推断出来，并且会更为激进地使用恰当的类型。
 
-Generally speaking, the ``.str`` accessor is intended to work only on strings. With very few
-exceptions, other uses are not supported, and may be disabled at a later point.
-
+一般来说 ``.str`` 访问器只倾向于针对字符串类型工作。只有在个别的情况下，才能对非字符串类型工作，但是这也将会在未来的版本中被逐步修正
 :::
 
-## Splitting and replacing strings
+## 拆分和替换字符串
 
-Methods like ``split`` return a Series of lists:
+类似``split``的方法返回一个列表类型的序列：
 
 ``` python
 In [15]: s2 = pd.Series(['a_b_c', 'c_d_e', np.nan, 'f_g_h'])
@@ -148,7 +130,7 @@ Out[16]:
 dtype: object
 ```
 
-Elements in the split lists can be accessed using ``get`` or ``[]`` notation:
+切分后的列表中的元素可以通过 ``get`` 方法或者 ``[]`` 方法进行读取：
 
 ``` python
 In [17]: s2.str.split('_').str.get(1)
@@ -168,7 +150,7 @@ Out[18]:
 dtype: object
 ```
 
-It is easy to expand this to return a DataFrame using ``expand``.
+使用``expand``方法可以轻易地将这种返回展开为一个数据表.
 
 ``` python
 In [19]: s2.str.split('_', expand=True)
@@ -180,7 +162,7 @@ Out[19]:
 3    f    g    h
 ```
 
-It is also possible to limit the number of splits:
+同样，我们也可以限制切分的次数：
 
 ``` python
 In [20]: s2.str.split('_', expand=True, n=1)
@@ -192,8 +174,7 @@ Out[20]:
 3    f  g_h
 ```
 
-``rsplit`` is similar to ``split`` except it works in the reverse direction,
-i.e., from the end of the string to the beginning of the string:
+``rsplit``与``split``相似，不同的是，这个切分的方向是反的。即，从字串的尾端向首段切分：
 
 ``` python
 In [21]: s2.str.rsplit('_', expand=True, n=1)
@@ -205,7 +186,7 @@ Out[21]:
 3  f_g    h
 ```
 
-``replace`` by default replaces [regular expressions](https://docs.python.org/3/library/re.html):
+``replace`` 方法默认使用 [正则表达式](https://docs.python.org/3/library/re.html):
 
 ``` python
 In [22]: s3 = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca',
@@ -241,9 +222,7 @@ Out[24]:
 dtype: object
 ```
 
-Some caution must be taken to keep regular expressions in mind! For example, the
-following code will cause trouble because of the regular expression meaning of
-*$*:
+一定要时时记得，是正则表达式，因此要格外小心。例如，因为正则表达式中的*$*符号,下列代码将会导致一些麻烦：
 
 ``` python
 # Consider the following badly formatted financial data
@@ -274,12 +253,10 @@ Out[28]:
 dtype: object
 ```
 
-*New in version 0.23.0.* 
+*v0.23.0. 新加入* 
 
-If you do want literal replacement of a string (equivalent to
-[``str.replace()``](https://docs.python.org/3/library/stdtypes.html#str.replace)), you can set the optional ``regex`` parameter to
-``False``, rather than escaping each character. In this case both ``pat``
-and ``repl`` must be strings:
+I如果你只是向单纯地替换字符 (等价于python中的
+[``str.replace()``](https://docs.python.org/3/library/stdtypes.html#str.replace))，你可以将可选参数 ``regex`` 设置为 ``False``，而不是傻傻地转义所有符号。这种情况下，``pat`` 和 ``repl`` 就都将作为普通字符对待：
 
 ``` python
 # These lines are equivalent
@@ -298,11 +275,9 @@ Out[30]:
 dtype: object
 ```
 
-*New in version 0.20.0.* 
+*v0.20.0. 新加入* 
 
-The ``replace`` method can also take a callable as replacement. It is called
-on every ``pat`` using [``re.sub()``](https://docs.python.org/3/library/re.html#re.sub). The callable should expect one
-positional argument (a regex object) and return a string.
+``replace`` 方法也可以传入一个可调用对象作为替换值。它针对每一个 ``pat`` 通过[``re.sub()``](https://docs.python.org/3/library/re.html#re.sub)来调用。可调用对象应只具有一个形参（一个正则表达式对象）并且返回一个字符串。
 
 ``` python
 # Reverse every lowercase alphabetic word
@@ -333,11 +308,9 @@ Out[36]:
 dtype: object
 ```
 
-*New in version 0.20.0.* 
+*v0.20.0. 新加入* 
 
-The ``replace`` method also accepts a compiled regular expression object
-from [``re.compile()``](https://docs.python.org/3/library/re.html#re.compile) as a pattern. All flags should be included in the
-compiled regular expression object.
+ ``replace`` 方法也可以接受一个来自[``re.compile()``](https://docs.python.org/3/library/re.html#re.compile) 编译过的正则表达式对象，来做为``表达式``。所有的标记都应该被包含在这个已经编译好的正则表达式对象中。
 
 ``` python
 In [37]: import re
@@ -359,8 +332,7 @@ Out[39]:
 dtype: object
 ```
 
-Including a ``flags`` argument when calling ``replace`` with a compiled
-regular expression object will raise a ``ValueError``.
+如果在已经使用编译的正则对象中继续传入``flags`` 参数，并进行替换，将会导致``ValueError``。
 
 ``` python
 In [40]: s3.str.replace(regex_pat, 'XX-XX ', flags=re.IGNORECASE)
@@ -368,14 +340,14 @@ In [40]: s3.str.replace(regex_pat, 'XX-XX ', flags=re.IGNORECASE)
 ValueError: case and flags cannot be set when pat is a compiled regex
 ```
 
-## Concatenation
+## 拼接
 
-There are several ways to concatenate a ``Series`` or ``Index``, either with itself or others, all based on [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat),
+Pandas提供了不同的方法将``序列``或``索引``与他们自己或者其他的对象进行拼接，所有的方法都是基于各自的[``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat),
 resp. ``Index.str.cat``.
 
-### Concatenating a single Series into a string
+### 将单个序列拼接为一个完整字符串
 
-The content of a ``Series`` (or ``Index``) can be concatenated:
+``序列``或``索引``的内容可以进行拼接：
 
 ``` python
 In [41]: s = pd.Series(['a', 'b', 'c', 'd'])
@@ -384,14 +356,14 @@ In [42]: s.str.cat(sep=',')
 Out[42]: 'a,b,c,d'
 ```
 
-If not specified, the keyword ``sep`` for the separator defaults to the empty string, ``sep=''``:
+如果没有额外声明，``sep`` 即分隔符默认为空字串，即``sep=''``：
 
 ``` python
 In [43]: s.str.cat()
 Out[43]: 'abcd'
 ```
 
-By default, missing values are ignored. Using ``na_rep``, they can be given a representation:
+默认情况下，缺失值会被忽略。使用``na_rep``参数，可以对缺失值进行赋值：
 
 ``` python
 In [44]: t = pd.Series(['a', 'b', np.nan, 'd'])
@@ -403,9 +375,9 @@ In [46]: t.str.cat(sep=',', na_rep='-')
 Out[46]: 'a,b,-,d'
 ```
 
-### Concatenating a Series and something list-like into a Series
+### 拼接序列和其他类列表型对象为新的序列
 
-The first argument to [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) can be a list-like object, provided that it matches the length of the calling ``Series`` (or ``Index``).
+[``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat)  的第一个参数为类列表对象，但必须要确保长度与``序列``或``索引``相同.
 
 ``` python
 In [47]: s.str.cat(['A', 'B', 'C', 'D'])
@@ -417,7 +389,8 @@ Out[47]:
 dtype: object
 ```
 
-Missing values on either side will result in missing values in the result as well, *unless* ``na_rep`` is specified:
+
+任何一端的缺失值都会导致之中结果为缺失值，*除非*使用``na_rep``：
 
 ``` python
 In [48]: s.str.cat(t)
@@ -437,11 +410,11 @@ Out[49]:
 dtype: object
 ```
 
-### Concatenating a Series and something array-like into a Series
+### 拼接序列与类数组对象为新的序列
 
-*New in version 0.23.0.* 
+*v0.23.0. 新加入* 
 
-The parameter ``others`` can also be two-dimensional. In this case, the number or rows must match the lengths of the calling ``Series`` (or ``Index``).
+``others`` 参数可以是二维的。此时，行数需要与``序列``或``索引``的长度相同。
 
 ``` python
 In [50]: d = pd.concat([t, s], axis=1)
@@ -471,12 +444,11 @@ Out[53]:
 dtype: object
 ```
 
-### Concatenating a Series and an indexed object into a Series, with alignment
+### 对齐拼接序列与带索引的对象成为新的序列
 
-*New in version 0.23.0.* 
+*v0.23.0.新加入* 
 
-For concatenation with a ``Series`` or ``DataFrame``, it is possible to align the indexes before concatenation by setting
-the ``join``-keyword.
+对于拼接``序列``或者``数据表``，我们可以使用 ``join``关键字来对齐索引。
 
 ``` python
 In [54]: u = pd.Series(['b', 'd', 'a', 'c'], index=[1, 3, 0, 2])
@@ -514,15 +486,15 @@ Out[58]:
 dtype: object
 ```
 
-::: danger Warning
+::: danger 警告
 
-If the ``join`` keyword is not passed, the method [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) will currently fall back to the behavior before version 0.23.0 (i.e. no alignment),
-but a ``FutureWarning`` will be raised if any of the involved indexes differ, since this default will change to ``join='left'`` in a future version.
+如果不使用``join`` 关键字， [``cat()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) 方法将会滚回到0.23.0版之前，即（无对齐）模式。但如果任何的索引不一致时，将会抛出一个
+``FutureWarning``  警告，因为在未来的版本中，默认行为将改为join='left' 。
 
 :::
 
-The usual options are available for ``join`` (one of ``'left', 'outer', 'inner', 'right'``).
-In particular, alignment also means that the different lengths do not need to coincide anymore.
+``join`` 的选项为（``'left'``, ``'outer'``, ``'inner'``, ``'right'``）中的一个。
+特别的，对齐操作使得两个对象可以是不同的长度。
 
 ``` python
 In [59]: v = pd.Series(['z', 'a', 'b', 'd', 'e'], index=[-1, 0, 1, 3, 4])
@@ -563,7 +535,7 @@ Out[63]:
 dtype: object
 ```
 
-The same alignment can be used when ``others`` is a ``DataFrame``:
+当``others``是一个``数据表``时，也可以执行相同的对齐操作：
 
 ``` python
 In [64]: f = d.loc[[3, 2, 1, 0], :]
@@ -593,10 +565,9 @@ Out[67]:
 dtype: object
 ```
 
-### Concatenating a Series and many objects into a Series
+### 将一个序列与多个对象拼接为一个新的序列
 
-Several array-like items (specifically: ``Series``, ``Index``, and 1-dimensional variants of ``np.ndarray``)
-can be combined in a list-like container (including iterators, ``dict``-views, etc.).
+所有的一维，类列表对象都可以任意组合进一个类列表的容器（包括迭代器，dict-视图等）：
 
 ``` python
 In [68]: s
@@ -624,8 +595,8 @@ Out[70]:
 dtype: object
 ```
 
-All elements without an index (e.g. ``np.ndarray``) within the passed list-like must match in length to the calling ``Series`` (or ``Index``),
-but ``Series`` and ``Index`` may have arbitrary length (as long as alignment is not disabled with ``join=None``):
+除了那些有索引的，所有传入没有索引的元素（如``np.ndarray``）必须与``序列``或``索引``有相同的长度。但是，只要禁用对齐``join=None``，那么``序列``或``索引``就可以是任意长度。
+
 
 ``` python
 In [71]: v
@@ -648,8 +619,7 @@ Out[72]:
 dtype: object
 ```
 
-If using ``join='right'`` on a list-like of ``others`` that contains different indexes,
-the union of these indexes will be used as the basis for the final concatenation:
+如果在一个包含不同的索引的``others``列表上使用``join='right'``，所有索引的并集将会被作为最终拼接的基础：
 
 ``` python
 In [73]: u.loc[[3]]
@@ -671,10 +641,9 @@ Out[75]:
 dtype: object
 ```
 
-## Indexing with ``.str``
+## 使用.str进行索引
 
-You can use ``[]`` notation to directly index by position locations. If you index past the end
-of the string, the result will be a ``NaN``.
+你可以使用 ``[]``方法来直接索引定位。如果你的索引超过了字符串的结尾，将返回``NaN``。
 
 ``` python
 In [76]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan,
@@ -708,27 +677,19 @@ Out[78]:
 dtype: object
 ```
 
-## Extracting substrings
+## 提取子字符串
 
-### Extract first match in each subject (extract)
+### 提取第一个匹配的对象  (extract)
 
-::: danger Warning
+::: danger 警告
 
-In version 0.18.0, ``extract`` gained the ``expand`` argument. When
-``expand=False`` it returns a ``Series``, ``Index``, or
-``DataFrame``, depending on the subject and regular expression
-pattern (same behavior as pre-0.18.0). When ``expand=True`` it
-always returns a ``DataFrame``, which is more consistent and less
-confusing from the perspective of a user. ``expand=True`` is the
-default since version 0.23.0.
+在 0.18.0中，``extract``拥有了 ``expand`` 参数。当 ``expand=False``时， 将返回一个序列，索引或者数据表， 这取决于原对象和正则表达式（之前的版本也是如此）。当 ``expand=True``时，它则总是返回一个``DataFrame``，这样可以更加一致，并且减少用户的混淆。 ``Expand=True`` 从0.23.0版本之后成为默认值。
 
 :::
 
-The ``extract`` method accepts a [regular expression](https://docs.python.org/3/library/re.html) with at least one
-capture group.
+``extract`` 方法接受一个至少含有一个捕获组的 [正则表达式](https://docs.python.org/3/library/re.html)。
 
-Extracting a regular expression with more than one group returns a
-DataFrame with one column per group.
+使用超过一个捕获组的正则表达式则会提取并返回一个数据表，每一列为一个捕获组。
 
 ``` python
 In [79]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'([ab])(\d)', expand=False)
@@ -739,14 +700,9 @@ Out[79]:
 2  NaN  NaN
 ```
 
-Elements that do not match return a row filled with ``NaN``. Thus, a
-Series of messy strings can be “converted” into a like-indexed Series
-or DataFrame of cleaned-up or more useful strings, without
-necessitating ``get()`` to access tuples or ``re.match`` objects. The
-dtype of the result is always object, even if no match is found and
-the result only contains ``NaN``.
+没有成功匹配的元素将会返回一行``NaN``。因此，一个序列的混乱的字符串可以被‘转换’为一个类似索引的序列或数据表。返回的内容会更为清爽，而且不需要使用``get()``方法来访问元组中的成员或者``re.match``对象。返回的类型将总是``object``类，即使匹配失败，返回的全是``NaN``。
 
-Named groups like
+有名称的捕获组，如：
 
 ``` python
 In [80]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'(?P<letter>[ab])(?P<digit>\d)',
@@ -759,7 +715,7 @@ Out[80]:
 2    NaN   NaN
 ```
 
-and optional groups like
+可选组类似，如：
 
 ``` python
 In [81]: pd.Series(['a1', 'b2', '3']).str.extract(r'([ab])?(\d)', expand=False)
@@ -769,13 +725,9 @@ Out[81]:
 1    b  2
 2  NaN  3
 ```
+也可以被使用。注意，任何有名称的捕获组，其名称都会被用做列名，否则将会直接使用数字。
 
-can also be used. Note that any capture group names in the regular
-expression will be used for column names; otherwise capture group
-numbers will be used.
-
-Extracting a regular expression with one group returns a ``DataFrame``
-with one column if ``expand=True``.
+如果仅使用正则表达式捕获一个组，而``expand=True``，那么仍然将返回一个``数据表``。
 
 ``` python
 In [82]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'[ab](\d)', expand=True)
@@ -786,7 +738,7 @@ Out[82]:
 2  NaN
 ```
 
-It returns a Series if ``expand=False``.
+如果``expand=False``，则会返回一个``序列``。
 
 ``` python
 In [83]: pd.Series(['a1', 'b2', 'c3']).str.extract(r'[ab](\d)', expand=False)
@@ -797,8 +749,7 @@ Out[83]:
 dtype: object
 ```
 
-Calling on an ``Index`` with a regex with exactly one capture group
-returns a ``DataFrame`` with one column if ``expand=True``.
+在``索引``上使用正则表达式，并且仅捕获一个组时，将会返回一个``数据表``，如果``expand=True``。
 
 ``` python
 In [84]: s = pd.Series(["a1", "b2", "c3"], ["A11", "B22", "C33"])
@@ -818,15 +769,14 @@ Out[86]:
 2      C
 ```
 
-It returns an ``Index`` if ``expand=False``.
+如果``expand=False``，则返回一个``Index``。
 
 ``` python
 In [87]: s.index.str.extract("(?P<letter>[a-zA-Z])", expand=False)
 Out[87]: Index(['A', 'B', 'C'], dtype='object', name='letter')
 ```
 
-Calling on an ``Index`` with a regex with more than one capture group
-returns a ``DataFrame`` if ``expand=True``.
+如果在``索引``上使用正则并捕获多个组，则返回一个``数据表``，如果``expand=True``。
 
 ``` python
 In [88]: s.index.str.extract("(?P<letter>[a-zA-Z])([0-9]+)", expand=True)
@@ -837,27 +787,25 @@ Out[88]:
 2      C  33
 ```
 
-It raises ``ValueError`` if ``expand=False``.
+如果 ``expand=False``，则抛出``ValueError``。
 
 ``` python
 >>> s.index.str.extract("(?P<letter>[a-zA-Z])([0-9]+)", expand=False)
 ValueError: only one regex group is supported with Index
 ```
 
-The table below summarizes the behavior of ``extract(expand=False)``
-(input subject in first column, number of groups in regex in
-first row)
+下面的表格总结了``extract (expand=False)``时的行为（输入对象在第一列，捕获组的数量在第一行）
 
   | 1 group | >1 group
 ---|---|---
 Index | Index | ValueError
 Series | Series | DataFrame
 
-### Extract all matches in each subject (extractall)
+### 提取所有的匹配 (extractall)
 
-*New in version 0.18.0.* 
+*v0.18.0. 新加入* 
 
-Unlike ``extract`` (which returns only the first match),
+不同于 ``extract``（只返回第一个匹配），
 
 ``` python
 In [89]: s = pd.Series(["a1a2", "b1", "c1"], index=["A", "B", "C"])
@@ -879,10 +827,7 @@ B      b     1
 C      c     1
 ```
 
-the ``extractall`` method returns every match. The result of
-``extractall`` is always a ``DataFrame`` with a ``MultiIndex`` on its
-rows. The last level of the ``MultiIndex`` is named ``match`` and
-indicates the order in the subject.
+``extractall``方法返回所有的匹配。``extractall``总是返回一个带有行``多重索引``的``数据表``，最后一级``多重索引``被命名为``match``，它指出匹配的顺序
 
 ``` python
 In [93]: s.str.extractall(two_groups)
@@ -895,7 +840,7 @@ B 0          b     1
 C 0          c     1
 ```
 
-When each subject string in the Series has exactly one match,
+当所有的对象字串都只有一个匹配时，
 
 ``` python
 In [94]: s = pd.Series(['a3', 'b3', 'c2'])
@@ -908,8 +853,7 @@ Out[95]:
 dtype: object
 ```
 
-then ``extractall(pat).xs(0, level='match')`` gives the same result as
-``extract(pat)``.
+``extractall(pat).xs(0, level='match')`` 的返回与``extract(pat)``相同。
 
 ``` python
 In [96]: extract_result = s.str.extract(two_groups, expand=True)
@@ -939,10 +883,9 @@ Out[100]:
 2      c     2
 ```
 
-``Index`` also supports ``.str.extractall``. It returns a ``DataFrame`` which has the
-same result as a ``Series.str.extractall`` with a default index (starts from 0).
+``索引``也支持``.str.extractall``。 它返回一个``数据表``，其中包含与``Series.str.estractall``相同的结果，使用默认索引（从0开始）
 
-*New in version 0.19.0.* 
+*v0.19.0. 新加入* 
 
 ``` python
 In [101]: pd.Index(["a1a2", "b1", "c1"]).str.extractall(two_groups)
@@ -964,9 +907,9 @@ Out[102]:
 2 0          c     1
 ```
 
-## Testing for Strings that match or contain a pattern
+## 测试匹配或包含模式的字符串
 
-You can check whether elements contain a pattern:
+你可以检查是否一个元素包含一个可以匹配到的正则表达式：
 
 ``` python
 In [103]: pattern = r'[0-9][a-z]'
@@ -981,7 +924,7 @@ Out[104]:
 dtype: bool
 ```
 
-Or whether elements match a pattern:
+或者是否元素完整匹配一个正则表达式
 
 ``` python
 In [105]: pd.Series(['1', '2', '3a', '3b', '03c']).str.match(pattern)
@@ -994,11 +937,9 @@ Out[105]:
 dtype: bool
 ```
 
-The distinction between ``match`` and ``contains`` is strictness: ``match``
-relies on strict ``re.match``, while ``contains`` relies on ``re.search``.
+``match``和``contains``的区别是是否严格匹配。``match``严格基于``re.match``，而``contains``基于``re.search``。
 
-Methods like ``match``, ``contains``, ``startswith``, and ``endswith`` take
-an extra ``na`` argument so missing values can be considered True or False:
+类似``match``, ``contains``, ``startswith`` 和 ``endswith`` 可以传入一个额外的``na``参数，因此，因此缺失值在匹配时可以被认为是``True``或者``False``：
 
 ``` python
 In [106]: s4 = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
@@ -1017,10 +958,9 @@ Out[107]:
 dtype: bool
 ```
 
-## Creating indicator variables
+## 建立一个指示变量
 
-You can extract dummy variables from string columns.
-For example if they are separated by a ``'|'``:
+你从字符串列可以抽出一个哑变量。例如，是否他们由``|``分割:
 
 ``` python
 In [108]: s = pd.Series(['a', 'a|b', np.nan, 'a|c'])
@@ -1034,9 +974,9 @@ Out[109]:
 3  1  0  1
 ```
 
-String ``Index`` also supports ``get_dummies`` which returns a ``MultiIndex``.
+索引也支持``get_dummies``，它返回一个多重索引：
 
-*New in version 0.18.1.* 
+*v0.18.1. 新加入* 
 
 ``` python
 In [110]: idx = pd.Index(['a', 'a|b', np.nan, 'a|c'])
@@ -1050,59 +990,59 @@ MultiIndex([(1, 0, 0),
            names=['a', 'b', 'c'])
 ```
 
-See also [``get_dummies()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html#pandas.get_dummies).
+参见 [``get_dummies()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html#pandas.get_dummies).
 
-## Method summary
+## 方法总览
 
-Method | Description
+方法 | 描述
 ---|---
-[cat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) | Concatenate strings
-[split()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.split.html#pandas.Series.str.split) | Split strings on delimiter
-[rsplit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rsplit.html#pandas.Series.str.rsplit) | Split strings on delimiter working from the end of the string
-[get()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get.html#pandas.Series.str.get) | Index into each element (retrieve i-th element)
-[join()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.join.html#pandas.Series.str.join) | Join strings in each element of the Series with passed separator
-[get_dummies()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get_dummies.html#pandas.Series.str.get_dummies) | Split strings on the delimiter returning DataFrame of dummy variables
-[contains()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html#pandas.Series.str.contains) | Return boolean array if each string contains pattern/regex
-[replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.replace.html#pandas.Series.str.replace) | Replace occurrences of pattern/regex/string with some other string or the return value of a callable given the occurrence
-[repeat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.repeat.html#pandas.Series.str.repeat) | Duplicate values (s.str.repeat(3) equivalent to x * 3)
-[pad()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.pad.html#pandas.Series.str.pad) | Add whitespace to left, right, or both sides of strings
-[center()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.center.html#pandas.Series.str.center) | Equivalent to str.center
-[ljust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.ljust.html#pandas.Series.str.ljust) | Equivalent to str.ljust
-[rjust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rjust.html#pandas.Series.str.rjust) | Equivalent to str.rjust
-[zfill()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.zfill.html#pandas.Series.str.zfill) | Equivalent to str.zfill
-[wrap()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.wrap.html#pandas.Series.str.wrap) | Split long strings into lines with length less than a given width
-[slice()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice.html#pandas.Series.str.slice) | Slice each string in the Series
-[slice_replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice_replace.html#pandas.Series.str.slice_replace) | Replace slice in each string with passed value
-[count()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.count.html#pandas.Series.str.count) | Count occurrences of pattern
-[startswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.startswith.html#pandas.Series.str.startswith) | Equivalent to str.startswith(pat) for each element
-[endswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.endswith.html#pandas.Series.str.endswith) | Equivalent to str.endswith(pat) for each element
-[findall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.findall.html#pandas.Series.str.findall) | Compute list of all occurrences of pattern/regex for each string
-[match()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.match.html#pandas.Series.str.match) | Call re.match on each element, returning matched groups as list
-[extract()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extract.html#pandas.Series.str.extract) | Call re.search on each element, returning DataFrame with one row for each element and one column for each regex capture group
-[extractall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extractall.html#pandas.Series.str.extractall) | Call re.findall on each element, returning DataFrame with one row for each match and one column for each regex capture group
-[len()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.len.html#pandas.Series.str.len) | Compute string lengths
-[strip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.strip.html#pandas.Series.str.strip) | Equivalent to str.strip
-[rstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rstrip.html#pandas.Series.str.rstrip) | Equivalent to str.rstrip
-[lstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lstrip.html#pandas.Series.str.lstrip) | Equivalent to str.lstrip
-[partition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.partition.html#pandas.Series.str.partition) | Equivalent to str.partition
-[rpartition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rpartition.html#pandas.Series.str.rpartition) | Equivalent to str.rpartition
-[lower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lower.html#pandas.Series.str.lower) | Equivalent to str.lower
-[casefold()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.casefold.html#pandas.Series.str.casefold) | Equivalent to str.casefold
-[upper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.upper.html#pandas.Series.str.upper) | Equivalent to str.upper
-[find()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.find.html#pandas.Series.str.find) | Equivalent to str.find
-[rfind()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rfind.html#pandas.Series.str.rfind) | Equivalent to str.rfind
-[index()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.index.html#pandas.Series.str.index) | Equivalent to str.index
-[rindex()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rindex.html#pandas.Series.str.rindex) | Equivalent to str.rindex
-[capitalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.capitalize.html#pandas.Series.str.capitalize) | Equivalent to str.capitalize
-[swapcase()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.swapcase.html#pandas.Series.str.swapcase) | Equivalent to str.swapcase
-[normalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.normalize.html#pandas.Series.str.normalize) | Return Unicode normal form. Equivalent to unicodedata.normalize
-[translate()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.translate.html#pandas.Series.str.translate) | Equivalent to str.translate
-[isalnum()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalnum.html#pandas.Series.str.isalnum) | Equivalent to str.isalnum
-[isalpha()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalpha.html#pandas.Series.str.isalpha) | Equivalent to str.isalpha
-[isdigit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdigit.html#pandas.Series.str.isdigit) | Equivalent to str.isdigit
-[isspace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isspace.html#pandas.Series.str.isspace) | Equivalent to str.isspace
-[islower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.islower.html#pandas.Series.str.islower) | Equivalent to str.islower
-[isupper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isupper.html#pandas.Series.str.isupper) | Equivalent to str.isupper
-[istitle()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.istitle.html#pandas.Series.str.istitle) | Equivalent to str.istitle
-[isnumeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isnumeric.html#pandas.Series.str.isnumeric) | Equivalent to str.isnumeric
-[isdecimal()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdecimal.html#pandas.Series.str.isdecimal) | Equivalent to str.isdecimal
+[cat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.cat.html#pandas.Series.str.cat) | 拼接字符串
+[split()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.split.html#pandas.Series.str.split) | 基于分隔符切分字符串
+[rsplit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rsplit.html#pandas.Series.str.rsplit) | 基于分隔符，逆向切分字符串
+[get()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get.html#pandas.Series.str.get) | 索引每一个元素（返回第i个元素）
+[join()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.join.html#pandas.Series.str.join) | 使用传入的分隔符依次拼接每一个元素
+[get_dummies()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.get_dummies.html#pandas.Series.str.get_dummies) | 用分隔符切分字符串，并返回一个含有哑变量的数据表 
+[contains()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html#pandas.Series.str.contains) | 返回一个布尔矩阵表明是每个元素包含字符串或正则表达式
+[replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.replace.html#pandas.Series.str.replace) | 将匹配到的子串或正则表达式替换为另外的字符串，或者一个可调用对象的返回值
+[repeat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.repeat.html#pandas.Series.str.repeat) | 值复制（s.str.repeat(3)等价于x * 3）
+[pad()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.pad.html#pandas.Series.str.pad) | 将白空格插入到字符串的左、右或者两端
+[center()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.center.html#pandas.Series.str.center) | 等价于``str.center`` 
+[ljust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.ljust.html#pandas.Series.str.ljust) | 等价于``str.ljust``
+[rjust()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rjust.html#pandas.Series.str.rjust) | 等价于``str.rjust`` 
+[zfill()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.zfill.html#pandas.Series.str.zfill) | 等价于``str.zfill``
+[wrap()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.wrap.html#pandas.Series.str.wrap) | 将长字符串转换为不长于给定长度的行
+[slice()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice.html#pandas.Series.str.slice) | 将序列中的每一个字符串切片
+[slice_replace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.slice_replace.html#pandas.Series.str.slice_replace) | 用传入的值替换每一个字串中的切片
+[count()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.count.html#pandas.Series.str.count) | 对出现符合的规则进行计数
+[startswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.startswith.html#pandas.Series.str.startswith) | 等价于``str.startswith(pat)`` 
+[endswith()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.endswith.html#pandas.Series.str.endswith) | 等价于 ``str.endswith(pat)`` 
+[findall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.findall.html#pandas.Series.str.findall) | 返回每一个字串中出现的所有满足样式或正则的匹配
+[match()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.match.html#pandas.Series.str.match) | 素调用 ``re.match``，并以列表形式返回匹配到的组
+[extract()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extract.html#pandas.Series.str.extract) | Call 对每一个元素调用 ``re.search``, 并以数据表的形式返回。行对应原有的一个元素，列对应所有捕获的组
+[extractall()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extractall.html#pandas.Series.str.extractall) | 一个元素调用 ``re.findall``, 并以数据表的形式返回。行对应原有的一个元素，列对应所有捕获的组
+[len()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.len.html#pandas.Series.str.len) | 计算字符串长度
+[strip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.strip.html#pandas.Series.str.strip) | 等价于``str.strip`` 
+[rstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rstrip.html#pandas.Series.str.rstrip) | 等价于``str.rstrip``
+[lstrip()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lstrip.html#pandas.Series.str.lstrip) | 等价于``str.lstrip``
+[partition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.partition.html#pandas.Series.str.partition) | 等价于 ``str.partition``
+[rpartition()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rpartition.html#pandas.Series.str.rpartition) | 等价于 ``str.rpartition``
+[lower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.lower.html#pandas.Series.str.lower) | 等价于 ``str.lower``
+[casefold()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.casefold.html#pandas.Series.str.casefold) | 等价于 ``str.casefold``
+[upper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.upper.html#pandas.Series.str.upper) | 等价于 ``str.upper`` 
+[find()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.find.html#pandas.Series.str.find) | 等价于``str.find``
+[rfind()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rfind.html#pandas.Series.str.rfind) | 等价于 ``str.rfind`` 
+[index()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.index.html#pandas.Series.str.index) | 等价于 ``str.index``
+[rindex()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.rindex.html#pandas.Series.str.rindex) | 等价于 ``str.rindex``
+[capitalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.capitalize.html#pandas.Series.str.capitalize) | 等价于 ``str.capitalize``
+[swapcase()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.swapcase.html#pandas.Series.str.swapcase) | 等价于 ``str.swapcase``
+[normalize()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.normalize.html#pandas.Series.str.normalize) | 返回Unicode 标注格式。等价于 unicodedata.normalize
+[translate()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.translate.html#pandas.Series.str.translate) | 等价于 ``str.translate``
+[isalnum()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalnum.html#pandas.Series.str.isalnum) | 等价于 ``str.isalnum`` 
+[isalpha()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isalpha.html#pandas.Series.str.isalpha) | 等价于 ``str.isalpha`` 
+[isdigit()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdigit.html#pandas.Series.str.isdigit) | 等价于 ``str.isdigit``
+[isspace()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isspace.html#pandas.Series.str.isspace) |  等价于 ``str.isspace``
+[islower()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.islower.html#pandas.Series.str.islower) | 等价于 ``str.islower``
+[isupper()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isupper.html#pandas.Series.str.isupper) | 等价于 ``str.isupper``
+[istitle()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.istitle.html#pandas.Series.str.istitle) | 等价于 ``str.istitle``
+[isnumeric()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isnumeric.html#pandas.Series.str.isnumeric) | 等价于 ``str.isnumeric``
+[isdecimal()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.isdecimal.html#pandas.Series.str.isdecimal) |  等价于 ``str.isdecimal``
