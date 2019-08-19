@@ -741,6 +741,7 @@ dtype: float64
 ```
 
 Combined with the broadcasting / arithmetic behavior, one can describe various statistical procedures, like standardization (rendering data zero mean and standard deviation 1), very concisely:
+结合使用广播/算数行为，我们可以非常简单地描述各种统计过程，例如标准化（将输入转化为均值为0，标准差为1）：
 
 ``` python
 In [86]: ts_stand = (df - df.mean()) / df.std()
