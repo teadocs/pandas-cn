@@ -330,7 +330,7 @@ In [34]: s.name
 Out[34]: 'something'
 ```
 
-``name``在许多情况下， Series 会自动分配，特别是在拍摄一维DataFrame时，如下所示。
+``name``在许多情况下， Series 会自动分配，特别是在获取1D DataFrame切片时，如下所示。
 
 *版本0.18.0中的新功能。* 
 
@@ -831,12 +831,13 @@ one_trunc     NaN
 Name: c, dtype: object
 ```
 
-有关基于标签的复杂索引和切片的更详尽处理，请参阅[索引部分](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing)。我们将[在重建索引](basics.html#basics-reindexing)一[节中介绍重新](basics.html#basics-reindexing)索引/符合新标签集的基础知识
- 。
+有关基于标签的复杂索引和切片的更详尽处理，
+请参阅[索引部分](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing)。
+我们将[在重建索引](basics.html#basics-reindexing)一节中介绍重新索引/符合新标签集的基础知识。
 
 ### 数据对齐和算术
 
-DataFrame对象之间的数据对齐自动**在列和索引（行标签）**上对齐。同样，生成的对象将具有列和行标签的并集。
+DataFrame对象之间的数据对齐自动 **在列和索引（行标签）** 上对齐。同样，生成的对象将具有列和行标签的并集。
 
 ``` python
 In [85]: df = pd.DataFrame(np.random.randn(10, 4), columns=['A', 'B', 'C', 'D'])
@@ -858,9 +859,8 @@ Out[87]:
 9       NaN       NaN       NaN NaN
 ```
 
-在DataFrame和Series之间执行操作时，默认行为是在DataFrame **列**上对齐Series **索引**，从而按
-行进行[广播](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)。例如：****[](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-
+在DataFrame和Series之间执行操作时，默认行为是在DataFrame**列**上对齐Series**索引**，从而按行进行[广播]((http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html))。例如：
+ 
 ``` python
 In [88]: df - df.iloc[0]
 Out[88]: 
@@ -1140,8 +1140,8 @@ dtype: int64
 
 ### 控制台显示
 
-将截断非常大的DataFrame以在控制台中显示它们。您还可以使用获得摘要[``info()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html#pandas.DataFrame.info)。（这里我正在阅读**plyr** 
-R包中的**棒球**数据集的CSV版本）：****
+将截断非常大的DataFrame以在控制台中显示它们。
+您还可以使用[``info()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html#pandas.DataFrame.info)获取摘要。 这里我正在阅读**plyr** R包中的**棒球**数据集的CSV版本）：
 
 ``` python
 In [119]: baseball = pd.read_csv('data/baseball.csv')
@@ -1187,7 +1187,7 @@ dtypes: float64(9), int64(11), object(3)
 memory usage: 18.1+ KB
 ```
 
-但是，using ``to_string``将以表格形式返回DataFrame的字符串表示形式，但它并不总是适合控制台宽度：
+但是，使用``to_string`` 将以表格形式返回DataFrame的字符串表示形式，但它并不总是适合控制台宽度：
 
 ``` python
 In [122]: print(baseball.iloc[-20:, :12].to_string())
@@ -1239,7 +1239,7 @@ Out[125]:
 2  0.758527  1.729689 -0.964980 -0.845696 -1.340896  1.846883 -1.328865  1.682706 -1.717693  0.888782  0.228440  0.901805
 ```
 
-您可以通过设置调整各列的最大宽度 ``display.max_colwidth``
+您可以通过设置 ``display.max_colwidth`` 调整各列的最大宽度。
 
 ``` python
 In [126]: datafile = {'filename': ['filename_01', 'filename_02'],
@@ -1294,8 +1294,7 @@ Out[133]:
 Name: foo1, dtype: float64
 ```
 
-列也连接到[IPython](https://ipython.org) 
-完成机制，因此它们可以完成制表：
+这些列也连接到[IPython](https://ipython.org) 的完成机制，因此它们可以完成制表：
 
 ``` python
 In [5]: df.fo<TAB>  # noqa: E225, E999
