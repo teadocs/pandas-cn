@@ -155,6 +155,28 @@ If you find a better tutorial to share, please [let us know]((https://github.com
   }
 ]"></awesome>
 
+## Open source project
+
+Here is the open source project related to pandas.
+
+<awesome :data="[
+  {
+    tag: 'github',
+    name: 'Productivity Tools for Plotly + Pandas',
+    href: 'https://github.com/santosjorge/cufflinks'
+  },
+  {
+    tag: 'github',
+    name: 'pandas-profiling',
+    href: 'https://github.com/pandas-profiling/pandas-profiling/tree/master/pandas_profiling/model'
+  },
+  {
+    tag: 'github',
+    name: 'Grid studio is a web-based spreadsheet application with full integration of the Python programming language.',
+    href: 'https://github.com/ricklamers/gridstudio'
+  }
+]"></awesome>
+
 ## Books
 
 Here is the download address of the learning version. If you have the conditions, please also support the genuine.

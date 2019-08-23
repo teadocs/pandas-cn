@@ -2,23 +2,23 @@
 
 ## 与R/R库的比较
 
-Since ``pandas`` aims to provide a lot of the data manipulation and analysis functionality that people use [R](http://www.r-project.org/) for, this page was started to provide a more detailed look at the [R language](http://en.wikipedia.org/wiki/R_(programming_language)) and its many third party libraries as they relate to ``pandas``. In comparisons with R and CRAN libraries, we care about the following things:
+由于``pandas``旨在为人们提供可以替代[R](http://www.r-project.org/)的大量数据操作和分析的功能，因此本章节会提供较为详细的[R语言](http://en.wikipedia.org/wiki/R_(programming_language))的介绍以及与相关的许多第三方库的对比说明，比如我们的``pandas``库。在与R和CRAN库的比较中，我们关注以下事项：
 
-- **Functionality / flexibility**: what can/cannot be done with each tool
-- **Performance**: how fast are operations. Hard numbers/benchmarks are preferable
-- **Ease-of-use**: Is one tool easier/harder to use (you may have to be the judge of this, given side-by-side code comparisons)
+- **功能/灵活性**：每个工具可以/不​​可以做什么
+- **性能**：操作速度有多快。硬性数字/基准是优选的
+- **易于使用**：一种工具更容易/更难使用（您可能需要对此进行判断，并进行并排代码比较）
 
-This page is also here to offer a bit of a translation guide for users of these R packages.
+此页面还为这些R包的用户提供了一些翻译指南。
 
-For transfer of ``DataFrame`` objects from ``pandas`` to R, one option is to use HDF5 files, see [External Compatibility](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-external-compatibility) for an example.
+要将``DataFrame``对象从 ``pandas`` 转化为到 R 的数据类型，有一个选择是采用HDF5文件，请参阅[外部兼容性](https://pandas.pydata.org/pandas-docs/stable/../user_guide/io.html#io-external-compatibility)示例。
 
-### Quick Reference
+### 快速参考
 
-We’ll start off with a quick reference guide pairing some common R operations using [dplyr](http://cran.r-project.org/web/packages/dplyr/index.html) with pandas equivalents.
+我们将从快速参考指南开始，将[dplyr](https://cran.r-project.org/package=dplyr)与pandas等效的一些常见R操作配对。
 
-#### Querying, Filtering, Sampling
+#### 查询、过滤、采样
 
-R | pandas
+R | Pandas
 ---|---
 dim(df) | df.shape
 head(df) | df.head()
@@ -27,59 +27,61 @@ filter(df, col1 == 1, col2 == 1) | df.query('col1 == 1 & col2 == 1')
 df[df$col1 == 1 & df$col2 == 1,] | df[(df.col1 == 1) & (df.col2 == 1)]
 select(df, col1, col2) | df[['col1', 'col2']]
 select(df, col1:col3) | df.loc[:, 'col1':'col3']
-select(df, -(col1:col3)) | df.drop(cols_to_drop, axis=1) but see [1]
+select(df, -(col1:col3)) | df.drop(cols_to_drop, axis=1)但是看[[1]](#select-range)
 distinct(select(df, col1)) | df[['col1']].drop_duplicates()
 distinct(select(df, col1, col2)) | df[['col1', 'col2']].drop_duplicates()
 sample_n(df, 10) | df.sample(n=10)
 sample_frac(df, 0.01) | df.sample(frac=0.01)
 
-::: tip
-[1] | R’s shorthand for a subrange of columns (``select(df, col1:col3)``) can be approached cleanly in pandas, if you have the list of columns, for example ``df[cols[1:3]]`` or ``df.drop(cols[1:3])``, but doing this by column name is a bit messy.
-:::
+::: tip Note
 
-#### Sorting
+R表示列的子集 ``(select(df，col1：col3)`` 的缩写更接近 Pandas 的写法，如果您有列的列表，例如 ``df[cols[1:3]`` 或 ``df.drop(cols[1:3])``，按列名执行此操作可能会引起混乱。
 
-R | pandas
+::: 
+
+#### 排序
+
+R | Pandas
 ---|---
 arrange(df, col1, col2) | df.sort_values(['col1', 'col2'])
 arrange(df, desc(col1)) | df.sort_values('col1', ascending=False)
 
-#### Transforming
+#### 变换
 
-R | pandas
+R | Pandas
 ---|---
 select(df, col_one = col1) | df.rename(columns={'col1': 'col_one'})['col_one']
 rename(df, col_one = col1) | df.rename(columns={'col1': 'col_one'})
 mutate(df, c=a-b) | df.assign(c=df.a-df.b)
 
-#### Grouping and Summarizing
+#### 分组和组合
 
-R | pandas
+R | Pandas
 ---|---
 summary(df) | df.describe()
 gdf <- group_by(df, col1) | gdf = df.groupby('col1')
 summarise(gdf, avg=mean(col1, na.rm=TRUE)) | df.groupby('col1').agg({'col1': 'mean'})
 summarise(gdf, total=sum(col1)) | df.groupby('col1').sum()
 
-### Base R
+### 基本的R用法
 
-#### Slicing with R’s [c](http://stat.ethz.ch/R-manual/R-patched/library/base/html/c.html)
+#### 用R``c``方法来进行切片操作
 
-R makes it easy to access ``data.frame`` columns by name
+R使您可以轻松地按名称访问列（``data.frame``）
 
-``` python
+``` r
 df <- data.frame(a=rnorm(5), b=rnorm(5), c=rnorm(5), d=rnorm(5), e=rnorm(5))
 df[, c("a", "c", "e")]
 ```
 
-or by integer location
+或整数位置
 
-``` python
+``` r
 df <- data.frame(matrix(rnorm(1000), ncol=100))
 df[, c(1:10, 25:30, 40, 50:100)]
 ```
 
-Selecting multiple columns by name in ``pandas`` is straightforward
+按名称选择多个``pandas``的列非常简单
 
 ``` python
 In [1]: df = pd.DataFrame(np.random.randn(10, 3), columns=list('abc'))
@@ -113,7 +115,7 @@ Out[3]:
 9 -1.039268 -1.157892
 ```
 
-Selecting multiple noncontiguous columns by integer location can be achieved with a combination of the ``iloc`` indexer attribute and ``numpy.r_``.
+通过整数位置选择多个不连续的列可以通过``iloc``索引器属性和 ``numpy.r_`` 的组合来实现。
 
 ``` python
 In [4]: named = list('abcdefg')
@@ -132,11 +134,7 @@ Out[8]:
 2   0.176444  0.403310 -0.154951  0.301624 -2.179861 -1.369849 -0.954208  1.462696 -1.743161 -0.826591  0.084844  0.432390  1.519970 -0.493662  0.600178  0.274230
 3   0.132885 -0.023688  2.410179  1.450520  0.206053 -0.251905 -2.213588  1.063327  1.266143  0.299368 -2.484478 -0.281461  0.030711  0.109121  1.126203 -0.977349
 4   1.474071 -0.064034 -1.282782  0.781836 -1.071357  0.441153  2.353925  0.583787  0.221471 -0.744471 -1.197071 -1.066969 -0.303421 -0.858447  0.306996 -0.028665
-5   0.384316  1.574159  1.588931  0.476720  0.473424 -0.242861 -0.014805 -0.284319  0.650776 -1.461665 -0.902937  0.068159 -0.057873 -0.368204 -1.144073  0.861209
-6   0.800193  0.782098 -1.069094 -1.099248  0.255269  0.009750  0.661084  0.379319 -0.008434  1.952541  0.604603  2.121453  0.597701  0.563700  0.967661 -1.057909
 ..       ...       ...       ...       ...       ...       ...       ...       ...       ...       ...       ...       ...       ...       ...       ...       ...
-23  1.534417 -1.374226 -0.367477  0.782551  1.356489  0.981552  0.304501  0.354041 -1.232756 -0.267074  0.641606 -1.690959  0.961088  0.052372  1.166439  0.407281
-24  0.859275 -0.995910  0.261263  1.783442  0.380989  2.289726  0.309489  2.189028  1.389045 -0.873585 -0.169076  0.840316  0.638172  0.890673 -1.949397 -0.003437
 25  1.492125 -0.068190  0.681456  1.221829 -0.434352  1.204815 -0.195612  1.251683 -1.040389 -0.796211  1.944517  0.042344 -0.307904  0.428572  0.880609  0.487645
 26  0.725238  0.624607 -0.141185 -0.143948 -0.328162  2.095086 -0.608888 -0.926422  1.872601 -2.513465 -0.846188  1.190624  0.778507  1.008500  1.424017  0.717110
 27  1.262419  1.950057  0.301038 -0.933858  0.814946  0.181439 -0.110015 -2.364638 -1.584814  0.307941 -1.341814  0.334281 -0.162227  1.007824  2.826008  1.458383
@@ -146,11 +144,11 @@ Out[8]:
 [30 rows x 16 columns]
 ```
 
-#### [aggregate](http://finzi.psych.upenn.edu/R/library/stats/html/aggregate.html)
+#### ``aggregate``
 
-In R you may want to split data into subsets and compute the mean for each. Using a data.frame called ``df`` and splitting it into groups ``by1`` and ``by2``:
+在R中，您可能希望将数据分成几个子集，并计算每个子集的平均值。使用名为``df``的data.frame并将其分成组``by1``和``by2``：
 
-``` python
+``` r
 df <- data.frame(
   v1 = c(1,3,5,7,8,3,5,NA,4,5,7,9),
   v2 = c(11,33,55,77,88,33,55,NA,44,55,77,99),
@@ -159,7 +157,8 @@ df <- data.frame(
 aggregate(x=df[, c("v1", "v2")], by=list(mydf2$by1, mydf2$by2), FUN = mean)
 ```
 
-The [groupby()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) method is similar to base R ``aggregate`` function.
+该[``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)方法类似于基本R的 ``aggregate``
+函数。
 
 ``` python
 In [9]: df = pd.DataFrame(
@@ -186,18 +185,18 @@ red  red   4.0  44.0
      wet   1.0  11.0
 ```
 
-For more details and examples see [the groupby documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#groupby-split).
+有关更多详细信息和示例，请参阅[groupby文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/groupby.html#groupby-split)。
 
-#### [match / %in%](http://finzi.psych.upenn.edu/R/library/base/html/match.html)
+#### ``match``/ ``%in%``
 
-A common way to select data in R is using ``%in%`` which is defined using the function ``match``. The operator ``%in%`` is used to return a logical vector indicating if there is a match or not:
+在R中选择数据的常用方法是使用``%in%``使用该函数定义的数据``match``。运算符``%in%``用于返回指示是否存在匹配的逻辑向量：
 
-``` python
+``` r
 s <- 0:4
 s %in% c(2,4)
 ```
 
-The [isin()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin) method is similar to R ``%in%`` operator:
+该[``isin()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin)方法类似于R ``%in%``运算符：
 
 ``` python
 In [12]: s = pd.Series(np.arange(5), dtype=np.float32)
@@ -212,20 +211,21 @@ Out[13]:
 dtype: bool
 ```
 
-The ``match`` function returns a vector of the positions of matches of its first argument in its second:
+该``match``函数返回其第二个参数匹配位置的向量：
 
-``` python
+``` r
 s <- 0:4
 match(s, c(2,4))
 ```
 
-For more details and examples see [the reshaping documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing-basics-indexing-isin).
+有关更多详细信息和示例，请参阅[重塑文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/indexing.html#indexing-basics-indexing-isin)。
 
-#### [tapply](http://finzi.psych.upenn.edu/R/library/base/html/tapply.html)
+#### ``tapply``
 
-``tapply`` is similar to ``aggregate``, but data can be in a ragged array, since the subclass sizes are possibly irregular. Using a data.frame called ``baseball``, and retrieving information based on the array ``team``:
+``tapply``类似于``aggregate``，但数据可以是一个参差不齐的数组，因为子类大小可能是不规则的。使用调用的data.frame
+ ``baseball``，并根据数组检索信息``team``：
 
-``` python
+``` r
 baseball <-
   data.frame(team = gl(5, 5,
              labels = paste("Team", LETTERS[1:5])),
@@ -236,7 +236,7 @@ tapply(baseball$batting.average, baseball.example$team,
        max)
 ```
 
-In ``pandas`` we may use [pivot_table()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html#pandas.pivot_table) method to handle this:
+在``pandas``我们可以使用[``pivot_table()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.pivot_table.html#pandas.pivot_table)方法来处理这个：
 
 ``` python
 In [14]: import random
@@ -255,19 +255,21 @@ team           team 1    team 2    team 3    team 4    team 5
 batting avg  0.352134  0.295327  0.397191  0.394457  0.396194
 ```
 
-For more details and examples see [the reshaping documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html#reshaping-pivot).
+有关更多详细信息和示例，请参阅[重塑文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/reshaping.html#reshaping-pivot)。
 
-#### [subset](http://finzi.psych.upenn.edu/R/library/base/html/subset.html)
+#### ``subset``
 
-The [query()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query) method is similar to the base R ``subset`` function. In R you might want to get the rows of a ``data.frame`` where one column’s values are less than another column’s values:
+该[``query()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query)方法类似于基本R ``subset``
+函数。在R中，您可能希望获取``data.frame``一列的值小于另一列的值的行：
 
-``` python
+``` r
 df <- data.frame(a=rnorm(10), b=rnorm(10))
 subset(df, a <= b)
-df[df$a <= df$b,]  # note the comma
+df[df$a <= df$b,]  ## note the comma
 ```
 
-In ``pandas``, there are a few ways to perform subsetting. You can use [query()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query) or pass an expression as if it were an index/slice as well as standard boolean indexing:
+在``pandas``，有几种方法可以执行子集化。您可以使用
+ [``query()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query)或传递表达式，就像它是索引/切片以及标准布尔索引一样：
 
 ``` python
 In [18]: df = pd.DataFrame({'a': np.random.randn(10), 'b': np.random.randn(10)})
@@ -306,20 +308,21 @@ Out[21]:
 8  0.238636  0.946550
 ```
 
-For more details and examples see [the query documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing-query).
+有关更多详细信息和示例，请参阅[查询文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/indexing.html#indexing-query)。
 
+#### ``with``
 
-#### [with](http://finzi.psych.upenn.edu/R/library/base/html/with.html)
+使用``df``带有列的R中调用的data.frame的表达式``a``，
+ ``b``将使用``with``如下方式进行求值：
 
-An expression using a data.frame called ``df`` in R with the columns ``a`` and ``b`` would be evaluated using ``with`` like so:
-
-``` python
+``` r
 df <- data.frame(a=rnorm(10), b=rnorm(10))
 with(df, a + b)
-df$a + df$b  # same as the previous expression
+df$a + df$b  ## same as the previous expression
 ```
 
-In ``pandas`` the equivalent expression, using the [eval()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.eval.html#pandas.DataFrame.eval) method, would be:
+在``pandas``等效表达式中，使用该
+ [``eval()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.eval.html#pandas.DataFrame.eval)方法将是：
 
 ``` python
 In [22]: df = pd.DataFrame({'a': np.random.randn(10), 'b': np.random.randn(10)})
@@ -338,7 +341,7 @@ Out[23]:
 9    2.104677
 dtype: float64
 
-In [24]: df.a + df.b  # same as the previous expression
+In [24]: df.a + df.b  ## same as the previous expression
 Out[24]: 
 0   -0.091430
 1   -2.483890
@@ -353,23 +356,24 @@ Out[24]:
 dtype: float64
 ```
 
-In certain cases [eval()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.eval.html#pandas.DataFrame.eval) will be much faster than evaluation in pure Python. For more details and examples see [the eval documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/enhancingperf.html#enhancingperf-eval).
+在某些情况下，[``eval()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.eval.html#pandas.DataFrame.eval)将比纯Python中的评估快得多。有关更多详细信息和示例，请参阅[eval文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/enhancingperf.html#enhancingperf-eval)。
 
-### plyr
+### plyr 
 
-``plyr`` is an R library for the split-apply-combine strategy for data analysis. The functions revolve around three data structures in R, ``a`` for ``arrays``, ``l`` for ``lists``, and ``d`` for ``data.frame``. The table below shows how these data structures could be mapped in Python.
+``plyr``是用于数据分析的拆分应用组合策略的R库。这些函数围绕R，``a``
+for ``arrays``，``l``for ``lists``和``d``for中的三个数据结构``data.frame``。下表显示了如何在Python中映射这些数据结构。
 
 R | Python
 ---|---
 array | list
-lists | dictionary or list of objects
+lists | 字典（dist）或对象列表（list of objects）
 data.frame | dataframe
 
-#### [ddply](http://www.inside-r.org/packages/cran/plyr/docs/ddply)
+#### ``ddply``
 
-An expression using a data.frame called ``df`` in R where you want to summarize ``x`` by ``month``:
+在R中使用名为``df``的data.frame的表达式，比如您有一个希望按``月``汇总``x``的需求：
 
-``` python
+``` r
 require(plyr)
 df <- data.frame(
   x = runif(120, 1, 168),
@@ -384,7 +388,8 @@ ddply(df, .(month, week), summarize,
       sd = round(sd(x), 2))
 ```
 
-In ``pandas`` the equivalent expression, using the [groupby()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) method, would be:
+在``pandas``等效表达式中，使用该
+ [``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)方法将是：
 
 ``` python
 In [25]: df = pd.DataFrame({'x': np.random.uniform(1., 168., 120),
@@ -414,20 +419,20 @@ month week
       3      73.936856  60.773900
 ```
 
-For more details and examples see [the groupby documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#groupby-aggregate).
+有关更多详细信息和示例，请参阅[groupby文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/groupby.html#groupby-aggregate)。
 
-### reshape / reshape2
+### 重塑/ reshape2 
 
-#### [melt.array](http://www.inside-r.org/packages/cran/reshape2/docs/melt.array)
+#### ``melt.array``
 
-An expression using a 3 dimensional array called a in R where you want to melt it into a data.frame:
+使用``a``在R中调用的3维数组的表达式，您希望将其融合到data.frame中：
 
-``` python
+``` r
 a <- array(c(1:23, NA), c(2,3,4))
 data.frame(melt(a))
 ```
 
-In Python, since a is a list, you can simply use list comprehension.
+在Python中，既然``a``是一个列表，你可以简单地使用列表理解。
 
 ``` python
 In [28]: a = np.array(list(range(1, 24)) + [np.NAN]).reshape(2, 3, 4)
@@ -440,11 +445,7 @@ Out[29]:
 2   0  0  2   3.0
 3   0  0  3   4.0
 4   0  1  0   5.0
-5   0  1  1   6.0
-6   0  1  2   7.0
 .. .. .. ..   ...
-17  1  1  1  18.0
-18  1  1  2  19.0
 19  1  1  3  20.0
 20  1  2  0  21.0
 21  1  2  1  22.0
@@ -454,16 +455,17 @@ Out[29]:
 [24 rows x 4 columns]
 ```
 
-#### [melt.list](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html#meltlist)
+#### ``melt.list``
 
-An expression using a list called ``a`` in R where you want to melt it into a data.frame:
+使用``a``R中调用的列表的表达式，您希望将其融合到data.frame中：
 
-``` python
+``` r
 a <- as.list(c(1:4, NA))
 data.frame(melt(a))
 ```
 
-In Python, this list would be a list of tuples, so [DataFrame()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) method would convert it to a dataframe as required.
+在Python中，此列表将是元组列表，因此
+ [``DataFrame()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.html#pandas.DataFrame)方法会根据需要将其转换为数据帧。
 
 ``` python
 In [30]: a = list(enumerate(list(range(1, 5)) + [np.NAN]))
@@ -478,13 +480,13 @@ Out[31]:
 4  4  NaN
 ```
 
-For more details and examples see [the Into to Data Structures documentation](https://pandas.pydata.org/pandas-docs/stable/getting_started/dsintro.html#dsintro).
+有关更多详细信息和示例，请参阅[“进入数据结构”文档](https://pandas.pydata.org/pandas-docs/stable/dsintro.html#dsintro)。
 
-#### [melt.data.frame](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html#meltdf)
+#### ``melt.data.frame``
 
-An expression using a data.frame called ``cheese`` in R where you want to reshape the data.frame:
+使用``cheese``在R中调用的data.frame的表达式，您要在其中重新整形data.frame：
 
-``` python
+``` r
 cheese <- data.frame(
   first = c('John', 'Mary'),
   last = c('Doe', 'Bo'),
@@ -494,7 +496,7 @@ cheese <- data.frame(
 melt(cheese, id=c("first", "last"))
 ```
 
-In Python, the [melt()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.melt.html#pandas.melt) method is the R equivalent:
+在Python中，该[``melt()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.melt.html#pandas.melt)方法是R等价物：
 
 ``` python
 In [32]: cheese = pd.DataFrame({'first': ['John', 'Mary'],
@@ -511,7 +513,7 @@ Out[33]:
 2  John  Doe   weight  130.0
 3  Mary   Bo   weight  150.0
 
-In [34]: cheese.set_index(['first', 'last']).stack()  # alternative way
+In [34]: cheese.set_index(['first', 'last']).stack()  ## alternative way
 Out[34]: 
 first  last        
 John   Doe   height      5.5
@@ -521,13 +523,13 @@ Mary   Bo    height      6.0
 dtype: float64
 ```
 
-For more details and examples see [the reshaping documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html#reshaping-melt).
+有关更多详细信息和示例，请参阅[重塑文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/reshaping.html#reshaping-melt)。
 
-#### [cast](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html#cast)
+#### ``cast``
 
-In R ``acast`` is an expression using a data.frame called df in R to cast into a higher dimensional array:
+在R中``acast``是一个表达式，它使用``df``在R中调用的data.frame 来转换为更高维的数组：
 
-``` python
+``` r
 df <- data.frame(
   x = runif(12, 1, 168),
   y = runif(12, 7, 334),
@@ -540,7 +542,7 @@ mdf <- melt(df, id=c("month", "week"))
 acast(mdf, week ~ month ~ variable, mean)
 ```
 
-In Python the best way is to make use of [pivot_table()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html#pandas.pivot_table):
+在Python中，最好的方法是使用[``pivot_table()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.pivot_table.html#pandas.pivot_table)：
 
 ``` python
 In [35]: df = pd.DataFrame({'x': np.random.uniform(1., 168., 12),
@@ -566,9 +568,9 @@ z        1     11.016009   10.079307   16.170549
          2      8.476111   17.638509   19.003494
 ```
 
-Similarly for ``dcast`` which uses a data.frame called ``df`` in R to aggregate information based on ``Animal`` and ``FeedType``:
+类似地``dcast``，使用``df``R中调用的data.frame 来基于``Animal``和聚合信息``FeedType``：
 
-``` python
+``` r
 df <- data.frame(
   Animal = c('Animal1', 'Animal2', 'Animal3', 'Animal2', 'Animal1',
              'Animal2', 'Animal3'),
@@ -577,11 +579,11 @@ df <- data.frame(
 )
 
 dcast(df, Animal ~ FeedType, sum, fill=NaN)
-# Alternative method using base R
+## Alternative method using base R
 with(df, tapply(Amount, list(Animal, FeedType), sum))
 ```
 
-Python can approach this in two different ways. Firstly, similar to above using [pivot_table()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html#pandas.pivot_table):
+Python可以通过两种不同的方式处理它。首先，类似于上面使用[``pivot_table()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.pivot_table.html#pandas.pivot_table)：
 
 ``` python
 In [38]: df = pd.DataFrame({
@@ -603,7 +605,7 @@ Animal2    2.0  13.0
 Animal3    6.0   NaN
 ```
 
-The second approach is to use the [groupby()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) method:
+第二种方法是使用该[``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)方法：
 
 ``` python
 In [40]: df.groupby(['Animal', 'FeedType'])['Amount'].sum()
@@ -617,18 +619,18 @@ Animal3  A            6
 Name: Amount, dtype: int64
 ```
 
-For more details and examples see [the reshaping documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html#reshaping-pivot) or [the groupby documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#groupby-split).
+有关更多详细信息和示例，请参阅[重新整形文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/reshaping.html#reshaping-pivot)或[groupby文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/groupby.html#groupby-split)。
 
-#### [factor](https://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html)
+#### ``factor``
 
-pandas has a data type for categorical data.
+pandas具有分类数据的数据类型。
 
-``` python
+``` r
 cut(c(1,2,3,4,5,6), 3)
 factor(c(1,2,3,2,2,3))
 ```
 
-In pandas this is accomplished with ``pd.cut`` and ``astype("category")``:
+在Pandas，这是完成与``pd.cut``和``astype("category")``：
 
 ``` python
 In [41]: pd.cut(pd.Series([1, 2, 3, 4, 5, 6]), 3)
@@ -654,15 +656,19 @@ dtype: category
 Categories (3, int64): [1, 2, 3]
 ```
 
-For more details and examples see [categorical introduction](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) and the [API documentation](https://pandas.pydata.org/pandas-docs/stable/reference/arrays.html#api-arrays-categorical). There is also a documentation regarding the [differences to R’s factor](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical-rfactor).
+有关更多详细信息和示例，请参阅[分类介绍](https://pandas.pydata.org/pandas-docs/stable/../user_guide/categorical.html#categorical)和
+ [API文档](https://pandas.pydata.org/pandas-docs/stable/../reference/arrays.html#api-arrays-categorical)。还有一个关于[R因子差异](https://pandas.pydata.org/pandas-docs/stable/../user_guide/categorical.html#categorical-rfactor)的文档
+ 。
 
 ## 与SQL比较
 
-Since many potential pandas users have some familiarity with [SQL](https://en.wikipedia.org/wiki/SQL), this page is meant to provide some examples of how various SQL operations would be performed using pandas.
+由于许多潜在的pandas用户对[SQL](https://en.wikipedia.org/wiki/SQL)有一定的了解
+ ，因此本页面旨在提供一些使用pandas如何执行各种SQL操作的示例。
 
-If you’re new to pandas, you might want to first read through [10 Minutes to pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html#min) to familiarize yourself with the library.
+如果您是 pandas 的新手，您可能需要先阅读[10分钟到 pandas ，](https://pandas.pydata.org/pandas-docs/stable/10min.html#min) 
+以熟悉图书馆。
 
-As is customary, we import pandas and NumPy as follows:
+按照惯例，我们按如下方式导入pandas和NumPy：
 
 ``` python
 In [1]: import pandas as pd
@@ -670,7 +676,7 @@ In [1]: import pandas as pd
 In [2]: import numpy as np
 ```
 
-Most of the examples will utilize the ``tips`` dataset found within pandas tests. We’ll read the data into a DataFrame called tips and assume we have a database table of the same name and structure.
+大多数示例将使用``tips``pandas测试中找到的数据集。我们将数据读入名为*tips*的DataFrame中，并假设我们有一个具有相同名称和结构的数据库表。
 
 ``` python
 In [3]: url = ('https://raw.github.com/pandas-dev'
@@ -689,9 +695,10 @@ Out[5]:
 4       24.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-### SELECT
+### SELECT 
 
-In SQL, selection is done using a comma-separated list of columns you’d like to select (or a * to select all columns):
+在SQL中，使用您要选择的以逗号分隔的列列表（或``*``
+选择所有列）来完成选择：
 
 ``` sql
 SELECT total_bill, tip, smoker, time
@@ -699,7 +706,7 @@ FROM tips
 LIMIT 5;
 ```
 
-With pandas, column selection is done by passing a list of column names to your DataFrame:
+使用pandas，通过将列名列表传递给DataFrame来完成列选择：
 
 ``` python
 In [6]: tips[['total_bill', 'tip', 'smoker', 'time']].head(5)
@@ -712,11 +719,12 @@ Out[6]:
 4       24.59  3.61     No  Dinner
 ```
 
-Calling the DataFrame without the list of column names would display all columns (akin to SQL’s *).
+在没有列名列表的情况下调用DataFrame将显示所有列（类似于SQL
+ ``*``）。
 
-### WHERE
+### 哪里
 
-Filtering in SQL is done via a WHERE clause.
+SQL中的过滤是通过WHERE子句完成的。
 
 ``` sql
 SELECT *
@@ -725,7 +733,8 @@ WHERE time = 'Dinner'
 LIMIT 5;
 ```
 
-DataFrames can be filtered in multiple ways; the most intuitive of which is using [boolean indexing](https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing).
+DataFrame可以通过多种方式进行过滤; 最直观的是使用
+ [布尔索引](https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing)。
 
 ``` python
 In [7]: tips[tips['time'] == 'Dinner'].head(5)
@@ -738,7 +747,7 @@ Out[7]:
 4       24.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-The above statement is simply passing a ``Series`` of True/False objects to the DataFrame, returning all rows with True.
+上面的语句只是将一个``Series``True / False对象传递给DataFrame，返回所有行为True。
 
 ``` python
 In [8]: is_dinner = tips['time'] == 'Dinner'
@@ -759,7 +768,7 @@ Out[10]:
 4       24.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-Just like SQL’s OR and AND, multiple conditions can be passed to a DataFrame using | (OR) and & (AND).
+就像SQL的OR和AND一样，可以使用|将多个条件传递给DataFrame （OR）和＆（AND）。
 
 ``` sql
 -- tips of more than $5.00 at Dinner meals
@@ -769,7 +778,7 @@ WHERE time = 'Dinner' AND tip > 5.00;
 ```
 
 ``` python
-# tips of more than $5.00 at Dinner meals
+## tips of more than $5.00 at Dinner meals
 In [11]: tips[(tips['time'] == 'Dinner') & (tips['tip'] > 5.00)]
 Out[11]: 
      total_bill    tip     sex smoker  day    time  size
@@ -798,7 +807,7 @@ WHERE size >= 5 OR total_bill > 45;
 ```
 
 ``` python
-# tips by parties of at least 5 diners OR bill total was more than $45
+## tips by parties of at least 5 diners OR bill total was more than $45
 In [12]: tips[(tips['size'] >= 5) | (tips['total_bill'] > 45)]
 Out[12]: 
      total_bill    tip     sex smoker   day    time  size
@@ -817,7 +826,8 @@ Out[12]:
 216       28.15   3.00    Male    Yes   Sat  Dinner     5
 ```
 
-NULL checking is done using the [notna()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.notna.html#pandas.Series.notna) and [isna()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isna.html#pandas.Series.isna) methods.
+使用[``notna()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.Series.notna.html#pandas.Series.notna)和[``isna()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.Series.isna.html#pandas.Series.isna)
+方法完成NULL检查。
 
 ``` python
 In [13]: frame = pd.DataFrame({'col1': ['A', 'B', np.NaN, 'C', 'D'],
@@ -834,7 +844,7 @@ Out[14]:
 4    D    I
 ```
 
-Assume we have a table of the same structure as our DataFrame above. We can see only the records where ``col2`` IS NULL with the following query:
+假设我们有一个与上面的DataFrame结构相同的表。我们只能``col2``通过以下查询看到IS NULL 的记录：
 
 ``` sql
 SELECT *
@@ -849,7 +859,7 @@ Out[15]:
 1    B  NaN
 ```
 
-Getting items where ``col1`` IS NOT NULL can be done with [notna()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.notna.html#pandas.Series.notna).
+获取``col1``IS NOT NULL的项目可以完成[``notna()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.Series.notna.html#pandas.Series.notna)。
 
 ``` sql
 SELECT *
@@ -867,11 +877,12 @@ Out[16]:
 4    D    I
 ```
 
-### GROUP BY
+### GROUP BY 
 
-In pandas, SQL’s GROUP BY operations are performed using the similarly named [groupby()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) method. [groupby()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) typically refers to a process where we’d like to split a dataset into groups, apply some function (typically aggregation) , and then combine the groups together.
+在pandas中，SQL的GROUP BY操作使用类似命名的
+ [``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)方法执行。[``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)通常是指我们想要将数据集拆分成组，应用某些功能（通常是聚合），然后将这些组合在一起的过程。
 
-A common SQL operation would be getting the count of records in each group throughout a dataset. For instance, a query getting us the number of tips left by sex:
+常见的SQL操作是获取整个数据集中每个组中的记录数。例如，一个查询向我们提供性别留下的提示数量：
 
 ``` sql
 SELECT sex, count(*)
@@ -883,7 +894,7 @@ Male      157
 */
 ```
 
-The pandas equivalent would be:
+ pandas 相当于：
 
 ``` python
 In [17]: tips.groupby('sex').size()
@@ -894,7 +905,9 @@ Male      157
 dtype: int64
 ```
 
-Notice that in the pandas code we used [size()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.size.html#pandas.core.groupby.DataFrameGroupBy.size) and not [count()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.count.html#pandas.core.groupby.DataFrameGroupBy.count). This is because [count()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.count.html#pandas.core.groupby.DataFrameGroupBy.count) applies the function to each column, returning the number of not null records within each.
+请注意，在我们使用的pandas代码中[``size()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.core.groupby.DataFrameGroupBy.size.html#pandas.core.groupby.DataFrameGroupBy.size)，没有
+ [``count()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.core.groupby.DataFrameGroupBy.count.html#pandas.core.groupby.DataFrameGroupBy.count)。这是因为
+ [``count()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.core.groupby.DataFrameGroupBy.count.html#pandas.core.groupby.DataFrameGroupBy.count)将函数应用于每个列，返回每个列中的记录数。``not null``
 
 ``` python
 In [18]: tips.groupby('sex').count()
@@ -905,7 +918,7 @@ Female          87   87      87   87    87    87
 Male           157  157     157  157   157   157
 ```
 
-Alternatively, we could have applied the [count()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.count.html#pandas.core.groupby.DataFrameGroupBy.count) method to an individual column:
+或者，我们可以将该[``count()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.core.groupby.DataFrameGroupBy.count.html#pandas.core.groupby.DataFrameGroupBy.count)方法应用于单个列：
 
 ``` python
 In [19]: tips.groupby('sex')['total_bill'].count()
@@ -916,7 +929,7 @@ Male      157
 Name: total_bill, dtype: int64
 ```
 
-Multiple functions can also be applied at once. For instance, say we’d like to see how tip amount differs by day of the week - ``agg()`` allows you to pass a dictionary to your grouped DataFrame, indicating which functions to apply to specific columns.
+也可以一次应用多个功能。例如，假设我们希望查看提示量与星期几的不同之处 - ``agg()``允许您将字典传递给分组的DataFrame，指示要应用于特定列的函数。
 
 ``` sql
 SELECT day, AVG(tip), COUNT(*)
@@ -941,7 +954,8 @@ Sun   3.255132   76
 Thur  2.771452   62
 ```
 
-Grouping by more than one column is done by passing a list of columns to the [groupby()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) method.
+通过将列列表传递给[``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)方法来完成多个列的分组
+ 。
 
 ``` sql
 SELECT smoker, day, COUNT(*), AVG(tip)
@@ -976,9 +990,10 @@ Yes    Fri   15.0  2.714000
        Thur  17.0  3.030000
 ```
 
-### JOIN
+### 加入
 
-JOINs can be performed with [join()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join) or [merge()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.merge.html#pandas.merge). By default, [join()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join) will join the DataFrames on their indices. Each method has parameters allowing you to specify the type of join to perform (LEFT, RIGHT, INNER, FULL) or the columns to join on (column names or indices).
+可以使用[``join()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join)或执行JOIN [``merge()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.merge.html#pandas.merge)。默认情况下，
+ [``join()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join)将在其索引上加入DataFrame。每个方法都有参数，允许您指定要执行的连接类型（LEFT，RIGHT，INNER，FULL）或要连接的列（列名称或索引）。
 
 ``` python
 In [22]: df1 = pd.DataFrame({'key': ['A', 'B', 'C', 'D'],
@@ -987,14 +1002,14 @@ In [22]: df1 = pd.DataFrame({'key': ['A', 'B', 'C', 'D'],
 
 In [23]: df2 = pd.DataFrame({'key': ['B', 'D', 'D', 'E'],
    ....:                     'value': np.random.randn(4)})
-   ....: 
+   ....:
 ```
 
-Assume we have two database tables of the same name and structure as our DataFrames.
+假设我们有两个与DataFrames名称和结构相同的数据库表。
 
-Now let’s go over the various types of JOINs.
+现在让我们来看看各种类型的JOIN。
 
-#### INNER JOIN
+#### 内部联接
 
 ``` sql
 SELECT *
@@ -1004,7 +1019,7 @@ INNER JOIN df2
 ```
 
 ``` python
-# merge performs an INNER JOIN by default
+## merge performs an INNER JOIN by default
 In [24]: pd.merge(df1, df2, on='key')
 Out[24]: 
   key   value_x   value_y
@@ -1013,7 +1028,7 @@ Out[24]:
 2   D -1.135632  0.119209
 ```
 
-[merge()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.merge.html#pandas.merge) also offers parameters for cases when you’d like to join one DataFrame’s column with another DataFrame’s index.
+[``merge()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.merge.html#pandas.merge) 当您想要将一个DataFrame列与另一个DataFrame索引连接时，还会为这些情况提供参数。
 
 ``` python
 In [25]: indexed_df2 = df2.set_index('key')
@@ -1026,7 +1041,7 @@ Out[26]:
 3   D -1.135632  0.119209
 ```
 
-#### LEFT OUTER JOIN
+#### LEFT OUTER JOIN 
 
 ``` sql
 -- show all records from df1
@@ -1037,7 +1052,7 @@ LEFT OUTER JOIN df2
 ```
 
 ``` python
-# show all records from df1
+## show all records from df1
 In [27]: pd.merge(df1, df2, on='key', how='left')
 Out[27]: 
   key   value_x   value_y
@@ -1048,7 +1063,7 @@ Out[27]:
 4   D -1.135632  0.119209
 ```
 
-#### RIGHT JOIN
+#### 正确加入
 
 ``` sql
 -- show all records from df2
@@ -1059,7 +1074,7 @@ RIGHT OUTER JOIN df2
 ```
 
 ``` python
-# show all records from df2
+## show all records from df2
 In [28]: pd.merge(df1, df2, on='key', how='right')
 Out[28]: 
   key   value_x   value_y
@@ -1069,9 +1084,9 @@ Out[28]:
 3   E       NaN -1.044236
 ```
 
-#### FULL JOIN
+#### 全加入
 
-pandas also allows for FULL JOINs, which display both sides of the dataset, whether or not the joined columns find a match. As of writing, FULL JOINs are not supported in all RDBMS (MySQL).
+pandas还允许显示数据集两侧的FULL JOIN，无论连接列是否找到匹配项。在编写时，所有RDBMS（MySQL）都不支持FULL JOIN。
 
 ``` sql
 -- show all records from both tables
@@ -1082,7 +1097,7 @@ FULL OUTER JOIN df2
 ```
 
 ``` python
-# show all records from both frames
+## show all records from both frames
 In [29]: pd.merge(df1, df2, on='key', how='outer')
 Out[29]: 
   key   value_x   value_y
@@ -1094,9 +1109,9 @@ Out[29]:
 5   E       NaN -1.044236
 ```
 
-### UNION
+### UNION 
 
-UNION ALL can be performed using [concat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html#pandas.concat).
+UNION ALL可以使用[``concat()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.concat.html#pandas.concat)。
 
 ``` python
 In [30]: df1 = pd.DataFrame({'city': ['Chicago', 'San Francisco', 'New York City'],
@@ -1105,7 +1120,7 @@ In [30]: df1 = pd.DataFrame({'city': ['Chicago', 'San Francisco', 'New York City
 
 In [31]: df2 = pd.DataFrame({'city': ['Chicago', 'Boston', 'Los Angeles'],
    ....:                     'rank': [1, 4, 5]})
-   ....: 
+   ....:
 ```
 
 ``` sql
@@ -1137,7 +1152,7 @@ Out[32]:
 2    Los Angeles     5
 ```
 
-SQL’s UNION is similar to UNION ALL, however UNION will remove duplicate rows.
+SQL的UNION类似于UNION ALL，但是UNION将删除重复的行。
 
 ``` sql
 SELECT city, rank
@@ -1156,8 +1171,10 @@ New York City     3
 */
 ```
 
-In pandas, you can use [concat()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html#pandas.concat) in conjunction with [drop_duplicates()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop_duplicates.html#pandas.DataFrame.drop_duplicates).
+在 pandas 中，您可以[``concat()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.concat.html#pandas.concat)结合使用
+ [``drop_duplicates()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.drop_duplicates.html#pandas.DataFrame.drop_duplicates)。
 
+``` python
 In [33]: pd.concat([df1, df2]).drop_duplicates()
 Out[33]: 
             city  rank
@@ -1166,10 +1183,11 @@ Out[33]:
 2  New York City     3
 1         Boston     4
 2    Los Angeles     5
+```
 
-### Pandas equivalents for some SQL analytic and aggregate functions
+### Pandas等同于某些SQL分析和聚合函数
 
-#### Top N rows with offset
+#### 带有偏移量的前N行
 
 ``` sql
 -- MySQL
@@ -1194,7 +1212,7 @@ Out[34]:
 211       25.89  5.16    Male    Yes   Sat  Dinner     4
 ```
 
-#### Top N rows per group
+#### 每组前N行
 
 ``` sql
 -- Oracle's ROW_NUMBER() analytic function
@@ -1227,7 +1245,7 @@ Out[35]:
 142       41.19   5.00    Male     No  Thur   Lunch     5   2
 ```
 
-the same using *rank(method=’first’)* function
+同样使用*rank（method ='first'）*函数
 
 ``` python
 In [36]: (tips.assign(rnk=tips.groupby(['day'])['total_bill']
@@ -1260,7 +1278,9 @@ WHERE rnk < 3
 ORDER BY sex, rnk;
 ```
 
-Let’s find tips with (rank < 3) per gender group for (tips < 2). Notice that when using ``rank(method='min')`` function *rnk_min* remains the same for the same *tip* (as Oracle’s RANK() function)
+让我们找到每个性别组（等级<3）的提示（提示<2）。请注意，使用``rank(method='min')``函数时
+ *rnk_min*对于相同的*提示*保持不变
+（如Oracle的RANK（）函数）
 
 ``` python
 In [37]: (tips[tips['tip'] < 2]
@@ -1278,7 +1298,7 @@ Out[37]:
 237       32.83  1.17    Male    Yes  Sat  Dinner     2      2.0
 ```
 
-### UPDATE
+### 更新
 
 ``` sql
 UPDATE tips
@@ -1290,14 +1310,14 @@ WHERE tip < 2;
 In [38]: tips.loc[tips['tip'] < 2, 'tip'] *= 2
 ```
 
-### DELETE
+### 删除
 
 ``` sql
 DELETE FROM tips
 WHERE tip > 9;
 ```
 
-In pandas we select the rows that should remain, instead of deleting them
+在pandas中，我们选择应保留的行，而不是删除它们
 
 ``` python
 In [39]: tips = tips.loc[tips['tip'] <= 9]
