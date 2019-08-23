@@ -155,6 +155,28 @@ sidebar: auto
   }
 ]"></awesome>
 
+## 开源相关
+
+与Pandas有关的开源项目。
+
+<awesome :data="[
+  {
+    tag: 'github',
+    name: 'Productivity Tools for Plotly + Pandas',
+    href: 'https://github.com/santosjorge/cufflinks'
+  },
+  {
+    tag: 'github',
+    name: 'pandas-profiling',
+    href: 'https://github.com/pandas-profiling/pandas-profiling/tree/master/pandas_profiling/model'
+  },
+  {
+    tag: 'github',
+    name: 'Grid studio is a web-based spreadsheet application with full integration of the Python programming language.',
+    href: 'https://github.com/ricklamers/gridstudio'
+  }
+]"></awesome>
+
 ## 推荐书籍
 
 这里给出学习版下载地址，有条件者，还请支持正版。

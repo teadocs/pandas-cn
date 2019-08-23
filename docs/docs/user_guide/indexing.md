@@ -3007,7 +3007,7 @@ dfmi.__getitem__('one').__setitem__('second', value)
 :::
 
 有时``SettingWithCopy``，当没有明显的链式索引时，会出现警告。**这些**``SettingWithCopy``是旨在捕获的错误
- ！熊猫可能会试图警告你，你已经这样做了：
+ ！Pandas可能会试图警告你，你已经这样做了：
 
 ``` python
 def do_something(df):
@@ -3030,7 +3030,7 @@ Pandas有，``SettingWithCopyWarning``因为分配一个切片的副本通常不
 设置``mode.chained_assignment``为以下值之一：
 
 - ``'warn'``，默认值表示``SettingWithCopyWarning``打印。
-- ``'raise'``意味着大熊猫会提出``SettingWithCopyException``
+- ``'raise'``意味着大Pandas会提出``SettingWithCopyException``
 你必须处理的事情。
 - ``None`` 将完全压制警告。
 

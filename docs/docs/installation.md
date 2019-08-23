@@ -130,7 +130,7 @@ Centos/RHEL | stable | [EPEL repository](https://admin.fedoraproject.org/pkgdb/p
 
 ## 运行测试套件
 
-大熊猫配备了一套详尽的单元测试，涵盖了撰写本文时约97％的代码库。要在您的计算机上运行它以验证一切正常（并且您已经安装了所有依赖项，软的和硬的），请确保您有 [pytest](http://docs.pytest.org/en/latest/) > = 4.0.2 和 [Hypothesis](https://hypothesis.readthedocs.io/) > = 3.58，然后运行：
+大Pandas配备了一套详尽的单元测试，涵盖了撰写本文时约97％的代码库。要在您的计算机上运行它以验证一切正常（并且您已经安装了所有依赖项，软的和硬的），请确保您有 [pytest](http://docs.pytest.org/en/latest/) > = 4.0.2 和 [Hypothesis](https://hypothesis.readthedocs.io/) > = 3.58，然后运行：
 
 ``` python
 >>> import Pandas as pd
