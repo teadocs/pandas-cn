@@ -159,7 +159,7 @@ In [17]: df.index.names
 Out[17]: FrozenList([None, None])
 ```
 
-此索引可以备份panda对象的任何轴，索引的**级别**由开发者决定:
+此索引可以支持panda对象的任何轴，索引的**级别**由开发者决定:
 
 ``` python
 In [18]: df = pd.DataFrame(np.random.randn(3, 8), index=['A', 'B', 'C'], columns=index)
