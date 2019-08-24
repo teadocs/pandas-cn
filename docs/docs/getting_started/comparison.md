@@ -665,8 +665,7 @@ Categories (3, int64): [1, 2, 3]
 由于许多潜在的pandas用户对[SQL](https://en.wikipedia.org/wiki/SQL)有一定的了解
  ，因此本页面旨在提供一些使用pandas如何执行各种SQL操作的示例。
 
-如果您是 pandas 的新手，您可能需要先阅读[10分钟到 pandas ，](https://pandas.pydata.org/pandas-docs/stable/10min.html#min) 
-以熟悉图书馆。
+如果您是 pandas 的新手，您可能需要先阅读[十分钟入门Pandas](/docs/getting_started/10min.html) 以熟悉本库。
 
 按照惯例，我们按如下方式导入pandas和NumPy：
 
@@ -719,10 +718,9 @@ Out[6]:
 4       24.59  3.61     No  Dinner
 ```
 
-在没有列名列表的情况下调用DataFrame将显示所有列（类似于SQL
- ``*``）。
+在没有列名列表的情况下调用DataFrame将显示所有列（类似于SQL``*``）。
 
-### 哪里
+### WHERE
 
 SQL中的过滤是通过WHERE子句完成的。
 
@@ -747,7 +745,7 @@ Out[7]:
 4       24.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-上面的语句只是将一个``Series``True / False对象传递给DataFrame，返回所有行为True。
+上面的语句只是将一个 ``Series`` 的 True / False 对象传递给 DataFrame，返回所有带有True的行。
 
 ``` python
 In [8]: is_dinner = tips['time'] == 'Dinner'
@@ -882,7 +880,7 @@ Out[16]:
 在pandas中，SQL的GROUP BY操作使用类似命名的
  [``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)方法执行。[``groupby()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby)通常是指我们想要将数据集拆分成组，应用某些功能（通常是聚合），然后将这些组合在一起的过程。
 
-常见的SQL操作是获取整个数据集中每个组中的记录数。例如，一个查询向我们提供性别留下的提示数量：
+常见的SQL操作是获取整个数据集中每个组中的记录数。例如，有一个需要向我们提供提示中的性别的数量的查询语句：
 
 ``` sql
 SELECT sex, count(*)
@@ -894,7 +892,7 @@ Male      157
 */
 ```
 
- pandas 相当于：
+在 pandas 中可以这样：
 
 ``` python
 In [17]: tips.groupby('sex').size()
@@ -990,7 +988,7 @@ Yes    Fri   15.0  2.714000
        Thur  17.0  3.030000
 ```
 
-### 加入
+### JOIN
 
 可以使用[``join()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join)或执行JOIN [``merge()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.merge.html#pandas.merge)。默认情况下，
  [``join()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join)将在其索引上加入DataFrame。每个方法都有参数，允许您指定要执行的连接类型（LEFT，RIGHT，INNER，FULL）或要连接的列（列名称或索引）。
@@ -1009,7 +1007,7 @@ In [23]: df2 = pd.DataFrame({'key': ['B', 'D', 'D', 'E'],
 
 现在让我们来看看各种类型的JOIN。
 
-#### 内部联接
+#### INNER JOIN
 
 ``` sql
 SELECT *
@@ -1063,7 +1061,7 @@ Out[27]:
 4   D -1.135632  0.119209
 ```
 
-#### 正确加入
+#### RIGHT JOIN
 
 ``` sql
 -- show all records from df2
@@ -1084,7 +1082,7 @@ Out[28]:
 3   E       NaN -1.044236
 ```
 
-#### 全加入
+#### FULL JOIN
 
 pandas还允许显示数据集两侧的FULL JOIN，无论连接列是否找到匹配项。在编写时，所有RDBMS（MySQL）都不支持FULL JOIN。
 
@@ -1245,7 +1243,7 @@ Out[35]:
 142       41.19   5.00    Male     No  Thur   Lunch     5   2
 ```
 
-同样使用*rank（method ='first'）*函数
+同样使用 *rank (method ='first')* 函数
 
 ``` python
 In [36]: (tips.assign(rnk=tips.groupby(['day'])['total_bill']
@@ -1298,7 +1296,7 @@ Out[37]:
 237       32.83  1.17    Male    Yes  Sat  Dinner     2      2.0
 ```
 
-### 更新
+### 更新（UPDATE）
 
 ``` sql
 UPDATE tips
@@ -1310,7 +1308,7 @@ WHERE tip < 2;
 In [38]: tips.loc[tips['tip'] < 2, 'tip'] *= 2
 ```
 
-### 删除
+### 删除（DELETE）
 
 ``` sql
 DELETE FROM tips
