@@ -1321,13 +1321,13 @@ WHERE tip > 9;
 In [39]: tips = tips.loc[tips['tip'] <= 9]
 ```
 
-## 与SAS比较
+## 与SAS的比较
 
-For potential users coming from [SAS](https://en.wikipedia.org/wiki/SAS_(software)) this page is meant to demonstrate how different SAS operations would be performed in pandas.
+由于许多潜在的pandas用户对[SQL](https://en.wikipedia.org/wiki/SQL)有一定的了解，因此本页面旨在提供一些使用pandas如何执行各种SQL操作的示例。
 
-If you’re new to pandas, you might want to first read through [10 Minutes to pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html#min) to familiarize yourself with the library.
+如果您是 pandas 的新手，您可能需要先阅读[十分钟入门Pandas](/docs/getting_started/10min.html) 以熟悉本库。
 
-As is customary, we import pandas and NumPy as follows:
+按照惯例，我们按如下方式导入pandas和NumPy：
 
 ``` python
 In [1]: import pandas as pd
@@ -1335,46 +1335,52 @@ In [1]: import pandas as pd
 In [2]: import numpy as np
 ```
 
-::: tip Note
+::: tip 注意
 
-Throughout this tutorial, the pandas DataFrame will be displayed by calling df.head(), which displays the first N (default 5) rows of the DataFrame. This is often used in interactive work (e.g. Jupyter notebook or terminal) - the equivalent in SAS would be:
+在本教程中，``DataFrame``将通过调用显示
+ pandas ``df.head()``，它将显示该行的前N行（默认为5行）``DataFrame``。这通常用于交互式工作（例如[Jupyter笔记本](https://jupyter.org/)或终端） -  SAS中的等价物将是：
 
-``` python
+``` sas
 proc print data=df(obs=5);
 run;
 ```
 
 :::
 
-### Data Structures
+### 数据结构
 
-#### General Terminology Translation
+#### 一般术语翻译
 
-pandas | SAS
+ Pandas  | SAS
 ---|---
-DataFrame | data set
-column | variable
-row | observation
+DataFrame | 数据集
+column | 变量
+row | 观察
 groupby | BY-group
 NaN | .
 
-#### DataFrame / Series
+#### ``DataFrame``/ ``Series``
 
-A ``DataFrame`` in pandas is analogous to a SAS data set - a two-dimensional data source with labeled columns that can be of different types. As will be shown in this document, almost any operation that can be applied to a data set using SAS’s ``DATA`` step, can also be accomplished in pandas.
+A ``DataFrame``pandas类似于SAS数据集 - 具有标记列的二维数据源，可以是不同类型的。如本文档所示，几乎所有可以使用SAS ``DATA``步骤应用于数据集的操作也可以在pandas中完成。
 
-A ``Series`` is the data structure that represents one column of a ``DataFrame``. SAS doesn’t have a separate data structure for a single column, but in general, working with a ``Series`` is analogous to referencing a column in the ``DATA`` step.
+A ``Series``是表示a的一列的数据结构
+ ``DataFrame``。SAS没有针对单个列的单独数据结构，但通常，使用a ``Series``类似于在``DATA``步骤中引用列。
 
-#### Index
+#### ``Index``
 
-Every ``DataFrame`` and ``Series`` has an ``Index`` - which are labels on the rows of the data. SAS does not have an exactly analogous concept. A data set’s rows are essentially unlabeled, other than an implicit integer index that can be accessed during the DATA step (``_N_``).
+每一个``DataFrame``和``Series``有一个``Index``-这是对标签
+ *的行*数据。SAS没有完全类似的概念。除了在``DATA``step（``_N_``）期间可以访问的隐式整数索引之外，数据集的行基本上是未标记的。
 
-In pandas, if no index is specified, an integer index is also used by default (first row = 0, second row = 1, and so on). While using a labeled ``Index`` or ``MultiIndex`` can enable sophisticated analyses and is ultimately an important part of pandas to understand, for this comparison we will essentially ignore the ``Index`` and just treat the ``DataFrame`` as a collection of columns. Please see the [indexing documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing) for much more on how to use an ``Index`` effectively.
+在pandas中，如果未指定索引，则默认情况下也使用整数索引（第一行= 0，第二行= 1，依此类推）。虽然使用标记``Index``或
+ ``MultiIndex``可以启用复杂的分析，并且最终是 Pandas 理解的重要部分，但是对于这种比较，我们基本上会忽略它，
+ ``Index``并且只是将其``DataFrame``视为列的集合。有关如何有效使用的更多信息，
+ 请参阅[索引文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/indexing.html#indexing)``Index``。
 
-### Data Input / Output
+### 数据输入/输出
 
-#### Constructing a DataFrame from Values
+#### 从值构造DataFrame
 
-A SAS data set can be built from specified values by placing the data after a ``datalines`` statement and specifying the column names.
+通过将数据放在``datalines``语句之后并指定列名，可以从指定值构建SAS数据集。
 
 ``` sas
 data df;
@@ -1387,7 +1393,7 @@ data df;
 run;
 ```
 
-A pandas ``DataFrame`` can be constructed in many different ways, but for a small number of values, it is often convenient to specify it as a Python dictionary, where the keys are the column names and the values are the data.
+``DataFrame``可以用许多不同的方式构造一个pandas ，但是对于少量的值，通常很方便将它指定为Python字典，其中键是列名，值是数据。
 
 ``` python
 In [3]: df = pd.DataFrame({'x': [1, 3, 5], 'y': [2, 4, 6]})
@@ -1400,11 +1406,11 @@ Out[4]:
 2  5  6
 ```
 
-#### Reading External Data
+#### 读取外部数据
 
-Like SAS, pandas provides utilities for reading in data from many formats. The ``tips`` dataset, found within the pandas tests ([csv](https://raw.github.com/pandas-dev/pandas/master/pandas/tests/data/tips.csv)) will be used in many of the following examples.
+与SAS一样，pandas提供了从多种格式读取数据的实用程序。``tips``在pandas测试（[csv](https://raw.github.com/pandas-dev/pandas/master/pandas/tests/data/tips.csv)）中找到的数据集将用于以下许多示例中。
 
-SAS provides ``PROC IMPORT`` to read csv data into a data set.
+SAS提供将csv数据读入数据集。``PROC IMPORT``
 
 ``` sas
 proc import datafile='tips.csv' dbms=csv out=tips replace;
@@ -1412,7 +1418,7 @@ proc import datafile='tips.csv' dbms=csv out=tips replace;
 run;
 ```
 
-The pandas method is [read_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv), which works similarly.
+Pandas 方法是[``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.read_csv.html#pandas.read_csv)类似的。
 
 ``` python
 In [5]: url = ('https://raw.github.com/pandas-dev/'
@@ -1431,37 +1437,38 @@ Out[7]:
 4       24.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-Like ``PROC`` ``IMPORT``, ``read_csv`` can take a number of parameters to specify how the data should be parsed. For example, if the data was instead tab delimited, and did not have column names, the pandas command would be:
+比如，可以使用许多参数来指定数据应该如何解析。例如，如果数据是由制表符分隔的，并且没有列名，那么pandas命令将是：``PROC IMPORT````read_csv``
 
 ``` python
 tips = pd.read_csv('tips.csv', sep='\t', header=None)
 
-# alternatively, read_table is an alias to read_csv with tab delimiter
+## alternatively, read_table is an alias to read_csv with tab delimiter
 tips = pd.read_table('tips.csv', header=None)
 ```
 
-In addition to text/csv, pandas supports a variety of other data formats such as Excel, HDF5, and SQL databases. These are all read via a ``pd.read_*`` function. See the [IO documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io) for more details.
+除了text / csv之外，pandas还支持各种其他数据格式，如Excel，HDF5和SQL数据库。这些都是通过``pd.read_*``
+函数读取的。有关更多详细信息，请参阅[IO文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/io.html#io)。
 
-#### Exporting Data
+#### 导出数据
 
-The inverse of ``PROC`` ``IMPORT`` in SAS is ``PROC`` ``EXPORT``
+在SAS中``proc导入``相反就是``proc导出``
 
 ``` sas
 proc export data=tips outfile='tips2.csv' dbms=csv;
 run;
 ```
 
-Similarly in pandas, the opposite of ``read_csv`` is [to_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv), and other data formats follow a similar api.
+类似地，在 Pandas ，相反``read_csv``是[``to_csv()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv)，与其他的数据格式遵循类似的API。
 
 ``` python
 tips.to_csv('tips2.csv')
 ```
 
-### Data Operations
+### 数据操作
 
-#### Operations on Columns
+#### 列上的操作
 
-In the DATA step, arbitrary math expressions can be used on new or existing columns.
+在该``DATA``步骤中，可以在新列或现有列上使用任意数学表达式。
 
 ``` sas
 data tips;
@@ -1471,7 +1478,7 @@ data tips;
 run;
 ```
 
-pandas provides similar vectorized operations by specifying the individual ``Series`` in the ``DataFrame``. New columns can be assigned in the same way.
+Pandas 通过指定个体提供了类似的矢量化操作``Series``中``DataFrame``。可以以相同的方式分配新列。
 
 ``` python
 In [8]: tips['total_bill'] = tips['total_bill'] - 2
@@ -1488,11 +1495,11 @@ Out[10]:
 4       22.59  3.61  Female     No  Sun  Dinner     4    11.295
 ```
 
-#### Filtering
+#### 过滤
 
-Filtering in SAS is done with an ``if`` or ``where`` statement, on one or more columns.
+SAS中的过滤是通过一个或多个列上的``if``或``where``语句完成的。
 
-``` python
+``` sas
 data tips;
     set tips;
     if total_bill > 10;
@@ -1506,7 +1513,8 @@ data tips;
 run;
 ```
 
-DataFrames can be filtered in multiple ways; the most intuitive of which is using [boolean indexing](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing-boolean)
+DataFrame可以通过多种方式进行过滤; 最直观的是使用
+ [布尔索引](https://pandas.pydata.org/pandas-docs/stable/../user_guide/indexing.html#indexing-boolean)
 
 ``` python
 In [11]: tips[tips['total_bill'] > 10].head()
@@ -1519,9 +1527,9 @@ Out[11]:
 5       23.29  4.71    Male     No  Sun  Dinner     4
 ```
 
-#### If/Then Logic
+#### 如果/那么逻辑
 
-In SAS, if/then logic can be used to create new columns.
+在SAS中，if / then逻辑可用于创建新列。
 
 ``` sas
 data tips;
@@ -1533,7 +1541,7 @@ data tips;
 run;
 ```
 
-The same operation in pandas can be accomplished using the ``where`` method from ``numpy``.
+Pandas 中的相同操作可以使用``where``来自的方法来完成``numpy``。
 
 ``` python
 In [12]: tips['bucket'] = np.where(tips['total_bill'] < 10, 'low', 'high')
@@ -1548,9 +1556,9 @@ Out[13]:
 4       22.59  3.61  Female     No  Sun  Dinner     4   high
 ```
 
-### Date Functionality
+#### 日期功能
 
-SAS provides a variety of functions to do operations on date/datetime columns.
+SAS提供了各种功能来对日期/日期时间列进行操作。
 
 ``` sas
 data tips;
@@ -1567,7 +1575,7 @@ data tips;
 run;
 ```
 
-The equivalent pandas operations are shown below. In addition to these functions pandas supports other Time Series features not available in Base SAS (such as resampling and custom offsets) - see the [timeseries documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries) for more details.
+等效的pandas操作如下所示。除了这些功能外，pandas还支持Base SAS中不具备的其他时间序列功能（例如重新采样和自定义偏移） - 有关详细信息，请参阅[时间序列文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/timeseries.html#timeseries)。
 
 ``` python
 In [14]: tips['date1'] = pd.Timestamp('2013-01-15')
@@ -1596,9 +1604,9 @@ Out[20]:
 4 2013-01-15 2015-02-15        2013            2 2013-02-01  <25 * MonthEnds>
 ```
 
-#### Selection of Columns
+#### 列的选择
 
-SAS provides keywords in the DATA step to select, drop, and rename columns.
+SAS在``DATA``步骤中提供关键字以选择，删除和重命名列。
 
 ``` sas
 data tips;
@@ -1617,10 +1625,10 @@ data tips;
 run;
 ```
 
-The same operations are expressed in pandas below.
+下面的 Pandas 表示相同的操作。
 
 ``` python
-# keep
+## keep
 In [21]: tips[['sex', 'total_bill', 'tip']].head()
 Out[21]: 
       sex  total_bill   tip
@@ -1630,7 +1638,7 @@ Out[21]:
 3    Male       21.68  3.31
 4  Female       22.59  3.61
 
-# drop
+## drop
 In [22]: tips.drop('sex', axis=1).head()
 Out[22]: 
    total_bill   tip smoker  day    time  size
@@ -1640,7 +1648,7 @@ Out[22]:
 3       21.68  3.31     No  Sun  Dinner     2
 4       22.59  3.61     No  Sun  Dinner     4
 
-# rename
+## rename
 In [23]: tips.rename(columns={'total_bill': 'total_bill_2'}).head()
 Out[23]: 
    total_bill_2   tip     sex smoker  day    time  size
@@ -1651,9 +1659,9 @@ Out[23]:
 4         22.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-#### Sorting by Values
+#### 按值排序
 
-Sorting in SAS is accomplished via ``PROC`` ``SORT``
+SAS中的排序是通过 ``PROC SORT``
 
 ``` sas
 proc sort data=tips;
@@ -1661,7 +1669,7 @@ proc sort data=tips;
 run;
 ```
 
-pandas objects have a [sort_values()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_values.html#pandas.DataFrame.sort_values) method, which takes a list of columns to sort by.
+pandas对象有一个[``sort_values()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.sort_values.html#pandas.DataFrame.sort_values)方法，它采用列表进行排序。
 
 ``` python
 In [24]: tips = tips.sort_values(['sex', 'total_bill'])
@@ -1676,11 +1684,14 @@ Out[25]:
 135        6.51  1.25  Female     No  Thur   Lunch     2
 ```
 
-### String Processing
+### 字符串处理
 
-#### Length
+#### 长度
 
-SAS determines the length of a character string with the [LENGTHN](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a002284668.htm) and [LENGTHC](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a002283942.htm) functions. LENGTHN excludes trailing blanks and LENGTHC includes trailing blanks.
+SAS使用[LENGTHN](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a002284668.htm) 
+和[LENGTHC](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a002283942.htm) 
+函数确定字符串的长度
+ 。``LENGTHN``排除尾随空白并``LENGTHC``包括尾随空白。
 
 ``` sas
 data _null_;
@@ -1690,7 +1701,8 @@ put(LENGTHC(time));
 run;
 ```
 
-Python determines the length of a character string with the ``len`` function. ``len`` includes trailing blanks. Use ``len`` and ``rstrip`` to exclude trailing blanks.
+Python使用该``len``函数确定字符串的长度。
+``len``包括尾随空白。使用``len``和``rstrip``排除尾随空格。
 
 ``` python
 In [26]: tips['time'].str.len().head()
@@ -1712,9 +1724,11 @@ Out[27]:
 Name: time, dtype: int64
 ```
 
-#### Find
+#### 查找（Find）
 
-SAS determines the position of a character in a string with the [FINDW](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a002978282.htm) function. ``FINDW`` takes the string defined by the first argument and searches for the first position of the substring you supply as the second argument.
+SAS使用[FINDW](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a002978282.htm)函数确定字符串中字符的位置
+ 。
+``FINDW``获取第一个参数定义的字符串，并搜索您提供的子字符串的第一个位置作为第二个参数。
 
 ``` sas
 data _null_;
@@ -1723,7 +1737,8 @@ put(FINDW(sex,'ale'));
 run;
 ```
 
-Python determines the position of a character in a string with the ``find`` function. ``find`` searches for the first position of the substring. If the substring is found, the function returns its position. Keep in mind that Python indexes are zero-based and the function will return -1 if it fails to find the substring.
+Python使用``find``函数确定字符串中字符的位置
+ 。  ``find``搜索子字符串的第一个位置。如果找到子字符串，则该函数返回其位置。请记住，Python索引是从零开始的，如果找不到子串，函数将返回-1。
 
 ``` python
 In [28]: tips['sex'].str.find("ale").head()
@@ -1736,9 +1751,10 @@ Out[28]:
 Name: sex, dtype: int64
 ```
 
-#### Substring
+#### 字符串提取（Substring）
 
-SAS extracts a substring from a string based on its position with the [SUBSTR](https://www2.sas.com/proceedings/sugi25/25/cc/25p088.pdf) function.
+SAS使用[SUBSTR](https://www2.sas.com/proceedings/sugi25/25/cc/25p088.pdf)函数根据其位置从字符串中提取子字符串
+ 。
 
 ``` sas
 data _null_;
@@ -1747,9 +1763,9 @@ put(substr(sex,1,1));
 run;
 ```
 
-With pandas you can use ``[]`` notation to extract a substring from a string by position locations. Keep in mind that Python indexes are zero-based.
+使用pandas，您可以使用``[]``符号从位置位置提取字符串中的子字符串。请记住，Python索引是从零开始的。
 
-``` sas
+``` python
 In [29]: tips['sex'].str[0:1].head()
 Out[29]: 
 67     F
@@ -1760,9 +1776,10 @@ Out[29]:
 Name: sex, dtype: object
 ```
 
-#### Scan
+#### 扫描
 
-The SAS [SCAN](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000214639.htm) function returns the nth word from a string. The first argument is the string you want to parse and the second argument specifies which word you want to extract.
+SAS [SCAN](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000214639.htm) 
+函数返回字符串中的第n个字。第一个参数是要解析的字符串，第二个参数指定要提取的字。
 
 ``` sas
 data firstlast;
@@ -1776,7 +1793,7 @@ Jane Cook;
 run;
 ```
 
-Python extracts a substring from a string based on its text by using regular expressions. There are much more powerful approaches, but this just shows a simple approach.
+Python使用正则表达式根据文本从字符串中提取子字符串。有更强大的方法，但这只是一个简单的方法。
 
 ``` python
 In [30]: firstlast = pd.DataFrame({'String': ['John Smith', 'Jane Cook']})
@@ -1792,9 +1809,12 @@ Out[33]:
 1   Jane Cook       Jane      Jane
 ```
 
-#### Upcase, Lowcase, and Propcase
+#### 大写，小写和特殊转换
 
-The SAS [UPCASE](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000245965.htm) [LOWCASE](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000245912.htm) and [PROPCASE](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/a002598106.htm) functions change the case of the argument.
+SAS [UPCASE ](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000245965.htm)
+[LOWCASE](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000245912.htm)和
+ [PROPCASE](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/a002598106.htm) 
+函数改变了参数的大小写。
 
 ``` sas
 data firstlast;
@@ -1809,7 +1829,7 @@ Jane Cook;
 run;
 ```
 
-The equivalent Python functions are ``upper``, ``lower``, and ``title``.
+等效Python的功能``upper``，``lower``和``title``。
 
 ``` python
 In [34]: firstlast = pd.DataFrame({'String': ['John Smith', 'Jane Cook']})
@@ -1827,9 +1847,9 @@ Out[38]:
 1   Jane Cook   JANE COOK   jane cook   Jane Cook
 ```
 
-### Merging
+### 合并（Merging）
 
-The following tables will be used in the merge examples
+合并示例中将使用以下表格
 
 ``` python
 In [39]: df1 = pd.DataFrame({'key': ['A', 'B', 'C', 'D'],
@@ -1857,7 +1877,7 @@ Out[42]:
 3   E -1.044236
 ```
 
-In SAS, data must be explicitly sorted before merging. Different types of joins are accomplished using the ``in=`` dummy variables to track whether a match was found in one or both input frames.
+在SAS中，必须在合并之前显式排序数据。使用``in=``虚拟变量来跟踪是否在一个或两个输入帧中找到匹配来完成不同类型的连接。
 
 ``` sas
 proc sort data=df1;
@@ -1878,7 +1898,7 @@ data left_join inner_join right_join outer_join;
 run;
 ```
 
-pandas DataFrames have a [merge()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html#pandas.DataFrame.merge) method, which provides similar functionality. Note that the data does not have to be sorted ahead of time, and different join types are accomplished via the ``how`` keyword.
+pandas DataFrames有一个[``merge()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.merge.html#pandas.DataFrame.merge)提供类似功能的方法。请注意，数据不必提前排序，并且通过``how``关键字可以实现不同的连接类型。
 
 ``` python
 In [43]: inner_join = df1.merge(df2, on=['key'], how='inner')
@@ -1924,9 +1944,9 @@ Out[50]:
 5   E       NaN -1.044236
 ```
 
-### Missing Data
+### 缺失数据（Missing data）
 
-Like SAS, pandas has a representation for missing data - which is the special float value ``NaN`` (not a number). Many of the semantics are the same, for example missing data propagates through numeric operations, and is ignored by default for aggregations.
+与SAS一样，pandas具有丢失数据的表示 - 这是特殊浮点值``NaN``（不是数字）。许多语义都是相同的，例如，丢失的数据通过数字操作传播，默认情况下会被聚合忽略。
 
 ``` python
 In [51]: outer_join
@@ -1953,7 +1973,7 @@ In [53]: outer_join['value_x'].sum()
 Out[53]: -3.5940742896293765
 ```
 
-One difference is that missing data cannot be compared to its sentinel value. For example, in SAS you could do this to filter missing values.
+一个区别是丢失的数据无法与其哨兵值进行比较。例如，在SAS中，您可以执行此操作以过滤缺失值。
 
 ``` sas
 data outer_join_nulls;
@@ -1967,7 +1987,7 @@ data outer_join_no_nulls;
 run;
 ```
 
-Which doesn’t work in pandas. Instead, the ``pd.isna`` or ``pd.notna`` functions should be used for comparisons.
+这在 Pandas 中不起作用。相反，应使用``pd.isna``或``pd.notna``函数进行比较。
 
 ``` python
 In [54]: outer_join[pd.isna(outer_join['value_x'])]
@@ -1985,7 +2005,8 @@ Out[55]:
 4   D -1.135632  0.119209
 ```
 
-pandas also provides a variety of methods to work with missing data - some of which would be challenging to express in SAS. For example, there are methods to drop all rows with any missing values, replacing mi(ssing values with a specified value, like the mean, or forward filling from previous rows. See the [missing data documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data) for more.
+pandas还提供了各种方法来处理丢失的数据 - 其中一些方法在SAS中表达起来很有挑战性。例如，有一些方法可以删除具有任何缺失值的所有行，使用指定值替换缺失值，例如平均值或前一行的前向填充。看到
+ [丢失的数据文件](https://pandas.pydata.org/pandas-docs/stable/../user_guide/missing_data.html#missing-data)为多。
 
 ``` python
 In [56]: outer_join.dropna()
@@ -2018,9 +2039,9 @@ Name: value_x, dtype: float64
 
 ### GroupBy
 
-#### Aggregation
+#### 聚合（Aggregation）
 
-SAS’s PROC SUMMARY can be used to group by one or more key variables and compute aggregations on numeric columns.
+SAS的PROC SUMMARY可用于按一个或多个关键变量进行分组，并计算数字列上的聚合。
 
 ``` sas
 proc summary data=tips nway;
@@ -2030,7 +2051,8 @@ proc summary data=tips nway;
 run;
 ```
 
-pandas provides a flexible ``groupby`` mechanism that allows similar aggregations. See the [groupby documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#groupby) for more details and examples.
+pandas提供了一种``groupby``允许类似聚合的灵活机制。有关
+更多详细信息和示例，请参阅[groupby文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/groupby.html#groupby)。
 
 ``` python
 In [59]: tips_summed = tips.groupby(['sex', 'smoker'])['total_bill', 'tip'].sum()
@@ -2045,9 +2067,9 @@ Male   No         1725.75  302.00
        Yes        1217.07  183.07
 ```
 
-#### Transformation
+#### 转换（Transformation）
 
-In SAS, if the group aggregations need to be used with the original frame, it must be merged back together. For example, to subtract the mean for each observation by smoker group.
+在SAS中，如果组聚合需要与原始帧一起使用，则必须将它们合并在一起。例如，减去吸烟者组每次观察的平均值。
 
 ``` sas
 proc summary data=tips missing nway;
@@ -2068,7 +2090,7 @@ data tips;
 run;
 ```
 
-pandas ``groubpy`` provides a ``transform`` mechanism that allows these type of operations to be succinctly expressed in one operation.
+pandas ``groupby``提供了一种``transform``机制，允许在一个操作中简洁地表达这些类型的操作。
 
 ``` python
 In [61]: gb = tips.groupby('smoker')['total_bill']
@@ -2085,9 +2107,9 @@ Out[63]:
 135        6.51  1.25  Female     No  Thur   Lunch     2      -10.678278
 ```
 
-#### By Group Processing
+#### 按组处理
 
-In addition to aggregation, pandas ``groupby`` can be used to replicate most other by group processing from SAS. For example, this ``DATA`` step reads the data by sex/smoker group and filters to the first entry for each.
+除了聚合之外，``groupby``还可以使用pandas 通过SAS的组处理来复制大多数其他pandas 。例如，此``DATA``步骤按性别/吸烟者组读取数据，并过滤到每个的第一个条目。
 
 ``` sas
 proc sort data=tips;
@@ -2101,7 +2123,7 @@ data tips_first;
 run;
 ```
 
-In pandas this would be written as:
+在 Pandas 中，这将写成：
 
 ``` python
 In [64]: tips.groupby(['sex', 'smoker']).first()
@@ -2114,19 +2136,21 @@ Male   No            5.51  2.00  Thur   Lunch     2      -11.678278
        Yes           5.25  5.15   Sun  Dinner     2      -13.506344
 ```
 
-### Other Considerations
+### 其他注意事项
 
-#### Disk vs Memory
+#### 磁盘与内存
 
-pandas operates exclusively in memory, where a SAS data set exists on disk. This means that the size of data able to be loaded in pandas is limited by your machine’s memory, but also that the operations on that data may be faster.
+pandas仅在内存中运行，其中SAS数据集存在于磁盘上。这意味着可以在pandas中加载的数据大小受机器内存的限制，但对数据的操作可能更快。
 
-If out of core processing is needed, one possibility is the [dask.dataframe](https://dask.pydata.org/en/latest/dataframe.html) library (currently in development) which provides a subset of pandas functionality for an on-disk ``DataFrame``
+如果需要进行核心处理，一种可能性是
+ [dask.dataframe](https://dask.pydata.org/en/latest/dataframe.html) 
+库（目前正在开发中），它为磁盘上的pandas功能提供了一个子集``DataFrame``
 
-#### Data Interop
+#### 数据互操作
 
-pandas provides a [read_sas()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sas.html#pandas.read_sas) method that can read SAS data saved in the XPORT or SAS7BDAT binary format.
+pandas提供了一种[``read_sas()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.read_sas.html#pandas.read_sas)方法，可以读取以XPORT或SAS7BDAT二进制格式保存的SAS数据。
 
-``` python
+``` sas
 libname xportout xport 'transport-file.xpt';
 data xportout.tips;
     set tips(rename=(total_bill=tbill));
@@ -2139,17 +2163,17 @@ df = pd.read_sas('transport-file.xpt')
 df = pd.read_sas('binary-file.sas7bdat')
 ```
 
-You can also specify the file format directly. By default, pandas will try to infer the file format based on its extension.
+您也可以直接指定文件格式。默认情况下，pandas将尝试根据其扩展名推断文件格式。
 
 ``` python
 df = pd.read_sas('transport-file.xpt', format='xport')
 df = pd.read_sas('binary-file.sas7bdat', format='sas7bdat')
 ```
 
-XPORT is a relatively limited format and the parsing of it is not as optimized as some of the other pandas readers. An alternative way to interop data between SAS and pandas is to serialize to csv.
+XPORT是一种相对有限的格式，它的解析并不像其他一些pandas读者那样优化。在SAS和pandas之间交换数据的另一种方法是序列化为csv。
 
 ``` python
-# version 0.17, 10M rows
+## version 0.17, 10M rows
 
 In [8]: %time df = pd.read_sas('big.xpt')
 Wall time: 14.6 s
