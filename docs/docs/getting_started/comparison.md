@@ -2,7 +2,7 @@
 
 ## 与R/R库的比较
 
-由于``pandas``旨在为人们提供可以替代[R](http://www.r-project.org/)的大量数据操作和分析的功能，因此本章节会提供较为详细的[R语言](http://en.wikipedia.org/wiki/R_(programming_language))的介绍以及与相关的许多第三方库的对比说明，比如我们的``pandas``库。在与R和CRAN库的比较中，我们关注以下事项：
+由于 ``pandas`` 旨在为人们提供可以替代[R](http://www.r-project.org/)的大量数据操作和分析的功能，因此本章节会提供较为详细的[R语言](http://en.wikipedia.org/wiki/R_(programming_language))的介绍以及与相关的许多第三方库的对比说明，比如我们的 ``pandas`` 库。在与R和CRAN库的比较中，我们关注以下事项：
 
 - **功能/灵活性**：每个工具可以/不​​可以做什么
 - **性能**：操作速度有多快。硬性数字/基准是优选的
@@ -10,7 +10,7 @@
 
 此页面还为这些R包的用户提供了一些翻译指南。
 
-要将``DataFrame``对象从 ``pandas`` 转化为到 R 的数据类型，有一个选择是采用HDF5文件，请参阅[外部兼容性](https://pandas.pydata.org/pandas-docs/stable/../user_guide/io.html#io-external-compatibility)示例。
+要将 ``DataFrame`` 对象从 ``pandas`` 转化为到 R 的数据类型，有一个选择是采用HDF5文件，请参阅[外部兼容性](https://pandas.pydata.org/pandas-docs/stable/../user_guide/io.html#io-external-compatibility)示例。
 
 ### 快速参考
 
@@ -265,7 +265,7 @@ batting avg  0.352134  0.295327  0.397191  0.394457  0.396194
 ``` r
 df <- data.frame(a=rnorm(10), b=rnorm(10))
 subset(df, a <= b)
-df[df$a <= df$b,]  ## note the comma
+df[df$a <= df$b,]  # note the comma
 ```
 
 在``pandas``，有几种方法可以执行子集化。您可以使用
@@ -318,7 +318,7 @@ Out[21]:
 ``` r
 df <- data.frame(a=rnorm(10), b=rnorm(10))
 with(df, a + b)
-df$a + df$b  ## same as the previous expression
+df$a + df$b  # same as the previous expression
 ```
 
 在``pandas``等效表达式中，使用该
@@ -341,7 +341,7 @@ Out[23]:
 9    2.104677
 dtype: float64
 
-In [24]: df.a + df.b  ## same as the previous expression
+In [24]: df.a + df.b  # same as the previous expression
 Out[24]: 
 0   -0.091430
 1   -2.483890
@@ -513,7 +513,7 @@ Out[33]:
 2  John  Doe   weight  130.0
 3  Mary   Bo   weight  150.0
 
-In [34]: cheese.set_index(['first', 'last']).stack()  ## alternative way
+In [34]: cheese.set_index(['first', 'last']).stack()  # alternative way
 Out[34]: 
 first  last        
 John   Doe   height      5.5
@@ -579,7 +579,7 @@ df <- data.frame(
 )
 
 dcast(df, Animal ~ FeedType, sum, fill=NaN)
-## Alternative method using base R
+# Alternative method using base R
 with(df, tapply(Amount, list(Animal, FeedType), sum))
 ```
 
@@ -662,12 +662,12 @@ Categories (3, int64): [1, 2, 3]
 
 ## 与SQL比较
 
-由于许多潜在的pandas用户对[SQL](https://en.wikipedia.org/wiki/SQL)有一定的了解
+由于许多潜在的 pandas 用户对[SQL](https://en.wikipedia.org/wiki/SQL)有一定的了解
  ，因此本页面旨在提供一些使用pandas如何执行各种SQL操作的示例。
 
 如果您是 pandas 的新手，您可能需要先阅读[十分钟入门Pandas](/docs/getting_started/10min.html) 以熟悉本库。
 
-按照惯例，我们按如下方式导入pandas和NumPy：
+按照惯例，我们按如下方式导入 pandas 和 NumPy：
 
 ``` python
 In [1]: import pandas as pd
@@ -776,7 +776,7 @@ WHERE time = 'Dinner' AND tip > 5.00;
 ```
 
 ``` python
-## tips of more than $5.00 at Dinner meals
+# tips of more than $5.00 at Dinner meals
 In [11]: tips[(tips['time'] == 'Dinner') & (tips['tip'] > 5.00)]
 Out[11]: 
      total_bill    tip     sex smoker  day    time  size
@@ -805,7 +805,7 @@ WHERE size >= 5 OR total_bill > 45;
 ```
 
 ``` python
-## tips by parties of at least 5 diners OR bill total was more than $45
+# tips by parties of at least 5 diners OR bill total was more than $45
 In [12]: tips[(tips['size'] >= 5) | (tips['total_bill'] > 45)]
 Out[12]: 
      total_bill    tip     sex smoker   day    time  size
@@ -1017,7 +1017,7 @@ INNER JOIN df2
 ```
 
 ``` python
-## merge performs an INNER JOIN by default
+# merge performs an INNER JOIN by default
 In [24]: pd.merge(df1, df2, on='key')
 Out[24]: 
   key   value_x   value_y
@@ -1050,7 +1050,7 @@ LEFT OUTER JOIN df2
 ```
 
 ``` python
-## show all records from df1
+# show all records from df1
 In [27]: pd.merge(df1, df2, on='key', how='left')
 Out[27]: 
   key   value_x   value_y
@@ -1072,7 +1072,7 @@ RIGHT OUTER JOIN df2
 ```
 
 ``` python
-## show all records from df2
+# show all records from df2
 In [28]: pd.merge(df1, df2, on='key', how='right')
 Out[28]: 
   key   value_x   value_y
@@ -1095,7 +1095,7 @@ FULL OUTER JOIN df2
 ```
 
 ``` python
-## show all records from both frames
+# show all records from both frames
 In [29]: pd.merge(df1, df2, on='key', how='outer')
 Out[29]: 
   key   value_x   value_y
@@ -1323,11 +1323,13 @@ In [39]: tips = tips.loc[tips['tip'] <= 9]
 
 ## 与SAS的比较
 
-由于许多潜在的pandas用户对[SQL](https://en.wikipedia.org/wiki/SQL)有一定的了解，因此本页面旨在提供一些使用pandas如何执行各种SQL操作的示例。
+对于来自 [SAS](https://en.wikipedia.org/wiki/SAS_(software)) 的潜在用户，本节旨在演示如何在 pandas 中做各种类似SAS的操作。
+
+由于许多潜在的 pandas 用户对[SQL](https://en.wikipedia.org/wiki/SQL)有一定的了解，因此本页面旨在提供一些使用 pandas 如何执行各种SQL操作的示例。
 
 如果您是 pandas 的新手，您可能需要先阅读[十分钟入门Pandas](/docs/getting_started/10min.html) 以熟悉本库。
 
-按照惯例，我们按如下方式导入pandas和NumPy：
+按照惯例，我们按如下方式导入 pandas 和 NumPy：
 
 ``` python
 In [1]: import pandas as pd
@@ -1349,13 +1351,13 @@ run;
 
 ### 数据结构
 
-#### 一般术语翻译
+#### 一般术语对照表
 
- Pandas  | SAS
+Pandas | SAS
 ---|---
-DataFrame | 数据集
-column | 变量
-row | 观察
+DataFrame | 数据集（data set）
+column | 变量（variable）
+row | 观察（observation）
 groupby | BY-group
 NaN | .
 
@@ -1442,7 +1444,7 @@ Out[7]:
 ``` python
 tips = pd.read_csv('tips.csv', sep='\t', header=None)
 
-## alternatively, read_table is an alias to read_csv with tab delimiter
+# alternatively, read_table is an alias to read_csv with tab delimiter
 tips = pd.read_table('tips.csv', header=None)
 ```
 
@@ -1478,7 +1480,7 @@ data tips;
 run;
 ```
 
-Pandas 通过指定个体提供了类似的矢量化操作``Series``中``DataFrame``。可以以相同的方式分配新列。
+pandas 通过指定个体提供了类似的矢量化操作``Series``中``DataFrame``。可以以相同的方式分配新列。
 
 ``` python
 In [8]: tips['total_bill'] = tips['total_bill'] - 2
@@ -1628,7 +1630,7 @@ run;
 下面的 Pandas 表示相同的操作。
 
 ``` python
-## keep
+# keep
 In [21]: tips[['sex', 'total_bill', 'tip']].head()
 Out[21]: 
       sex  total_bill   tip
@@ -1638,7 +1640,7 @@ Out[21]:
 3    Male       21.68  3.31
 4  Female       22.59  3.61
 
-## drop
+# drop
 In [22]: tips.drop('sex', axis=1).head()
 Out[22]: 
    total_bill   tip smoker  day    time  size
@@ -1648,7 +1650,7 @@ Out[22]:
 3       21.68  3.31     No  Sun  Dinner     2
 4       22.59  3.61     No  Sun  Dinner     4
 
-## rename
+# rename
 In [23]: tips.rename(columns={'total_bill': 'total_bill_2'}).head()
 Out[23]: 
    total_bill_2   tip     sex smoker  day    time  size
@@ -1776,7 +1778,7 @@ Out[29]:
 Name: sex, dtype: object
 ```
 
-#### 扫描
+#### SCAN
 
 SAS [SCAN](https://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000214639.htm) 
 函数返回字符串中的第n个字。第一个参数是要解析的字符串，第二个参数指定要提取的字。
@@ -2173,7 +2175,7 @@ df = pd.read_sas('binary-file.sas7bdat', format='sas7bdat')
 XPORT是一种相对有限的格式，它的解析并不像其他一些pandas读者那样优化。在SAS和pandas之间交换数据的另一种方法是序列化为csv。
 
 ``` python
-## version 0.17, 10M rows
+# version 0.17, 10M rows
 
 In [8]: %time df = pd.read_sas('big.xpt')
 Wall time: 14.6 s
@@ -2182,13 +2184,13 @@ In [9]: %time df = pd.read_csv('big.csv')
 Wall time: 4.86 s
 ```
 
-## 与Stata比较
+## 与Stata的比较
 
-For potential users coming from [Stata](https://en.wikipedia.org/wiki/Stata) this page is meant to demonstrate how different Stata operations would be performed in pandas.
+对于来自 [Stata](https://en.wikipedia.org/wiki/Stata) 的潜在用户，本节旨在演示如何在 pandas 中做各种类似Stata的操作。
 
-If you’re new to pandas, you might want to first read through [10 Minutes to pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html#min) to familiarize yourself with the library.
+如果您是 pandas 的新手，您可能需要先阅读[十分钟入门Pandas](/docs/getting_started/10min.html) 以熟悉本库。
 
-As is customary, we import pandas and NumPy as follows. This means that we can refer to the libraries as ``pd`` and ``np``, respectively, for the rest of the document.
+按照惯例，我们按如下方式导入 pandas 和 NumPy：
 
 ``` python
 In [1]: import pandas as pd
@@ -2196,47 +2198,51 @@ In [1]: import pandas as pd
 In [2]: import numpy as np
 ```
 
-::: tip Note
+::: tip 注意
 
-Throughout this tutorial, the pandas ``DataFrame`` will be displayed by calling ``df.head()``, which displays the first N (default 5) rows of the ``DataFrame``. This is often used in interactive work (e.g. [Jupyter notebook](https://jupyter.org/) or terminal) – the equivalent in Stata would be:
+在本教程中，``DataFrame``将通过调用显示
+ pandas ``df.head()``，它将显示该行的前N行（默认为5行）``DataFrame``。这通常用于交互式工作（例如[Jupyter笔记本](https://jupyter.org/)或终端） -  Stata中的等价物将是：
 
-``` bash
+``` stata
 list in 1/5
 ```
 
 :::
 
-### Data Structures
+### 数据结构
 
-#### General Terminology Translation
+#### 一般术语对照表
 
-pandas | Stata
+Pandas | Stata
 ---|---
-DataFrame | data set
-column | variable
-row | observation
+DataFrame | 数据集（data set）
+column | 变量（variable）
+row | 观察（observation）
 groupby | bysort
 NaN | .
 
-#### DataFrame / Series
+#### ``DataFrame``/ ``Series``
 
-A ``DataFrame`` in pandas is analogous to a Stata data set – a two-dimensional data source with labeled columns that can be of different types. As will be shown in this document, almost any operation that can be applied to a data set in Stata can also be accomplished in pandas.
+pandas 中的 ``DataFrame`` 类似于 ``Stata`` 数据集-具有不同类型的标记列的二维数据源。如本文档所示，几乎任何可以应用于Stata中的数据集的操作也可以在 pandas 中完成。
 
-A ``Series`` is the data structure that represents one column of a ``DataFrame``. Stata doesn’t have a separate data structure for a single column, but in general, working with a ``Series`` is analogous to referencing a column of a data set in Stata.
+``Series`` 是表示DataFrame的一列的数据结构。Stata 对于单个列没有单独的数据结构，但是通常，使用 ``Series`` 类似于引用Stata中的数据集的列。
 
-#### Index
+#### ``Index``
 
-Every ``DataFrame`` and ``Series`` has an ``Index`` – labels on the rows of the data. Stata does not have an exactly analogous concept. In Stata, a data set’s rows are essentially unlabeled, other than an implicit integer index that can be accessed with ``_n``.
+每个 ``DataFrame`` 和 ``Series`` 在数据 *行* 上都有一个叫 ``Index``-label 的标签。在 Stata 中没有相似的概念。在Stata中，数据集的行基本上是无标签的，除了可以用 ``_n`` 访问的隐式整数索引。
 
-In pandas, if no index is specified, an integer index is also used by default (first row = 0, second row = 1, and so on). While using a labeled ``Index`` or ``MultiIndex`` can enable sophisticated analyses and is ultimately an important part of pandas to understand, for this comparison we will essentially ignore the ``Index`` and just treat the ``DataFrame`` as a collection of columns. Please see the [indexing documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing) for much more on how to use an ``Index`` effectively.
+在pandas中，如果未指定索引，则默认情况下也使用整数索引（第一行= 0，第二行= 1，依此类推）。虽然使用标记``Index``或
+ ``MultiIndex``可以启用复杂的分析，并且最终是 pandas 理解的重要部分，但是对于这种比较，我们基本上会忽略它，
+ ``Index``并且只是将其``DataFrame``视为列的集合。有关如何有效使用的更多信息，
+ 请参阅[索引文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/indexing.html#indexing)``Index``。
 
-### Data Input / Output
+### 数据输入/输出
 
-#### Constructing a DataFrame from Values
+#### 从价值观构建数据帧
 
-A Stata data set can be built from specified values by placing the data after an ``input`` statement and specifying the column names.
+通过将数据放在``input``语句之后并指定列名，可以从指定值构建Stata数据集。
 
-``` bash
+``` stata
 input x y
 1 2
 3 4
@@ -2244,7 +2250,8 @@ input x y
 end
 ```
 
-A pandas ``DataFrame`` can be constructed in many different ways, but for a small number of values, it is often convenient to specify it as a Python dictionary, where the keys are the column names and the values are the data.
+pandas 的 ``DataFrame`` 可以用许多不同的方式构建，但对于少量的值，通常可以方便地将其指定为Python字典，其中键是列名，值是数据。
+
 
 ``` python
 In [3]: df = pd.DataFrame({'x': [1, 3, 5], 'y': [2, 4, 6]})
@@ -2257,17 +2264,17 @@ Out[4]:
 2  5  6
 ```
 
-#### Reading External Data
+#### 读取外部数据
 
-Like Stata, pandas provides utilities for reading in data from many formats. The ``tips`` data set, found within the pandas tests ([csv](https://raw.github.com/pandas-dev/pandas/master/pandas/tests/data/tips.csv)) will be used in many of the following examples.
+与Stata一样，pandas提供了从多种格式读取数据的实用程序。``tips``在pandas测试（[csv](https://raw.github.com/pandas-dev/pandas/master/pandas/tests/data/tips.csv)）中找到的数据集将用于以下许多示例中。
 
-Stata provides ``import`` ``delimited`` to read csv data into a data set in memory. If the ``tips.csv`` file is in the current working directory, we can import it as follows.
+Stata提供将csv数据读入内存中的数据集。如果文件在当前工作目录中，我们可以按如下方式导入它。``import delimited````tips.csv``
 
-``` python
+``` stata
 import delimited tips.csv
 ```
 
-The pandas method is [read_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv), which works similarly. Additionally, it will automatically download the data set if presented with a url.
+pandas 方法是[``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.read_csv.html#pandas.read_csv)类似的。此外，如果提供了网址，它将自动下载数据集。
 
 ``` python
 In [5]: url = ('https://raw.github.com/pandas-dev'
@@ -2286,7 +2293,7 @@ Out[7]:
 4       24.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-Like ``import`` ``delimited``, [read_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv) can take a number of parameters to specify how the data should be parsed. For example, if the data were instead tab delimited, did not have column names, and existed in the current working directory, the pandas command would be:
+比如，可以使用许多参数来指定数据应该如何解析。例如，如果数据是由制表符分隔的，没有列名，并且存在于当前工作目录中，则pandas命令将为：``import delimited``[``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.read_csv.html#pandas.read_csv)
 
 ``` python
 tips = pd.read_csv('tips.csv', sep='\t', header=None)
@@ -2295,47 +2302,49 @@ tips = pd.read_csv('tips.csv', sep='\t', header=None)
 tips = pd.read_table('tips.csv', header=None)
 ```
 
-Pandas can also read Stata data sets in ``.dta`` format with the [read_stata()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_stata.html#pandas.read_stata) function.
+pandas 还可以用于 ``.dta`` 的文件格式中。使用[``read_stata()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.read_stata.html#pandas.read_stata)函数读取格式的Stata数据集。
 
 ``` python
 df = pd.read_stata('data.dta')
 ```
 
-In addition to text/csv and Stata files, pandas supports a variety of other data formats such as Excel, SAS, HDF5, Parquet, and SQL databases. These are all read via a ``pd.read_*`` function. See the [IO documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io) for more details.
+除了text / csv和Stata文件之外，pandas还支持各种其他数据格式，如Excel，SAS，HDF5，Parquet和SQL数据库。这些都是通过``pd.read_*``
+函数读取的。有关更多详细信息，请参阅[IO文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/io.html#io)。
 
-#### Exporting Data
+#### 导出数据
 
-The inverse of ``import`` ``delimited`` in Stata is ``export`` ``delimited``
+stata 中 ``import delimated`` 的反向操作是 ``export delimated``。
 
-``` bash
+``` stata
 export delimited tips2.csv
 ```
 
-Similarly in pandas, the opposite of ``read_csv`` is [DataFrame.to_csv()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv).
+类似地，在 pandas 中，``read_csv`` 的反向操作是[``DataFrame.to_csv()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv)。
 
 ``` python
 tips.to_csv('tips2.csv')
 ```
 
-Pandas can also export to Stata file format with the [DataFrame.to_stata()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_stata.html#pandas.DataFrame.to_stata) method.
+pandas 还可以使用[``DataFrame.to_stata()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.to_stata.html#pandas.DataFrame.to_stata)方法导出为Stata文件格式。
 
 ``` python
 tips.to_stata('tips2.dta')
 ```
 
-### Data Operations
+### 数据操作
 
-#### Operations on Columns
+#### 列上的操作
 
-In Stata, arbitrary math expressions can be used with the ``generate`` and ``replace`` commands on new or existing columns. The drop command drops the column from the data set.
+在Stata中，任意数学表达式可以与新列或现有列上的``generate``和
+ ``replace``命令一起使用。该``drop``命令从数据集中删除列。
 
-``` python
+``` stata
 replace total_bill = total_bill - 2
 generate new_bill = total_bill / 2
 drop new_bill
 ```
 
-pandas provides similar vectorized operations by specifying the individual ``Series`` in the ``DataFrame``. New columns can be assigned in the same way. The [DataFrame.drop()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html#pandas.DataFrame.drop) method drops a column from the ``DataFrame``.
+pandas 通过指定个体提供了类似的矢量化操作``Series``中``DataFrame``。可以以相同的方式分配新列。该[``DataFrame.drop()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.drop.html#pandas.DataFrame.drop)方法从中删除一列``DataFrame``。
 
 ``` python
 In [8]: tips['total_bill'] = tips['total_bill'] - 2
@@ -2354,15 +2363,16 @@ Out[10]:
 In [11]: tips = tips.drop('new_bill', axis=1)
 ```
 
-#### Filtering
+#### 过滤
 
-Filtering in Stata is done with an if clause on one or more columns.
+在Stata中过滤是通过 ``if`` 一个或多个列上的子句完成的。
 
-``` bash
+``` stata
 list if total_bill > 10
 ```
 
-DataFrames can be filtered in multiple ways; the most intuitive of which is using [boolean indexing](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing-boolean).
+DataFrame可以通过多种方式进行过滤; 最直观的是使用
+ [布尔索引](https://pandas.pydata.org/pandas-docs/stable/../user_guide/indexing.html#indexing-boolean)。
 
 ``` python
 In [12]: tips[tips['total_bill'] > 10].head()
@@ -2375,16 +2385,16 @@ Out[12]:
 5       23.29  4.71    Male     No  Sun  Dinner     4
 ```
 
-#### If/Then Logic
+#### 如果/那么逻辑
 
-In Stata, an ``if`` clause can also be used to create new columns.
+在Stata中，``if``子句也可用于创建新列。
 
-``` bash
+``` stata
 generate bucket = "low" if total_bill < 10
 replace bucket = "high" if total_bill >= 10
 ```
 
-The same operation in pandas can be accomplished using the ``where`` method from ``numpy``.
+使用 ``numpy`` 的 ``where`` 方法可以在 pandas 中完成相同的操作。
 
 ``` python
 In [13]: tips['bucket'] = np.where(tips['total_bill'] < 10, 'low', 'high')
@@ -2399,11 +2409,11 @@ Out[14]:
 4       22.59  3.61  Female     No  Sun  Dinner     4   high
 ```
 
-#### Date Functionality
+#### 日期功能
 
-Stata provides a variety of functions to do operations on date/datetime columns.
+Stata提供了各种函数来对date / datetime列进行操作。
 
-``` bash
+``` stata
 generate date1 = mdy(1, 15, 2013)
 generate date2 = date("Feb152015", "MDY")
 
@@ -2418,7 +2428,7 @@ generate months_between = mofd(date2) - mofd(date1)
 list date1 date2 date1_year date2_month date1_next months_between
 ```
 
-The equivalent pandas operations are shown below. In addition to these functions, pandas supports other Time Series features not available in Stata (such as time zone handling and custom offsets) – see the [timeseries documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries) for more details.
+等效的 pandas 操作如下所示。除了这些功能外，pandas 还支持 Stata 中不具备的其他时间序列功能（例如时区处理和自定义偏移） - 有关详细信息，请参阅[时间序列文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/timeseries.html#timeseries)。
 
 ``` python
 In [15]: tips['date1'] = pd.Timestamp('2013-01-15')
@@ -2447,11 +2457,11 @@ Out[21]:
 4 2013-01-15 2015-02-15        2013            2 2013-02-01  <25 * MonthEnds>
 ```
 
-#### Selection of Columns
+#### 列的选择
 
-Stata provides keywords to select, drop, and rename columns.
+Stata 提供了选择，删除和重命名列的关键字。
 
-``` bash
+``` stata
 keep sex total_bill tip
 
 drop sex
@@ -2459,7 +2469,7 @@ drop sex
 rename total_bill total_bill_2
 ```
 
-The same operations are expressed in pandas below. Note that in contrast to Stata, these operations do not happen in place. To make these changes persist, assign the operation back to a variable.
+下面的 pandas 表示相同的操作。请注意，与 Stata 相比，这些操作不会发生。要使这些更改保持不变，请将操作分配回变量。
 
 ``` python
 # keep
@@ -2493,15 +2503,15 @@ Out[24]:
 4         22.59  3.61  Female     No  Sun  Dinner     4
 ```
 
-#### Sorting by Values
+#### 按值排序
 
-Sorting in Stata is accomplished via ``sort``
+Stata中的排序是通过 ``sort``
 
-``` bash
+``` stata
 sort sex total_bill
 ```
 
-pandas objects have a [DataFrame.sort_values()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_values.html#pandas.DataFrame.sort_values) method, which takes a list of columns to sort by.
+pandas 对象有一个[``DataFrame.sort_values()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.sort_values.html#pandas.DataFrame.sort_values)方法，它采用列表进行排序。
 
 ``` python
 In [25]: tips = tips.sort_values(['sex', 'total_bill'])
@@ -2516,18 +2526,18 @@ Out[26]:
 135        6.51  1.25  Female     No  Thur   Lunch     2
 ```
 
-### String Processing
+### 字符串处理
 
-#### Finding Length of String
+#### 查找字符串的长度
 
-Stata determines the length of a character string with the ``strlen()`` and ``ustrlen()`` functions for ASCII and Unicode strings, respectively.
+Stata 分别使用ASCII和Unicode字符串 ``strlen()`` 和 ``ustrlen()`` 函数确定字符串的长度。
 
-``` bash
+``` stata
 generate strlen_time = strlen(time)
 generate ustrlen_time = ustrlen(time)
 ```
 
-Python determines the length of a character string with the len function. In Python 3, all strings are Unicode strings. ``len`` includes trailing blanks. Use ``len`` and ``rstrip`` to exclude trailing blanks.
+Python 使用该 ``len`` 函数确定字符串的长度。在Python 3中，所有字符串都是Unicode字符串。``len``包括尾随空白。使用``len``和``rstrip``排除尾随空格。
 
 ``` python
 In [27]: tips['time'].str.len().head()
@@ -2549,15 +2559,15 @@ Out[28]:
 Name: time, dtype: int64
 ```
 
-#### Finding Position of Substring
+#### 找到字符串的位置
 
-Stata determines the position of a character in a string with the ``strpos()`` function. This takes the string defined by the first argument and searches for the first position of the substring you supply as the second argument.
+Stata使用该``strpos()``函数确定字符串中字符的位置。这将获取第一个参数定义的字符串，并搜索您提供的子字符串的第一个位置作为第二个参数。
 
-``` bash
+``` stata
 generate str_position = strpos(sex, "ale")
 ```
 
-Python determines the position of a character in a string with the ``find()`` function. ``find`` searches for the first position of the substring. If the substring is found, the function returns its position. Keep in mind that Python indexes are zero-based and the function will return -1 if it fails to find the substring.
+Python使用``find()``函数确定字符串中字符的位置。``find``搜索子字符串的第一个位置。如果找到子字符串，则该函数返回其位置。请记住，Python索引是从零开始的，如果找不到子串，函数将返回-1。
 
 ``` python
 In [29]: tips['sex'].str.find("ale").head()
@@ -2570,15 +2580,15 @@ Out[29]:
 Name: sex, dtype: int64
 ```
 
-#### Extracting Substring by Position
+#### 按位置提取字符串
 
-Stata extracts a substring from a string based on its position with the ``substr()`` function.
+Stata根据``substr()``函数的位置从字符串中提取字符串。
 
-``` bash
+``` stata
 generate short_sex = substr(sex, 1, 1)
 ```
 
-With pandas you can use ``[]`` notation to extract a substring from a string by position locations. Keep in mind that Python indexes are zero-based.
+使用pandas，您可以使用``[]``符号从位置位置提取字符串中的子字符串。请记住，Python索引是从零开始的。
 
 ``` python
 In [30]: tips['sex'].str[0:1].head()
@@ -2591,11 +2601,11 @@ Out[30]:
 Name: sex, dtype: object
 ```
 
-#### Extracting nth Word
+#### 提取第n个字符
 
-The Stata ``word()`` function returns the nth word from a string. The first argument is the string you want to parse and the second argument specifies which word you want to extract.
+Stata ``word()``函数返回字符串中的第n个单词。第一个参数是要解析的字符串，第二个参数指定要提取的字。
 
-``` bash
+``` stata
 clear
 input str20 string
 "John Smith"
@@ -2606,7 +2616,7 @@ generate first_name = word(name, 1)
 generate last_name = word(name, -1)
 ```
 
-Python extracts a substring from a string based on its text by using regular expressions. There are much more powerful approaches, but this just shows a simple approach.
+Python使用正则表达式根据文本从字符串中提取字符串。有更强大的方法，但这只是一个简单的方法。
 
 ``` python
 In [31]: firstlast = pd.DataFrame({'string': ['John Smith', 'Jane Cook']})
@@ -2622,11 +2632,12 @@ Out[34]:
 1   Jane Cook       Jane      Jane
 ```
 
-#### Changing Case
+#### 改变案例
 
-The Stata ``strupper()``, ``strlower()``, ``strproper()``, ``ustrupper()``, ``ustrlower()``, and ``ustrtitle()`` functions change the case of ASCII and Unicode strings, respectively.
+所述的Stata ``strupper()``，``strlower()``，``strproper()``，
+ ``ustrupper()``，``ustrlower()``，和``ustrtitle()``功能分别改变ASCII和Unicode字符串的情况下，。
 
-``` bash
+``` stata
 clear
 input str20 string
 "John Smith"
@@ -2639,7 +2650,7 @@ generate title = strproper(string)
 list
 ```
 
-The equivalent Python functions are ``upper``, ``lower``, and ``title``.
+等效Python的功能``upper``，``lower``和``title``。
 
 ``` python
 In [35]: firstlast = pd.DataFrame({'string': ['John Smith', 'Jane Cook']})
@@ -2657,9 +2668,9 @@ Out[39]:
 1   Jane Cook   JANE COOK   jane cook   Jane Cook
 ```
 
-### Merging
+### 合并
 
-The following tables will be used in the merge examples
+合并示例中将使用以下表格
 
 ``` python
 In [40]: df1 = pd.DataFrame({'key': ['A', 'B', 'C', 'D'],
@@ -2687,11 +2698,12 @@ Out[43]:
 3   E -1.044236
 ```
 
-In Stata, to perform a merge, one data set must be in memory and the other must be referenced as a file name on disk. In contrast, Python must have both ``DataFrames`` already in memory.
+在Stata中，要执行合并，一个数据集必须在内存中，另一个必须作为磁盘上的文件名引用。相比之下，Python必须``DataFrames``已经在内存中。
 
-By default, Stata performs an outer join, where all observations from both data sets are left in memory after the merge. One can keep only observations from the initial data set, the merged data set, or the intersection of the two by using the values created in the ``_merge`` variable.
+默认情况下，Stata执行外部联接，其中两个数据集的所有观察值在合并后都保留在内存中。通过使用在``_merge``变量中创建的值，可以仅保留来自初始数据集，合并数据集或两者的交集的观察
+ 。
 
-``` bash
+``` stata
 * First create df2 and save to disk
 clear
 input str1 key
@@ -2734,7 +2746,7 @@ restore
 merge 1:n key using df2.dta
 ```
 
-pandas DataFrames have a [DataFrame.merge()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html#pandas.DataFrame.merge) method, which provides similar functionality. Note that different join types are accomplished via the ``how`` keyword.
+pandas 的 DataFrames 有一个[``DataFrame.merge()``](https://pandas.pydata.org/pandas-docs/stable/../reference/api/pandas.DataFrame.merge.html#pandas.DataFrame.merge)提供类似功能的方法。请注意，通过``how``关键字可以实现不同的连接类型。
 
 ``` python
 In [44]: inner_join = df1.merge(df2, on=['key'], how='inner')
@@ -2780,9 +2792,9 @@ Out[51]:
 5   E       NaN -1.044236
 ```
 
-### Missing Data
+### 缺少数据
 
-Like Stata, pandas has a representation for missing data – the special float value ``NaN`` (not a number). Many of the semantics are the same; for example missing data propagates through numeric operations, and is ignored by default for aggregations.
+像Stata一样，pandas 有缺失数据的表示 - 特殊浮点值``NaN``（不是数字）。许多语义都是一样的; 例如，丢失的数据通过数字操作传播，默认情况下会被聚合忽略。
 
 ``` python
 In [52]: outer_join
@@ -2809,16 +2821,16 @@ In [54]: outer_join['value_x'].sum()
 Out[54]: -3.5940742896293765
 ```
 
-One difference is that missing data cannot be compared to its sentinel value. For example, in Stata you could do this to filter missing values.
+一个区别是丢失的数据无法与其哨兵值进行比较。例如，在 Stata 中，您可以执行此操作以过滤缺失值。
 
-``` bash
+``` stata
 * Keep missing values
 list if value_x == .
 * Keep non-missing values
 list if value_x != .
 ```
 
-This doesn’t work in pandas. Instead, the ``pd.isna()`` or ``pd.notna()`` functions should be used for comparisons.
+这在 pandas 中不起作用。相反，应使用``pd.isna()``或``pd.notna()``函数进行比较。
 
 ``` python
 In [55]: outer_join[pd.isna(outer_join['value_x'])]
@@ -2836,7 +2848,7 @@ Out[56]:
 4   D -1.135632  0.119209
 ```
 
-Pandas also provides a variety of methods to work with missing data – some of which would be challenging to express in Stata. For example, there are methods to drop all rows with any missing values, replacing missing values with a specified value, like the mean, or forward filling from previous rows. See the [missing data documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data) for more.
+pandas 还提供了多种处理丢失数据的方法，其中一些方法在Stata中表达起来很有挑战性。例如，有一些方法可以删除具有任何缺失值的所有行，用指定值(如平均值)替换缺失值，或从前一行向前填充。有关详细信息，请参阅[缺失数据文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/missing_data.html#missing-data)。
 
 ``` python
 # Drop rows with any missing value
@@ -2870,17 +2882,18 @@ Out[59]:
 Name: value_x, dtype: float64
 ```
 
-### GroupBy
+### 的GroupBy 
 
-#### Aggregation
+#### 聚合
 
-Stata’s ``collapse`` can be used to group by one or more key variables and compute aggregations on numeric columns.
+Stata ``collapse``可用于按一个或多个关键变量进行分组，并计算数字列上的聚合。
 
-``` bash
+``` stata
 collapse (sum) total_bill tip, by(sex smoker)
 ```
 
-pandas provides a flexible ``groupby`` mechanism that allows similar aggregations. See the [groupby documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#groupby) for more details and examples.
+pandas提供了一种``groupby``允许类似聚合的灵活机制。有关
+更多详细信息和示例，请参阅[groupby文档](https://pandas.pydata.org/pandas-docs/stable/../user_guide/groupby.html#groupby)。
 
 ``` python
 In [60]: tips_summed = tips.groupby(['sex', 'smoker'])['total_bill', 'tip'].sum()
@@ -2895,16 +2908,16 @@ Male   No         1725.75  302.00
        Yes        1217.07  183.07
 ```
 
-#### Transformation
+#### 转换
 
-In Stata, if the group aggregations need to be used with the original data set, one would usually use ``bysort`` with ``egen()``. For example, to subtract the mean for each observation by smoker group.
+在Stata中，如果组聚合需要与原始数据集一起使用``bysort``，通常会使用``egen()``。例如，减去吸烟者组每次观察的平均值。
 
-``` bash
+``` stata
 bysort sex smoker: egen group_bill = mean(total_bill)
 generate adj_total_bill = total_bill - group_bill
 ```
 
-pandas ``groubpy`` provides a ``transform`` mechanism that allows these type of operations to be succinctly expressed in one operation.
+pandas ``groupby``提供了一种``transform``机制，允许在一个操作中简洁地表达这些类型的操作。
 
 ``` python
 In [62]: gb = tips.groupby('smoker')['total_bill']
@@ -2921,15 +2934,15 @@ Out[64]:
 135        6.51  1.25  Female     No  Thur   Lunch     2      -10.678278
 ```
 
-#### By Group Processing
+#### 按组处理
 
-In addition to aggregation, pandas ``groupby`` can be used to replicate most other ``bysort`` processing from Stata. For example, the following example lists the first observation in the current sort order by sex/smoker group.
+除聚合外，pandas ``groupby``还可用于复制``bysort``Stata中的大多数其他处理。例如，以下示例按性别/吸烟者组列出当前排序顺序中的第一个观察结果。
 
-``` bash
+``` stata
 bysort sex smoker: list if _n == 1
 ```
 
-In pandas this would be written as:
+在 pandas 中，这将写成：
 
 ``` python
 In [65]: tips.groupby(['sex', 'smoker']).first()
@@ -2942,8 +2955,8 @@ Male   No            5.51  2.00  Thur   Lunch     2      -11.678278
        Yes           5.25  5.15   Sun  Dinner     2      -13.506344
 ```
 
-### Other Considerations
+### 其他注意事项
 
-#### Disk vs Memory
+#### 磁盘与内存
 
-Pandas and Stata both operate exclusively in memory. This means that the size of data able to be loaded in pandas is limited by your machine’s memory. If out of core processing is needed, one possibility is the [dask.dataframe](http://dask.pydata.org/en/latest/dataframe.html) library, which provides a subset of pandas functionality for an on-disk ``DataFrame``.
+pandas 和 Stata 都只在内存中运行。这意味着能够在 pandas 中加载的数据大小受机器内存的限制。如果需要进行核心处理，则有一种可能性是[dask.dataframe](http://dask.pydata.org/en/latest/dataframe.html) 库，它为磁盘上的pandas功能提供了一个子集``DataFrame``。
