@@ -149,8 +149,8 @@ module.exports = ctx => ({
       serviceWorker: true,
       updatePopup: {
         '/': {
-          message: "发现新内容可用",
-          buttonText: "刷新"
+          message: "更新了新内容呢！",
+          buttonText: "立即刷新"
         },
         '/en/': {
           message: "New content is available.",

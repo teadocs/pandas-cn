@@ -1,17 +1,17 @@
 # 包概述
 
-**Pandas** 是一个 [Python](https://www.python.org/) 的包，提供快速、灵活和富有表现力的数据结构，旨在使“关系”或“标记”数据的使用既简单又直观。它旨在成为在Python中进行实际，**真实世界**数据分析的基础高级构建模块。此外，**它还有更宏远的目标，即成为超过任何语言的最强大，最灵活的开源数据分析/操作工具**。它已朝着这个目标迈进。
+**Pandas** 是一个 [Python](https://www.python.org/) 的包，提供快速、灵活和富有表现力的数据结构，旨在使“关系”或“标记”数据的使用既简单又直观。它的目标是成为用Python进行实际的、**真实**的数据分析的基础高级模块。此外，**它还有更宏远的目标，即成为超过任何语言的最强大，最灵活的开源数据分析/操作工具**。它已朝着这个目标迈进。
 
-pandas非常适合许多不同类型的数据：
+pandas 非常适合许多不同类型的数据：
 
  - 具有异构类型列的表格数据，如SQL表或Excel电子表格。
  - 有序和无序（不一定是固定频率）时间序列数据。
  - 具有行和列标签的任意矩阵数据（均匀类型或异构）。
  - 任何其他形式的观察/统计数据集。 实际上不需要将数据标记为放置在Pandas数据结构中。
 
-Pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)（1维）和[DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)（2维），处理金融，统计，社会科学和许多工程领域中的绝大多数典型用例。 对于R用户，DataFrame提供R的data.frame提供的所有内容以及更多内容。 Pandas建立在[NumPy](https://www.numpy.org/)之上，旨在与许多其他第三方库完美地集成在科学计算环境中。
+pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)（1维）和[DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)（2维），处理金融，统计，社会科学和许多工程领域中的绝大多数典型用例。 对于R用户，DataFrame提供R的data.frame提供的所有内容以及更多内容。pandas 建立在[NumPy](https://www.numpy.org/)之上，旨在与许多其他第三方库完美地集成在科学计算环境中。
 
-以下是Pandas做够胜任的一些事情：
+以下是 pandas 做够胜任的一些事情：
 
  - 在浮点和非浮点数据中轻松处理**缺失数据**（表示为NaN）。
  - 大小可变性：可以从DataFrame和更高维度的对象中**插入和删除**。
@@ -29,9 +29,9 @@ Pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-d
 
 其他一些说明
 
-- Pandas 的开发速度**很快**。许多低级算法位已经在[Cython](https://cython.org/)代码中进行了大量优化。然而，与其他任何事物一样，这样做通常会牺牲性能。 因此，如果您专注于应用程序的一个功能，您可以更快创建一个专用的工具。
-- Pandas 是[statsmodels](https://www.statsmodels.org/stable/index.html)的依赖，使其成为Python中统计计算生态系统的重要组成部分。
-- Pandas 已广泛用于金融领域的应用和生产。
+- pandas 的开发速度**很快**。许多低级算法位已经在[Cython](https://cython.org/)代码中进行了大量优化。然而，与其他任何事物一样，这样做通常会牺牲性能。 因此，如果您专注于应用程序的一个功能，您可以更快创建一个专用的工具。
+- pandas 是[statsmodels](https://www.statsmodels.org/stable/index.html)的依赖，使其成为Python中统计计算生态系统的重要组成部分。
+- pandas 已广泛用于金融领域的应用和生产。
 
 ## 数据结构
 
@@ -42,9 +42,9 @@ Pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-d
 
 ### 为什么有多个数据结构？
 
-考虑Pandas数据结构的最佳方式是作为低维数据的灵活容器。例如，DataFrame是Series的容器，Series是scalars的容器。我们希望能够以类似字典的方式从这些容器中插入和删除对象。
+考虑 pandas 数据结构的最佳方式是作为低维数据的灵活容器。例如，DataFrame是Series的容器，Series是scalars的容器。我们希望能够以类似字典的方式从这些容器中插入和删除对象。
 
-此外，我们希望通用API函数的合理默认行为考虑到时间序列和横截面数据集的典型方向。当使用ndarrays存储2维和3维数据时，在编写函数时会给用户带来负担以考虑数据集的方向; 轴被认为或多或少相等（除非C-或Fortran-连续性对性能有影响）。在Pandas中，轴旨在为数据提供更多的语义含义; 即，对于特定数据集，可能存在定向数据的“正确”方式。因此，目标是减少在下游功能中编码数据转换所需的心理努力量。
+此外，我们希望通用API函数的合理默认行为考虑到时间序列和横截面数据集的典型方向。当使用ndarrays存储2维和3维数据时，在编写函数时会给用户带来负担以考虑数据集的方向; 轴被认为或多或少相等（除非C-或Fortran-连续性对性能有影响）。在Pandas中，轴旨在为数据提供更多的语义含义; 即，对于特定数据集，可能存在定向数据的“正确”方式。因此，目标是减少在下游功能中编码数据转换所需的精力。
 
 此外，我们希望公共API函数的合理默认行为考虑到时间序列和横截面数据集的典型方向。当使用ndarray存储2维和3维数据时，用户在编写函数时需要考虑数据集的方向；轴被认为或多或少是等价的(除非C或Fortran邻接关系到性能)。在Pandas中，轴旨在为数据提供更多的语义含义；即，对于特定的数据集，可能会有一种“正确”的方式来确定数据的方向。因此，目标是减少在下游函数中编写数据转换代码所需的脑力劳动。
 
@@ -66,15 +66,15 @@ for col in df.columns:
 
 ## 社区
 
-如今 Pandas 得到了世界各地志同道合的人们的积极支持，他们贡献了宝贵的时间和精力来帮助开源 Pandas 成为可能。感谢我们[所有的贡献者](https://github.com/Pandas-dev/Pandas/graphs/contributors)。
+如今 pandas 得到了世界各地志同道合的人们的积极支持，他们贡献了宝贵的时间和精力来帮助开源 pandas 成为可能。感谢我们[所有的贡献者](https://github.com/Pandas-dev/Pandas/graphs/contributors)。
 
 如果您对贡献感兴趣，请访问[贡献指南](https://Pandas.pydata.org/Pandas-docs/stable/development/contributing.html#contributing)。
 
-Pandas是[NumFOCUS](https://www.numfocus.org/open-source-projects/)赞助的项目。 这将有助于确保Pandas作为世界级开源项目的成功发展，并有可能为该项目[捐款](https://Pandas.pydata.org/donate.html)。
+pandas 是[NumFOCUS](https://www.numfocus.org/open-source-projects/)赞助的项目。 这将有助于确保 pandas 作为世界级开源项目的成功发展，并有可能为该项目[捐款](https://Pandas.pydata.org/donate.html)。
 
 ## 项目治理
 
-Pandas 项目自2008年成立以来非正式使用的治理流程已在[项目治理文档](https://github.com/Pandas-dev/Pandas-governance)中正式确定。这些文件阐明了如何制定决策以及我们社区的各种要素如何相互作用，包括开源协作开发与可能由营利或非营利实体资助的工作之间的关系。
+pandas 项目自2008年成立以来非正式使用的治理流程已在[项目治理文档](https://github.com/Pandas-dev/Pandas-governance)中正式确定。这些文件阐明了如何制定决策以及我们社区的各种要素如何相互作用，包括开源协作开发与可能由营利或非营利实体资助的工作之间的关系。
 
 Wes McKinney 是仁慈的生活独裁者（BDFL）。
 

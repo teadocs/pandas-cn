@@ -4,11 +4,11 @@
 
 ## 官方指南
 
-Pandas 官方出品的[10分钟入门Pandas](/docs/getting_started/10min.html)
+Pandas 官方出品的[十分钟入门Pandas](/docs/getting_started/10min.html)。
 
-或者是跟多复杂高阶用法的[Cookbook](/docs/user_guide/cookbook.html).
+或者是跟多复杂高阶用法的[Cookbook](/docs/user_guide/cookbook.html)。
 
-一个简便的Pandas[备忘清单](http://Pandas.pydata.org/Pandas_Cheat_Sheet.pdf)
+一个简便的Pandas[备忘清单](http://Pandas.pydata.org/Pandas_Cheat_Sheet.pdf)。
 
 ## 社区指南
 
