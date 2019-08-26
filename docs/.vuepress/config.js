@@ -112,6 +112,11 @@ module.exports = ctx => ({
   ],
   theme: 'teadocs',
   themeConfig: {
+    logo: {
+      text: 'Pandas',
+      subText: '中文网',
+      image: 'logo.png',
+    },
     alert: [{
       id: '2019-7-29',
       title: '文档公告',
