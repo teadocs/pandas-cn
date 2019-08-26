@@ -2203,7 +2203,7 @@ In [2]: import numpy as np
 在本教程中，``DataFrame``将通过调用显示
  pandas ``df.head()``，它将显示该行的前N行（默认为5行）``DataFrame``。这通常用于交互式工作（例如[Jupyter笔记本](https://jupyter.org/)或终端） -  Stata中的等价物将是：
 
-``` stata
+```
 list in 1/5
 ```
 
@@ -2242,7 +2242,7 @@ pandas 中的 ``DataFrame`` 类似于 ``Stata`` 数据集-具有不同类型的�
 
 通过将数据放在``input``语句之后并指定列名，可以从指定值构建Stata数据集。
 
-``` stata
+```
 input x y
 1 2
 3 4
@@ -2270,7 +2270,7 @@ Out[4]:
 
 Stata提供将csv数据读入内存中的数据集。如果文件在当前工作目录中，我们可以按如下方式导入它。``import delimited````tips.csv``
 
-``` stata
+```
 import delimited tips.csv
 ```
 
@@ -2315,7 +2315,7 @@ df = pd.read_stata('data.dta')
 
 stata 中 ``import delimated`` 的反向操作是 ``export delimated``。
 
-``` stata
+```
 export delimited tips2.csv
 ```
 
@@ -2338,7 +2338,7 @@ tips.to_stata('tips2.dta')
 在Stata中，任意数学表达式可以与新列或现有列上的``generate``和
  ``replace``命令一起使用。该``drop``命令从数据集中删除列。
 
-``` stata
+```
 replace total_bill = total_bill - 2
 generate new_bill = total_bill / 2
 drop new_bill
@@ -2367,7 +2367,7 @@ In [11]: tips = tips.drop('new_bill', axis=1)
 
 在Stata中过滤是通过 ``if`` 一个或多个列上的子句完成的。
 
-``` stata
+```
 list if total_bill > 10
 ```
 
@@ -2389,7 +2389,7 @@ Out[12]:
 
 在Stata中，``if``子句也可用于创建新列。
 
-``` stata
+```
 generate bucket = "low" if total_bill < 10
 replace bucket = "high" if total_bill >= 10
 ```
@@ -2413,7 +2413,7 @@ Out[14]:
 
 Stata提供了各种函数来对date / datetime列进行操作。
 
-``` stata
+```
 generate date1 = mdy(1, 15, 2013)
 generate date2 = date("Feb152015", "MDY")
 
@@ -2461,7 +2461,7 @@ Out[21]:
 
 Stata 提供了选择，删除和重命名列的关键字。
 
-``` stata
+```
 keep sex total_bill tip
 
 drop sex
@@ -2507,7 +2507,7 @@ Out[24]:
 
 Stata中的排序是通过 ``sort``
 
-``` stata
+```
 sort sex total_bill
 ```
 
@@ -2532,7 +2532,7 @@ Out[26]:
 
 Stata 分别使用ASCII和Unicode字符串 ``strlen()`` 和 ``ustrlen()`` 函数确定字符串的长度。
 
-``` stata
+```
 generate strlen_time = strlen(time)
 generate ustrlen_time = ustrlen(time)
 ```
@@ -2563,7 +2563,7 @@ Name: time, dtype: int64
 
 Stata使用该``strpos()``函数确定字符串中字符的位置。这将获取第一个参数定义的字符串，并搜索您提供的子字符串的第一个位置作为第二个参数。
 
-``` stata
+```
 generate str_position = strpos(sex, "ale")
 ```
 
@@ -2584,7 +2584,7 @@ Name: sex, dtype: int64
 
 Stata根据``substr()``函数的位置从字符串中提取字符串。
 
-``` stata
+```
 generate short_sex = substr(sex, 1, 1)
 ```
 
@@ -2605,7 +2605,7 @@ Name: sex, dtype: object
 
 Stata ``word()``函数返回字符串中的第n个单词。第一个参数是要解析的字符串，第二个参数指定要提取的字。
 
-``` stata
+```
 clear
 input str20 string
 "John Smith"
@@ -2637,7 +2637,7 @@ Out[34]:
 所述的Stata ``strupper()``，``strlower()``，``strproper()``，
  ``ustrupper()``，``ustrlower()``，和``ustrtitle()``功能分别改变ASCII和Unicode字符串的情况下，。
 
-``` stata
+```
 clear
 input str20 string
 "John Smith"
@@ -2703,7 +2703,7 @@ Out[43]:
 默认情况下，Stata执行外部联接，其中两个数据集的所有观察值在合并后都保留在内存中。通过使用在``_merge``变量中创建的值，可以仅保留来自初始数据集，合并数据集或两者的交集的观察
  。
 
-``` stata
+```
 * First create df2 and save to disk
 clear
 input str1 key
@@ -2823,7 +2823,7 @@ Out[54]: -3.5940742896293765
 
 一个区别是丢失的数据无法与其哨兵值进行比较。例如，在 Stata 中，您可以执行此操作以过滤缺失值。
 
-``` stata
+```
 * Keep missing values
 list if value_x == .
 * Keep non-missing values
@@ -2888,7 +2888,7 @@ Name: value_x, dtype: float64
 
 Stata ``collapse``可用于按一个或多个关键变量进行分组，并计算数字列上的聚合。
 
-``` stata
+```
 collapse (sum) total_bill tip, by(sex smoker)
 ```
 
@@ -2912,7 +2912,7 @@ Male   No         1725.75  302.00
 
 在Stata中，如果组聚合需要与原始数据集一起使用``bysort``，通常会使用``egen()``。例如，减去吸烟者组每次观察的平均值。
 
-``` stata
+```
 bysort sex smoker: egen group_bill = mean(total_bill)
 generate adj_total_bill = total_bill - group_bill
 ```
@@ -2938,7 +2938,7 @@ Out[64]:
 
 除聚合外，pandas ``groupby``还可用于复制``bysort``Stata中的大多数其他处理。例如，以下示例按性别/吸烟者组列出当前排序顺序中的第一个观察结果。
 
-``` stata
+```
 bysort sex smoker: list if _n == 1
 ```
 
