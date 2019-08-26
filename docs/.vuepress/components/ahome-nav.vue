@@ -12,7 +12,7 @@
     <!-- 关注公众号 -->
     <div class="block" :class="{'show': navId === 1}">
       <div class>
-        <p>数据科学爱好者的最终归属地，关注公众号获取各种Python的奇淫技巧、赚钱技巧，更有机会获得大厂内推。</p>
+        <p>掌上中文数据科学社区，关注公众号获取各种Python的奇淫技巧、赚钱技巧，更有机会获得大厂内推。</p>
       </div>
       <div class="qr-item">
         <img src="/home/wx-gzh.png" alt />
@@ -23,7 +23,7 @@
     <!-- 加入群聊 -->
     <div class="block" :class="{'show': navId === 2}">
       <div class>
-        <p>欢迎加入我们的交流群，群内有BAT公司大牛、常春藤校友、中国顶尖高校的各类学霸，以及众多事业有成者！</p>
+        <p>加入 <b>Pandas中文社区</b> 微信交流群，群内有BAT公司大牛、常春藤校友、中国顶尖高校的各类学霸，以及众多事业有成者！</p>
       </div>
       <div class="qr-item">
         <img src="/home/wx-qr.jpg" alt />
