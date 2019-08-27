@@ -255,7 +255,7 @@ dtype: object
 
 *v0.23.0. 新加入* 
 
-I如果你只是向单纯地替换字符 (等价于python中的
+如果你只是向单纯地替换字符 (等价于python中的
 [``str.replace()``](https://docs.python.org/3/library/stdtypes.html#str.replace))，你可以将可选参数 ``regex`` 设置为 ``False``，而不是傻傻地转义所有符号。这种情况下，``pat`` 和 ``repl`` 就都将作为普通字符对待：
 
 ``` python
