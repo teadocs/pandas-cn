@@ -61,7 +61,7 @@
           font-size 14px !important
           transition color 0.2s
           &:hover
-            color #00502c
+            color darken($accentColor, 20%);
 
   .left-box
     float left
