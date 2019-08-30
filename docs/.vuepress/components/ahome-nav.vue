@@ -112,7 +112,7 @@ export default {
       display: inline-block;
       margin-left: 2px;
       margin-right: 2px;
-      border: 1px solid #3eaf7c;
+      border: 1px solid $accentColor;
       border-radius: 25px;
       font-size: 14px;
       padding-left: 12px;
@@ -120,12 +120,12 @@ export default {
       cursor: pointer;
 
       &.active {
-        background-color: #3eaf7c;
+        background-color: $accentColor;
         color: #ffffff;
       }
 
       &:hover {
-        background-color: #3eaf7c;
+        background-color: $accentColor;
         color: #ffffff;
       }
     }
