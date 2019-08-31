@@ -2365,71 +2365,66 @@ The ``Series`` object also has a ``to_string`` method, but with only the ``buf``
 ``na_rep``, ``float_format`` arguments. There is also a ``length`` argument
 which, if set to ``True``, will additionally output the length of the Series.
 
-## JSON
+##JSON
 
-Read and write ``JSON`` format files and strings.
+读取和写入 `JSON` 格式的文本和字符串。
 
-### Writing JSON
+###Writing JSON
 
-A ``Series`` or ``DataFrame`` can be converted to a valid JSON string. Use ``to_json``
-with optional parameters:
+一个`Series` 或 ` DataFrame` 能转化成一个有效的`JSON`字符串。使用`to_json` 同可选的参数：
+- `path_or_buf` ： 写入输出的路径名或缓存可以是`None` ， 在这种情况下会返回一个JSON字符串。
+- `orient` :
 
-- ``path_or_buf`` : the pathname or buffer to write the output This can be ``None`` in which case a JSON string is returned
+   `Series` :
+    -  默认是 `index` ；
+    - 允许的值可以是{`split`, `records`, `index`}。
+  
+  `DataFrame` : 
+  - 默认是 `columns` ;
+  - 允许的值可以是{`split`,  `records`, ` index`, `columns`, `values`, `table`}。
+  
+  JSON字符串的格式：
+  
 
-- ``orient`` :
+  split  |  dict like {index -> [index], columns -> [columns], data -> [values]}
+  ------------- | -------------
+  records |  list like [{column -> value}, … , {column -> value}]
+  index  |  dict like {index -> {column -> value}}
+  columns  |  dict like {column -> {index -> value}}
+  values  |  just the values array
+    
+- `date_format` : 字符串，日期类型的转换，'eposh'是时间戳，'iso'是 ISO8601。
 
-  ``Series``:
+- `double_precision` : 当要编码的是浮点数值时使用的小数位数，默认是 10。
 
-    - default is ``index``
-    - allowed values are {``split``, ``records``, ``index``}
+- `force_ascii` : 强制编码字符串为 ASCII , 默认是True。
 
-  ``DataFrame``:
+- `date_unit` : 时间单位被编码来管理时间戳 和 ISO8601精度。's', 'ms', 'us' 或'ns'中的一个分别为 秒，毫秒，微秒，纳秒。默认是 'ms'。
 
-    - default is ``columns``
-    - allowed values are {``split``, ``records``, ``index``, ``columns``, ``values``, ``table``}
+- `default_handler` : 如果一个对象没有转换成一个恰当的JSON格式，处理程序就会被调用。采用单个参数，即要转换的对象，并返回一个序列化的对象。
 
-    The format of the JSON string
+- `lines` ： 如果面向 `records` ，就将每行写入记录为json。
 
-    split | dict like {index -> [index], columns -> [columns], data -> [values]}
-    ---|---
-    records | list like [{column -> value}, … , {column -> value}]
-    index | dict like {index -> {column -> value}}
-    columns | dict like {column -> {index -> value}}
-    values | just the values array
+注意：`NaN`'S , `NaT`'S 和`None` 将会被转换为`null`, 并且`datetime` 将会基于`date_format` 和 `date_unit` 两个参数转换。 
 
-- ``date_format`` : string, type of date conversion, ‘epoch’ for timestamp, ‘iso’ for ISO8601.
-
-- ``double_precision`` : The number of decimal places to use when encoding floating point values, default 10.
-
-- ``force_ascii`` : force encoded string to be ASCII, default True.
-
-- ``date_unit`` : The time unit to encode to, governs timestamp and ISO8601 precision. One of ‘s’, ‘ms’, ‘us’ or ‘ns’ for seconds, milliseconds, microseconds and nanoseconds respectively. Default ‘ms’.
-
-- ``default_handler`` : The handler to call if an object cannot otherwise be converted to a suitable format for JSON. Takes a single argument, which is the object to convert, and returns a serializable object.
-
-- ``lines`` : If ``records`` orient, then will write each record per line as json.
-
-Note ``NaN``’s, ``NaT``’s and ``None`` will be converted to ``null`` and ``datetime`` objects will be converted based on the ``date_format`` and ``date_unit`` parameters.
-
-``` python
+```python
 In [192]: dfj = pd.DataFrame(np.random.randn(5, 2), columns=list('AB'))
 
 In [193]: json = dfj.to_json()
 
 In [194]: json
-Out[194]: '{"A":{"0":-1.2945235903,"1":0.2766617129,"2":-0.0139597524,"3":-0.0061535699,"4":0.8957173022},"B":{"0":0.4137381054,"1":-0.472034511,"2":-0.3625429925,"3":-0.923060654,"4":0.8052440254}}'
-
+Out[194]: '{"A":{"0":-1.2945235903,"1":0.2766617129,"2":-0.0139597524,"3":-0.0061535699,"4":0.8957173022},"B":{"0":0.4137381054,
+"1":-0.472034511,"2":-0.3625429925,"3":-0.923060654,"4":0.8052440254}}'
 ```
 
-#### Orient options
+### 面向选项（Orient options）
 
-There are a number of different options for the format of the resulting JSON
-file / string. Consider the following ``DataFrame`` and ``Series``:
+要生成JSON文件/字符串，这儿有很多可选的格式。如下面的 `DataFrame ` 和 `Series` :
 
-``` python
+```python
 In [195]: dfjo = pd.DataFrame(dict(A=range(1, 4), B=range(4, 7), C=range(7, 10)),
-   .....:                     columns=list('ABC'), index=list('xyz'))
-   .....: 
+       ..... :                     columns=list('ABC'), index=list('xyz'))
+       ..... : 
 
 In [196]: dfjo
 Out[196]: 
@@ -2449,21 +2444,19 @@ Name: D, dtype: int64
 
 ```
 
-**Column oriented** (the default for ``DataFrame``) serializes the data as
-nested JSON objects with column labels acting as the primary index:
+**面向列**  序列化数据（默认是 `DataFrame`)来作为嵌套的JSON对象，且列标签充当主索引：
 
-``` python
+```python
 In [199]: dfjo.to_json(orient="columns")
 Out[199]: '{"A":{"x":1,"y":2,"z":3},"B":{"x":4,"y":5,"z":6},"C":{"x":7,"y":8,"z":9}}'
 
-# Not available for Series
+# Not available for Series （不适用于 Series）
 
 ```
 
-**Index oriented** (the default for ``Series``) similar to column oriented
-but the index labels are now primary:
+**面向索引** （默认是 `Series`) 与面向列类似，但是索引标签是主键：
 
-``` python
+```python
 In [200]: dfjo.to_json(orient="index")
 Out[200]: '{"x":{"A":1,"B":4,"C":7},"y":{"A":2,"B":5,"C":8},"z":{"A":3,"B":6,"C":9}}'
 
@@ -2472,11 +2465,9 @@ Out[201]: '{"x":15,"y":16,"z":17}'
 
 ```
 
-**Record oriented** serializes the data to a JSON array of column -> value records,
-index labels are not included. This is useful for passing ``DataFrame`` data to plotting
-libraries, for example the JavaScript library ``d3.js``:
+**面向记录**  序列化数据为一列JSON数组 -> 值的记录，索引标签不包括在内。这个在传递 `DataFrame` 数据到绘图库的时候很有用，例如JavaScript库 `d3.js` :
 
-``` python
+```python
 In [202]: dfjo.to_json(orient="records")
 Out[202]: '[{"A":1,"B":4,"C":7},{"A":2,"B":5,"C":8},{"A":3,"B":6,"C":9}]'
 
@@ -2485,10 +2476,9 @@ Out[203]: '[15,16,17]'
 
 ```
 
-**Value oriented** is a bare-bones option which serializes to nested JSON arrays of
-values only, column and index labels are not included:
+**面向值** 是一个概要的选项，它只序列化为嵌套的JSON数组值，列和索引标签不包括在内：
 
-``` python
+```python
 In [204]: dfjo.to_json(orient="values")
 Out[204]: '[[1,4,7],[2,5,8],[3,6,9]]'
 
@@ -2496,10 +2486,9 @@ Out[204]: '[[1,4,7],[2,5,8],[3,6,9]]'
 
 ```
 
-**Split oriented** serializes to a JSON object containing separate entries for
-values, index and columns. Name is also included for ``Series``:
+**面向切分** 序列化成一个JSON对象，它包括单项的值、索引和列。`Series` 的命名也包括：
 
-``` python
+```python
 In [205]: dfjo.to_json(orient="split")
 Out[205]: '{"columns":["A","B","C"],"index":["x","y","z"],"data":[[1,4,7],[2,5,8],[3,6,9]]}'
 
@@ -2508,22 +2497,16 @@ Out[206]: '{"name":"D","index":["x","y","z"],"data":[15,16,17]}'
 
 ```
 
-**Table oriented** serializes to the JSON [Table Schema](https://specs.frictionlessdata.io/json-table-schema/), allowing for the
-preservation of metadata including but not limited to dtypes and index names.
+**面向表格** 序列化为JSON的[ 表格模式（Table Schema）](https://specs.frictionlessdata.io/json-table-schema/ " Table Schema")，允许保存为元数据，包括但不限于dtypes和索引名称。
 
-::: tip Note
-
-Any orient option that encodes to a JSON object will not preserve the ordering of
-index and column labels during round-trip serialization. If you wish to preserve
-label ordering use the *split* option as it uses ordered containers.
-
+:::**注意**任何面向选项编码为一个JSON对象在转为序列化期间将不会保留索引和列标签的顺序。如果你想要保留标签的顺序，就使用`split`选项，因为它使用有序的容器。
 :::
 
-#### Date handling
+### 日期处理（Date handling）
 
-Writing in ISO date format:
+用ISO日期格式来写入：
 
-``` python
+```python
 In [207]: dfd = pd.DataFrame(np.random.randn(5, 2), columns=list('AB'))
 
 In [208]: dfd['date'] = pd.Timestamp('20130101')
@@ -2537,19 +2520,18 @@ Out[211]: '{"date":{"0":"2013-01-01T00:00:00.000Z","1":"2013-01-01T00:00:00.000Z
 
 ```
 
-Writing in ISO date format, with microseconds:
+以ISO日期格式的微秒单位写入：
 
-``` python
+```python
 In [212]: json = dfd.to_json(date_format='iso', date_unit='us')
 
 In [213]: json
-Out[213]: '{"date":{"0":"2013-01-01T00:00:00.000000Z","1":"2013-01-01T00:00:00.000000Z","2":"2013-01-01T00:00:00.000000Z","3":"2013-01-01T00:00:00.000000Z","4":"2013-01-01T00:00:00.000000Z"},"B":{"0":2.5656459463,"1":1.3403088498,"2":-0.2261692849,"3":0.8138502857,"4":-0.8273169356},"A":{"0":-1.2064117817,"1":1.4312559863,"2":-1.1702987971,"3":0.4108345112,"4":0.1320031703}}'
+Out[213]: '{"date":{"0":"2013-01-01T00:00:00.000000Z","1":"2013-01-01T00:00:00.000000Z","2":"2013-01-01T00:00:00.000000Z","3":"2013-01-01T00:00:00.000000Z","4":"2013-01-01T00:00:00.000000Z"},"B":{"0":2.5656459463,"1":1.3403088498,"2":-0.2261692849,"3":0.8138502857,"4":-0.8273169356},"A":{"0":-1.2064117817,"1":1.4312559863,"2":-1.1702987971,"3":0.4108345112,"4":0.1320031703}}
 
 ```
+时间戳的时间，以秒为单位：
 
-Epoch timestamps, in seconds:
-
-``` python
+```python
 In [214]: json = dfd.to_json(date_format='epoch', date_unit='s')
 
 In [215]: json
@@ -2557,9 +2539,9 @@ Out[215]: '{"date":{"0":1356998400,"1":1356998400,"2":1356998400,"3":1356998400,
 
 ```
 
-Writing to a file, with a date index and a date column:
+写入文件，以日期索引和日期列格式：
 
-``` python
+```python
 In [216]: dfj2 = dfj.copy()
 
 In [217]: dfj2['date'] = pd.Timestamp('20130101')
@@ -2573,29 +2555,24 @@ In [220]: dfj2.index = pd.date_range('20130101', periods=5)
 In [221]: dfj2.to_json('test.json')
 
 In [222]: with open('test.json') as fh:
-   .....:     print(fh.read())
-   .....: 
+        .....:     print(fh.read())
+        .....: 
 {"A":{"1356998400000":-1.2945235903,"1357084800000":0.2766617129,"1357171200000":-0.0139597524,"1357257600000":-0.0061535699,"1357344000000":0.8957173022},"B":{"1356998400000":0.4137381054,"1357084800000":-0.472034511,"1357171200000":-0.3625429925,"1357257600000":-0.923060654,"1357344000000":0.8052440254},"date":{"1356998400000":1356998400000,"1357084800000":1356998400000,"1357171200000":1356998400000,"1357257600000":1356998400000,"1357344000000":1356998400000},"ints":{"1356998400000":0,"1357084800000":1,"1357171200000":2,"1357257600000":3,"1357344000000":4},"bools":{"1356998400000":true,"1357084800000":true,"1357171200000":true,"1357257600000":true,"1357344000000":true}}
 
 ```
 
-#### Fallback behavior
+### 回退行为（Fallback behavior）
 
-If the JSON serializer cannot handle the container contents directly it will
-fall back in the following manner:
+如果JSON序列不能直接处理容器的内容，他将会以下面的方式发生回退：
 
-- if the dtype is unsupported (e.g. ``np.complex``) then the ``default_handler``, if provided, will be called
-for each value, otherwise an exception is raised.
+- 如果dtype是不被支持的（例如：` np.complex` ) ，则将为每个值调用 `default_handler` （如果提供），否则引发异常。
 
-- if an object is unsupported it will attempt the following:
-  - check if the object has defined a ``toDict`` method and call it.
-A ``toDict`` method should return a ``dict`` which will then be JSON serialized.
-  - invoke the ``default_handler`` if one was provided.
-  - convert the object to a ``dict`` by traversing its contents. However this will often fail
-with an ``OverflowError`` or give unexpected results.
+- 如果对象不受支持，它将尝试以下操作：
+    -  检查一下是否对象被定义为 `toDict ` 的方法并调用它。`toDict`的方法将返回一个`dict`，它将会是序列化的JSON格式。
+	- 如果提供了`default_handler`，则调用它。
+    - 通过遍历其内容将对象转换为`dict`。 但是，这通常会出现`OverflowError`而失败或抛出意外的结果。
 
-In general the best approach for unsupported objects or dtypes is to provide a ``default_handler``.
-For example:
+通常，对于不被支持的对象或dtypes，处理的最佳方法是提供`default_handler`。 例如:
 
 ``` python
 >>> DataFrame([1.0, 2.0, complex(1.0, 2.0)]).to_json()  # raises
@@ -2603,7 +2580,7 @@ RuntimeError: Unhandled numpy dtype 15
 
 ```
 
-can be dealt with by specifying a simple ``default_handler``:
+可以通过指定一个简单`default_handler`来处理：
 
 ``` python
 In [223]: pd.DataFrame([1.0, 2.0, complex(1.0, 2.0)]).to_json(default_handler=str)
@@ -2611,106 +2588,88 @@ Out[223]: '{"0":{"0":"(1+0j)","1":"(2+0j)","2":"(1+2j)"}}'
 
 ```
 
-### Reading JSON
+### JSON的读取（Reading JSON)
 
-Reading a JSON string to pandas object can take a number of parameters.
-The parser will try to parse a ``DataFrame`` if ``typ`` is not supplied or
-is ``None``. To explicitly force ``Series`` parsing, pass ``typ=series``
+把JSON字符串读取到pandas对象里会采用很多参数。如果`typ`没有提供或者为`None`，解析器将尝试解析`DataFrame`。 要强制地进行`Series`解析，请传递参数如`typ = series`。
 
-- ``filepath_or_buffer`` : a **VALID** JSON string or file handle / StringIO. The string could be
-a URL. Valid URL schemes include http, ftp, S3, and file. For file URLs, a host
-is expected. For instance, a local file could be
-file ://localhost/path/to/table.json
+- `filepath_or_buffer` : 一个**有效**的JSON字符串或文件句柄/StringIO(在内存中读写字符串)。字符串可以是一个URL。有效的URL格式包括http， ftp， S3和文件。对于文件型的URL, 最好有个主机地址。例如一个本地文件可以是 file://localhost/path/to/table.json 这样的格式。
 
-- ``typ``    : type of object to recover (series or frame), default ‘frame’
+- `typ` ： 要恢复的对象类型（series或者frame），默认“frame”。
 
-- ``orient`` :
+- `orient` :
 
-  Series :
+  Series:  
+    - 默认是 `index `。
+    - 允许值为{ `split`, `records`, `index`}。
 
-  - default is ``index``
-  - allowed values are {``split``, ``records``, ``index``}
+  DataFrame:
+  - 默认是 `columns `。
+  - 允许值是{ `split`, `records`, `index`, `columns`, `values`, `table`}。
+  
+JSON字符串的格式：
+  
 
-  DataFrame
+  split  |  dict like {index -> [index], columns -> [columns], data -> [values]}
+  ------------- | -------------
+  records |  list like [{column -> value}, … , {column -> value}]
+  index  |  dict like {index -> {column -> value}}
+  columns  |  dict like {column -> {index -> value}}
+  values  |  just the values array
+  table  | adhering to the JSON [Table Schema](https://specs.frictionlessdata.io/json-table-schema/)
 
-  - default is ``columns``
-  - allowed values are {``split``, ``records``, ``index``, ``columns``, ``values``, ``table``}
+- ` dtype `： 如果为True，推断dtypes，如果列为dtype的字典，则使用那些；如果为`False`，则根本不推断dtypes，默认为True，仅适用于数据。
 
-  The format of the JSON string
+- `convert_axes` ： 布尔值，尝试将轴转换为正确的dtypes，默认为`True`。
 
-  split | dict like {index -> [index], columns -> [columns], data -> [values]}
-  ---|---
-  records | list like [{column -> value}, … , {column -> value}]
-  index | dict like {index -> {column -> value}}
-  columns | dict like {column -> {index -> value}}
-  values | just the values array
-  table | adhering to the JSON [Table Schema](https://specs.frictionlessdata.io/json-table-schema/)
+- `convert_dates` ：一列列表要解析为日期; 如果为`True`，则尝试解析类似日期的列，默认为`True`。
 
-- ``dtype`` : if True, infer dtypes, if a dict of column to dtype, then use those, if ``False``, then don’t infer dtypes at all, default is True, apply only to the data.
+- `keep_default_dates` ：布尔值，默认为`True`。 如果解析日期，则解析默认的类似日期的列。
 
-- ``convert_axes`` : boolean, try to convert the axes to the proper dtypes, default is ``True``
+- `numpy` ：直接解码为NumPy数组。 默认为`False`; 虽然标签可能是非数字的，但仅支持数字数据。 另请注意，如果`numpy = True`，则每个术语的JSON顺序 **必须** 相同。
 
-- ``convert_dates`` : a list of columns to parse for dates; If ``True``, then try to parse date-like columns, default is ``True``.
+- `precise_float` ：布尔值，默认为`False`。 当解码字符串为双值时，设置为能使用更高精度（strtod）函数。 默认（`False`）快速使用但不精确的内置功能。
 
-- ``keep_default_dates`` : boolean, default ``True``. If parsing dates, then parse the default date-like columns.
+- `date_unit` ：字符串，用于检测转换日期的时间戳单位。 默认无。 默认情况下，将检测时间戳精度，如果不需要，则传递's'，'ms'，'us'或'ns'中的一个，以强制时间戳精度分别为秒，毫秒，微秒或纳秒。
 
-- ``numpy`` : direct decoding to NumPy arrays. default is ``False``;
-Supports numeric data only, although labels may be non-numeric. Also note that the JSON ordering **MUST** be the same for each term if ``numpy=True``.
+- `lines` ：读取文件每行作为一个JSON对象。
 
-- ``precise_float`` : boolean, default ``False``. Set to enable usage of higher precision (strtod) function when decoding string to double values. Default (``False``) is to use fast but less precise builtin functionality.
+- `encoding` ：用于解码py3字节的编码。
 
-- ``date_unit`` : string, the timestamp unit to detect if converting dates. Default
-None. By default the timestamp precision will be detected, if this is not desired
-then pass one of ‘s’, ‘ms’, ‘us’ or ‘ns’ to force timestamp precision to
-seconds, milliseconds, microseconds or nanoseconds respectively.
+- `chunksize` ：当与`lines = True`结合使用时，返回一个Json读取器（JSONReader），每次迭代读取`chunksize`行。
 
-- ``lines`` : reads file as one json object per line.
+如果JSON不能解析，解析器将抛出`ValueError / TypeError / AssertionError `中的一个错误。
 
-- ``encoding`` : The encoding to use to decode py3 bytes.
+如果在编码为JSON时使用非默认的`orient`方法，请确保在此处传递相同的选项以便解码产生合理的结果，请参阅 [Orient Options](https://www.pypandas.cn/docs/user_guide/io.html#orient-options)以获取概述。
 
-- ``chunksize`` : when used in combination with ``lines=True``, return a JsonReader which reads in ``chunksize`` lines per iteration.
+### 数据转换（Data conversion）
 
-The parser will raise one of ``ValueError/TypeError/AssertionError`` if the JSON is not parseable.
+`convert_axes = True`，`dtype = True`和`convert_dates = True`的默认值将尝试解析轴，并将所有数据解析为适当的类型，包括日期。 如果需要覆盖特定的dtypes，请将字典传递给`dtype`。 如果您需要在轴中保留类似字符串的数字（例如“1”，“2”），则只应将`convert_axes`设置为`False`。
 
-If a non-default ``orient`` was used when encoding to JSON be sure to pass the same
-option here so that decoding produces sensible results, see [Orient Options](#orient-options) for an
-overview.
-
-#### Data conversion
-
-The default of ``convert_axes=True``, ``dtype=True``, and ``convert_dates=True``
-will try to parse the axes, and all of the data into appropriate types,
-including dates. If you need to override specific dtypes, pass a dict to
-``dtype``. ``convert_axes`` should only be set to ``False`` if you need to
-preserve string-like numbers (e.g. ‘1’, ‘2’) in an axes.
-
-::: tip Note
-
-Large integer values may be converted to dates if ``convert_dates=True`` and the data and / or column labels appear ‘date-like’. The exact threshold depends on the ``date_unit`` specified. ‘date-like’ means that the column label meets one of the following criteria:
-
-- it ends with ``'_at'``
-- it ends with ``'_time'``
-- it begins with ``'timestamp'``
-- it is ``'modified'``
-- it is ``'date'``
+:::   **注意** ：如果`convert_dates = True`并且数据和/或列标签显示为“类似日期（'date-like'）“，则可以将大的整数值转换为日期。 确切的标准取决于指定的`date_unit`。 'date-like'表示列标签符合以下标准之一：
+- 结尾以 `'_at'`
+- 结尾以 `'_time'`
+- 开头以 `'timestamp'`
+- 它是 `'modified'`
+- 它是 `'date'`
 
 :::
 
-::: danger Warning
+::: 警告
 
-When reading JSON data, automatic coercing into dtypes has some quirks:
+在读取JSON数据时，自动强制转换为dtypes有一些不同寻常的地方：
 
-- an index can be reconstructed in a different order from serialization, that is, the returned order is not guaranteed to be the same as before serialization
-- a column that was ``float`` data will be converted to ``integer`` if it can be done safely, e.g. a column of ``1.``
-- bool columns will be converted to ``integer`` on reconstruction
+- 索引可以按序列化的不同顺序重建，也就是说，返回的顺序不能保证与序列化之前的顺序相同
 
-Thus there are times where you may want to specify specific dtypes via the ``dtype`` keyword argument.
+- 如果可以安全地，那么一列浮动（`float`)数据将被转换为一列整数(`integer`)，例如 一列 `1`
+- 布尔列将在重建时转换为整数（`integer `)
+
+因此，有时你会有那样的时刻可能想通过`dtype`关键字参数指定特定的dtypes。
 
 :::
 
-Reading from a JSON string:
+读取JSON字符串：
 
-``` python
+```python
 In [224]: pd.read_json(json)
 Out[224]: 
         date         B         A
@@ -2721,10 +2680,9 @@ Out[224]:
 4 2013-01-01 -0.827317  0.132003
 
 ```
+读取文件：
 
-Reading from a file:
-
-``` python
+```python
 In [225]: pd.read_json('test.json')
 Out[225]: 
                    A         B       date  ints  bools
@@ -2735,10 +2693,9 @@ Out[225]:
 2013-01-05  0.895717  0.805244 2013-01-01     4   True
 
 ```
+不要转换任何数据（但仍然转换轴和日期）：
 
-Don’t convert any data (but still convert axes and dates):
-
-``` python
+```python
 In [226]: pd.read_json('test.json', dtype=object).dtypes
 Out[226]: 
 A        object
@@ -2746,13 +2703,12 @@ B        object
 date     object
 ints     object
 bools    object
-dtype: object
+dtype:   object
 
 ```
+指定转换的dtypes：
 
-Specify dtypes for conversion:
-
-``` python
+```python
 In [227]: pd.read_json('test.json', dtype={'A': 'float32', 'bools': 'int8'}).dtypes
 Out[227]: 
 A               float32
@@ -2760,13 +2716,12 @@ B               float64
 date     datetime64[ns]
 ints              int64
 bools              int8
-dtype: object
+dtype:   object
 
 ```
+保留字符串索引：
 
-Preserve string indices:
-
-``` python
+```python
 In [228]: si = pd.DataFrame(np.zeros((4, 4)), columns=list(range(4)),
    .....:                   index=[str(i) for i in range(4)])
    .....: 
@@ -2804,8 +2759,7 @@ In [236]: sij.columns
 Out[236]: Index(['0', '1', '2', '3'], dtype='object')
 
 ```
-
-Dates written in nanoseconds need to be read back in nanoseconds:
+以纳秒为单位的日期需要以纳秒为单位读回：
 
 ``` python
 In [237]: json = dfj2.to_json(date_unit='ns')
@@ -2848,20 +2802,15 @@ Out[243]:
 
 ```
 
-#### The Numpy parameter
+### Numpy 参数
 
-::: tip Note
-
-This supports numeric data only. Index and columns labels may be non-numeric, e.g. strings, dates etc.
+::: **注意** ：这仅支持数值数据。 索引和列标签可以是非数字的，例如 字符串，日期等。
 
 :::
 
-If ``numpy=True`` is passed to ``read_json`` an attempt will be made to sniff
-an appropriate dtype during deserialization and to subsequently decode directly
-to NumPy arrays, bypassing the need for intermediate Python objects.
+如果将`numpy = True`传递给`read_json`，则会在反序列化期间尝试找到适当的dtype，然后直接解码到NumPy数组，从而绕过对中间Python对象的需求。
 
-This can provide speedups if you are deserialising a large amount of numeric
-data:
+如果要反序列化大量数值数据，这可以提供加速：
 
 ``` python
 In [244]: randfloats = np.random.uniform(-100, 1000, 10000)
@@ -2886,7 +2835,7 @@ In [249]: %timeit pd.read_json(jsonfloats, numpy=True)
 
 ```
 
-The speedup is less noticeable for smaller datasets:
+对于较小的数据集，加速不太明显：
 
 ``` python
 In [250]: jsonfloats = dffloats.head(100).to_json()
@@ -2904,27 +2853,21 @@ In [252]: %timeit pd.read_json(jsonfloats, numpy=True)
 7 ms +- 162 us per loop (mean +- std. dev. of 7 runs, 100 loops each)
 
 ```
+::: 警告
 
-::: danger Warning
+直接NumPy解码会产生许多假设并可能导致失败，或如果这些假设不满足，则产生意外地输出：
 
-Direct NumPy decoding makes a number of assumptions and may fail or produce
-unexpected output if these assumptions are not satisfied:
+- 数据是数值。
+- 数据是统一的。 从解码的第一个值中找到dtype。可能会引发`ValueError`错误，或者如果这个条件不满足可能产生不正确的输出。
 
-- data is numeric.
-- data is uniform. The dtype is sniffed from the first value decoded.
-A ``ValueError`` may be raised, or incorrect output may be produced
-if this condition is not satisfied.
-- labels are ordered. Labels are only read from the first container, it is assumed
-that each subsequent row / column has been encoded in the same order. This should be satisfied if the
-data was encoded using ``to_json`` but may not be the case if the JSON
-is from another source.
+- 标签是有序的。 标签仅从第一个容器读取，假设每个后续行/列已按相同顺序编码。 如果使用`to_json`编码数据，则应该满足这一要求，但如果JSON来自其他来源，则可能不是这种情况。
 
 :::
 
-### Normalization
 
-pandas provides a utility function to take a dict or list of dicts and normalize this semi-structured data
-into a flat table.
+###标准化（Normalization）
+
+pandas提供了一个实用程序函数来获取一个字典或字典列表，并将这个半结构化数据规范化为一个平面表。
 
 ``` python
 In [253]: from pandas.io.json import json_normalize
@@ -2967,9 +2910,7 @@ Out[257]:
 4    Cuyahoga        1337     Ohio        OH   John Kasich
 
 ```
-
-The max_level parameter provides more control over which level to end normalization.
-With max_level=1 the following snippet normalizes until 1st nesting level of the provided dict.
+max_level 参数提供了对结束规范化的级别的更多控制。 当max_level = 1时，以下代码段会标准化，直到提供了字典的第一个嵌套级别为止。
 
 ``` python
 In [258]: data = [{'CreatedBy': {'Name': 'User001'},
@@ -2987,16 +2928,15 @@ Out[259]:
 
 ```
 
-### Line delimited json
+###json的行分割（Line delimited json）
 
 *New in version 0.19.0.* 
 
-pandas is able to read and write line-delimited json files that are common in data processing pipelines
-using Hadoop or Spark.
+pandas能够读取和写入行分隔的json文件通常是在用Hadoop或Spark进行数据处理的管道中。
 
 *New in version 0.21.0.* 
 
-For line-delimited json files, pandas can also return an iterator which reads in ``chunksize`` lines at a time. This can be useful for large files or to read from a stream.
+对于行分隔的json文件，pandas也可以返回一个迭代器，它能一次读取`chunksize`行。 这对于大型文件或从数据流中读取非常有用。
 
 ``` python
 In [260]: jsonl = '''
@@ -3035,14 +2975,11 @@ Index: []
 
 ```
 
-### Table schema
+###表模式（Table schema）
 
 *New in version 0.20.0.* 
 
-[Table Schema](https://specs.frictionlessdata.io/json-table-schema/) is a spec for describing tabular datasets as a JSON
-object. The JSON includes information on the field names, types, and
-other attributes. You can use the orient ``table`` to build
-a JSON string with two fields, ``schema`` and ``data``.
+表模式（[Table schema](https://specs.frictionlessdata.io/json-table-schema/)）是用于将表格数据集描述为JSON对象的一种规范。 JSON包含有关字段名称，类型和其他属性的信息。 你可以使用面向`table`来构建一个JSON字符串包含两个字段，`schema`和`data`。
 
 ``` python
 In [267]: df = pd.DataFrame({'A': [1, 2, 3],
@@ -3063,20 +3000,11 @@ In [269]: df.to_json(orient='table', date_format="iso")
 Out[269]: '{"schema": {"fields":[{"name":"idx","type":"integer"},{"name":"A","type":"integer"},{"name":"B","type":"string"},{"name":"C","type":"datetime"}],"primaryKey":["idx"],"pandas_version":"0.20.0"}, "data": [{"idx":0,"A":1,"B":"a","C":"2016-01-01T00:00:00.000Z"},{"idx":1,"A":2,"B":"b","C":"2016-01-02T00:00:00.000Z"},{"idx":2,"A":3,"B":"c","C":"2016-01-03T00:00:00.000Z"}]}'
 
 ```
+`schema`字段包含`fields`主键，它本身包含一个列名称到列对的列表，包括`Index`或`MultiIndex`（请参阅下面的类型列表）。 如果（多）索引是唯一的，则`schema`字段也包含一个`primaryKey`字段。
 
-The ``schema`` field contains the ``fields`` key, which itself contains
-a list of column name to type pairs, including the ``Index`` or ``MultiIndex``
-(see below for a list of types).
-The ``schema`` field also contains a ``primaryKey`` field if the (Multi)index
-is unique.
+第二个字段`data`包含用面向`records`来序列化数据。 索引是包括的，并且任何日期时间都是ISO 8601格式，正如表模式规范所要求的那样。
 
-The second field, ``data``, contains the serialized data with the ``records``
-orient.
-The index is included, and any datetimes are ISO 8601 formatted, as required
-by the Table Schema spec.
-
-The full list of types supported are described in the Table Schema
-spec. This table shows the mapping from pandas types:
+表模式规范中描述了所有支持的全部类型列表。 此表显示了pandas类型的映射：
 
 Pandas type | Table Schema type
 ---|---
@@ -3088,13 +3016,10 @@ timedelta64[ns] | duration
 categorical | any
 object | str
 
-A few notes on the generated table schema:
+关于生成的表模式的一些注意事项：
 
-- The ``schema`` object contains a ``pandas_version`` field. This contains
-the version of pandas’ dialect of the schema, and will be incremented
-with each revision.
-- All dates are converted to UTC when serializing. Even timezone naive values,
-which are treated as UTC with an offset of 0.
+- `schema`对象包含`pandas_version`的字段。 它包含模式的pandas方言版本，并将随每个修订增加。
+- 序列化时，所有日期都转换为UTC。 甚至是时区的初始值，也被视为UTC，偏移量为0。
 
 ``` python
 In [270]: from pandas.io.json import build_table_schema
@@ -3109,8 +3034,7 @@ Out[272]:
  'pandas_version': '0.20.0'}
 
 ```
-- datetimes with a timezone (before serializing), include an additional field
-``tz`` with the time zone name (e.g. ``'US/Central'``).
+- 具有时区的日期时间（在序列化之前），包括具有时区名称的附加字段`tz`（例如：`'US / Central'`）。
 
 ``` python
 In [273]: s_tz = pd.Series(pd.date_range('2016', periods=12,
@@ -3125,9 +3049,7 @@ Out[274]:
  'pandas_version': '0.20.0'}
 
 ```
-- Periods are converted to timestamps before serialization, and so have the
-same behavior of being converted to UTC. In addition, periods will contain
-and additional field ``freq`` with the period’s frequency, e.g. ``'A-DEC'``.
+- 时间段在序列化之前是转换为时间戳的，因此具有转换为UTC的相同方式。 此外，时间段将包含具有时间段频率的附加字段`freq`，例如：`'A-DEC'`。
 
 ``` python
 In [275]: s_per = pd.Series(1, index=pd.period_range('2016', freq='A-DEC',
@@ -3142,8 +3064,7 @@ Out[276]:
  'pandas_version': '0.20.0'}
 
 ```
-- Categoricals use the ``any`` type and an ``enum`` constraint listing
-the set of possible values. Additionally, an ``ordered`` field is included:
+- 分类使用`any`类型和`enum`约束来列出可能值的集合。 此外，还包括一个`ordered`字段：
 
 ``` python
 In [277]: s_cat = pd.Series(pd.Categorical(['a', 'b', 'a']))
@@ -3159,8 +3080,7 @@ Out[278]:
  'pandas_version': '0.20.0'}
 
 ```
-- A ``primaryKey`` field, containing an array of labels, is included
-if the index is unique:
+- 如果索引是唯一的，则包含`primaryKey`字段,它包含了标签数组：
 
 ``` python
 In [279]: s_dupe = pd.Series([1, 2], index=[1, 1])
@@ -3172,8 +3092,7 @@ Out[280]:
  'pandas_version': '0.20.0'}
 
 ```
-- The ``primaryKey`` behavior is the same with MultiIndexes, but in this
-case the ``primaryKey`` is an array:
+- `primaryKey `的形式与多索引相同，但在这种情况下，`primaryKey`是一个数组：
 
 ``` python
 In [281]: s_multi = pd.Series(1, index=pd.MultiIndex.from_product([('a', 'b'),
@@ -3189,22 +3108,15 @@ Out[282]:
  'pandas_version': '0.20.0'}
 
 ```
-
-- The default naming roughly follows these rules:
-
-  - For series, the ``object.name`` is used. If that’s none, then the
-  name is ``values``
-  - For ``DataFrames``, the stringified version of the column name is used
-  - For ``Index`` (not ``MultiIndex``), ``index.name`` is used, with a
-  fallback to ``index`` if that is None.
-  - For ``MultiIndex``, ``mi.names`` is used. If any level has no name,
-  then ``level_`` is used.
+- 默认命名大致遵循以下规则：
+ - 对于series，使用`object.name`。 如果没有，那么名称就是`values`
+ - 对于`DataFrames`，使用列名称的字符串化版本 
+ - 对于`Index`（不是`MultiIndex`），使用`index.name`，如果为None，则使用回退`index`。 
+ - 对于`MultiIndex`，使用`mi.names`。 如果任何级别没有名称，则使用`level_`。
 
 *New in version 0.23.0.* 
 
-``read_json`` also accepts ``orient='table'`` as an argument. This allows for
-the preservation of metadata such as dtypes and index names in a
-round-trippable manner.
+`read_json`也接受`orient ='table'`作为参数。 这允许以可循环移动的方式保存诸如dtypes和索引名称之类的元数据。
 
 ``` python
 In [283]: df = pd.DataFrame({'foo': [1, 2, 3, 4],
@@ -3253,11 +3165,7 @@ qux          category
 dtype: object
 
 ```
-
-Please note that the literal string ‘index’ as the name of an [``Index``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index)
-is not round-trippable, nor are any names beginning with ``'level_'`` within a
-[``MultiIndex``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex). These are used by default in [``DataFrame.to_json()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_json.html#pandas.DataFrame.to_json) to
-indicate missing values and the subsequent read cannot distinguish the intent.
+请注意，作为 [Index](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index) 名称的文字字符串'index'是不能循环移动的，也不能在 [MultiIndex](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.MultiIndex.html#pandas.MultiIndex) 中用以`'level_'`开头的任何名称。 这些默认情况下在 [DataFrame.to_json（)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_json.html#pandas.DataFrame.to_json) 中用于指示缺失值和后续读取无法区分的目的。
 
 ``` python
 In [290]: df.index.name = 'index'
