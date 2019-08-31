@@ -1,6 +1,11 @@
 ---
 home: true
-heroImage: /hero.png
+meta:
+  - name: keywords
+    content: pandas中文文档,pandas中文api,pandas中文手册,pandas教程,pandas下载安装,pandas
+  - name: description
+    content: Pandas中文网、Pandas官方中文文档。
+heroImage: /logo.svg
 actionText: 快速开始 →
 actionLink: /docs/
 footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
@@ -45,8 +50,8 @@ Index: []
 本网站推荐使用[Python3.x](https://www.python.org/downloads/)及以上版本。
 :::
 
-### 站点相关
+<ahome-wxpub></ahome-wxpub>
 
-* [粤ICP备16025085号-8](http://www.beian.miit.gov.cn/)
-* [Logo 捐赠名单](/logo/)
+<ahome-nav></ahome-nav>
 
+<ahome-footer></ahome-footer>

@@ -1,6 +1,11 @@
 ---
 home: true
-heroImage: /hero.png
+meta:
+  - name: keywords
+    content: pandas documentation, pandas api,pandas Manual, pandas tutorial, pandas download and installation, pandas
+  - name: description
+    content: Pandas, Python Data Analysis Library.
+heroImage: /logo.svg
 actionText: Get Started →
 actionLink: /guide/
 footer: Attribution-NonCommercial-ShareAlike 3.0 China Mainland (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
@@ -41,10 +46,16 @@ Columns: []
 Index: []
 ```
 
+### Contact information
+
+- 📮**Email**: l@numpy.org.cn
+- 📩**WeChat**: iamnotahacker(If you want to join our group)
+
 ::: warning NOTE
 This site is recommended to use [Python 3.x](https://www.python.org/downloads/) and above.
 :::
 
-### Publicity
+### Brothers
 
-* [Logo donation list](/en/logo/)
+- [Numpy of Chinese documents](https://www.numpy.org.cn/)
+- [Matplotlibof Chinese documents](https://www.matplotlib.org.cn/)

@@ -303,7 +303,7 @@
   window.c = new Convert({
     baseUrl: 'https://pandas.pydata.org/pandas-docs/stable',
     baseImgDir: '/static/images/',
-    el: `#whats-new-in-0-24-1-february-3-2019`,
+    el: `#comparison-with-stata`,
     $: window.$
   });
 
