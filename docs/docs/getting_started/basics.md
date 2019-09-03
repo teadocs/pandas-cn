@@ -1,4 +1,4 @@
-# 基本功能
+[TOC]
 
 本节介绍 pandas 数据结构的基本功能。下列代码创建上一节用过的示例数据对象：
 
@@ -600,7 +600,7 @@ In [69]: np.array([1, 2, 3]) == np.array([2])
 Out[69]: array([False,  True, False])
 ```
 
-Numpy 无法执行广播操作时，将返回 `False`:
+Numpy 无法执行广播操作时，返回 `False`:
 
 ```python
 In [70]: np.array([1, 2, 3]) == np.array([1, 2])
@@ -2019,8 +2019,8 @@ Out[218]:
 
 | 方法             | 动作               |
 | :--------------- | :----------------- |
-| pad / ffill      | 先前填充           |
-| bfill / backfill | 向后填充           |
+| pad / ffill      | 先前填充|
+| bfill / backfill | 向后填充|
 | nearest          | 从最近的索引值填充 |
 
 下面用一个简单的 Series 展示 `fill` 方法：
@@ -3040,14 +3040,14 @@ Pandas 与第三方支持库对 Numpy 类型系统进行了扩充，本节只介
 
 下表列出了 pandas 扩展类型，参阅列出的文档内容，查看每种类型的详情。
 
-|      数据种类       |                           数据类型                           |                             标量                             |                             数组                             |                             文档                             |
-| :-----------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-|  tz-aware datetime  | [`DatetimeTZDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DatetimeTZDtype.html#pandas.DatetimeTZDtype) | [`Timestamp`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html#pandas.Timestamp) | [`arrays.DatetimeArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.DatetimeArray.html#pandas.arrays.DatetimeArray) | [Time zone handling](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-timezone) |
-|     Categorical     | [`CategoricalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalDtype.html#pandas.CategoricalDtype) |                             (无)                             | [`Categorical`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical) | [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) |
+| 数据种类            | 数据类型                                                     | 标量                                                         | 数组                                                         | 文档                                                         |
+| :------------------: | :-----------------------------------------------------------: | :-----------------------------------------------------------: | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
+| tz-aware datetime   | [`DatetimeTZDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DatetimeTZDtype.html#pandas.DatetimeTZDtype) | [`Timestamp`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html#pandas.Timestamp) | [`arrays.DatetimeArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.DatetimeArray.html#pandas.arrays.DatetimeArray) | [Time zone handling](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-timezone) |
+| Categorical         | [`CategoricalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalDtype.html#pandas.CategoricalDtype) | (无)                                                         | [`Categorical`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical) | [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) |
 | period (time spans) | [`PeriodDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.PeriodDtype.html#pandas.PeriodDtype) | [`Period`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Period.html#pandas.Period) | [`arrays.PeriodArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.PeriodArray.html#pandas.arrays.PeriodArray) | [Time span representation](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-periods) |
-|       sparse        | [`SparseDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.SparseDtype.html#pandas.SparseDtype) |                             (无)                             |                     `arrays.SparseArray`                     | [Sparse data structures](https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#sparse) |
-|      intervals      | [`IntervalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalDtype.html#pandas.IntervalDtype) | [`Interval`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Interval.html#pandas.Interval) | [`arrays.IntervalArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntervalArray.html#pandas.arrays.IntervalArray) | [IntervalIndex](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-intervalindex) |
-|  nullable integer   | [`Int64Dtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Int64Dtype.html#pandas.Int64Dtype), … |                             (无)                             | [`arrays.IntegerArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntegerArray.html#pandas.arrays.IntegerArray) | [Nullable integer data type](https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html#integer-na) |
+| sparse              | [`SparseDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.SparseDtype.html#pandas.SparseDtype) | (无)                                                         | `arrays.SparseArray`                                         | [Sparse data structures](https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#sparse) |
+| intervals           | [`IntervalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalDtype.html#pandas.IntervalDtype) | [`Interval`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Interval.html#pandas.Interval) | [`arrays.IntervalArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntervalArray.html#pandas.arrays.IntervalArray) | [IntervalIndex](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-intervalindex) |
+| nullable integer    | [`Int64Dtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Int64Dtype.html#pandas.Int64Dtype), … | (无)                                                         | [`arrays.IntegerArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntegerArray.html#pandas.arrays.IntegerArray) | [Nullable integer data type](https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html#integer-na) |
 
 Pandas 用 `object` 存储字符串。
 

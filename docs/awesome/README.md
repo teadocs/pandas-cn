@@ -115,13 +115,13 @@ sidebar: auto
   },
   {
     tag: '微信公号',
-    name: '23种Pandas核心操作',
+    name: '23种pandas核心操作',
     href: 'https://mp.weixin.qq.com/s/L95slIQ8so5IWpIpy7ZHEQ'
   },
   {
-    tag: '微信公号',
-    name: 'pandas 入门教程',
-    href: 'https://mp.weixin.qq.com/s/Ac0lud4alum3Kq3BhH4VLg'
+    tag: '程序员虾说',
+    name: 'pandas 系列教程',
+    href: 'http://www.ysir308.com/archives/category/tutorial/pandas-tutorial'
   }
 ]"></awesome>
 
@@ -152,6 +152,28 @@ sidebar: auto
     tag: 'bilibili',
     name: 'pandas数据科学最佳实践 by Kevin Markham',
     href: 'https://www.bilibili.com/video/av53400543?from=search&seid=11913881822934039260'
+  }
+]"></awesome>
+
+## 开源相关
+
+与Pandas有关的开源项目。
+
+<awesome :data="[
+  {
+    tag: 'github',
+    name: 'Productivity Tools for Plotly + Pandas',
+    href: 'https://github.com/santosjorge/cufflinks'
+  },
+  {
+    tag: 'github',
+    name: 'pandas-profiling',
+    href: 'https://github.com/pandas-profiling/pandas-profiling/tree/master/pandas_profiling/model'
+  },
+  {
+    tag: 'github',
+    name: 'Grid studio is a web-based spreadsheet application with full integration of the Python programming language.',
+    href: 'https://github.com/ricklamers/gridstudio'
   }
 ]"></awesome>
 

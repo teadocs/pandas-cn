@@ -112,6 +112,11 @@ module.exports = ctx => ({
   ],
   theme: 'teadocs',
   themeConfig: {
+    logo: {
+      text: 'Pandas',
+      subText: '中文网',
+      image: '/logo.svg',
+    },
     alert: [{
       id: '2019-7-29',
       title: '文档公告',
@@ -149,8 +154,8 @@ module.exports = ctx => ({
       serviceWorker: true,
       updatePopup: {
         '/': {
-          message: "发现新内容可用",
-          buttonText: "刷新"
+          message: "更新了新内容呢！",
+          buttonText: "立即刷新"
         },
         '/en/': {
           message: "New content is available.",

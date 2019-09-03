@@ -50,6 +50,8 @@ Index: []
 本网站推荐使用[Python3.x](https://www.python.org/downloads/)及以上版本。
 :::
 
+<ahome-wxpub></ahome-wxpub>
+
 <ahome-nav></ahome-nav>
 
 <ahome-footer></ahome-footer>
