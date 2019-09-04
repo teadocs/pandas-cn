@@ -1,4 +1,4 @@
-[TOC]
+# 基本使用方法
 
 本节介绍 pandas 数据结构的基本功能。下列代码创建上一节用过的示例数据对象：
 
@@ -46,7 +46,7 @@ Pandas 可以通过多个属性访问元数据：
     - **Series**: *Index* (仅有      此轴)
     - **DataFrame**: *Index* (行) 与*列*
 
-注： **为属性赋值是安全的**！
+注意： **为属性赋值是安全的**！
 
 ```
 In [7]: df[:2]
@@ -144,7 +144,11 @@ array([[-0.1732,  0.1192, -1.0442],
 ```
 DataFrame 为同质型数据时，pandas 直接修改原始 `ndarray`，所做修改会直接反应在数据结构里。对于异质型数据，即 DataFrame 列的数据类型不一样时，就不是这种操作模式了。与轴标签不同，不能为值的属性赋值。
 
-> 注：处理异质型数据时，输出结果 `ndarray` 的数据类型适用于涉及的各类数据。若 DataFrame 里包含字符串，输出结果的数据类型就是 `object`。要是只有浮点数或整数，则输出结果的数据类型是浮点数。
+::: tip 注意
+
+处理异质型数据时，输出结果 `ndarray` 的数据类型适用于涉及的各类数据。若 DataFrame 里包含字符串，输出结果的数据类型就是 `object`。要是只有浮点数或整数，则输出结果的数据类型是浮点数。
+
+:::
 
 以前，pandas 推荐用 [`Series.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values "pandas.Series.values") 或 [`DataFrame.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values "pandas.DataFrame.values") 从 Series 或 DataFrame 里提取数据。旧有代码库或在线教程里仍在用这种操作，但其实 pandas 已经对此做出了改进，现在推荐用 `.array` 或 `to_numpy` 这两种方式提取数据，别再用 `.values` 了。`.values` 有以下几个缺点：
 
@@ -480,25 +484,29 @@ Out[55]: True
 In [56]: pd.DataFrame([[False]]).bool()
 Out[56]: False
 ```
-> **注**：以下代码：
-> ```python
-> >>> if df:
-> ...     pass
-> ```
->
-> 或
->
-> ```python
-> >>> df and df2
-> ```
->
-> 上述代码试图比对多个值，因此，这两种操作都会触发错误：
->
-> ```python
-> ValueError: The truth value of an array is ambiguous. Use a.empty, a.any() or a.all().
-> ```
+::: danger 警告
 
-要了解详情，请参阅[各种坑](https://pandas.pydata.org/pandas-docs/stable/user_guide/gotchas.html#gotchas-truth)小节的内容。
+以下代码：
+```python
+>>> if df:
+...     pass
+```
+
+或
+
+```python
+>>> df and df2
+```
+
+上述代码试图比对多个值，因此，这两种操作都会触发错误：
+
+```python
+ValueError: The truth value of an array is ambiguous. Use a.empty, a.any() or a.all().
+```
+
+:::
+
+了解详情，请参阅[各种坑](https://pandas.pydata.org/pandas-docs/stable/user_guide/gotchas.html#gotchas-truth)小节的内容。
 
 ### 比较对象是否等效
 
@@ -521,7 +529,7 @@ three    False
 dtype: bool
 ```
 
-注：布尔型 DataFrame `df + df == df * 2` 中有 `False` 值！这是因为两个 `NaN` 值的比较结果为**不等**：
+注意：布尔型 DataFrame `df + df == df * 2` 中有 `False` 值！这是因为两个 `NaN` 值的比较结果为**不等**：
 
 ```python
 In [59]: np.nan == np.nan
@@ -535,7 +543,7 @@ In [60]: (df + df).equals(df * 2)
 Out[60]: True
 ```
 
-注：Series 与 DataFrame 索引的顺序必须一致，验证结果才能为 `True`：
+注意：Series 与 DataFrame 索引的顺序必须一致，验证结果才能为 `True`：
 
 ```python
 In [61]: df1 = pd.DataFrame({'col': ['foo', 0, np.nan]})
@@ -593,7 +601,7 @@ In [56]: pd.Series(['foo', 'bar', 'baz']) == pd.Series(['foo'])
 ValueError: Series lengths must match to compare
 ```
 
-注： 这里的操作与 Numpy 的广播机制不同：
+注意： 这里的操作与 Numpy 的广播机制不同：
 
 ```python
 In [69]: np.array([1, 2, 3]) == np.array([2])
@@ -874,7 +882,7 @@ freq      5
 dtype: object
 ```
 
-注：对于混合型的 DataFrame 对象， [`describe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.describe.html#pandas.Series.describe)  只返回数值列的汇总统计量，如果没有数值列，则只显示类别型的列。
+注意：对于混合型的 DataFrame 对象， [`describe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.describe.html#pandas.Series.describe)  只返回数值列的汇总统计量，如果没有数值列，则只显示类别型的列。
 
 ```python
 In [102]: frame = pd.DataFrame({'a': ['Yes', 'Yes', 'No', 'No'], 'b': range(4)})
@@ -995,8 +1003,11 @@ a  NaN
 In [116]: df3['A'].idxmin()
 Out[116]: 'd'
 ```
+::: tip 注意
 
-> 注：`idxmin` 与 `idxmax` 对应 Numpy 里的 `argmin` 与 `argmax`。
+`idxmin` 与 `idxmax` 对应 Numpy 里的 `argmin` 与 `argmax`。
+
+:::
 
 ### 值计数（直方图）与众数
 
@@ -1456,7 +1467,7 @@ Name: A, dtype: float64
 
 指定为哪些列应用哪些聚合函数时，需要把包含列名与标量（或标量列表）的字典传递给 `DataFrame.agg`。
 
-注：这里输出结果的顺序不是固定的，要想让输出顺序与输入顺序一致，请使用 `OrderedDict`。
+注意：这里输出结果的顺序不是固定的，要想让输出顺序与输入顺序一致，请使用 `OrderedDict`。
 
 ```python
 In [165]: tsdf.agg({'A': 'mean', 'B': 'sum'})
@@ -1847,7 +1858,7 @@ f       NaN       NaN       NaN
 b  0.343054  1.912123 -0.050390
 ```
 
-注：不同对象可以**共享** `Index` 包含的轴标签。比如，有一个 Series，还有一个 DataFrame，可以执行下列操作：
+注意：不同对象可以**共享** `Index` 包含的轴标签。比如，有一个 Series，还有一个 DataFrame，可以执行下列操作：
 
 ```python
 In [202]: rs = s.reindex(df.index)
@@ -1886,10 +1897,17 @@ b -0.050390  1.912123  0.343054
 c  1.227435  1.478369  0.695246
 d -0.613172  0.279344       NaN
 ```
+::: tip 注意
 
-> 注：[多重索引与高级索引](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced)介绍了怎样用更简洁的方式重置索引。
+[多重索引与高级索引](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced)介绍了怎样用更简洁的方式重置索引。
 
-> 注：编写注重性能的代码时，最好花些时间深入理解 `reindex`：**预对齐数据后，操作会更快**。两个未对齐的 DataFrame 相加，后台操作会执行 `reindex`。探索性分析时很难注意到这点有什么不同，这是因为 `reindex` 已经进行了高度优化，但需要注重 CPU 周期时，显式调用 `reindex` 还是有一些影响的。
+:::
+
+::: tip 注意
+
+编写注重性能的代码时，最好花些时间深入理解 `reindex`：**预对齐数据后，操作会更快**。两个未对齐的 DataFrame 相加，后台操作会执行 `reindex`。探索性分析时很难注意到这点有什么不同，这是因为 `reindex` 已经进行了高度优化，但需要注重 CPU 周期时，显式调用 `reindex` 还是有一些影响的。
+
+:::
 
 ### 重置索引，并与其它对象对齐
 
@@ -2102,7 +2120,7 @@ Freq: D, dtype: float64
 
 上述操作要求索引按递增或递减**排序**。
 
-注：除了 `method='nearest'`，用 [`fillna`](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data-fillna) 或 [`interpolate`](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data-interpolate) 也能实现同样的效果：
+注意：除了 `method='nearest'`，用 [`fillna`](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data-fillna) 或 [`interpolate`](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html#missing-data-interpolate) 也能实现同样的效果：
 
 ```python
 In [228]: ts2.reindex(ts.index).fillna(method='ffill')
@@ -2154,7 +2172,7 @@ Out[230]:
 Freq: D, dtype: float64
 ```
 
-注：索引为 `DatetimeIndex`、`TimedeltaIndex` 或 `PeriodIndex` 时，`tolerance` 会尽可能将这些索引强制转换为 `Timedelta`，这里要求用户用恰当的字符串设定 `tolerance` 参数。
+注意：索引为 `DatetimeIndex`、`TimedeltaIndex` 或 `PeriodIndex` 时，`tolerance` 会尽可能将这些索引强制转换为 `Timedelta`，这里要求用户用恰当的字符串设定 `tolerance` 参数。
 
 ### 去掉轴上的标签
 
@@ -2184,7 +2202,7 @@ c  1.478369  1.227435
 d  0.279344 -0.613172
 ```
 
-注：下面的代码可以运行，但不够清晰：
+注意：下面的代码可以运行，但不够清晰：
 
 ```python
 In [234]: df.reindex(df.index.difference(['a', 'd']))
@@ -2349,30 +2367,38 @@ Pandas 对象还支持字典式的 [`items()`](https://pandas.pydata.org/pandas-
 
 * [`itertuples()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.itertuples.html#pandas.DataFrame.itertuples "pandas.DataFrame.itertuples") 把 DataFrame 的行当作值的命名元组进行迭代。该操作比  [`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 快的多，建议尽量用这种方法迭代 DataFrame 的值。
 
-> 警告：Pandas 对象迭代的速度较慢。大部分情况下，没必要对行执行迭代操作，建议用以下几种替代方式：
->
-> * *矢量化*：很多操作可以用内置方法或 Numpy 函数，布尔索引……
-> * 调用的函数不能在完整的 DataFrame / Series 上运行时，最好用 [`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply "pandas.DataFrame.apply")，不要对值进行迭代操作。请参阅[函数应用](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-apply)文档。
-> * 如果必须对值进行迭代，请务必注意代码的性能，建议在 cython 或 numba 环境下实现内循环。参阅[增强性能](https://pandas.pydata.org/pandas-docs/stable/user_guide/enhancingperf.html#enhancingperf)一节，查看这种操作方法的示例。
+::: danger 警告
 
-> 警告：**永远不要修改**迭代的内容，这种方式不能确保所有操作都能正常运作。基于数据类型，迭代器返回的是复制（copy）的结果，不是视图（view），这种写入可能不会生效！
->
-> 下例中的赋值就不会生效：
+Pandas 对象迭代的速度较慢。大部分情况下，没必要对行执行迭代操作，建议用以下几种替代方式：
 
-> ```python
-> In [247]: df = pd.DataFrame({'a': [1, 2, 3], 'b': ['a', 'b', 'c']})
-> 
-> In [248]: for index, row in df.iterrows():
-> .....:     row['a'] = 10
-> .....: 
-> 
-> In [249]: df
-> Out[249]: 
-> a  b
-> 0  1  a
-> 1  2  b
-> 2  3  c
-> ```
+* 矢量化：很多操作可以用内置方法或 Numpy 函数，布尔索引……
+* 调用的函数不能在完整的 DataFrame / Series 上运行时，最好用 [`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply "pandas.DataFrame.apply")，不要对值进行迭代操作。请参阅[函数应用](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-apply)文档。
+* 如果必须对值进行迭代，请务必注意代码的性能，建议在 cython 或 numba 环境下实现内循环。参阅[增强性能](https://pandas.pydata.org/pandas-docs/stable/user_guide/enhancingperf.html#enhancingperf)一节，查看这种操作方法的示例。
+
+:::
+
+::: danger 警告
+
+**永远不要修改**迭代的内容，这种方式不能确保所有操作都能正常运作。基于数据类型，迭代器返回的是复制（copy）的结果，不是视图（view），这种写入可能不会生效！
+
+下例中的赋值就不会生效：
+
+```python
+In [247]: df = pd.DataFrame({'a': [1, 2, 3], 'b': ['a', 'b', 'c']})
+
+In [248]: for index, row in df.iterrows():
+.....:     row['a'] = 10
+.....: 
+
+In [249]: df
+Out[249]: 
+a  b
+0  1  a
+1  2  b
+2  3  c
+```
+
+:::
 
 ### 项目（items）
 与字典型接口类似，[`items()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.items.html#pandas.DataFrame.items "pandas.DataFrame.items") 通过键值对进行迭代：
@@ -2419,38 +2445,41 @@ a    3
 b    c
 Name: 2, dtype: object
 ```
+::: tip 注意
 
-> 注：[`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 返回的是 Series 里的每一行数据，该操作**不会**保留每行数据的数据类型，因为数据类型是通过 DataFrame 的列界定的。
+[`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 返回的是 Series 里的每一行数据，该操作**不会**保留每行数据的数据类型，因为数据类型是通过 DataFrame 的列界定的。
 
 示例如下：
 
-> ```python
-> In [252]: df_orig = pd.DataFrame([[1, 1.5]], columns=['int', 'float'])
-> 
-> In [253]: df_orig.dtypes
-> Out[253]: 
-> int        int64
-> float    float64
-> dtype: object
-> 
-> In [254]: row = next(df_orig.iterrows())[1]
-> 
-> In [255]: row
-> Out[255]: 
-> int      1.0
-> float    1.5
-> Name: 0, dtype: float64
-> ```
-> `row` 里的值以 Series 形式返回，并被转换为浮点数，原始的整数值则在列 X：
->
-> ```python
-> In [256]: row['int'].dtype
-> Out[256]: dtype('float64')
-> 
-> In [257]: df_orig['int'].dtype
-> Out[257]: dtype('int64')
-> ```
-> 要想在行迭代时保存数据类型，最好用 [`itertuples()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.itertuples.html#pandas.DataFrame.itertuples "pandas.DataFrame.itertuples")，这个函数返回值的命名元组，总的来说，该操作比 [`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 速度更快。
+```python
+In [252]: df_orig = pd.DataFrame([[1, 1.5]], columns=['int', 'float'])
+
+In [253]: df_orig.dtypes
+Out[253]: 
+int        int64
+float    float64
+dtype: object
+
+In [254]: row = next(df_orig.iterrows())[1]
+
+In [255]: row
+Out[255]: 
+int      1.0
+float    1.5
+Name: 0, dtype: float64
+```
+`row` 里的值以 Series 形式返回，并被转换为浮点数，原始的整数值则在列 X：
+
+```python
+In [256]: row['int'].dtype
+Out[256]: dtype('float64')
+
+In [257]: df_orig['int'].dtype
+Out[257]: dtype('int64')
+```
+要想在行迭代时保存数据类型，最好用 [`itertuples()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.itertuples.html#pandas.DataFrame.itertuples "pandas.DataFrame.itertuples")，这个函数返回值的命名元组，总的来说，该操作比 [`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 速度更快。
+
+:::
 
 下例展示了怎样转置 DataFrame：
 
@@ -2493,7 +2522,11 @@ Pandas(Index=2, a=3, b='c')
 
 该方法不会把行转换为 Series，只是返回命名元组里的值。[`itertuples()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.itertuples.html#pandas.DataFrame.itertuples "pandas.DataFrame.itertuples") 保存值的数据类型，而且比 [`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 快。
 
-> 包含无效 Python 识别符的列名、重复的列名及以下划线开头的列名，会被重命名为位置名称。如果列数较大，比如大于 255 列，则返回正则元组。
+::: tip 注意
+
+包含无效 Python 识别符的列名、重复的列名及以下划线开头的列名，会被重命名为位置名称。如果列数较大，比如大于 255 列，则返回正则元组。
+
+:::
 
 ## .dt 访问器
 
@@ -2686,7 +2719,11 @@ Out[288]:
 3     1      0        0        8             0             0            0
 ```
 
-> 注：用这个访问器处理不是 `datetime` 类型的值时，`Series.dt` 会触发 `TypeError` 错误。
+::: tip 注意
+
+用这个访问器处理不是 `datetime` 类型的值时，`Series.dt` 会触发 `TypeError` 错误。
+
+:::
 
 ## 矢量化字符串方法
 
@@ -2884,7 +2921,11 @@ a     2       4
       2       5
 ```
 
-> 注： 如果字符串、列名、索引层名重名，会触发警告提示，并以列名为准。后期版本中，这种情况将会触发模糊错误。
+::: tip 注意
+
+如果字符串、列名、索引层名重名，会触发警告提示，并以列名为准。后期版本中，这种情况将会触发模糊错误。
+
+:::
 
 ### 搜索排序
 
@@ -3320,7 +3361,9 @@ c    float64
 dtype: object
 ```
 
-> 注：用 [`astype()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.astype.html#pandas.DataFrame.astype "pandas.DataFrame.astype") 与 [`loc()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html#pandas.DataFrame.loc "pandas.DataFrame.loc") 为部分列转换指定类型时，会发生向上转型。
+::: tip 注意
+
+用 [`astype()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.astype.html#pandas.DataFrame.astype "pandas.DataFrame.astype") 与 [`loc()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html#pandas.DataFrame.loc "pandas.DataFrame.loc") 为部分列转换指定类型时，会发生向上转型。
 
 [`loc()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html#pandas.DataFrame.loc "pandas.DataFrame.loc") 尝试分配当前的数据类型，而 `[]` 则会从右方获取数据类型并进行覆盖。因此，下列代码会产出意料之外的结果：
 
@@ -3342,6 +3385,8 @@ b    int64
 c    int64
 dtype: object
 ```
+
+:::
 
 ### 对象转换
 
@@ -3756,4 +3801,8 @@ Out[431]:
   numpy.datetime64,
   numpy.object_]]
 ```
-> 注：Pandas 支持 `category` 与 `datetime64[ns, tz]` 类型，但这两种类型未整合到 Numpy 的架构里，因此，上面的函数没有显示。
+::: tip 注意
+
+Pandas 支持 `category` 与 `datetime64[ns, tz]` 类型，但这两种类型未整合到 Numpy 的架构里，因此，上面的函数没有显示。
+
+:::
