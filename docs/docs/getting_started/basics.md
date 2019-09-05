@@ -3801,6 +3801,7 @@ Out[431]:
   numpy.datetime64,
   numpy.object_]]
 ```
+
 ::: tip 注意
 
 Pandas 支持 `category` 与 `datetime64[ns, tz]` 类型，但这两种类型未整合到 Numpy 的架构里，因此，上面的函数没有显示。
