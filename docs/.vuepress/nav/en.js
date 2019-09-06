@@ -22,6 +22,7 @@ module.exports = [
   {
     text: 'Learn More',
     items: [
+      { text: 'Blog', link: '/en/blog/' },
       { text: 'Community', link: '/en/community/' },
       { text: 'Talks', link: '/en/talks/' }
     ]

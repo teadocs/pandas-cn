@@ -26,7 +26,8 @@ module.exports = {
       lastUpdated: '上次更新',
       nav: require('../nav/zh'),
       sidebar: {
-        '/docs/': require('../sidebar/docs_zh')()
+        '/docs/': require('../sidebar/docs_zh')(),
+        '/blog/': require('../sidebar/blog_zh')()
       }
     },
     '/en/': {
@@ -36,7 +37,8 @@ module.exports = {
       lastUpdated: 'Last Updated',
       nav: require('../nav/en'),
       sidebar: {
-        '/en/docs/': require('../sidebar/docs_en')()
+        '/en/docs/': require('../sidebar/docs_en')(),
+        '/en/blog/': require('../sidebar/blog_en')()
       }
     }
   }
