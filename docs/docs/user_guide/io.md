@@ -2329,11 +2329,11 @@ The ``Series`` object also has a ``to_string`` method, but with only the ``buf``
 ``na_rep``, ``float_format`` arguments. There is also a ``length`` argument
 which, if set to ``True``, will additionally output the length of the Series.
 
-##JSON
+## JSON
 
 读取和写入 `JSON` 格式的文本和字符串。
 
-###Writing JSON
+### Writing JSON
 
 一个`Series` 或 ` DataFrame` 能转化成一个有效的`JSON`字符串。使用`to_json` 同可选的参数：
 - `path_or_buf` ： 写入输出的路径名或缓存可以是`None` ， 在这种情况下会返回一个JSON字符串。
@@ -2381,7 +2381,7 @@ Out[194]: '{"A":{"0":-1.2945235903,"1":0.2766617129,"2":-0.0139597524,"3":-0.006
 "1":-0.472034511,"2":-0.3625429925,"3":-0.923060654,"4":0.8052440254}}'
 ```
 
-### 面向选项（Orient options）
+#### 面向选项（Orient options）
 
 要生成JSON文件/字符串，这儿有很多可选的格式。如下面的 `DataFrame ` 和 `Series` :
 
@@ -2463,10 +2463,13 @@ Out[206]: '{"name":"D","index":["x","y","z"],"data":[15,16,17]}'
 
 **面向表格** 序列化为JSON的[ 表格模式（Table Schema）](https://specs.frictionlessdata.io/json-table-schema/ " Table Schema")，允许保存为元数据，包括但不限于dtypes和索引名称。
 
-:::**注意**任何面向选项编码为一个JSON对象在转为序列化期间将不会保留索引和列标签的顺序。如果你想要保留标签的顺序，就使用`split`选项，因为它使用有序的容器。
+::: tip 注意
+
+任何面向选项编码为一个JSON对象在转为序列化期间将不会保留索引和列标签的顺序。如果你想要保留标签的顺序，就使用`split`选项，因为它使用有序的容器。
+
 :::
 
-### 日期处理（Date handling）
+#### 日期处理（Date handling）
 
 用ISO日期格式来写入：
 
@@ -2525,7 +2528,7 @@ In [222]: with open('test.json') as fh:
 
 ```
 
-### 回退行为（Fallback behavior）
+#### 回退行为（Fallback behavior）
 
 如果JSON序列不能直接处理容器的内容，他将会以下面的方式发生回退：
 
@@ -2605,11 +2608,13 @@ JSON字符串的格式：
 
 如果在编码为JSON时使用非默认的`orient`方法，请确保在此处传递相同的选项以便解码产生合理的结果，请参阅 [Orient Options](https://www.pypandas.cn/docs/user_guide/io.html#orient-options)以获取概述。
 
-### 数据转换（Data conversion）
+#### 数据转换（Data conversion）
 
 `convert_axes = True`，`dtype = True`和`convert_dates = True`的默认值将尝试解析轴，并将所有数据解析为适当的类型，包括日期。 如果需要覆盖特定的dtypes，请将字典传递给`dtype`。 如果您需要在轴中保留类似字符串的数字（例如“1”，“2”），则只应将`convert_axes`设置为`False`。
 
-:::   **注意** ：如果`convert_dates = True`并且数据和/或列标签显示为“类似日期（'date-like'）“，则可以将大的整数值转换为日期。 确切的标准取决于指定的`date_unit`。 'date-like'表示列标签符合以下标准之一：
+::: tip 注意
+
+如果`convert_dates = True`并且数据和/或列标签显示为“类似日期（'date-like'）“，则可以将大的整数值转换为日期。 确切的标准取决于指定的`date_unit`。 'date-like'表示列标签符合以下标准之一：
 - 结尾以 `'_at'`
 - 结尾以 `'_time'`
 - 开头以 `'timestamp'`
@@ -2618,7 +2623,7 @@ JSON字符串的格式：
 
 :::
 
-::: 警告
+::: danger 警告
 
 在读取JSON数据时，自动强制转换为dtypes有一些不同寻常的地方：
 
@@ -2766,9 +2771,11 @@ Out[243]:
 
 ```
 
-### Numpy 参数
+#### Numpy 参数
 
-::: **注意** ：这仅支持数值数据。 索引和列标签可以是非数字的，例如 字符串，日期等。
+::: tip 注意
+
+这仅支持数值数据。 索引和列标签可以是非数字的，例如 字符串，日期等。
 
 :::
 
@@ -2817,7 +2824,7 @@ In [252]: %timeit pd.read_json(jsonfloats, numpy=True)
 7 ms +- 162 us per loop (mean +- std. dev. of 7 runs, 100 loops each)
 
 ```
-::: 警告
+::: danger 警告
 
 直接NumPy解码会产生许多假设并可能导致失败，或如果这些假设不满足，则产生意外地输出：
 
@@ -2829,7 +2836,7 @@ In [252]: %timeit pd.read_json(jsonfloats, numpy=True)
 :::
 
 
-###标准化（Normalization）
+### 标准化（Normalization）
 
 pandas提供了一个实用程序函数来获取一个字典或字典列表，并将这个半结构化数据规范化为一个平面表。
 
@@ -2892,7 +2899,7 @@ Out[259]:
 
 ```
 
-###json的行分割（Line delimited json）
+### json的行分割（Line delimited json）
 
 *New in version 0.19.0.* 
 
@@ -2939,7 +2946,7 @@ Index: []
 
 ```
 
-###表模式（Table schema）
+### 表模式（Table schema）
 
 *New in version 0.20.0.* 
 
@@ -3073,10 +3080,11 @@ Out[282]:
 
 ```
 - 默认命名大致遵循以下规则：
- - 对于series，使用`object.name`。 如果没有，那么名称就是`values`
- - 对于`DataFrames`，使用列名称的字符串化版本 
- - 对于`Index`（不是`MultiIndex`），使用`index.name`，如果为None，则使用回退`index`。 
- - 对于`MultiIndex`，使用`mi.names`。 如果任何级别没有名称，则使用`level_`。
+
+  - 对于series，使用`object.name`。 如果没有，那么名称就是`values`
+  - 对于`DataFrames`，使用列名称的字符串化版本 
+  - 对于`Index`（不是`MultiIndex`），使用`index.name`，如果为None，则使用回退`index`。 
+  - 对于`MultiIndex`，使用`mi.names`。 如果任何级别没有名称，则使用`level_`。
 
 *New in version 0.23.0.* 
 
