@@ -47,7 +47,11 @@ Index: []
 ```
 
 ::: warning 提醒
+
+改变世界从 **Python** 开始。
+
 本网站推荐使用[Python3.x](https://www.python.org/downloads/)及以上版本。
+
 :::
 
 <ahome-wxpub></ahome-wxpub>

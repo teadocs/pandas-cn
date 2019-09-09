@@ -52,7 +52,11 @@ Index: []
 - 📩**WeChat**: iamnotahacker(If you want to join our group)
 
 ::: warning NOTE
+
+Change the world from **Python**.
+
 This site is recommended to use [Python 3.x](https://www.python.org/downloads/) and above.
+
 :::
 
 ### Brothers
