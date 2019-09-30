@@ -3151,31 +3151,23 @@ None
 
 ```
 
-## HTML
+##HTML
 
-### Reading HTML content
+###读取HTML的内容
 
-::: danger Warning
-
-We **highly encourage** you to read the [HTML Table Parsing gotchas](#io-html-gotchas)
-below regarding the issues surrounding the BeautifulSoup4/html5lib/lxml parsers.
-
+::: danger 警告：
+我们**强烈建议**你阅读 [HTML Table Parsing gotchas](https://www.pypandas.cn/docs/user_guide/io.html#io-html-gotchas)里面相关的围绕BeautifulSoup4/html5lib/lxml解析器部分的问题。
 :::
 
-The top-level ``read_html()`` function can accept an HTML
-string/file/URL and will parse HTML tables into list of pandas ``DataFrames``.
-Let’s look at a few examples.
+顶级的`read_html()`函数能接受HTML字符串/文件/URL格式，并且能解析HTML 表格为pandas`DataFrames`的列表，让我们看看下面的几个例子。
 
-::: tip Note
-
-``read_html`` returns a ``list`` of ``DataFrame`` objects, even if there is
-only a single table contained in the HTML content.
-
+::: tip 注意：
+`read_html`返回的是一个`DataFrame`对象的`list`，即便在HTML页面里只包含单个表格。
 :::
 
-Read a URL with no options:
+读取一个没有选项的URL：
 
-``` python
+```python
 In [294]: url = 'https://www.fdic.gov/bank/individual/failed/banklist.html'
 
 In [295]: dfs = pd.read_html(url)
@@ -3199,17 +3191,13 @@ Out[296]:
 
 ```
 
-::: tip Note
-
-The data from the above URL changes every Monday so the resulting data above
-and the data below may be slightly different.
-
+::: tip 注意：
+上面的URL数据修改了每个周一以至于上面的数据结果跟下面的数据结果可能有轻微的不同。
 :::
 
-Read in the content of the file from the above URL and pass it to ``read_html``
-as a string:
+从上面的URL读取文件内容并且传递它给`read_html`作为一个字符串：
 
-``` python
+```python
 In [297]: with open(file_path, 'r') as f:
    .....:     dfs = pd.read_html(f.read())
    .....: 
@@ -3233,9 +3221,9 @@ Out[298]:
 
 ```
 
-You can even pass in an instance of ``StringIO`` if you so desire:
+甚至如果你想，你还可以传递一个`StringIO`的实例：
 
-``` python
+```python
 In [299]: with open(file_path, 'r') as f:
    .....:     sio = StringIO(f.read())
    .....: 
@@ -3261,150 +3249,128 @@ Out[301]:
 
 ```
 
-::: tip Note
-
-The following examples are not run by the IPython evaluator due to the fact
-that having so many network-accessing functions slows down the documentation
-build. If you spot an error or an example that doesn’t run, please do not
-hesitate to report it over on [pandas GitHub issues page](https://www.github.com/pandas-dev/pandas/issues).
-
+::: tip 注意：
+以下的例子在IPython的程序中不会运行，因为有太多的网络接入函数减缓了文档的创建。如果你的程序报错或者例子不运行，请立即向[ pandas GitHub issues page](https://www.github.com/pandas-dev/pandas/issues) 上报。
 :::
 
-Read a URL and match a table that contains specific text:
+读取一个URL并匹配表格里面所包含的具体文本内容：
 
-``` python
+```python
 match = 'Metcalf Bank'
 df_list = pd.read_html(url, match=match)
 
 ```
 
-`` elements).
+指定一个标题行（通过默认的<th>或者<td>定位并伴随一个<thead>被用来作为列的索引，如果是多行含有<thead>，则多索引就会被创建）；如果已经指定，标题行则从数据减去已解析的标题元素中获取（<th>元素）。
 
-``` python
+```python
 dfs = pd.read_html(url, header=0)
 
 ```
 
-Specify an index column:
+指定一个索引列：
 
-``` python
+```python
 dfs = pd.read_html(url, index_col=0)
 
 ```
 
-Specify a number of rows to skip:
+指定跳过行的数量：
 
-``` python
+```python
 dfs = pd.read_html(url, skiprows=0)
 
 ```
 
-Specify a number of rows to skip using a list (``xrange`` (Python 2 only) works
-as well):
+指定使用列表来跳过行的数量（`xrange`(只在Python 2 中)也有效）：
 
-``` python
+```python
 dfs = pd.read_html(url, skiprows=range(2))
 
 ```
 
-Specify an HTML attribute:
+指定一个HTML属性：
 
-``` python
+```python
 dfs1 = pd.read_html(url, attrs={'id': 'table'})
 dfs2 = pd.read_html(url, attrs={'class': 'sortable'})
 print(np.array_equal(dfs1[0], dfs2[0]))  # Should be True
 
 ```
+指定值将会被转换为NaN(非数值)：
 
-Specify values that should be converted to NaN:
-
-``` python
+```python
 dfs = pd.read_html(url, na_values=['No Acquirer'])
 
 ```
 
-*New in version 0.19.* 
+*New in version 0.19.*
 
-Specify whether to keep the default set of NaN values:
+指定是否保持默认的NaN值的设置：
 
-``` python
+```python
 dfs = pd.read_html(url, keep_default_na=False)
 
 ```
 
-*New in version 0.19.* 
+*New in version 0.19.*
 
-Specify converters for columns. This is useful for numerical text data that has
-leading zeros.  By default columns that are numerical are cast to numeric
-types and the leading zeros are lost. To avoid this, we can convert these
-columns to strings.
+指定列的转换器。这对于有前置零的数字文本数据很有用。默认情况下，数值列会转换成数值类型且前置零会丢失。为了避免这种情况，我们能转换这些列为字符串。
 
-``` python
+```python
 url_mcc = 'https://en.wikipedia.org/wiki/Mobile_country_code'
 dfs = pd.read_html(url_mcc, match='Telekom Albania', header=0,
                    converters={'MNC': str})
 
 ```
 
-*New in version 0.19.* 
+*New in version 0.19.*
 
-Use some combination of the above:
+把上面的一些结合使用：
 
-``` python
+```python
 dfs = pd.read_html(url, match='Metcalf Bank', index_col=0)
 
 ```
 
-Read in pandas ``to_html`` output (with some loss of floating point precision):
+读取pandas`to_html`输出（同时一些精确的浮点会失去）：
 
-``` python
+```python
 df = pd.DataFrame(np.random.randn(2, 2))
 s = df.to_html(float_format='{0:.40g}'.format)
 dfin = pd.read_html(s, index_col=0)
 
 ```
 
-The ``lxml`` backend will raise an error on a failed parse if that is the only
-parser you provide. If you only have a single parser you can provide just a
-string, but it is considered good practice to pass a list with one string if,
-for example, the function expects a sequence of strings. You may use:
+如果`lxml`后端是你提供的唯一解析器，那么它将在解析失败时报错。如果你能提供的解析器只有一个就选字符串，但是传递一个字符串列表会是很好的训练，例如，这个函数期望是一个字符串序列。你可以这样使用：
 
-``` python
+```python
 dfs = pd.read_html(url, 'Metcalf Bank', index_col=0, flavor=['lxml'])
 
 ```
 
-Or you could pass ``flavor='lxml'`` without a list:
+或者你可以传递`flavor='lxml'`而不要列表：
 
-``` python
+```python
 dfs = pd.read_html(url, 'Metcalf Bank', index_col=0, flavor='lxml')
 
 ```
 
-However, if you have bs4 and html5lib installed and pass ``None`` or ``['lxml',
-'bs4']`` then the parse will most likely succeed. Note that as soon as a parse
-succeeds, the function will return.
+然而，如果你已经安装了bs4 和 html5lib并且传递`None`或`['lxml', 'bs4']`，那么极大可能会解析成功。注意*一旦解析成功了，函数将会返回。*
 
-``` python
+```python
 dfs = pd.read_html(url, 'Metcalf Bank', index_col=0, flavor=['lxml', 'bs4'])
 
 ```
 
-### Writing to HTML files
+###写入HTML文件
+`DataFrame`对象具有实例的方法`to_html`，它能渲染`DataFrame`的内容为HTML表格。这个函数的参数同上面的`to_string`方法的一样。
 
-``DataFrame`` objects have an instance method ``to_html`` which renders the
-contents of the ``DataFrame`` as an HTML table. The function arguments are as
-in the method ``to_string`` described above.
-
-::: tip Note
-
-Not all of the possible options for ``DataFrame.to_html`` are shown here for
-brevity’s sake. See ``to_html()`` for the
-full set of options.
-
+::: tip 注意：
+为了简洁起见，这儿显示的不是所有的`DataFrame.to_html`可选项。所有的选项设置见`to_html()`。
 :::
 
-``` python
+```python
 In [302]: df = pd.DataFrame(np.random.randn(2, 2))
 
 In [303]: df
@@ -3440,14 +3406,46 @@ In [304]: print(df.to_html())  # raw html
 
 HTML:
 
- | 0 | 1
----|---|---
-0 | -0.184744 | 0.496971
-1 | -0.856240 | 1.857977
+|   |  0  | 1 |
+| ------------ | ------------ |
+| **0 **| -0.184744  |  0.496971 |
+| **1 **| -0.856240  |  1.857977 |
 
-The ``columns`` argument will limit the columns shown:
+```python
+In [302]: df = pd.DataFrame(np.random.randn(2, 2))
 
-``` python
+In [303]: df
+Out[303]: 
+          0         1
+0 -0.184744  0.496971
+1 -0.856240  1.857977
+
+In [304]: print(df.to_html())  # raw html
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.184744</td>
+      <td>0.496971</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.856240</td>
+      <td>1.857977</td>
+    </tr>
+  </tbody>
+</table>
+```
+`columns `参数将限制列的显示：
+
+```python
 In [305]: print(df.to_html(columns=[0]))
 <table border="1" class="dataframe">
   <thead>
@@ -3469,18 +3467,16 @@ In [305]: print(df.to_html(columns=[0]))
 </table>
 
 ```
+HTML：
 
-HTML:
+|   |  0  |
+| ------------ | ------------ |
+| **0 **| -0.184744  |
+|  **1 **| -0.856240  |
 
-- | 0
----|---
-0 | -0.184744
-1 | -0.856240
+`float_format`采用可调用的 Python来控制浮点值的精确度：
 
-``float_format`` takes a Python callable to control the precision of floating
-point values:
-
-``` python
+```python
 In [306]: print(df.to_html(float_format='{0:.10f}'.format))
 <table border="1" class="dataframe">
   <thead>
@@ -3506,17 +3502,16 @@ In [306]: print(df.to_html(float_format='{0:.10f}'.format))
 
 ```
 
-HTML:
+HTML：
 
- | 0 | 1
----|---|---
-0 | -0.1847438576 | 0.4969711327
-1 | -0.8562396763 | 1.8579766508
+|   |  0  | 1 |
+| ------------ | ------------ |
+|  **0 **| -0.1847438576 	  | 0.4969711327 |
+| **1 **| -0.8562396763| 1.8579766508 |
 
-``bold_rows`` will make the row labels bold by default, but you can turn that
-off:
+默认情况下，`bold_rows`可以加粗行标签，但是你可以关掉它：
 
-``` python
+```python
 In [307]: print(df.to_html(bold_rows=False))
 <table border="1" class="dataframe">
   <thead>
@@ -3542,16 +3537,14 @@ In [307]: print(df.to_html(bold_rows=False))
 
 ```
 
- | 0 | 1
----|---|---
-0 | -0.184744 | 0.496971
-1 | -0.856240 | 1.857977
+|   |  0  | 1 |
+| ------------ | ------------ |
+|  0 |-0.184744 	 | 0.496971|
+|  1 |-0.856240| 1.857977 |
 
-The ``classes`` argument provides the ability to give the resulting HTML
-table CSS classes. Note that these classes are appended to the existing
-``'dataframe'`` class.
+`classes `参数提供了能生成HTML表的CSS类的功能。注意这些类是已添加到现有的`'dataframe' `类中的。
 
-``` python
+```python
 In [308]: print(df.to_html(classes=['awesome_table_class', 'even_more_awesome_class']))
 <table border="1" class="dataframe awesome_table_class even_more_awesome_class">
   <thead>
@@ -3576,13 +3569,11 @@ In [308]: print(df.to_html(classes=['awesome_table_class', 'even_more_awesome_cl
 </table>
 
 ```
+`render_links`参数提供了向包含URL的单元格添加超链接的功能。
 
-The ``render_links`` argument provides the ability to add hyperlinks to cells
-that contain URLs.
+*New in version 0.24.*
 
-*New in version 0.24.* 
-
-``` python
+```python
 In [309]: url_df = pd.DataFrame({
    .....:     'name': ['Python', 'Pandas'],
    .....:     'url': ['https://www.python.org/', 'http://pandas.pydata.org']})
@@ -3615,23 +3606,20 @@ In [310]: print(url_df.to_html(render_links=True))
 
 HTML:
 
-- | name | url
----|---|---
-0 | Python | [https://www.python.org/](https://www.python.org/)
-1 | Pandas | [http://pandas.pydata.org](http://pandas.pydata.org)
+|   |  name  | url |
+| ------------ | ------------ |
+|  **0 **| Python| https://www.python.org/ |
+| **1 **| Pandas| http://pandas.pydata.org |
 
-Finally, the ``escape`` argument allows you to control whether the
-“<”, “>” and “&” characters escaped in the resulting HTML (by default it is
-``True``). So to get the HTML without escaped characters pass ``escape=False``
+最后，`escape`参数允许你控制是否对生成的 HTML字符“<”, “>”和 “&”进行转义（默认是`True`）。因此，获取不转义的HTML字符就设置为`escape=False`。
 
-``` python
+```python
 In [311]: df = pd.DataFrame({'a': list('&<>'), 'b': np.random.randn(3)})
 
 ```
+转义的：
 
-Escaped:
-
-``` python
+```python
 In [312]: print(df.to_html())
 <table border="1" class="dataframe">
   <thead>
@@ -3661,16 +3649,15 @@ In [312]: print(df.to_html())
 </table>
 
 ```
+|   |  a  | b |
+| ------------ | ------------ |
+|  **0 **|&| -0.474063 |
+| **1 **| < |-0.230305|
+| **2 **|>| -0.400654|
 
-- | a | b
----|---|---
-0 | & | -0.474063
-1 | < | -0.230305
-2 | > | -0.400654
+不转义的：
 
-Not escaped:
-
-``` python
+```python
 In [313]: print(df.to_html(escape=False))
 <table border="1" class="dataframe">
   <thead>
@@ -3701,58 +3688,44 @@ In [313]: print(df.to_html(escape=False))
 
 ```
 
-- | a | b
----|---|---
-0 | & | -0.474063
-1 | < | -0.230305
-2 | > | -0.400654
+|   |  a  | b |
+| ------------ | ------------ |
+|  **0 **|&| -0.474063 |
+| **1 **| < |-0.230305|
+| **2 **|>| -0.400654|
 
-::: tip Note
-
-Some browsers may not show a difference in the rendering of the previous two
-HTML tables.
-
+::: tip 注意：
+一些浏览器在渲染上面的两个HTML表格的时候可能看不出区别。
 :::
 
-### HTML Table Parsing Gotchas
+###HTML表格解析陷阱
 
-There are some versioning issues surrounding the libraries that are used to
-parse HTML tables in the top-level pandas io function ``read_html``.
+在使用顶级的pandas io函数`read_html`来解析HTML表格的时候，围绕这些库，存在一些版本的问题。
 
-**Issues with** [lxml](https://lxml.de)
+**[lxml](https://lxml.de/)问题**:
 
-  - Benefits
-    - [lxml](https://lxml.de) is very fast.
-    - [lxml](https://lxml.de) requires Cython to install correctly.
-  - Drawbacks
-    - [lxml](https://lxml.de) does not make any guarantees about the results of its parse
-unless it is given [strictly valid markup](https://validator.w3.org/docs/help.html#validation_basics).
-    - In light of the above, we have chosen to allow you, the user, to use the
-[lxml](https://lxml.de) backend, but **this backend will use** [html5lib](https://github.com/html5lib/html5lib-python) if [lxml](https://lxml.de)
-fails to parse
-    - It is therefore highly recommended that you install both
-[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) and [html5lib](https://github.com/html5lib/html5lib-python), so that you will still get a valid result (provided everything else is valid) even if [lxml](https://lxml.de) fails.
+- 优点：
+  - [lxml](https://lxml.de/) 是非常快的。
+  - [lxml](https://lxml.de/)要求Cython正确安装。
 
-**Issues with** [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) **using** [lxml](https://lxml.de) **as a backend**
+- 缺点：
+  - [lxml](https://lxml.de/) 不能保证它的解析结果除非使用[严格有效地标记](https://validator.w3.org/docs/help.html#validation_basics)。
+  - 鉴于上述情况，我们选择允许用户使用 [lxml](https://lxml.de/) 作为后端，但是如果 [lxml](https://lxml.de/) 解析失败，**这个后端将使用[html5lib](https://github.com/html5lib/html5lib-python)**。
+  - 因此，强烈推荐你安装**[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup)**和**[html5lib](https://github.com/html5lib/html5lib-python)**这两个库。这样即使[lxml](https://lxml.de/)解析失败，你仍然能够得到一个有效的结果（前提是其他所有内容都有效）。
+  
+**[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup)使用[lxml](https://lxml.de/)作为后端的问题**：
 
-  - The above issues hold here as well since [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) is essentially
-just a wrapper around a parser backend.
+- 以上问题仍然会存在因为**[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup)**本质上是一个围绕后端解析的包装器。
 
-**Issues with** [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup) **using** [html5lib](https://github.com/html5lib/html5lib-python) **as a backend**
+**[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup)使用[html5lib](https://github.com/html5lib/html5lib-python)作为后端的问题**：
 
-  - Benefits
-    - [html5lib](https://github.com/html5lib/html5lib-python) is far more lenient than [lxml](https://lxml.de) and consequently deals
-with real-life markup in a much saner way rather than just, e.g.,
-dropping an element without notifying you.
-    - [html5lib](https://github.com/html5lib/html5lib-python) generates valid HTML5 markup from invalid markup
-automatically. This is extremely important for parsing HTML tables,
-since it guarantees a valid document. However, that does NOT mean that
-it is “correct”, since the process of fixing markup does not have a
-single definition.
-    - [html5lib](https://github.com/html5lib/html5lib-python) is pure Python and requires no additional build steps beyond
-its own installation.
-  - Drawbacks
-    - The biggest drawback to using [html5lib](https://github.com/html5lib/html5lib-python) is that it is slow as molasses.  However consider the fact that many tables on the web are not big enough for the parsing algorithm runtime to matter. It is more likely that the bottleneck will be in the process of reading the raw text from the URL over the web, i.e., IO (input-output). For very large tables, this might not be true.
+- 优点：
+  - [html5lib](https://github.com/html5lib/html5lib-python)比[lxml](https://lxml.de/)宽容得多，所以会以一种更理智的方式处理*现实生活中的标记*，而不是仅仅，比如在未通知你的情况下删除元素。
+  - [html5lib](https://github.com/html5lib/html5lib-python)*能自动从无效标记中生成有效的 HTML5 标记*。这在解析HTML表格的时候是相当重要的，因为它保证了它是有效的文件。然而这不意味着它是“正确的“，因为修复标记的过程没有一个定义。
+  - [html5lib](https://github.com/html5lib/html5lib-python)是纯净的Python，除了它自己的安装步骤没有其他的步骤。
+  
+- 缺点：
+  - 使用[html5lib](https://github.com/html5lib/html5lib-python)最大的缺点就是太慢了。但是考虑到网络上许多表格并不足以如解析算法运行时的那么重要，它更可能像是正在通过网络上的URL读取原始文本过程中的瓶颈。例如当IO（输入-输出） 时，对于非常大的表，事实可能并非如此。
 
 ## Excel files
 
