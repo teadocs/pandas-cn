@@ -82,17 +82,9 @@ module.exports = [
     content: '#000000'
   }],
   // 百度统计
-  ['script', {}, `
-    (function() {
-      var onDocumentComplete = function() { 
-        if(document.readyState =='complete') {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?198a327b7394c4873952b3dc378df8c0";
-          var s = document.getElementsByTagName("script")[0]; 
-          s.parentNode.insertBefore(hm, s);
-        }
-      }
-      document.onreadystatechange = onDocumentComplete; //当页面加载状态改变的时候执行这个方法. 
-    })();
-  `],
+  ['script', {
+    src: 'https://hm.baidu.com/hm.js?198a327b7394c4873952b3dc378df8c0',
+    defer: 'defer',
+    async: 'true'
+  }]
 ];

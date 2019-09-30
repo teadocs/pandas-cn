@@ -179,12 +179,12 @@ sidebar: auto
 
 ## 推荐书籍
 
-这里给出学习版下载地址，有条件者，还请支持正版。
+这里给出的书籍都是学习版，有条件者，还请支持正版。
 
 <awesome :data="[
   {
-    tag: '百度网盘',
-    name: '《利用Python进行数据分析(第二版)》高清中文版PDF+高清英文版PDF',
-    href: 'https://pan.baidu.com/s/1K3DjJ9S1S3AxpacEElNF9Q'
+    tag: 'github',
+    name: '《利用Python进行数据分析·第2版》中文版开源书籍',
+    href: 'https://github.com/iamseancheney/python_for_data_analysis_2nd_chinese_version'
   }
 ]"></awesome>
