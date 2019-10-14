@@ -43,7 +43,7 @@ Pandas 可以通过多个属性访问元数据：
 
 - **轴标签**
 
-    - **Series**: *Index* (仅有此轴)
+    - **Series**: *Index* (仅有      此轴)
     - **DataFrame**: *Index* (行) 与*列*
 
 注意： **为属性赋值是安全的**！
@@ -3801,6 +3801,7 @@ Out[431]:
   numpy.datetime64,
   numpy.object_]]
 ```
+
 ::: tip 注意
 
 Pandas 支持 `category` 与 `datetime64[ns, tz]` 类型，但这两种类型未整合到 Numpy 的架构里，因此，上面的函数没有显示。

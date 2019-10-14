@@ -1,14 +1,14 @@
 module.exports = [
   {
-    text: 'Pandas 简介',
+    text: '它是什么',
     link: '/intro/'
   },
   {
-    text: '关于 Pandas',
+    text: '关于项目',
     link: '/about/'
   },
   {
-    text: '获取 Pandas',
+    text: '获取与安装',
     link: '/get_pandas/'
   },
   {
@@ -22,6 +22,7 @@ module.exports = [
   {
     text: '了解更多',
     items: [
+      { text: '熊猫博客', link: '/blog/' },
       { text: '社区', link: '/community/' },
       { text: '讨论', link: '/talks/' }
     ]
