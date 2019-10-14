@@ -11,7 +11,7 @@
 有关本类库中的内容和更多详细信息，请参阅[包概述](/docs/getting_started/overview.html)。
 
 - [v0.25.0 版本特性（发布于：2019年7月18日）](whatsnew/v0.25.0.html)
-- [安装方法](install.html)
+- [安装方法](installation.html)
 - [快速入门](getting_started/index.html)
   - [包概述](getting_started/overview.html)
   - [十分钟入门Pandas](getting_started/10min.html)
