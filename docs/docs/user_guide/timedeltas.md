@@ -1,6 +1,6 @@
 # 时间差
 
-`Timedelta`，时间差，即时间之间的差异，用`日、时、分、秒`等时间单位表示，这些时间单位可为正，也可为负。
+`Timedelta`，时间差，即时间之间的差异，用 `日、时、分、秒` 等时间单位表示，时间单位可为正，也可为负。
 
 `Timedelta` 是 `datetime.timedelta` 的子类，两者的操作方式相似，但 `Timedelta` 兼容 `np.timedelta64` 等数据类型，还支持自定义表示形式、能解析多种类型的数据，并支持自有属性。
 
@@ -8,7 +8,7 @@
 
 `Timedelta()` 支持用多种参数生成时间差：
 
-```python
+``` python
 In [1]: import datetime
 
 # 字符串
@@ -64,14 +64,14 @@ Out[14]: Timedelta('0 days 00:00:00.000000')
 
 [DateOffsets](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offsets)（`Day`、`Hour`、`Minute`、`Second`、`Milli`、`Micro`、`Nano`）也可以用来生成时间差。
 
-```python
+``` python
 In [15]: pd.Timedelta(pd.offsets.Second(2))
 Out[15]: Timedelta('0 days 00:00:02')
 ```
 
 标量运算生成的也是 `Timedelta` 标量。
 
-```python
+``` python
 In [16]: pd.Timedelta(pd.offsets.Day(2)) + pd.Timedelta(pd.offsets.Second(2)) +\
    ....:     pd.Timedelta('00:00:00.000123')
    ....: 
@@ -84,7 +84,7 @@ Out[16]: Timedelta('2 days 00:00:02.000123')
 
 `to_timedelta()` 可以解析单个字符串：
 
-```python
+``` python
 In [17]: pd.to_timedelta('1 days 06:05:01.00003')
 Out[17]: Timedelta('1 days 06:05:01.000030')
 
@@ -94,14 +94,14 @@ Out[18]: Timedelta('0 days 00:00:00.000015')
 
 还能解析字符串列表或数组：
 
-```python
+``` python
 In [19]: pd.to_timedelta(['1 days 06:05:01.00003', '15.5us', 'nan'])
 Out[19]: TimedeltaIndex(['1 days 06:05:01.000030', '0 days 00:00:00.000015', NaT], dtype='timedelta64[ns]', freq=None)
 ```
 
 `unit` 关键字参数指定时间差的单位：
 
-```python
+``` python
 In [20]: pd.to_timedelta(np.arange(5), unit='s')
 Out[20]: TimedeltaIndex(['00:00:00', '00:00:01', '00:00:02', '00:00:03', '00:00:04'], dtype='timedelta64[ns]', freq=None)
 
@@ -113,7 +113,7 @@ Out[21]: TimedeltaIndex(['0 days', '1 days', '2 days', '3 days', '4 days'], dtyp
 
 Pandas 时间差的纳秒解析度是 64 位整数，这就决定了 `Timedelta` 的上下限。
 
-```python
+``` python
 In [22]: pd.Timedelta.min
 Out[22]: Timedelta('-106752 days +00:12:43.145224')
 
@@ -125,7 +125,7 @@ Out[23]: Timedelta('106751 days 23:47:16.854775')
 
 以时间差为数据的 `Series` 与 `DataFrame` 支持各种运算，`datetime64 [ns]` 序列或 `Timestamps` 减法运算生成的是`timedelta64 [ns]` 序列。
 
-```python
+``` python
 In [24]: s = pd.Series(pd.date_range('2012-1-1', periods=3, freq='D'))
 
 In [25]: td = pd.Series([pd.Timedelta(days=i) for i in range(3)])
@@ -193,7 +193,7 @@ dtype: datetime64[ns]
 
 `timedelta64 [ns]` 序列的标量运算：
 
-```python
+``` python
 In [36]: y = s - s[0]
 
 In [37]: y
@@ -206,7 +206,7 @@ dtype: timedelta64[ns]
 
 时间差序列支持 `NaT` 值：
 
-```python
+``` python
 In [38]: y = s - s.shift()
 
 In [39]: y
@@ -219,7 +219,7 @@ dtype: timedelta64[ns]
 
 与 `datetime` 类似，`np.nan` 把时间差设置为 `NaT`：
 
-```python
+``` python
 In [40]: y[1] = np.nan
 
 In [41]: y
@@ -232,7 +232,7 @@ dtype: timedelta64[ns]
 
 运算符也可以显示为逆序（序列与单个对象的运算）：
 
-```python
+``` python
 In [42]: s.max() - s
 Out[42]: 
 0   2 days
@@ -257,7 +257,7 @@ dtype: datetime64[ns]
 
 `DataFrame` 支持 `min`、`max` 及 `idxmin`、`idxmax` 运算：
 
-```python
+``` python
 In [45]: A = s - pd.Timestamp('20120101') - pd.Timedelta('00:05:05')
 
 In [46]: B = s - pd.Series(pd.date_range('2012-1-2', periods=3, freq='D'))
@@ -299,7 +299,7 @@ dtype: int64
 
 `Series` 也支持`min`、`max` 及 `idxmin`、`idxmax` 运算。标量计算结果为 `Timedelta`。
 
-```python
+``` python
 In [53]: df.min().max()
 Out[53]: Timedelta('-1 days +23:54:55')
 
@@ -315,7 +315,7 @@ Out[56]: 0
 
 时间差支持 `fillna` 函数，参数是 `Timedelta`，用于指定填充值。
 
-```python
+``` python
 In [57]: y.fillna(pd.Timedelta(0))
 Out[57]: 
 0   0 days
@@ -340,7 +340,7 @@ dtype: timedelta64[ns]
 
 `Timedelta` 还支持取反、乘法及绝对值（`Abs`）运算：
 
-```python
+``` python
 In [60]: td1 = pd.Timedelta('-1 days 2 hours 3 seconds')
 
 In [61]: td1
@@ -360,7 +360,7 @@ Out[64]: Timedelta('1 days 02:00:03')
 
 `timedelta64 [ns]` 数值归约运算返回的是 `Timedelta` 对象。 一般情况下，`NaT` 不计数。
 
-```python
+``` python
 In [65]: y2 = pd.Series(pd.to_timedelta(['-1 days +00:00:05', 'nat',
    ....:                                 '-1 days +00:00:05', '1 days']))
    ....: 
@@ -400,7 +400,7 @@ Ceiling Division，即两数的商为向上取整，如，9 / 2 = 5。又译作�
  
 :::
 
-```python
+``` python
 In [71]: december = pd.Series(pd.date_range('20121201', periods=4))
 
 In [72]: january = pd.Series(pd.date_range('20130101', periods=4))
@@ -465,7 +465,7 @@ dtype: float64
 
 `timedelta64 [ns]` 序列与整数或整数序列相乘或相除，生成的也是 `timedelta64 [ns]` 序列。
 
-```python
+``` python
 In [82]: td * -1
 Out[82]: 
 0   -31 days +00:00:00
@@ -486,7 +486,7 @@ dtype: timedelta64[ns]
 `timedelta64 [ns]` 序列与 `Timedelta` 标量相除的结果为取底整除的整数序列。
 
 
-```python
+``` python
 In [84]: td // pd.Timedelta(days=3, hours=4)
 Out[84]: 
 0    9.0
@@ -506,7 +506,7 @@ dtype: float64
 
 `Timedelta` 的求余（`mod(%)`）与除余（`divmod`）运算，支持时间差与数值参数。
 
-```python
+``` python
 In [86]: pd.Timedelta(hours=37) % datetime.timedelta(hours=2)
 Out[86]: Timedelta('0 days 01:00:00')
 
@@ -533,7 +533,7 @@ Out[88]: (Timedelta('0 days 00:00:00.000000'), Timedelta('0 days 01:00:00'))
 
 对于 `Series`：
 
-```python
+``` python
 In [89]: td.dt.days
 Out[89]: 
 0    31.0
@@ -553,7 +553,7 @@ dtype: float64
 
 直接访问 `Timedelta` 标量字段值。
 
-```python
+``` python
 In [91]: tds = pd.Timedelta('31 days 5 min 3 sec')
 
 In [92]: tds.days
@@ -568,7 +568,7 @@ Out[94]: 86097
 
 `.components` 属性可以快速访问时间差的组件，返回结果是 `DataFrame`。 下列代码输出 `Timedelta` 的显示值。
 
-```python
+``` python
 In [95]: td.dt.components
 Out[95]: 
    days  hours  minutes  seconds  milliseconds  microseconds  nanoseconds
@@ -590,7 +590,7 @@ Name: seconds, dtype: float64
 
 *0.20.0 版新增。*
 
-```python
+``` python
 In [97]: pd.Timedelta(days=6, minutes=50, seconds=3,
    ....:              milliseconds=10, microseconds=10,
    ....:              nanoseconds=12).isoformat()
@@ -606,7 +606,7 @@ Out[97]: 'P6DT0H50M3.010010012S'
 
 `np.nan`、`pd.NaT`、`nat` 代表缺失值。
 
-```python
+``` python
 In [98]: pd.TimedeltaIndex(['1 days', '1 days, 00:00:05', np.timedelta64(2, 'D'),
    ....:                    datetime.timedelta(days=2, seconds=2)])
    ....: 
@@ -618,7 +618,7 @@ TimedeltaIndex(['1 days 00:00:00', '1 days 00:00:05', '2 days 00:00:00',
 
 `freq` 关键字参数为 `infer` 时，`TimedeltaIndex` 可以自行推断时间频率：
 
-```python
+``` python
 In [99]: pd.TimedeltaIndex(['0 days', '10 days', '20 days'], freq='infer')
 Out[99]: TimedeltaIndex(['0 days', '10 days', '20 days'], dtype='timedelta64[ns]', freq='10D')
 ```
@@ -627,14 +627,14 @@ Out[99]: TimedeltaIndex(['0 days', '10 days', '20 days'], dtype='timedelta64[ns]
 
 与 [`date_range()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.date_range.html#pandas.date_range) 相似，[`timedelta_range()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.timedelta_range.html#pandas.timedelta_range) 可以生成定频 `TimedeltaIndex`，`timedelta_range` 的默认频率是日历日：
 
-```python
+``` python
 In [100]: pd.timedelta_range(start='1 days', periods=5)
 Out[100]: TimedeltaIndex(['1 days', '2 days', '3 days', '4 days', '5 days'], dtype='timedelta64[ns]', freq='D')
 ```
 
 `timedelta_range` 支持 `start`、`end`、`periods` 三个参数：
 
-```python
+``` python
 In [101]: pd.timedelta_range(start='1 days', end='5 days')
 Out[101]: TimedeltaIndex(['1 days', '2 days', '3 days', '4 days', '5 days'], dtype='timedelta64[ns]', freq='D')
 
@@ -644,7 +644,7 @@ Out[102]: TimedeltaIndex(['7 days', '8 days', '9 days', '10 days'], dtype='timed
 
 `freq` 参数支持各种[频率别名](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases)：
 
-```python
+``` python
 In [103]: pd.timedelta_range(start='1 days', end='2 days', freq='30T')
 Out[103]: 
 TimedeltaIndex(['1 days 00:00:00', '1 days 00:30:00', '1 days 01:00:00',
@@ -677,7 +677,7 @@ TimedeltaIndex(['1 days 00:00:00', '3 days 05:00:00', '5 days 10:00:00',
 
 用 `start`、`end`、`period` 可以生成等宽时间差范围，其中，`start` 与 `end`（含）是起止两端的时间，`periods` 为 `TimedeltaIndex` 里的元素数量：
 
-```python
+``` python
 In [105]: pd.timedelta_range('0 days', '4 days', periods=5)
 Out[105]: TimedeltaIndex(['0 days', '1 days', '2 days', '3 days', '4 days'], dtype='timedelta64[ns]', freq=None)
 
@@ -694,7 +694,7 @@ TimedeltaIndex(['0 days 00:00:00', '0 days 10:40:00', '0 days 21:20:00',
 
 与 `DatetimeIndex`、`PeriodIndex` 等 `datetime` 型索引类似，`TimedeltaIndex` 也可当作 pandas 对象的索引。
 
-```python
+``` python
 In [107]: s = pd.Series(np.arange(100),
    .....:               index=pd.timedelta_range('1 days', periods=100, freq='h'))
    .....: 
@@ -717,7 +717,7 @@ Freq: H, Length: 100, dtype: int64
 
 选择操作也差不多，可以强制转换字符串与切片：
 
-```python
+``` python
 In [109]: s['1 day':'2 day']
 Out[109]: 
 1 days 00:00:00     0
@@ -742,7 +742,7 @@ Out[111]: 1
 
 `TimedeltaIndex` 还支持局部字符串选择，并且可以推断选择范围：
 
-```python
+``` python
 In [112]: s['1 day':'1 day 5 hours']
 Out[112]: 
 1 days 00:00:00    0
@@ -758,7 +758,7 @@ Freq: H, dtype: int64
 
 `TimedeltaIndex` 与 `DatetimeIndex` 运算可以保留 `NaT` 值：
 
-```python
+``` python
 In [113]: tdi = pd.TimedeltaIndex(['1 days', pd.NaT, '2 days'])
 
 In [114]: tdi.to_list()
@@ -783,7 +783,7 @@ Out[118]: [Timestamp('2012-12-31 00:00:00'), NaT, Timestamp('2013-01-01 00:00:00
 
 与 `Series` 频率转换类似，可以把 `TimedeltaIndex` 转换为其它索引。
 
-```python
+``` python
 In [119]: tdi / np.timedelta64(1, 's')
 Out[119]: Float64Index([86400.0, nan, 172800.0], dtype='float64')
 
@@ -793,7 +793,7 @@ Out[120]: Float64Index([86400.0, nan, 172800.0], dtype='float64')
 
 与标量操作类似，会返回**不同**类型的索引。
 
-```python
+``` python
 # 时间差与日期相加，结果为日期型索引（DatetimeIndex）
 In [121]: tdi + pd.Timestamp('20130101')
 Out[121]: DatetimeIndex(['2013-01-02', 'NaT', '2013-01-03'], dtype='datetime64[ns]', freq=None)
@@ -820,7 +820,7 @@ Out[125]: Float64Index([1.0, nan, 2.0], dtype='float64')
 
 与[时间序列重采样](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-resampling)一样，`TimedeltaIndex` 也支持重采样。
 
-```python
+``` python
 In [126]: s.resample('D').mean()
 Out[126]: 
 1 days    11.5
