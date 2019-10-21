@@ -17,7 +17,7 @@
   - [十分钟入门Pandas](getting_started/10min.html)
   - [基本使用方法](getting_started/basics.html)
   - [数据结构简介](getting_started/dsintro.html)
-  - [与其他工具比较](getting_started/comparison/index.html)
+  - [与其他工具比较](getting_started/comparison.html)
   - [教程资料](getting_started/tutorials.html)
 - [用户指南](user_guide/index.html)
   - [IO工具（文本，CSV，HDF5，…）](user_guide/io.html)
