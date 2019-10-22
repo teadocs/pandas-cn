@@ -9,7 +9,7 @@ module.exports = [
   },
   {
     text: '深度学习',
-    link: 'https://www.numpy.org.cn/deep/',
+    link: '/deep/',
     important: true
   },
   {
