@@ -3156,13 +3156,17 @@ None
 ### 读取HTML的内容
 
 ::: danger 警告：
+
 我们**强烈建议**你阅读 [HTML Table Parsing gotchas](https://www.pypandas.cn/docs/user_guide/io.html#io-html-gotchas)里面相关的围绕BeautifulSoup4/html5lib/lxml解析器部分的问题。
+
 :::
 
 顶级的`read_html()`函数能接受HTML字符串/文件/URL格式，并且能解析HTML 表格为pandas`DataFrames`的列表，让我们看看下面的几个例子。
 
 ::: tip 注意：
+
 `read_html`返回的是一个`DataFrame`对象的`list`，即便在HTML页面里只包含单个表格。
+
 :::
 
 读取一个没有选项的URL：
@@ -3192,7 +3196,9 @@ Out[296]:
 ```
 
 ::: tip 注意：
+
 上面的URL数据修改了每个周一以至于上面的数据结果跟下面的数据结果可能有轻微的不同。
+
 :::
 
 从上面的URL读取文件内容并且传递它给`read_html`作为一个字符串：
@@ -3250,7 +3256,9 @@ Out[301]:
 ```
 
 ::: tip 注意：
+
 以下的例子在IPython的程序中不会运行，因为有太多的网络接入函数减缓了文档的创建。如果你的程序报错或者例子不运行，请立即向[ pandas GitHub issues page](https://www.github.com/pandas-dev/pandas/issues) 上报。
+
 :::
 
 读取一个URL并匹配表格里面所包含的具体文本内容：
@@ -3364,10 +3372,13 @@ dfs = pd.read_html(url, 'Metcalf Bank', index_col=0, flavor=['lxml', 'bs4'])
 ```
 
 ### 写入HTML文件
+
 `DataFrame`对象具有实例的方法`to_html`，它能渲染`DataFrame`的内容为HTML表格。这个函数的参数同上面的`to_string`方法的一样。
 
 ::: tip 注意：
+
 为了简洁起见，这儿显示的不是所有的`DataFrame.to_html`可选项。所有的选项设置见`to_html()`。
+
 :::
 
 ```python
@@ -3407,7 +3418,7 @@ In [304]: print(df.to_html())  # raw html
 HTML:
 
 | **-** | **0** | **1** |
-| --- | --- |
+| --- | --- | --- |
 | 0 | -0.184744  |  0.496971 |
 | 1 | -0.856240  |  1.857977 |
 
@@ -3505,9 +3516,9 @@ In [306]: print(df.to_html(float_format='{0:.10f}'.format))
 HTML：
 
 | **-** | **0** | **1** |
-| --- | --- |
-|  **0 **| -0.1847438576 	  | 0.4969711327 |
-| **1 **| -0.8562396763| 1.8579766508 |
+| --- | --- | --- |
+| **0 **| -0.1847438576 | 0.4969711327 |
+| **1 **| -0.8562396763 | 1.8579766508 |
 
 默认情况下，`bold_rows`可以加粗行标签，但是你可以关掉它：
 
@@ -3538,9 +3549,9 @@ In [307]: print(df.to_html(bold_rows=False))
 ```
 
 | **-** | **0** | **1** |
-| --- | --- |
-|  0 |-0.184744 	 | 0.496971|
-|  1 |-0.856240| 1.857977 |
+| --- | --- | --- |
+|  0 | -0.184744 | 0.496971 |
+|  1 | -0.856240 | 1.857977 |
 
 `classes `参数提供了能生成HTML表的CSS类的功能。注意这些类是已添加到现有的`'dataframe' `类中的。
 
@@ -3607,9 +3618,9 @@ In [310]: print(url_df.to_html(render_links=True))
 HTML:
 
 | **-** | **name** | **url** |
-| --- | --- |
-| 0 | Python| [https://www.python.org/](https://www.python.org/) |
-| 1 | Pandas| [http://pandas.pydata.org](http://pandas.pydata.org) |
+| --- | --- | --- |
+| 0 | Python | [https://www.python.org/](https://www.python.org/) |
+| 1 | Pandas | [http://pandas.pydata.org](http://pandas.pydata.org) |
 
 最后，`escape`参数允许你控制是否对生成的 HTML字符“<”, “>”和 “&”进行转义（默认是`True`）。因此，获取不转义的HTML字符就设置为`escape=False`。
 
@@ -3650,10 +3661,10 @@ In [312]: print(df.to_html())
 
 ```
 | **-** | **a** | **b** |
-| --- | --- |
+| --- | --- | --- |
 | 0 | & | -0.474063 |
-| 1 | < |-0.230305|
-| 2 |>| -0.400654|
+| 1 | < | -0.230305 |
+| 2 | > | -0.400654 |
 
 不转义的：
 
@@ -3689,13 +3700,15 @@ In [313]: print(df.to_html(escape=False))
 ```
 
 | **-** | **a** | **b** |
-| --- | --- |
-| 0 |&| -0.474063 |
-| 1 | < |-0.230305|
-| 2 |>| -0.400654|
+| --- | --- | --- |
+| 0 | & | -0.474063 |
+| 1 | < | -0.230305 |
+| 2 | > | -0.400654 |
 
 ::: tip 注意：
+
 一些浏览器在渲染上面的两个HTML表格的时候可能看不出区别。
+
 :::
 
 ### HTML表格解析陷阱
