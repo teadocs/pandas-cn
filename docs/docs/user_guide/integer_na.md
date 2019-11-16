@@ -1,25 +1,16 @@
-# Nullable integer data type
+# Nullable整型数据类型
 
-*New in version 0.24.0.* 
+*在0.24.0版本中新引入* 
 
-::: tip Note
+::: tip 小贴士
 
-IntegerArray is currently experimental. Its API or implementation may
-change without warning.
+IntegerArray目前属于实验性阶段，因此他的API或者使用方式可能会在没有提示的情况下更改。
 
 :::
 
-In [Working with missing data](missing_data.html#missing-data), we saw that pandas primarily uses ``NaN`` to represent
-missing data. Because ``NaN`` is a float, this forces an array of integers with
-any missing values to become floating point. In some cases, this may not matter
-much. But if your integer column is, say, an identifier, casting to float can
-be problematic. Some integers cannot even be represented as floating point
-numbers.
+在 [处理丢失的数据](missing_data.html#missing-data)部分, 我们知道pandas主要使用 ``NaN`` 来代表丢失数据。因为 ``NaN`` 属于浮点型数据，这强制有缺失值的整型array强制转换成浮点型。在某些情况下，这可能不会有太大影响，但是如果你的整型数据恰好是标识符，数据类型的转换可能会存在隐患。同时，某些整数无法使用浮点型来表示。
 
-Pandas can represent integer data with possibly missing values using
-[``arrays.IntegerArray``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntegerArray.html#pandas.arrays.IntegerArray). This is an [extension types](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types)
-implemented within pandas. It is not the default dtype for integers, and will not be inferred;
-you must explicitly pass the dtype into [``array()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.array.html#pandas.array) or [``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series):
+Pandas能够将可能存在缺失值的整型数据使用[``arrays.IntegerArray``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntegerArray.html#pandas.arrays.IntegerArray)来表示。这是pandas中内置的 [扩展方式](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types)。 它并不是整型数据组成array对象的默认方式，并且并不会被pandas直接使用。因此，如果你希望生成这种数据类型，你需要在生成[``array()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.array.html#pandas.array) 或者 [``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)时，在``dtype``变量中直接指定。
 
 ``` python
 In [1]: arr = pd.array([1, 2, np.nan], dtype=pd.Int64Dtype())
@@ -31,8 +22,7 @@ Out[2]:
 Length: 3, dtype: Int64
 ```
 
-Or the string alias ``"Int64"`` (note the capital ``"I"``, to differentiate from
-NumPy’s ``'int64'`` dtype:
+或者使用字符串``"Int64"``（注意此处的 ``"I"``需要大写，以此和NumPy中的``'int64'``数据类型作出区别）：
 
 ``` python
 In [3]: pd.array([1, 2, np.nan], dtype="Int64")
@@ -42,8 +32,7 @@ Out[3]:
 Length: 3, dtype: Int64
 ```
 
-This array can be stored in a [``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) or [``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series) like any
-NumPy array.
+这样的array对象与NumPy的array对象类似，可以被存放在[``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) 或 [``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)中。
 
 ``` python
 In [4]: pd.Series(arr)
@@ -54,8 +43,7 @@ Out[4]:
 dtype: Int64
 ```
 
-You can also pass the list-like object to the [``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series) constructor
-with the dtype.
+你也可以直接将列表形式的数据直接传入[``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)中，并指明``dtype``。
 
 ``` python
 In [5]: s = pd.Series([1, 2, np.nan], dtype="Int64")
@@ -68,8 +56,7 @@ Out[6]:
 dtype: Int64
 ```
 
-By default (if you don’t specify ``dtype``), NumPy is used, and you’ll end
-up with a ``float64`` dtype Series:
+默认情况下（如果你不指明``dtype``），则会使用NumPy来构建这个数据，最终你会得到``float64``类型的Series：
 
 ``` python
 In [7]: pd.Series([1, 2, np.nan])
@@ -80,12 +67,10 @@ Out[7]:
 dtype: float64
 ```
 
-Operations involving an integer array will behave similar to NumPy arrays.
-Missing values will be propagated, and and the data will be coerced to another
-dtype if needed.
+对使用了整型array的操作与对NumPy中array的操作类似，缺失值会被继承并保留原本的数据类型，但在必要的情况下，数据类型也会发生转变。
 
 ``` python
-# arithmetic
+# 运算
 In [8]: s + 1
 Out[8]: 
 0      2
@@ -93,7 +78,7 @@ Out[8]:
 2    NaN
 dtype: Int64
 
-# comparison
+# 比较
 In [9]: s == 1
 Out[9]: 
 0     True
@@ -101,14 +86,14 @@ Out[9]:
 2    False
 dtype: bool
 
-# indexing
+# 索引
 In [10]: s.iloc[1:3]
 Out[10]: 
 1      2
 2    NaN
 dtype: Int64
 
-# operate with other dtypes
+# 和其他数据类型联合使用
 In [11]: s + s.iloc[1:3].astype('Int8')
 Out[11]: 
 0    NaN
@@ -116,7 +101,7 @@ Out[11]:
 2    NaN
 dtype: Int64
 
-# coerce when needed
+# 在必要情况下，数据类型发生转变
 In [12]: s + 0.01
 Out[12]: 
 0    1.01
@@ -125,7 +110,7 @@ Out[12]:
 dtype: float64
 ```
 
-These dtypes can operate as part of of ``DataFrame``.
+这种数据类型可以作为 ``DataFrame``的一部分进行使用。
 
 ``` python
 In [13]: df = pd.DataFrame({'A': s, 'B': [1, 1, 3], 'C': list('aab')})
@@ -145,7 +130,7 @@ C    object
 dtype: object
 ```
 
-These dtypes can be merged & reshaped & casted.
+这种数据类型也可以在合并（merge）、重构（reshape）和类型转换（cast）。
 
 ``` python
 In [16]: pd.concat([df[['A']], df[['B', 'C']]], axis=1).dtypes
@@ -163,7 +148,7 @@ Out[17]:
 Name: A, dtype: float64
 ```
 
-Reduction and groupby operations such as ‘sum’ work as well.
+类似于求和的降维和分组操作也能正常使用。
 
 ``` python
 In [18]: df.sum()

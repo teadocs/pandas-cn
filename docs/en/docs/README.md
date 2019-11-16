@@ -17,7 +17,7 @@ See the [Package overview](https://pandas.pydata.org/pandas-docs/stable/getting_
   - [10 Minutes to pandas](getting_started/10min.html)
   - [Essential Basic Functionality](getting_started/basics.html)
   - [Intro to Data Structures](getting_started/dsintro.html)
-  - [Comparison with other tools](getting_started/comparison/index.html)
+  - [Comparison with other tools](getting_started/comparison.html)
   - [Tutorials](getting_started/tutorials.html)
 - [User Guide](user_guide/index.html)
   - [IO Tools (Text, CSV, HDF5, …)](user_guide/io.html)

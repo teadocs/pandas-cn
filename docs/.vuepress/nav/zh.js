@@ -8,6 +8,11 @@ module.exports = [
     link: '/about/'
   },
   {
+    text: '深度学习',
+    link: '/deep/',
+    important: true
+  },
+  {
     text: '获取与安装',
     link: '/get_pandas/'
   },

@@ -1,54 +1,51 @@
-# 包概述
+# Pandas 概览
+**Pandas** 是 [Python](https://www.python.org/) 的核心数据分析支持库，提供了快速、灵活、明确的数据结构，旨在简单、直观地处理关系型、标记型数据。Pandas 的目标是成为 Python 数据分析实践与实战的必备高级工具，其长远目标是成为**最强大、最灵活、可以支持任何语言的开源数据分析工具**。经过多年不懈的努力，Pandas 离这个目标已经越来越近了。
 
-**Pandas** 是一个 [Python](https://www.python.org/) 的包，提供快速、灵活和富有表现力的数据结构，旨在使“关系”或“标记”数据的使用既简单又直观。它的目标是成为用Python进行实际的、**真实**的数据分析的基础高级模块。此外，**它还有更宏远的目标，即成为超过任何语言的最强大，最灵活的开源数据分析/操作工具**。它已朝着这个目标迈进。
+Pandas 适用于处理以下类型的数据：
 
-pandas 非常适合许多不同类型的数据：
+* 与 SQL 或 Excel 表类似的，含异构列的表格数据。
+* 有序和无序（即非固定频率）的时间序列数据。
+* 带行列标签的矩阵数据，包括同构或异构型数据。
+* 任意其它形式的观测、统计数据集。 数据转入 Pandas 数据结构时不必事先标记。
 
- - 具有异构类型列的表格数据，如SQL表或Excel电子表格。
- - 有序和无序（不一定是固定频率）时间序列数据。
- - 具有行和列标签的任意矩阵数据（均匀类型或异构）。
- - 任何其他形式的观察/统计数据集。 实际上不需要将数据标记为放置在Pandas数据结构中。
+Pandas 的主要数据结构是 [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)（一维数据）与 [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)（二维数据），这两种数据结构足以处理金融、统计、社会科学、工程等领域里的大多数典型用例。对于 R 用户，DataFrame 提供了比 R 语言 data.frame 更丰富的功能。Pandas 基于 [NumPy](https://www.numpy.org/) 开发，可以与其它第三方科学计算支持库完美集成。
 
-pandas 的两个主要数据结构，[Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series)（1维）和[DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame)（2维），处理金融，统计，社会科学和许多工程领域中的绝大多数典型用例。 对于R用户，DataFrame提供R的data.frame提供的所有内容以及更多内容。pandas 建立在[NumPy](https://www.numpy.org/)之上，旨在与许多其他第三方库完美地集成在科学计算环境中。
+Pandas 就像一把万能瑞士军刀，下面仅列出了它的部分优势 ：
 
-以下是 pandas 做够胜任的一些事情：
+* 处理浮点与非浮点数据里的**缺失数据**，表示为 `NaN`；
+* 大小可变：**插入或删除** DataFrame 等多维对象的列；
+* 自动、显式**数据对齐**：显式地将对象与一组标签对齐，也可以忽略标签，在 Series、DataFrame 计算时自动与数据对齐；
+* 强大、灵活的**分组（group by）**功能：**拆分-应用-组合**数据集，聚合、转换数据；
+* 把 Python 和 NumPy 数据结构里不规则、不同索引的数据**轻松**地转换为 DataFrame 对象；
+* 基于智能标签，对大型数据集进行**切片**、**花式索引**、**子集分解**等操作；
+* 直观地**合并（merge）**、**连接（join）**数据集；
+* 灵活地**重塑（reshape）**、**透视（pivot）**数据集；
+*  **轴**支持结构化标签：即一个刻度支持多个标签；
+* 成熟的 IO 工具：用于读取**文本文件**（CSV 等支持分隔符的文件）、Excel 文件、数据库等来源的数据，利用超快的 **HDF5** 格式保存 / 加载数据；
+* **时间序列**：支持日期范围生成、频率转换、移动窗口统计、移动窗口线性回归、日期位移等时间序列功能。
 
- - 在浮点和非浮点数据中轻松处理**缺失数据**（表示为NaN）。
- - 大小可变性：可以从DataFrame和更高维度的对象中**插入和删除**。
- - 自动和显式**数据对齐**：对象可以明确地与一组标签对齐，或者用户可以简单地忽略标签，让Series，DataFrame等在计算中自动对齐数据
- - 强大，灵活的<strong>组（group by）</strong>功能，可对数据集执行拆分应用组合操作，用于聚合和转换数据。
- - **轻松**将其他Python和NumPy数据结构中的不规则，不同索引数据转换为DataFrame对象。
- - 基于智能标签的**切片**，**花式索引**和**子集**大数据集。
- - 直观**合并**和**加入**数据集。
- - 灵活的**重塑**和数据集的旋转。 
- -  **轴的分层**标记（每个刻度可能有多个标签）。
- - 强大的IO工具，用于从**平面文件**（CSV和分隔）、Excel文件、数据库以及能从超快的**HDF5格式**中保存或加载数据。
- -  **特定时间序列**功能：日期范围生成和频率转换、移动窗口统计、移动窗口线性回归、日期转换和滞后等。
+这些功能主要是为了解决其它编程语言、科研环境的痛点。数据科学家处理数据一般分为以下几个阶段：数据整理与清洗、数据分析与建模、数据可视化与制表，Pandas 是实现这些数据处理工作的理想工具。
 
-其中许多技术都是为了解决使用其他语言/科研环境时经常遇到的缺点。对于数据科学家来说，处理数据通常分为多个阶段：整理和清理数据，分析/建模数据，然后将分析结果组织成适合绘图或表格显示的形式。Pandas 是完成所有这些任务的理想工具。
+其它说明：
 
-其他一些说明
-
-- pandas 的开发速度**很快**。许多低级算法位已经在[Cython](https://cython.org/)代码中进行了大量优化。然而，与其他任何事物一样，这样做通常会牺牲性能。 因此，如果您专注于应用程序的一个功能，您可以更快创建一个专用的工具。
-- pandas 是[statsmodels](https://www.statsmodels.org/stable/index.html)的依赖，使其成为Python中统计计算生态系统的重要组成部分。
-- pandas 已广泛用于金融领域的应用和生产。
+* Pandas 速度**很快**。Pandas 的很多底层算法都用 [Cython](https://cython.org/) 优化过。然而，为了保持通用性，必然要牺牲一些性能，如果专注于某一功能，您完全可以开发出比 pandas 更快的专用工具。
+* Pandas 是 [statsmodels](https://www.statsmodels.org/stable/index.html) 的依赖项，因此，Pandas 也是 Python 中统计计算生态圈的重要组成部分。
+* Pandas 已广泛应用于金融领域。
 
 ## 数据结构
 
 维数 | 名称 | 描述
 ---|---|---
-1 | Series | 可以看做有标签（默认是整数序列RangeIndex；可以重复）的一维数组（同类型）。是scalars的集合，同时也是DataFrame的元素。
-2 | DataFrame | 一般是二维标签，尺寸可变的表格结构，具有潜在的异质型列。
+1 | Series | 带标签的一维同构数组
+2 | DataFrame | 带标签的，大小可变的，二维异构表格
 
 ### 为什么有多个数据结构？
 
-考虑 pandas 数据结构的最佳方式是作为低维数据的灵活容器。例如，DataFrame是Series的容器，Series是scalars的容器。我们希望能够以类似字典的方式从这些容器中插入和删除对象。
+Pandas 数据结构就像是低维数据的容器。比如，DataFrame 是 Series 的容器，而 Series 则是标量的容器。使用这种方式，可以在容器中以字典的形式插入或删除对象。
 
-此外，我们希望通用API函数的合理默认行为考虑到时间序列和横截面数据集的典型方向。当使用ndarrays存储2维和3维数据时，在编写函数时会给用户带来负担以考虑数据集的方向; 轴被认为或多或少相等（除非C-或Fortran-连续性对性能有影响）。在Pandas中，轴旨在为数据提供更多的语义含义; 即，对于特定数据集，可能存在定向数据的“正确”方式。因此，目标是减少在下游功能中编码数据转换所需的精力。
+此外，通用 API 函数的默认操作要顾及时间序列与截面数据集的方向。多维数组存储二维或三维数据时，编写函数要注意数据集的方向，这对用户来说是一种负担；如果不考虑 C 或 Fortran 中连续性对性能的影响，一般情况下，不同的轴在程序里其实没有什么区别。Pandas 里，轴的概念主要是为了给数据赋予更直观的语义，即用“更恰当”的方式表示数据集的方向。这样做是为了让用户编写数据转换函数时，少费点脑子。
 
-此外，我们希望公共API函数的合理默认行为考虑到时间序列和横截面数据集的典型方向。当使用ndarray存储2维和3维数据时，用户在编写函数时需要考虑数据集的方向；轴被认为或多或少是等价的(除非C或Fortran邻接关系到性能)。在Pandas中，轴旨在为数据提供更多的语义含义；即，对于特定的数据集，可能会有一种“正确”的方式来确定数据的方向。因此，目标是减少在下游函数中编写数据转换代码所需的脑力劳动。
-
-举个例子，对于表格数据(DataFrame)，考虑***索引**(行)和**列**(而不是轴0和轴1)在语义上更有帮助。因此，迭代DataFrame的列会产生更具可读性的代码：
+处理 DataFrame 等表格数据时，**index**（行）或 **columns**（列）比 **axis 0** 和 **axis 1** 更直观。用这种方式迭代 DataFrame 的列，代码更易读易懂：
 
 ``` python
 for col in df.columns:
@@ -56,35 +53,36 @@ for col in df.columns:
     # do something with series
 ```
 
-## 数据的可变性和拷贝
+## 大小可变与数据复制
 
-所有的Pandas数据结构都是值可变的（它们包含的值可以改变），但并不总是大小可变的。Series的长度不能更改，但例如，列可以插入到DataFrame中。然而，绝大多数方法产生新的对象并保持输入数据不变。 一般来说，我们喜欢在合情合理的情况下**支持不变性**。
+Pandas 所有数据结构的值都是可变的，但数据结构的大小并非都是可变的，比如，Series 的长度不可改变，但 DataFrame 里就可以插入列。
+
+Pandas 里，绝大多数方法都不改变原始的输入数据，而是复制数据，生成新的对象。 一般来说，原始输入数据**不变**更稳妥。
 
 ## 获得支持
 
-如果你有Pandas 问题和想法的，第一个应该想到的是[Github问题跟踪器](https://github.com/Pandas-dev/Pandas/issues)。如果您有常规问题，Pandas的社区专家可以通过[Stack Overflow](https://stackoverflow.com/questions/tagged/Pandas)来回答。
+发现 Pandas 的问题或有任何建议，请反馈到 [Github 问题跟踪器](https://github.com/Pandas-dev/Pandas/issues)。日常应用问题请在 [Stack Overflow](https://stackoverflow.com/questions/tagged/Pandas) 上咨询 Pandas 社区专家。
 
 ## 社区
 
-如今 pandas 得到了世界各地志同道合的人们的积极支持，他们贡献了宝贵的时间和精力来帮助开源 pandas 成为可能。感谢我们[所有的贡献者](https://github.com/Pandas-dev/Pandas/graphs/contributors)。
+Pandas 如今由来自全球的同道中人组成的社区提供支持，社区里的每个人都贡献了宝贵的时间和精力，正因如此，才成就了开源 Pandas，在此，我们要感谢[所有贡献者](https://github.com/Pandas-dev/Pandas/graphs/contributors)。
 
-如果您对贡献感兴趣，请访问[贡献指南](https://Pandas.pydata.org/Pandas-docs/stable/development/contributing.html#contributing)。
+若您有意为 Pandas 贡献自己的力量，请先阅读[贡献指南](https://Pandas.pydata.org/Pandas-docs/stable/development/contributing.html#contributing)。
 
-pandas 是[NumFOCUS](https://www.numfocus.org/open-source-projects/)赞助的项目。 这将有助于确保 pandas 作为世界级开源项目的成功发展，并有可能为该项目[捐款](https://Pandas.pydata.org/donate.html)。
+Pandas 是 [NumFOCUS](https://www.numfocus.org/open-source-projects/) 赞助的项目。有了稳定的资金来源，就确保了 Pandas，这一世界级开源项目的成功，为本项目[捐款](https://Pandas.pydata.org/donate.html)也更有保障。
 
-## 项目治理
+## 项目监管
 
-pandas 项目自2008年成立以来非正式使用的治理流程已在[项目治理文档](https://github.com/Pandas-dev/Pandas-governance)中正式确定。这些文件阐明了如何制定决策以及我们社区的各种要素如何相互作用，包括开源协作开发与可能由营利或非营利实体资助的工作之间的关系。
+自 2008 年以来，Pandas 沿用的监管流程已正式编纂为[项目监管文档](https://github.com/Pandas-dev/Pandas-governance)。这些文件阐明了如何决策，如何处理营利组织与非营利实体进行开源协作开发的关系等内容。
 
-Wes McKinney 是仁慈的生活独裁者（BDFL）。
+Wes McKinney 是仁慈的终身独裁者。
 
 ## 开发团队
-
-可以在治理仓库的[人员页面](https://github.com/Pandas-dev/Pandas-governance/blob/master/people.md)上找到核心团队成员列表和更详细的信息。
+核心团队成员列表及详细信息可在 Github 仓库的[人员页面](https://github.com/Pandas-dev/Pandas-governance/blob/master/people.md)上查询。
 
 ## 机构合作伙伴
 
-有关当前机构合作伙伴的信息可以在[Pandas网站页面](/about/)上找到。
+现有机构合作伙伴信息可在 [Pandas 网站页面](/about/)上查询。
 
 ## 许可协议
 
