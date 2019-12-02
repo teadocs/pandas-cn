@@ -23,7 +23,7 @@
   - [绘图](10min.html#plotting)
   - [数据输入 / 输出](10min.html#getting-data-in-out)
   - [坑（Gotchas）](10min.html#gotchas)
-- [基础使用方法](basics.html)
+- [基础用法](basics.html)
   - [Head 与 Tail](basics.html#head-and-tail)
   - [属性与底层数据](basics.html#attributes-and-underlying-data)
   - [加速操作](basics.html#accelerated-operations)

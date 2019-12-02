@@ -21,9 +21,9 @@ module.exports = function () {
       sidebarDepth: 1,
       children: [
         ['/docs/getting_started/', '目录'],
-        ['/docs/getting_started/overview', '包概述'],
+        ['/docs/getting_started/overview', 'Pandas 概览'],
         ['/docs/getting_started/10min', '十分钟入门Pandas'],
-        ['/docs/getting_started/basics', '基本使用方法'],
+        ['/docs/getting_started/basics', '基础用法'],
         ['/docs/getting_started/dsintro', '数据结构简介'],
         ['/docs/getting_started/comparison', '与其他工具比较'],
         ['/docs/getting_started/tutorials', '教程资料']
