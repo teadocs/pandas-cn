@@ -1,8 +1,8 @@
-# 基本使用方法
+# 基础用法
 
-本节介绍 pandas 数据结构的基础用法。下列代码创建上一节用过的示例数据对象：
+本节介绍 Pandas 数据结构的基础用法。下列代码创建上一节用过的示例数据对象：
 
-```
+``` python
 In [1]: index = pd.date_range('1/1/2000', periods=8)
 
 In [2]: s = pd.Series(np.random.randn(5), index=['a', 'b', 'c', 'd', 'e'])
@@ -13,7 +13,7 @@ In [3]: df = pd.DataFrame(np.random.randn(8, 3), index=index,
 ```
 ## Head 与 Tail
 
-[`head()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head) 与 [`tail()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.tail.html#pandas.DataFrame.tail)  用于快速预览 Series 与 DataFrame，默认显示 5 条数据，也可以指定要显示的数量。
+[`head()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head) 与 [`tail()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.tail.html#pandas.DataFrame.tail)  用于快速预览 Series 与 DataFrame，默认显示 5 条数据，也可以指定显示数据的数量。
 
 ```python
 In [4]: long_series = pd.Series(np.random.randn(1000))
@@ -48,7 +48,7 @@ Pandas 可以通过多个属性访问元数据：
 
 注意： **为属性赋值是安全的**！
 
-```
+```python
 In [7]: df[:2]
 Out[7]: 
                    A         B         C
@@ -70,11 +70,11 @@ Out[9]:
 2000-01-08 -1.715002 -1.039268 -0.370647
 ```
 
-Pandas 对象（[`Index`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index "pandas.Index")， [`Series`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series "pandas.Series")， [`DataFrame`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame "pandas.DataFrame")）相当于数组的容器，用于存储数据，并执行计算。大部分类型的底层数组都是 [`numpy.ndarray`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray "(in NumPy v1.16)")。不过，pandas 与第三方支持库一般都会扩展 Numpy 类型系统，添加自定义数组（见[数据类型](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes)）。
+Pandas 对象（[`Index`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index "pandas.Index")， [`Series`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series "pandas.Series")， [`DataFrame`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame "pandas.DataFrame")）相当于数组的容器，用于存储数据、执行计算。大部分类型的底层数组都是 [`numpy.ndarray`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray "(in NumPy v1.16)")。不过，Pandas 与第三方支持库一般都会扩展 NumPy 类型系统，添加自定义数组（见[数据类型](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes)）。
 
-获取  [`Index`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index "pandas.Index") 或 [`Series`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series "pandas.Series")  里的数据，请用 `.array` 属性。
+`.array` 属性用于提取  [`Index`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index "pandas.Index") 或 [`Series`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series "pandas.Series")  里的数据。
 
-```
+```python
 In [10]: s.array
 Out[10]: 
 <PandasArray>
@@ -88,11 +88,11 @@ Out[11]:
 ['a', 'b', 'c', 'd', 'e']
 Length: 5, dtype: object
 ```
-[`array`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array "pandas.Series.array") 一般指 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray")。至于什么是 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray") 及 pandas 为什么要用 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray") 不是本节要说明的内容。更多信息请参阅[数据类型](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes)。
+[`array`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array "pandas.Series.array") 一般指 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray")。至于什么是 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray") 及 Pandas 为什么要用 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray") 不是本节要说明的内容。更多信息请参阅[数据类型](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes)。
 
-提取 Numpy 数组，用 [`to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy "pandas.Series.to_numpy") 或 `numpy.asarray()`。
+提取 NumPy 数组，用 [`to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy "pandas.Series.to_numpy") 或 `numpy.asarray()`。
 
-```
+```python
 In [12]: s.to_numpy()
 Out[12]: array([ 0.4691, -0.2829, -1.5091, -1.1356,  1.2121])
 
@@ -102,15 +102,15 @@ Out[13]: array([ 0.4691, -0.2829, -1.5091, -1.1356,  1.2121])
 
 `Series` 与 `Index` 的类型是 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray") 时， [`to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy "pandas.Series.to_numpy") 会复制数据，并强制转换值。详情见[数据类型](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes)。
 
-[`to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy "pandas.Series.to_numpy") 可以控制 [`numpy.ndarray`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray "(in NumPy v1.16)") 生成的数据类型。以带时区的 datetime 为例，Numpy 未提供时区信息的 datetime 数据类型，pandas 则提供了两种表现形式：
+[`to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy "pandas.Series.to_numpy") 可以控制 [`numpy.ndarray`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray "(in NumPy v1.16)") 生成的数据类型。以带时区的 datetime 为例，NumPy 未提供时区信息的 datetime 数据类型，Pandas 则提供了两种表现形式：
 
 1. 一种是带 [`Timestamp`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html#pandas.Timestamp "pandas.Timestamp") 的 [`numpy.ndarray`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray "(in NumPy v1.16)")，提供了正确的 `tz` 信息。
 
-2. 另一种是 `datetime64[ns]`，这也是 [`numpy.ndarray`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray "(in NumPy v1.16)")，值被转换为 UTC，但去掉了时区信息。
+2. 另一种是 `datetime64[ns]`，这也是一种 [`numpy.ndarray`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray "(in NumPy v1.16)")，值被转换为 UTC，但去掉了时区信息。
 
 时区信息可以用 `dtype=object` 保存。
 
-```
+```python
 In [14]: ser = pd.Series(pd.date_range('2000', periods=2, tz="CET"))
 
 In [15]: ser.to_numpy(dtype=object)
@@ -121,16 +121,16 @@ array([Timestamp('2000-01-01 00:00:00+0100', tz='CET', freq='D'),
 ```
 或用 `dtype='datetime64[ns]'` 去除。
 
-```
+```python
 In [16]: ser.to_numpy(dtype="datetime64[ns]")
 Out[16]: 
 array(['1999-12-31T23:00:00.000000000', '2000-01-01T23:00:00.000000000'],
       dtype='datetime64[ns]')
 ```
 
-获取 `DataFrame` 里的**原数据**略显复杂。DataFrame 里所有列的数据类型都一样时，[`DataFrame.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy "pandas.DataFrame.to_numpy") 返回底层数据：
+提取 `DataFrame` 里的**原数据**稍微有点复杂。DataFrame 里所有列的数据类型都一样时，[`DataFrame.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy "pandas.DataFrame.to_numpy") 返回底层数据：
 
-```
+```python
 In [17]: df.to_numpy()
 Out[17]: 
 array([[-0.1732,  0.1192, -1.0442],
@@ -142,7 +142,7 @@ array([[-0.1732,  0.1192, -1.0442],
        [ 0.525 ,  0.4047,  0.577 ],
        [-1.715 , -1.0393, -0.3706]])
 ```
-DataFrame 为同质型数据时，pandas 直接修改原始 `ndarray`，所做修改会直接反应在数据结构里。对于异质型数据，即 DataFrame 列的数据类型不一样时，就不是这种操作模式了。与轴标签不同，不能为值的属性赋值。
+DataFrame 为同构型数据时，Pandas 直接修改原始 `ndarray`，所做修改会直接反应在数据结构里。对于异质型数据，即 DataFrame 列的数据类型不一样时，就不是这种操作模式了。与轴标签不同，不能为值的属性赋值。
 
 ::: tip 注意
 
@@ -150,15 +150,15 @@ DataFrame 为同质型数据时，pandas 直接修改原始 `ndarray`，所做�
 
 :::
 
-以前，pandas 推荐用 [`Series.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values "pandas.Series.values") 或 [`DataFrame.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values "pandas.DataFrame.values") 从 Series 或 DataFrame 里提取数据。旧有代码库或在线教程里仍在用这种操作，但其实 pandas 已经对此做出了改进，现在推荐用 `.array` 或 `to_numpy` 这两种方式提取数据，别再用 `.values` 了。`.values` 有以下几个缺点：
+以前，Pandas 推荐用 [`Series.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values "pandas.Series.values") 或 [`DataFrame.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values "pandas.DataFrame.values") 从 Series 或 DataFrame 里提取数据。旧有代码库或在线教程里仍在用这种操作，但 Pandas 已改进了此功能，现在，推荐用 `.array` 或 `to_numpy` 提取数据，别再用 `.values` 了。`.values` 有以下几个缺点：
 
-1. Series 含[扩展类型](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types)时，[Series.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values) 无法判断到底是该返回 Numpy `array`，还是返回 `ExtensionArray`。而 [`Series.array`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array "pandas.Series.array") 则只返回 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray")，且不会复制数据。[`Series.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy "pandas.Series.to_numpy") 则返回 Numpy 数组，其代价是需要复制、并强制转换数据的值。
+1. Series 含[扩展类型](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types)时，[Series.values](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.values.html#pandas.Series.values) 无法判断到底是该返回 NumPy `array`，还是返回 `ExtensionArray`。而 [`Series.array`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.array.html#pandas.Series.array "pandas.Series.array") 则只返回 [`ExtensionArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.api.extensions.ExtensionArray.html#pandas.api.extensions.ExtensionArray "pandas.api.extensions.ExtensionArray")，且不会复制数据。[`Series.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html#pandas.Series.to_numpy "pandas.Series.to_numpy") 则返回 NumPy 数组，其代价是需要复制、并强制转换数据的值。
 
-2. DataFrame 含多种数据类型时，[`DataFrame.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values "pandas.DataFrame.values") 会复制数据，并将数据的值强制转换同一种数据类型，这是一种代价较高的操作。[`DataFrame.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy "pandas.DataFrame.to_numpy") 则返回 Numpy 数组，这种方式更清晰，也不会把 DataFrame 里的数据都当作一种类型。
+2. DataFrame 含多种数据类型时，[`DataFrame.values`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.values.html#pandas.DataFrame.values "pandas.DataFrame.values") 会复制数据，并将数据的值强制转换同一种数据类型，这是一种代价较高的操作。[`DataFrame.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy "pandas.DataFrame.to_numpy") 则返回 NumPy 数组，这种方式更清晰，也不会把 DataFrame 里的数据都当作一种类型。
 
 ## 加速操作
 
-借助 `numexpr` 与 `bottleneck` 支持库，pandas 可以加速特定类型的二进制数值与布尔操作。
+借助 `numexpr` 与 `bottleneck` 支持库，Pandas 可以加速特定类型的二进制数值与布尔操作。
 
 处理大型数据集时，这两个支持库特别有用，加速效果也非常明显。 `numexpr` 使用智能分块、缓存与多核技术。`bottleneck` 是一组专属 cython 例程，处理含 `nans` 值的数组时，特别快。
 
@@ -170,20 +170,20 @@ DataFrame 为同质型数据时，pandas 直接修改原始 `ndarray`，所做�
 | `df1 * df2` |     21.71     |   36.63   |  0.5928  |
 | `df1 + df2` |     22.04     |   36.50   |  0.6039  |
 
-强烈建议安装这两个支持库，了解更多信息，请参阅[推荐支持库](https://pandas.pydata.org/pandas-docs/stable/install.html#install-recommended-dependencies)。
+强烈建议安装这两个支持库，更多信息，请参阅[推荐支持库](https://pandas.pydata.org/pandas-docs/stable/install.html#install-recommended-dependencies)。
 
 这两个支持库默认为启用状态，可用以下选项设置：
 
-*0.20.0 版新增*
+*0.20.0 版新增。*
 
-```
+```python
 pd.set_option('compute.use_bottleneck', False)
 pd.set_option('compute.use_numexpr', False)
 ```
 
 ## 二进制操作
 
-pandas 数据结构之间执行二进制操作，要注意下列两个关键点：
+Pandas 数据结构之间执行二进制操作，要注意下列两个关键点：
 
 * 多维（DataFrame）与低维（Series）对象之间的广播机制；
 * 计算中的缺失值处理。
@@ -245,7 +245,7 @@ b -1.569069  0.0 -1.962513
 c -0.783123  0.0 -0.250933
 d       NaN  0.0 -0.892516
 ```
-还可以用 Series 对齐多重索引 DataFrame 的某一层级。
+还可以用 Series 对齐多层索引 DataFrame 的某一层级。
 
 ```python
 In [26]: dfmi = df.copy()
@@ -365,6 +365,17 @@ dtype: int64
 
 Series 与 DataFrame 的算数函数支持 `fill_value` 选项，即用指定值替换某个位置的缺失值。比如，两个 DataFrame 相加，除非两个 DataFrame 里同一个位置都有缺失值，其相加的和仍为 `NaN`，如果只有一个 DataFrame 里存在缺失值，则可以用 `fill_value` 指定一个值来替代 `NaN`，当然，也可以用 `fillna` 把 `NaN` 替换为想要的值。
 
+::: tip 注意
+
+下面第 43 条代码里，Pandas 官档没有写 df2 是哪里来的，这里补上，与 df 类似。 ```python
+df2 = pd.DataFrame({
+   ....:     'one': pd.Series(np.random.randn(3), index=['a', 'b', 'c']),
+   ....:     'two': pd.Series(np.random.randn(4), index=['a', 'b', 'c', 'd']),
+   ....:     'three': pd.Series(np.random.randn(3), index=['a', 'b', 'c', 'd'])})
+   ....:
+```
+:::
+
 ```python
 In [42]: df
 Out[42]: 
@@ -430,7 +441,7 @@ c  False  False  False
 d   True  False  False
 ```
 
-这些操作生成一个与左侧输入对象类型相同的 pandas 对象，即，dtype 为 `bool`。这些 `boolean` 对象可用于索引操作，参阅[布尔索引](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing-boolean)小节。
+这些操作生成一个与左侧输入对象类型相同的 Pandas 对象，即，dtype 为 `bool`。`boolean` 对象可用于索引操作，参阅[布尔索引](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#indexing-boolean)。
 
 ### 布尔简化
 
@@ -459,7 +470,7 @@ In [50]: (df > 0).any().any()
 Out[50]: True
 ```
 
-通过 [`empty`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.empty.html#pandas.DataFrame.empty "pandas.DataFrame.empty") 属性，可以验证 pandas 对象是否为**空**。
+通过 [`empty`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.empty.html#pandas.DataFrame.empty "pandas.DataFrame.empty") 属性，可以验证 Pandas 对象是否为**空**。
 
 ```python
 In [51]: df.empty
@@ -536,7 +547,7 @@ In [59]: np.nan == np.nan
 Out[59]: False
 ```
 
-为了验证数据是否等效，Series 与 DataFrame 等 N 维框架提供了 [`equals()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.equals.html#pandas.DataFrame.equals "pandas.DataFrame.equals") 方法，，用这个方法验证 `NaN` 值的结果为**相等**。
+为了验证数据是否等效，Series 与 DataFrame 等 N 维框架提供了 [`equals()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.equals.html#pandas.DataFrame.equals "pandas.DataFrame.equals") 方法，用这个方法验证 `NaN` 值的结果为**相等**。
 
 ```python
 In [60]: (df + df).equals(df * 2)
@@ -559,7 +570,7 @@ Out[64]: True
 
 ### 比较 array 型对象
 
-用标量值与 pandas 数据结构对比数据元素非常简单：
+用标量值与 Pandas 数据结构对比数据元素非常简单：
 
 ```python
 In [65]: pd.Series(['foo', 'bar', 'baz']) == 'foo'
@@ -573,7 +584,7 @@ In [66]: pd.Index(['foo', 'bar', 'baz']) == 'foo'
 Out[66]: array([ True, False, False])
 ```
 
-pandas 还能对比两个等长 array 对象里的数据元素：
+Pandas 还能对比两个等长 `array` 对象里的数据元素：
 
 ```python
 In [67]: pd.Series(['foo', 'bar', 'baz']) == pd.Index(['foo', 'bar', 'qux'])
@@ -601,14 +612,14 @@ In [56]: pd.Series(['foo', 'bar', 'baz']) == pd.Series(['foo'])
 ValueError: Series lengths must match to compare
 ```
 
-注意： 这里的操作与 Numpy 的广播机制不同：
+注意： 这里的操作与 NumPy 的广播机制不同：
 
 ```python
 In [69]: np.array([1, 2, 3]) == np.array([2])
 Out[69]: array([False,  True, False])
 ```
 
-Numpy 无法执行广播操作时，返回 `False`:
+NumPy 无法执行广播操作时，返回 `False`:
 
 ```python
 In [70]: np.array([1, 2, 3]) == np.array([1, 2])
@@ -617,7 +628,7 @@ Out[70]: False
 
 ### 合并重叠数据集
 
-有时会合并两个近似数据集，两个数据集中，其中一个的数据比另一个多。比如，展示特定经济指标的两个数据序列，其中一个是“高质量”指标，另一个是“低质量”指标。一般来说，低质量序列可能包含更多的历史数据，或覆盖更广的数据。因此，要合并这两个 DataFrame 对象，其中一个 DataFrame 中的缺失值将按指定条件用另一个 DataFrame 里类似标签中的数据进行填充。要实现这一操作，请用下列代码中的 [`combine_first()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.combine_first.html#pandas.DataFrame.combine_first "pandas.DataFrame.combine_first") 函数。
+有时，要合并两个相似的数据集，两个数据集里的其中一个的数据比另一个多。比如，展示特定经济指标的两个数据序列，其中一个是“高质量”指标，另一个是“低质量”指标。一般来说，低质量序列可能包含更多的历史数据，或覆盖更广的数据。因此，要合并这两个 DataFrame 对象，其中一个 DataFrame 中的缺失值将按指定条件用另一个 DataFrame 里类似标签中的数据进行填充。要实现这一操作，请用下列代码中的 [`combine_first()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.combine_first.html#pandas.DataFrame.combine_first "pandas.DataFrame.combine_first") 函数。
 
 ```python
 In [71]: df1 = pd.DataFrame({'A': [1., np.nan, 3., 5., np.nan],
@@ -658,7 +669,7 @@ Out[75]:
 5  7.0  8.0
 ```
 
-### 通用的 DataFrame 合并方法
+### DataFrame 通用合并方法
 
 上述 [`combine_first()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.combine_first.html#pandas.DataFrame.combine_first "pandas.DataFrame.combine_first") 方法调用了更普适的 [`DataFrame.combine()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.combine.html#pandas.DataFrame.combine "pandas.DataFrame.combine") 方法。该方法提取另一个 DataFrame 及合并器函数，并将之与输入的 DataFrame 对齐，再传递与 Series 配对的合并器函数（比如，名称相同的列）。
 
@@ -676,8 +687,8 @@ In [76]: def combiner(x, y):
 
 * **Series**：无需 `axis` 参数
 * **DataFrame**：
-  * "index"，即 `axis=0`，默认值
-  * "columns", 即 `axis=1`
+  * `index`，即 `axis=0`，默认值
+  * `columns`, 即 `axis=1`
 
 示例如下：
 
@@ -706,7 +717,7 @@ d   -0.166914
 dtype: float64
 ```
 
-这些方法都支持 `skipna`，这个关键字指定是否要把缺失数据排除在外，默认值为 `True`。
+上述方法都支持 `skipna` 关键字，指定是否要排除缺失数据，默认值为 `True`。
 
 ```python
 In [80]: df.sum(0, skipna=False)
@@ -760,7 +771,7 @@ c  2.433281  5.163008  1.177045
 d       NaN  5.442353  0.563873
 ```
 
-下面是常用函数汇总表。每个函数都支持 `level` 参数，仅在数据对象为[结构化 Index](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-hierarchical) 时使用。
+下表为常用函数汇总表。每个函数都支持 `level` 参数，仅在数据对象为[结构化 Index](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-hierarchical) 时使用。
 
 |    函数    |           描述           |
 | :--------: | :----------------------: |
@@ -785,7 +796,7 @@ d       NaN  5.442353  0.563873
 |  `cummax`  |        累积最大值        |
 |  `cummin`  |        累积最小值        |
 
-注意：Numpy 的 `mean`、`std`、`sum` 等方法默认不统计 Series 里的空值。
+注意：NumPy 的 `mean`、`std`、`sum` 等方法默认不统计 Series 里的空值。
 
 ```python
 In [87]: np.mean(df['one'])
@@ -1005,7 +1016,7 @@ Out[116]: 'd'
 ```
 ::: tip 注意
 
-`idxmin` 与 `idxmax` 对应 Numpy 里的 `argmin` 与 `argmax`。
+`idxmin` 与 `idxmax` 对应 NumPy 里的 `argmin` 与 `argmax`。
 
 :::
 
@@ -1072,7 +1083,7 @@ Out[125]:
 
 ### 离散化与分位数
 
-[`cut()函数`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut)（以值为依据实现分箱）及 [`qcut()函数`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.qcut.html#pandas.qcut)（以样本分位数为依据实现分箱）用于连续值的离散化：
+[`cut() 函数`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html#pandas.cut)（以值为依据实现分箱）及 [`qcut() 函数`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.qcut.html#pandas.qcut)（以样本分位数为依据实现分箱）用于连续值的离散化：
 
 ```python
 In [126]: arr = np.random.randn(20)
@@ -1134,7 +1145,7 @@ Categories (2, interval[float64]): [(-inf, 0.0] < (0.0, inf]]
 
 ## 函数应用
 
-不管是为 pandas 对象应用自定义函数，还是应用其它第三方函数，都离不开以下三种方法。用哪种方法取决于操作的对象是 `DataFrame` 或 `Series` ，是行或列，还是元素。
+不管是为 Pandas 对象应用自定义函数，还是应用第三方函数，都离不开以下三种方法。用哪种方法取决于操作的对象是 `DataFrame`，还是 `Series` ；是行、列，还是元素。
 
 1. 表级函数应用：[`pipe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pipe.html#pandas.DataFrame.pipe)
 2. 行列级函数应用： [`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply)
@@ -1144,14 +1155,14 @@ Categories (2, interval[float64]): [(-inf, 0.0] < (0.0, inf]]
 
 ### 表级函数应用
 
-虽然可以把  `DataFrame` 与 `Series`  传递给函数。不过，通过链式调用函数时，最好使用 [`pipe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pipe.html#pandas.DataFrame.pipe) 方法。对比以下两种方式：
+虽然可以把 DataFrame 与 Series 传递给函数，不过链式调用函数时，最好使用 [`pipe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pipe.html#pandas.DataFrame.pipe) 方法。对比以下两种方式：
 
 ```python
-# f, g, and h are functions taking and returning ``DataFrames``
+# f、g、h 是提取、返回 `DataFrames` 的函数
 >>> f(g(h(df), arg1=1), arg2=2, arg3=3)
 ```
 
-下列代码与上述代码等效
+下列代码与上述代码等效：
 
 ```python
 >>> (df.pipe(h)
@@ -1159,7 +1170,7 @@ Categories (2, interval[float64]): [(-inf, 0.0] < (0.0, inf]]
 ...    .pipe(f, arg2=2, arg3=3))
 ```
 
-pandas 鼓励使用第二种方式，即链式方法。在链式方法中调用自定义函数或第三方支持库函数时，用 `pipe` 更容易，与用 pandas 自身方法一样。
+Pandas 鼓励使用第二种方式，即链式方法。在链式方法中调用自定义函数或第三方支持库函数时，用 `pipe` 更容易，与用 Pandas 自身方法一样。
 
 上例中，`f`、`g`  与 `h` 这几个函数都把 `DataFrame` 当作首位参数。要是想把数据作为第二个参数，该怎么办？本例中，`pipe` 为元组 （`callable,data_keyword`）形式。`.pipe` 把  `DataFrame`  作为元组里指定的参数。
 
@@ -1210,13 +1221,14 @@ Warnings:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 [2] The condition number is large, 1.49e+07. This might indicate that there are
 strong multicollinearity or other numerical problems.
+"""
 ```
 
 unix 的 `pipe`  与后来出现的 [dplyr](https://github.com/hadley/dplyr) 及 [magrittr](https://github.com/smbache/magrittr) 启发了`pipe` 方法，在此，引入了 R 语言里用于读取 pipe 的操作符 (`%>%`)。`pipe` 的实现思路非常清晰，仿佛 Python 源生的一样。强烈建议大家阅读  [`pipe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pipe.html#pandas.DataFrame.pipe)  的源代码。
 
 ### 行列级函数应用
 
-[`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply) 方法可以沿着 DataFrame 的轴应用任何函数，比如，描述性统计方法，该方法支持  `axis` 参数。
+[`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply) 方法沿着 DataFrame 的轴应用函数，比如，描述性统计方法，该方法支持  `axis` 参数。
 
 ```python
 In [141]: df.apply(np.mean)
@@ -1279,7 +1291,7 @@ dtype: float64
 
 默认情况下，[`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply) 调用的函数返回的类型会影响 `DataFrame.apply` 输出结果的类型。
 
-* 函数返回的是 `Series` 时，最终输出的结果是 `DataFrame`。输出的列与函数返回的 `Series` 索引相匹配。
+* 函数返回的是 `Series` 时，最终输出结果是 `DataFrame`。输出的列与函数返回的 `Series` 索引相匹配。
 
 * 函数返回其它任意类型时，输出结果是 `Series`。
 
@@ -1352,7 +1364,7 @@ Out[151]:
 
 聚合 API 可以快速、简洁地执行多个聚合操作。Pandas 对象支持多个类似的 API，如 [groupby API](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#groupby-aggregate)、[window functions API](https://pandas.pydata.org/pandas-docs/stable/user_guide/computation.html#stats-aggregate)、[resample API](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-aggregate)。聚合函数为[`DataFrame.aggregate()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.aggregate.html#pandas.DataFrame.aggregate "pandas.DataFrame.aggregate")，它的别名是 [`DataFrame.agg()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.agg.html#pandas.DataFrame.agg "pandas.DataFrame.agg")。
 
-这里使用与前例类似的 `DataFrame`：
+此处用与上例类似的 `DataFrame`：
 
 ```python
 In [152]: tsdf = pd.DataFrame(np.random.randn(10, 3), columns=['A', 'B', 'C'],
@@ -1402,7 +1414,7 @@ C    1.575510
 dtype: float64
 ```
 
-对 `Series` 进行单个聚合操作，返回的是标量值：
+`Series` 单个聚合操作返回标量值：
 
 ```python
 In [158]: tsdf.A.agg('sum')
@@ -1430,7 +1442,7 @@ sum   3.033606 -1.803879  1.575510
 mean  0.505601 -0.300647  0.262585
 ```
 
-对于 `Series`，多个函数返回的结果也是 `Series`，其索引为函数名：
+`Series` 聚合多函数返回结果还是 `Series`，索引为函数名：
 
 ```python
 In [161]: tsdf.A.agg(['sum', 'mean'])
@@ -1449,7 +1461,7 @@ sum         3.033606
 Name: A, dtype: float64
 ```
 
-应用自定义函数时，则该函数名为输出结果的行名：
+应用自定义函数时，该函数名为输出结果的行名：
 
 ```python
 In [163]: def mymean(x):
@@ -1487,9 +1499,9 @@ min  -0.749892       NaN
 sum        NaN -1.803879
 ```
 
-### 多种 Dtype
+### 多种数据类型（Dtype）
 
-`DataFrame` 里包含不能执行聚合操作的多种 Dtype 时，`.agg` 只计算可以执行聚合的列。这与 `groupby` 的 `.agg` 操作类似：
+与 `groupby` 的 `.agg` 操作类似，DataFrame 含不能执行聚合的数据类型时，`.agg` 只计算可聚合的列：
 
 ```python
 In [167]: mdf = pd.DataFrame({'A': [1, 2, 3],
@@ -1517,7 +1529,7 @@ sum  6  6.0  foobarbaz        NaT
 
 ### 自定义 Describe
 
-用 `.agg()` 可以轻松地创建与内置 [describe 函数](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-describe)类似的自定义 describe 函数。
+`.agg()` 可以创建类似于内置 [describe 函数](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-describe) 的自定义 describe 函数。
 
 ```python
 In [170]: from functools import partial
@@ -1546,9 +1558,9 @@ max     2.169758  1.004194  0.896839
 
 *0.20.0 版新增*。
 
-[`transform()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.transform.html#pandas.DataFrame.transform "pandas.DataFrame.transform") 方法返回的结果与原始数据具有同样索引，且大小相同。这个 API 支持同时处理多种操作，不用一个一个操作，且该 API 与 `.agg` API 类似。
+[`transform()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.transform.html#pandas.DataFrame.transform "pandas.DataFrame.transform") 方法的返回结果与原始数据的索引相同，大小相同。与 `.agg` API 类似，该 API 支持同时处理多种操作，不用一个一个操作。
 
-下面先创建一个 DataFrame：
+下面，先创建一个 DataFrame：
 
 ```python
 In [176]: tsdf = pd.DataFrame(np.random.randn(10, 3), columns=['A', 'B', 'C'],
@@ -1572,7 +1584,7 @@ Out[178]:
 2000-01-10 -0.030876  0.371900  0.061932
 ```
 
-这里转换的是整个 DataFrame。`.transform()` 支持 Numpy 函数、字符串函数及自定义函数。
+这里转换的是整个 DataFrame。`.transform()` 支持 NumPy 函数、字符串函数及自定义函数。
 
 ```python
 In [179]: tsdf.transform(np.abs)
@@ -1655,7 +1667,7 @@ Freq: D, Name: A, dtype: float64
 
 ### 多函数 Transform
 
-`transform()` 调用多个函数时，将生成多重索引 DataFrame。第一层是原始数据集的列名；第二层是 `transform()` 调用的函数名。
+`transform()` 调用多个函数时，生成多层索引 DataFrame。第一层是原始数据集的列名；第二层是 `transform()` 调用的函数名。
 
 ```python
 In [184]: tsdf.transform([np.abs, lambda x: x + 1])
@@ -1712,7 +1724,7 @@ Out[186]:
 2000-01-10  0.030876  1.371900
 ```
 
-`transform()` 的参数是列表字典时，生成的是以 `transform()` 调用的函数为名的多重索引 DataFrame。
+`transform()` 的参数是列表字典时，生成的是以 `transform()` 调用的函数为名的多层索引 DataFrame。
 
 ```python
 In [187]: tsdf.transform({'A': np.abs, 'B': [lambda x: x + 1, 'sqrt']})
@@ -1733,7 +1745,7 @@ Out[187]:
 
 ### 元素级函数应用
 
-并非所有函数都能矢量化，即接受 Numpy 数组，返回另一个数组或值，DataFrame 的 [`applymap()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap "pandas.DataFrame.applymap") 及 Series 的 [`map()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.map.html#pandas.Series.map "pandas.Series.map") ，支持任何接收单个值并返回单个值的 Python 函数。
+并非所有函数都能矢量化，即接受 NumPy 数组，返回另一个数组或值，DataFrame 的 [`applymap()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap "pandas.DataFrame.applymap") 及 Series 的 [`map()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.map.html#pandas.Series.map "pandas.Series.map") ，支持任何接收单个值并返回单个值的 Python 函数。
 
 示例如下：
 
@@ -1767,7 +1779,7 @@ c   18   18     16
 d    3   19     19
 ```
 
-[`Series.map()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.map.html#pandas.Series.map "pandas.Series.map") 还有个功能，可以“连接”或“映射”第二个 Series 定义的值。这与 [merging/joining 功能](https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#merging)联系非常紧密：
+[`Series.map()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.map.html#pandas.Series.map "pandas.Series.map") 还有个功能，可以“连接”或“映射”第二个 Series 定义的值。这与 [merging / joining 功能](https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#merging)联系非常紧密：
 
 ```python
 In [192]: s = pd.Series(['six', 'seven', 'six', 'seven', 'six'],
@@ -1797,7 +1809,7 @@ dtype: float64
 
 ## 重置索引与更换标签
 
-[`reindex()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.reindex.html#pandas.Series.reindex "pandas.Series.reindex") 是 pandas 里实现数据对齐的基本方法，该方法执行几乎所有功能都要用到的标签对齐功能。 `reindex` 指的是沿着指定轴，让数据与给定的一组标签进行匹配。该功能完成以下几项操作：
+[`reindex()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.reindex.html#pandas.Series.reindex "pandas.Series.reindex") 是 Pandas 里实现数据对齐的基本方法，该方法执行几乎所有功能都要用到的标签对齐功能。 `reindex` 指的是沿着指定轴，让数据与给定的一组标签进行匹配。该功能完成以下几项操作：
 
 * 让现有数据匹配一组新标签，并重新排序；
 * 在无数据但有标签的位置插入缺失值（`NA`）标记；
@@ -1899,7 +1911,7 @@ d -0.613172  0.279344       NaN
 ```
 ::: tip 注意
 
-[多重索引与高级索引](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced)介绍了怎样用更简洁的方式重置索引。
+[多层索引与高级索引](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced)介绍了怎样用更简洁的方式重置索引。
 
 :::
 
@@ -2037,8 +2049,8 @@ Out[218]:
 
 | 方法             | 动作               |
 | :--------------- | :----------------- |
-| pad / ffill      | 先前填充|
-| bfill / backfill | 向后填充|
+| pad / ffill      | 先前填充           |
+| bfill / backfill | 向后填充           |
 | nearest          | 从最近的索引值填充 |
 
 下面用一个简单的 Series 展示 `fill` 方法：
@@ -2250,7 +2262,7 @@ c       0.695246  1.478369  1.227435
 durian       NaN  0.279344 -0.613172
 ```
 
-pandas 不会重命名标签未包含在映射里的列或索引。注意，映射里多出的标签不会触发错误。
+Pandas 不会重命名标签未包含在映射里的列或索引。注意，映射里多出的标签不会触发错误。
 
 *0.21.0 版新增*。
 
@@ -2293,7 +2305,7 @@ Name: scalar-name, dtype: float64
 
 *0.24.0 版新增*。
 
-[`rename_axis()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.rename_axis.html#pandas.Series.rename_axis "pandas.Series.rename_axis") 方法支持指定 `多重索引` 名称，与标签相对应。
+[`rename_axis()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.rename_axis.html#pandas.Series.rename_axis "pandas.Series.rename_axis") 方法支持指定 `多层索引` 名称，与标签相对应。
 
 ```python
 In [241]: df = pd.DataFrame({'x': [1, 2, 3, 4, 5, 6],
@@ -2338,7 +2350,7 @@ c   1    5  50
 
 ## 迭代
 
-pandas 对象基于类型进行迭代操作。Series 迭代时被视为数组，基础迭代生成值。DataFrame 则遵循字典式习语，用对象的 `key` 实现迭代操作。
+Pandas 对象基于类型进行迭代操作。Series 迭代时被视为数组，基础迭代生成值。DataFrame 则遵循字典式习语，用对象的 `key` 实现迭代操作。
 
 简言之，基础迭代（`for i in object`）生成：
 
@@ -2371,9 +2383,9 @@ Pandas 对象还支持字典式的 [`items()`](https://pandas.pydata.org/pandas-
 
 Pandas 对象迭代的速度较慢。大部分情况下，没必要对行执行迭代操作，建议用以下几种替代方式：
 
-* 矢量化：很多操作可以用内置方法或 Numpy 函数，布尔索引……
+* 矢量化：很多操作可以用内置方法或 NumPy 函数，布尔索引……
 * 调用的函数不能在完整的 DataFrame / Series 上运行时，最好用 [`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply "pandas.DataFrame.apply")，不要对值进行迭代操作。请参阅[函数应用](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-apply)文档。
-* 如果必须对值进行迭代，请务必注意代码的性能，建议在 cython 或 numba 环境下实现内循环。参阅[增强性能](https://pandas.pydata.org/pandas-docs/stable/user_guide/enhancingperf.html#enhancingperf)一节，查看这种操作方法的示例。
+* 如果必须对值进行迭代，请务必注意代码的性能，建议在 cython 或 numba 环境下实现内循环。参阅[性能优化](https://pandas.pydata.org/pandas-docs/stable/user_guide/enhancingperf.html#enhancingperf)一节，查看这种操作方法的示例。
 
 :::
 
@@ -2447,7 +2459,7 @@ Name: 2, dtype: object
 ```
 ::: tip 注意
 
-[`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 返回的是 Series 里的每一行数据，该操作**不会**保留每行数据的数据类型，因为数据类型是通过 DataFrame 的列界定的。
+[`iterrows()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows "pandas.DataFrame.iterrows") 返回的是 Series 里的每一行数据，该操作**不**保留每行数据的数据类型，因为数据类型是通过 DataFrame 的列界定的。
 
 示例如下：
 
@@ -2578,7 +2590,7 @@ Out[269]:
 dtype: datetime64[ns]
 ```
 
-还可以轻易实现时区转换：
+时区转换也很轻松：
 
 ```python
 In [270]: stz = s.dt.tz_localize('US/Eastern')
@@ -2595,7 +2607,7 @@ In [272]: stz.dt.tz
 Out[272]: <DstTzInfo 'US/Eastern' LMT-1 day, 19:04:00 STD>
 ```
 
-还可以把这些操作连在一起：
+可以把这些操作连在一起：
 
 ```python
 In [273]: s.dt.tz_localize('UTC').dt.tz_convert('US/Eastern')
@@ -2607,7 +2619,7 @@ Out[273]:
 dtype: datetime64[ns, US/Eastern]
 ```
 
-还可以用 [`Series.dt.strftime()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.dt.strftime.html#pandas.Series.dt.strftime "pandas.Series.dt.strftime") 把 `datetime` 的值当成字符串进行格式化，支持与标准的 [`strftime()`](https://docs.python.org/3/library/datetime.html#datetime.datetime.strftime "(in Python v3.7)") 同样的格式。
+还可以用 [`Series.dt.strftime()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.dt.strftime.html#pandas.Series.dt.strftime "pandas.Series.dt.strftime") 把 `datetime` 的值当成字符串进行格式化，支持与标准 [`strftime()`](https://docs.python.org/3/library/datetime.html#datetime.datetime.strftime "(in Python v3.7)") 同样的格式。
 
 ```python
 # DatetimeIndex
@@ -2727,7 +2739,7 @@ Out[288]:
 
 ## 矢量化字符串方法
 
-Series 支持字符串处理方法，操作数组中每个元素十分方便。这些方法会自动排除缺失值与空值，这也许是其最重要的特性。这些方法通过 Series 的 `str` 属性访问，一般情况下，这些操作的名称与内置的字符串方法一致。示例如下：
+Series 支持字符串处理方法，可以非常方便地操作数组里的每个元素。这些方法会自动排除缺失值与空值，这也许是其最重要的特性。这些方法通过 Series 的 `str` 属性访问，一般情况下，这些操作的名称与内置的字符串方法一致。示例如下：
 
 ```python
 In [289]: s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
@@ -2748,7 +2760,7 @@ dtype: object
 
 这里还提供了强大的模式匹配方法，但工业注意，模式匹配方法默认使用[正则表达式](https://docs.python.org/3/library/re.html)。
 
-参阅[矢量化字符串方法](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#text-string-methods)了解完整内容。
+参阅[矢量化字符串方法](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#text-string-methods)，了解完整内容。
 
 ## 排序
 
@@ -2756,7 +2768,7 @@ Pandas 支持三种排序方式，按索引标签排序，按列里的值排序�
 
 ### 按索引排序
 
-[`Series.sort_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.sort_index.html#pandas.Series.sort_index "pandas.Series.sort_index") 与 [`DataFrame.sort_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_index.html#pandas.DataFrame.sort_index "pandas.DataFrame.sort_index") 方法用于按索引层级对 pandas 对象排序。
+[`Series.sort_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.sort_index.html#pandas.Series.sort_index "pandas.Series.sort_index") 与 [`DataFrame.sort_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_index.html#pandas.DataFrame.sort_index "pandas.DataFrame.sort_index") 方法用于按索引层级对 Pandas 对象排序。
 
 ```python
 In [291]: df = pd.DataFrame({
@@ -2923,7 +2935,7 @@ a     2       4
 
 ::: tip 注意
 
-如果字符串、列名、索引层名重名，会触发警告提示，并以列名为准。后期版本中，这种情况将会触发模糊错误。
+字符串、列名、索引层名重名时，会触发警告提示，并以列名为准。后期版本中，这种情况将会触发模糊错误。
 
 :::
 
@@ -3043,9 +3055,9 @@ Out[325]:
 4  8  e  NaN
 ```
 
-### 用多重索引的列排序
+### 用多层索引的列排序
 
-列为多重索引时，还可以显式排序，用 `by` 可以指定所有层级。
+列为多层索引时，可以显式排序，用 `by` 指定所有层级。
 
 ```python
 In [326]: df1.columns = pd.MultiIndex.from_tuples([('a', 'one'),
@@ -3065,30 +3077,30 @@ Out[327]:
 
 ## 复制
 
-在 pandas 对象上执行 [`copy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.copy.html#pandas.DataFrame.copy "pandas.DataFrame.copy") 方法，将复制底层数据（但不包括轴索引，因为轴索引不可变），并返回一个新的对象。注意，**复制对象这种操作一般来说不是必须的**。比如说，以下几种方式可以***就地（inplace）*** 改变 DataFrame：
+在 Pandas 对象上执行 [`copy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.copy.html#pandas.DataFrame.copy "pandas.DataFrame.copy") 方法，将复制底层数据（但不包括轴索引，因为轴索引不可变），并返回一个新的对象。注意，**复制对象这种操作一般来说不是必须的**。比如说，以下几种方式可以***就地（inplace）*** 改变 DataFrame：
 
 * 插入、删除、修改列
 * 为 `index` 或 `columns` 属性赋值
 * 对于同质数据，用 `values` 属性或高级索引即可直接修改值
 
-注意，用 pandas 方法修改数据不会带来任何副作用，几乎所有方法都返回新的对象，不会修改原始数据对象。如果原始数据有所改动，唯一的可能就是用户显式指定了要修改原始数据。
+注意，用 Pandas 方法修改数据不会带来任何副作用，几乎所有方法都返回新的对象，不会修改原始数据对象。如果原始数据有所改动，唯一的可能就是用户显式指定了要修改原始数据。
 
 ## 数据类型
 
-大多数情况下，pandas 使用 Numpy 数组、Series 或 DataFrame 里某列的数据类型。Numpy 支持 `float`、`int`、`bool`、`timedelta[ns]`、`datetime64[ns]`，注意，Numpy 不支持带时区信息的 `datetime`。
+大多数情况下，Pandas 使用 NumPy 数组、Series 或 DataFrame 里某列的数据类型。NumPy 支持 `float`、`int`、`bool`、`timedelta[ns]`、`datetime64[ns]`，注意，NumPy 不支持带时区信息的 `datetime`。
 
-Pandas 与第三方支持库对 Numpy 类型系统进行了扩充，本节只介绍 pandas 的内部扩展。如需了解自行编写与 pandas 配合的扩展类型，请参阅[扩展类型](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types)，参阅[扩展数据类型](https://pandas.pydata.org/pandas-docs/stable/ecosystem.html#ecosystem-extensions)了解第三方支持库提供的扩展类型。
+Pandas 与第三方支持库扩充了 NumPy 类型系统，本节只介绍 Pandas 的内部扩展。如需了解如何编写与 Pandas 扩展类型，请参阅[扩展类型](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extending-extension-types)，参阅[扩展数据类型](https://pandas.pydata.org/pandas-docs/stable/ecosystem.html#ecosystem-extensions)了解第三方支持库提供的扩展类型。
 
-下表列出了 pandas 扩展类型，参阅列出的文档内容，查看每种类型的详情。
+下表列出了 Pandas 扩展类型，参阅列出的文档内容，查看每种类型的详细说明。
 
-| 数据种类            | 数据类型                                                     | 标量                                                         | 数组                                                         | 文档                                                         |
-| :------------------: | :-----------------------------------------------------------: | :-----------------------------------------------------------: | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
-| tz-aware datetime   | [`DatetimeTZDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DatetimeTZDtype.html#pandas.DatetimeTZDtype) | [`Timestamp`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html#pandas.Timestamp) | [`arrays.DatetimeArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.DatetimeArray.html#pandas.arrays.DatetimeArray) | [Time zone handling](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-timezone) |
-| Categorical         | [`CategoricalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalDtype.html#pandas.CategoricalDtype) | (无)                                                         | [`Categorical`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical) | [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) |
+|      数据种类       |                           数据类型                           |                             标量                             |                             数组                             |                             文档                             |
+| :-----------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|  tz-aware datetime  | [`DatetimeTZDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DatetimeTZDtype.html#pandas.DatetimeTZDtype) | [`Timestamp`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html#pandas.Timestamp) | [`arrays.DatetimeArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.DatetimeArray.html#pandas.arrays.DatetimeArray) | [Time zone handling](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-timezone) |
+|     Categorical     | [`CategoricalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.CategoricalDtype.html#pandas.CategoricalDtype) |                             (无)                             | [`Categorical`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html#pandas.Categorical) | [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#categorical) |
 | period (time spans) | [`PeriodDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.PeriodDtype.html#pandas.PeriodDtype) | [`Period`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Period.html#pandas.Period) | [`arrays.PeriodArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.PeriodArray.html#pandas.arrays.PeriodArray) | [Time span representation](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-periods) |
-| sparse              | [`SparseDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.SparseDtype.html#pandas.SparseDtype) | (无)                                                         | `arrays.SparseArray`                                         | [Sparse data structures](https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#sparse) |
-| intervals           | [`IntervalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalDtype.html#pandas.IntervalDtype) | [`Interval`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Interval.html#pandas.Interval) | [`arrays.IntervalArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntervalArray.html#pandas.arrays.IntervalArray) | [IntervalIndex](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-intervalindex) |
-| nullable integer    | [`Int64Dtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Int64Dtype.html#pandas.Int64Dtype), … | (无)                                                         | [`arrays.IntegerArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntegerArray.html#pandas.arrays.IntegerArray) | [Nullable integer data type](https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html#integer-na) |
+|       sparse        | [`SparseDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.SparseDtype.html#pandas.SparseDtype) |                             (无)                             |                     `arrays.SparseArray`                     | [Sparse data structures](https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#sparse) |
+|      intervals      | [`IntervalDtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.IntervalDtype.html#pandas.IntervalDtype) | [`Interval`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Interval.html#pandas.Interval) | [`arrays.IntervalArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntervalArray.html#pandas.arrays.IntervalArray) | [IntervalIndex](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced-intervalindex) |
+|  nullable integer   | [`Int64Dtype`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Int64Dtype.html#pandas.Int64Dtype), … |                             (无)                             | [`arrays.IntegerArray`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.arrays.IntegerArray.html#pandas.arrays.IntegerArray) | [Nullable integer data type](https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html#integer-na) |
 
 Pandas 用 `object` 存储字符串。
 
@@ -3157,7 +3169,7 @@ Out[333]:
 dtype: object
 ```
 
-`DataFrame.dtypes.value_counts()` 用于统计 DataFrame 里各列数据类型的数量。
+`DataFrame.dtypes.value_counts()` 用于统计 DataFrame 里不同数据类型的列数。
 
 ```python
 In [334]: dft.dtypes.value_counts()
@@ -3241,7 +3253,7 @@ a    int64
 dtype: object
 ```
 
-注意，Numpy 创建数组时，会根据系统选择类型。下列代码在 32 位系统上**将**返回 `int32`。
+注意，NumPy 创建数组时，会根据系统选择类型。下列代码在 32 位系统上**将**返回 `int32`。
 
 ```python
 In [344]: frame = pd.DataFrame(np.array([1, 2]))
@@ -3249,7 +3261,7 @@ In [344]: frame = pd.DataFrame(np.array([1, 2]))
 
 ### 向上转型
 
-与其它类型合并时，要用到向上转型，这里指的是从现有类型转换为另一种类型，如`int` 变为 `float`。
+与其它类型合并时，用的是向上转型，指的是从现有类型转换为另一种类型，如`int` 变为 `float`。
 
 ```python
 In [345]: df3 = df1.reindex_like(df2).fillna(value=0.0) + df2
@@ -3274,7 +3286,7 @@ C    float64
 dtype: object
 ```
 
-[`DataFrame.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy "pandas.DataFrame.to_numpy") 返回多个数据类型里**用的最多的数据类型**，这里指的是输出结果的数据类型是适用于所有同质 Numpy 数组的数据类型。这里会强制执行**向上转型**。
+[`DataFrame.to_numpy()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_numpy.html#pandas.DataFrame.to_numpy "pandas.DataFrame.to_numpy") 返回多个数据类型里**用得最多的数据类型**，这里指的是，输出结果的数据类型，适用于所有同构 NumPy 数组的数据类型。此处强制执行**向上转型**。
 
 ```python
 In [348]: df3.to_numpy().dtype
@@ -3283,9 +3295,9 @@ Out[348]: dtype('float64')
 
 ### astype
 
-[`astype()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.astype.html#pandas.DataFrame.astype "pandas.DataFrame.astype") 方法显式地把一种数据类型转换为另一种，默认返回的是复制数据，就算数据类型没有改变也会执行复制操作，`copy=False` 可以改变默认操作模式。此外，如果 `astype` 无效会触发异常。
+[`astype()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.astype.html#pandas.DataFrame.astype "pandas.DataFrame.astype") 方法显式地把一种数据类型转换为另一种，默认操作为复制数据，就算数据类型没有改变也会复制数据，`copy=False` 改变默认操作模式。此外，`astype` 无效时，会触发异常。
 
-向上转型一般都会遵循 **numpy** 的规则。如果操作中涉及两种不同类型的数据，返回的将是更通用的那种数据类型。
+向上转型一般都遵循 **NumPy** 规则。操作中含有两种不同类型的数据时，返回更为通用的那种数据类型。
 
 ```python
 In [349]: df3
@@ -3460,7 +3472,7 @@ In [376]: pd.to_timedelta(m)
 Out[376]: TimedeltaIndex(['0 days 00:00:00.000005', '1 days 00:00:00'], dtype='timedelta64[ns]', freq=None)
 ```
 
-如需强制转换，则要加入 `error` 参数，指定 pandas 怎样处理不能转换为成预期类型或对象的数据。`errors` 参数的默认值为 `False`，指的是在转换过程中，遇到任何问题都触发错误。设置为 `errors='coerce'` 时，pandas 会忽略错误，强制把问题数据转换为 `pd.NaT`（`datetime` 与 `timedelta`），或 `np.nan`（数值型）。读取数据时，如果大部分要转换的数据是数值型或 `datetime`，这种操作非常有用，但偶尔也会有非制式数据混合在一起，可能会导致展示数据缺失：
+如需强制转换，则要加入 `error` 参数，指定 Pandas 怎样处理不能转换为成预期类型或对象的数据。`errors` 参数的默认值为 `False`，指的是在转换过程中，遇到任何问题都触发错误。设置为 `errors='coerce'` 时，pandas 会忽略错误，强制把问题数据转换为 `pd.NaT`（`datetime` 与 `timedelta`），或 `np.nan`（数值型）。读取数据时，如果大部分要转换的数据是数值型或 `datetime`，这种操作非常有用，但偶尔也会有非制式数据混合在一起，可能会导致展示数据缺失：
 ```python
 In [377]: import datetime
 
@@ -3571,7 +3583,7 @@ Out[405]:
 
 ### 各种坑
 
-对 `integer` 数据执行选择操作时，可以很轻而易举地把数据转换为 `floating` 。pandas 会保存输入数据的数据类型，以防未引入 `nans` 的情况。参阅 [对整数 NA 空值的支持](https://pandas.pydata.org/pandas-docs/stable/user_guide/gotchas.html#gotchas-intna)。
+对 `integer` 数据执行选择操作时，可以很轻而易举地把数据转换为 `floating` 。Pandas 会保存输入数据的数据类型，以防未引入 `nans` 的情况。参阅 [对整数 NA 空值的支持](https://pandas.pydata.org/pandas-docs/stable/user_guide/gotchas.html#gotchas-intna)。
 
 ```python
 In [406]: dfi = df3.astype('int32')
@@ -3768,7 +3780,7 @@ In [430]: def subdtypes(dtype):
    .....: 
 ```
 
-所有 Numpy 数据类型都是 `numpy.generic` 的子类：
+所有 NumPy 数据类型都是 `numpy.generic` 的子类：
 
 ```python
 In [431]: subdtypes(np.generic)
@@ -3803,6 +3815,6 @@ Out[431]:
 ```
 ::: tip 注意
 
-Pandas 支持 `category` 与 `datetime64[ns, tz]` 类型，但这两种类型未整合到 Numpy 的架构里，因此，上面的函数没有显示。
+Pandas 支持 `category` 与 `datetime64[ns, tz]` 类型，但这两种类型未整合到 NumPy 架构，因此，上面的函数没有显示。
 
 :::
