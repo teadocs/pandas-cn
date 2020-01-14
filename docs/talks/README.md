@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: Pandas 讨论
+  - name: description
+    content: Pandas 的相关论文以及Pandas 的相关论文都可以在这里找到
 ---
 
 # Pandas 讨论

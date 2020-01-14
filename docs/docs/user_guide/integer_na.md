@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: Nullable,整型数据类型
+  - name: description
+    content: 在处理丢失的数据部分, 我们知道pandas主要使用 NaN 来代表丢失数据。因为 NaN 属于浮点型数据，这强制有缺失值的整型array强制转换成浮点型。
+---
+
 # Nullable整型数据类型
 
 *在0.24.0版本中新引入* 

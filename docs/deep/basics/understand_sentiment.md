@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: 情感分析,电影评论
+  - name: description
+    content: 在网络技术不断发展和电子商务规模不断扩大的背景下，商品数量和种类快速增长，用户需要花费大量时间才能找到自己想买的商品，这就是信息超载问题。为了解决这个难题，个性化推荐系统（Recommender System）应运而生。
+---
+
 # 情感分析
 
 本教程源代码目录在[book/understand_sentiment](https://github.com/PaddlePaddle/book/tree/develop/06.understand_sentiment),初次使用请您参考[Book文档使用说明](https://github.com/PaddlePaddle/book/blob/develop/README.cn.md#运行这本书)。

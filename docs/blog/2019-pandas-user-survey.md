@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: Pandas用户调查
+  - name: description
+    content: Pandas 最近设计进行了一项用户调查，以帮助指导未来的发展。感谢所有参与的人！这篇文章介绍了浓缩后的结果。
 ---
 
 # 2019年 Pandas 用户调查

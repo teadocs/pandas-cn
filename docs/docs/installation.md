@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: 安装pandas,下载pandas
+  - name: description
+    content: 安装Pandas的最简单方法是将其安装为Anaconda发行版的一部分，这是一种用于数据分析和科学计算的跨平台发行版。这是大多数用户的推荐安装方法。
+---
+
 # 安装
 
 安装Pandas的最简单方法是将其安装为[Anaconda](http://docs.continuum.io/anaconda/)发行版的一部分，这是一种用于数据分析和科学计算的跨平台发行版。这是大多数用户的推荐安装方法。

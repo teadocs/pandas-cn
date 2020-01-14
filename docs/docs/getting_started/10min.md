@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: 快速入门pandas
+  - name: description
+    content: 本节是帮助 Pandas 新手快速上手的简介。烹饪指南里介绍了更多实用案例。本节以下列方式导入 Pandas 与 NumPy：
+---
+
 # 十分钟入门 Pandas
 
 本节是帮助 Pandas 新手快速上手的简介。[烹饪指南](/docs/user_guide/cookbook.html)里介绍了更多实用案例。

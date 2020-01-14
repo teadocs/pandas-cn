@@ -1,5 +1,6 @@
 ---
 home: true
+title: Pandas documentation
 meta:
   - name: keywords
     content: pandas documentation, pandas api,pandas Manual, pandas tutorial, pandas download and installation, pandas

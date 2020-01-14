@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: Pandas指南
+  - name: description
+    content: “用户指南” 按主题划分区域涵盖了几乎所有Pandas的功能。每个小节都介绍了一个主题（例如“处理缺失的数据”），并讨论了Pandas如何解决问题，其中包含许多示例。
+---
+
 # Pandas 用户指南目录
 
 “用户指南” 按主题划分区域涵盖了几乎所有Pandas的功能。每个小节都介绍了一个主题（例如“处理缺失的数据”），并讨论了Pandas如何解决问题，其中包含许多示例。

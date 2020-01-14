@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: 数字识别
+  - name: description
+    content: 当我们学习编程的时候，编写的第一个程序一般是实现打印"Hello World"。
+---
+
 # 数字识别
 
 本教程源代码目录在[book/recognize_digits](https://github.com/PaddlePaddle/book/tree/develop/02.recognize_digits),初次使用请您参考[Book文档使用说明](https://github.com/PaddlePaddle/book/blob/develop/README.cn.md#运行这本书)。

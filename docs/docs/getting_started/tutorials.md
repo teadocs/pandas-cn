@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: pandas教程,pandas资料
+  - name: description
+    content: 为方便新用户上手 Pandas，本节收录了众多 Pandas 教程。Pandas 团队出品。
+---
+
 # 教程资料
 
 为方便新用户上手 Pandas，本节收录了众多 Pandas 教程。

@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: Pandas的社区
+  - name: description
+    content: Pandas 的庞大用户和开发者社区规模庞大且分散。我们尝试将某些交流讨论引导至某些第三方渠道。
 ---
 
 # Pandas 社区

@@ -1,5 +1,10 @@
 ---
 sidebar: false
+meta:
+  - name: keywords
+    content: 捐赠名单,pandas捐赠
+  - name: description
+    content: 这是pandas中文文档的捐赠名单，特此鸣谢以下捐赠者对Pandas中文网Logo的捐赠。
 ---
 
 # Logo 捐赠名单

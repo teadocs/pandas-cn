@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: pandas文档,pandas文档目录
+  - name: description
+    content: Pandas是强大的 Python 数据分析支持库，这是关于中文文档的目录结构
+---
+
 # Pandas: 强大的 Python 数据分析支持库
 
 **版本**：0.25.3

@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: 关于 Pandas
+  - name: description
+    content: Pandas 是一个开放源码、BSD许可的库，为Python编程语言提供高性能、易于使用的数据结构和数据分析工具。
 ---
 
 # 关于 Pandas
