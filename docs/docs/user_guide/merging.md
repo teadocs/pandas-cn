@@ -43,7 +43,7 @@ In [4]: frames = [df1, df2, df3]
 In [5]: result = pd.concat(frames)
 ```
 
-![merging_concat_basic](/static/images/merging_concat_basic.png)
+![merging_concat_basic](https://static.pypandas.cn/public/static/images/merging_concat_basic.png)
 
 Like its sibling function on ndarrays, ``numpy.concatenate``, ``pandas.concat``
 takes a list or dict of homogeneously-typed objects and concatenates them with
@@ -89,7 +89,7 @@ with each of the pieces of the chopped up DataFrame. We can do this using the
 In [6]: result = pd.concat(frames, keys=['x', 'y', 'z'])
 ```
 
-![merging_concat_keys](/static/images/merging_concat_keys.png)
+![merging_concat_keys](https://static.pypandas.cn/public/static/images/merging_concat_keys.png)
 
 As you can see (if you’ve read the rest of the documentation), the resulting
 object’s index has a [hierarchical index](advanced.html#advanced-hierarchical). This
@@ -145,7 +145,7 @@ In [8]: df4 = pd.DataFrame({'B': ['B2', 'B3', 'B6', 'B7'],
 In [9]: result = pd.concat([df1, df4], axis=1, sort=False)
 ```
 
-![merging_concat_axis1](/static/images/merging_concat_axis1.png)
+![merging_concat_axis1](https://static.pypandas.cn/public/static/images/merging_concat_axis1.png)
 
 ::: danger Warning
 
@@ -164,7 +164,7 @@ Here is the same thing with ``join='inner'``:
 In [10]: result = pd.concat([df1, df4], axis=1, join='inner')
 ```
 
-![merging_concat_axis1_inner](/static/images/merging_concat_axis1_inner.png)
+![merging_concat_axis1_inner](https://static.pypandas.cn/public/static/images/merging_concat_axis1_inner.png)
 
 Lastly, suppose we just wanted to reuse the *exact index* from the original
 DataFrame:
@@ -185,7 +185,7 @@ Out[12]:
 3  A3  B3  C3  D3   B3   D3   F3
 ```
 
-![merging_concat_axis1_join_axes](/static/images/merging_concat_axis1_join_axes.png)
+![merging_concat_axis1_join_axes](https://static.pypandas.cn/public/static/images/merging_concat_axis1_join_axes.png)
 
 ### Concatenating using ``append``
 
@@ -197,7 +197,7 @@ instance methods on ``Series`` and ``DataFrame``. These methods actually predate
 In [13]: result = df1.append(df2)
 ```
 
-![merging_append1](/static/images/merging_append1.png)
+![merging_append1](https://static.pypandas.cn/public/static/images/merging_append1.png)
 
 In the case of ``DataFrame``, the indexes must be disjoint but the columns do not
 need to be:
@@ -206,7 +206,7 @@ need to be:
 In [14]: result = df1.append(df4, sort=False)
 ```
 
-![merging_append2](/static/images/merging_append2.png)
+![merging_append2](https://static.pypandas.cn/public/static/images/merging_append2.png)
 
 ``append`` may take multiple objects to concatenate:
 
@@ -214,7 +214,7 @@ In [14]: result = df1.append(df4, sort=False)
 In [15]: result = df1.append([df2, df3])
 ```
 
-![merging_append3](/static/images/merging_append3.png)
+![merging_append3](https://static.pypandas.cn/public/static/images/merging_append3.png)
 
 ::: tip Note
 
@@ -234,7 +234,7 @@ do this, use the ``ignore_index`` argument:
 In [16]: result = pd.concat([df1, df4], ignore_index=True, sort=False)
 ```
 
-![merging_concat_ignore_index](/static/images/merging_concat_ignore_index.png)
+![merging_concat_ignore_index](https://static.pypandas.cn/public/static/images/merging_concat_ignore_index.png)
 
 This is also a valid argument to [``DataFrame.append()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html#pandas.DataFrame.append):
 
@@ -242,7 +242,7 @@ This is also a valid argument to [``DataFrame.append()``](https://pandas.pydata.
 In [17]: result = df1.append(df4, ignore_index=True, sort=False)
 ```
 
-![merging_append_ignore_index](/static/images/merging_append_ignore_index.png)
+![merging_append_ignore_index](https://static.pypandas.cn/public/static/images/merging_append_ignore_index.png)
 
 ### Concatenating with mixed ndims
 
@@ -256,7 +256,7 @@ In [18]: s1 = pd.Series(['X0', 'X1', 'X2', 'X3'], name='X')
 In [19]: result = pd.concat([df1, s1], axis=1)
 ```
 
-![merging_concat_mixed_ndim](/static/images/merging_concat_mixed_ndim.png)
+![merging_concat_mixed_ndim](https://static.pypandas.cn/public/static/images/merging_concat_mixed_ndim.png)
 
 ::: tip Note
 
@@ -275,7 +275,7 @@ In [20]: s2 = pd.Series(['_0', '_1', '_2', '_3'])
 In [21]: result = pd.concat([df1, s2, s2, s2], axis=1)
 ```
 
-![merging_concat_unnamed_series](/static/images/merging_concat_unnamed_series.png)
+![merging_concat_unnamed_series](https://static.pypandas.cn/public/static/images/merging_concat_unnamed_series.png)
 
 Passing ``ignore_index=True`` will drop all name references.
 
@@ -283,7 +283,7 @@ Passing ``ignore_index=True`` will drop all name references.
 In [22]: result = pd.concat([df1, s1], axis=1, ignore_index=True)
 ```
 
-![merging_concat_series_ignore_index](/static/images/merging_concat_series_ignore_index.png)
+![merging_concat_series_ignore_index](https://static.pypandas.cn/public/static/images/merging_concat_series_ignore_index.png)
 
 ### More concatenating with group keys
 
@@ -326,7 +326,7 @@ Let’s consider a variation of the very first example presented:
 In [28]: result = pd.concat(frames, keys=['x', 'y', 'z'])
 ```
 
-![merging_concat_group_keys2](/static/images/merging_concat_group_keys2.png)
+![merging_concat_group_keys2](https://static.pypandas.cn/public/static/images/merging_concat_group_keys2.png)
 
 You can also pass a dict to ``concat`` in which case the dict keys will be used
 for the ``keys`` argument (unless other keys are specified):
@@ -337,13 +337,13 @@ In [29]: pieces = {'x': df1, 'y': df2, 'z': df3}
 In [30]: result = pd.concat(pieces)
 ```
 
-![merging_concat_dict](/static/images/merging_concat_dict.png)
+![merging_concat_dict](https://static.pypandas.cn/public/static/images/merging_concat_dict.png)
 
 ``` python
 In [31]: result = pd.concat(pieces, keys=['z', 'y'])
 ```
 
-![merging_concat_dict_keys](/static/images/merging_concat_dict_keys.png)
+![merging_concat_dict_keys](https://static.pypandas.cn/public/static/images/merging_concat_dict_keys.png)
 
 The MultiIndex created has levels that are constructed from the passed keys and
 the index of the ``DataFrame`` pieces:
@@ -363,7 +363,7 @@ In [33]: result = pd.concat(pieces, keys=['x', 'y', 'z'],
    ....:
 ```
 
-![merging_concat_dict_keys_names](/static/images/merging_concat_dict_keys_names.png)
+![merging_concat_dict_keys_names](https://static.pypandas.cn/public/static/images/merging_concat_dict_keys_names.png)
 
 ``` python
 In [34]: result.index.levels
@@ -385,7 +385,7 @@ In [35]: s2 = pd.Series(['X0', 'X1', 'X2', 'X3'], index=['A', 'B', 'C', 'D'])
 In [36]: result = df1.append(s2, ignore_index=True)
 ```
 
-![merging_append_series_as_row](/static/images/merging_append_series_as_row.png)
+![merging_append_series_as_row](https://static.pypandas.cn/public/static/images/merging_append_series_as_row.png)
 
 You should use ``ignore_index`` with this method to instruct DataFrame to
 discard its index. If you wish to preserve the index, you should construct an
@@ -401,7 +401,7 @@ In [37]: dicts = [{'A': 1, 'B': 2, 'C': 3, 'X': 4},
 In [38]: result = df1.append(dicts, ignore_index=True, sort=False)
 ```
 
-![merging_append_dits](/static/images/merging_append_dits.png)
+![merging_append_dits](https://static.pypandas.cn/public/static/images/merging_append_dits.png)
 
 ## Database-style DataFrame or named Series joining/merging
 
@@ -534,7 +534,7 @@ In [40]: right = pd.DataFrame({'key': ['K0', 'K1', 'K2', 'K3'],
 In [41]: result = pd.merge(left, right, on='key')
 ```
 
-![merging_merge_on_key](/static/images/merging_merge_on_key.png)
+![merging_merge_on_key](https://static.pypandas.cn/public/static/images/merging_merge_on_key.png)
 
 Here is a more complicated example with multiple join keys. Only the keys
 appearing in ``left`` and ``right`` are present (the intersection), since
@@ -556,7 +556,7 @@ In [43]: right = pd.DataFrame({'key1': ['K0', 'K1', 'K1', 'K2'],
 In [44]: result = pd.merge(left, right, on=['key1', 'key2'])
 ```
 
-![merging_merge_on_key_multiple](/static/images/merging_merge_on_key_multiple.png)
+![merging_merge_on_key_multiple](https://static.pypandas.cn/public/static/images/merging_merge_on_key_multiple.png)
 
 The ``how`` argument to ``merge`` specifies how to determine which keys are to
 be included in the resulting table. If a key combination **does not appear** in
@@ -574,25 +574,25 @@ inner | INNER JOIN | Use intersection of keys from both frames
 In [45]: result = pd.merge(left, right, how='left', on=['key1', 'key2'])
 ```
 
-![merging_merge_on_key_left](/static/images/merging_merge_on_key_left.png)
+![merging_merge_on_key_left](https://static.pypandas.cn/public/static/images/merging_merge_on_key_left.png)
 
 ``` python
 In [46]: result = pd.merge(left, right, how='right', on=['key1', 'key2'])
 ```
 
-![merging_merge_on_key_right](/static/images/merging_merge_on_key_right.png)
+![merging_merge_on_key_right](https://static.pypandas.cn/public/static/images/merging_merge_on_key_right.png)
 
 ``` python
 In [47]: result = pd.merge(left, right, how='outer', on=['key1', 'key2'])
 ```
 
-![merging_merge_on_key_outer](/static/images/merging_merge_on_key_outer.png)
+![merging_merge_on_key_outer](https://static.pypandas.cn/public/static/images/merging_merge_on_key_outer.png)
 
 ``` python
 In [48]: result = pd.merge(left, right, how='inner', on=['key1', 'key2'])
 ```
 
-![merging_merge_on_key_inner](/static/images/merging_merge_on_key_inner.png)
+![merging_merge_on_key_inner](https://static.pypandas.cn/public/static/images/merging_merge_on_key_inner.png)
 
 Here is another example with duplicate join keys in DataFrames:
 
@@ -604,7 +604,7 @@ In [50]: right = pd.DataFrame({'A': [4, 5, 6], 'B': [2, 2, 2]})
 In [51]: result = pd.merge(left, right, on='B', how='outer')
 ```
 
-![merging_merge_on_key_dup](/static/images/merging_merge_on_key_dup.png)
+![merging_merge_on_key_dup](https://static.pypandas.cn/public/static/images/merging_merge_on_key_dup.png)
 
 ::: danger Warning
 
@@ -867,13 +867,13 @@ In [80]: right = pd.DataFrame({'C': ['C0', 'C2', 'C3'],
 In [81]: result = left.join(right)
 ```
 
-![merging_join](/static/images/merging_join.png)
+![merging_join](https://static.pypandas.cn/public/static/images/merging_join.png)
 
 ``` python
 In [82]: result = left.join(right, how='outer')
 ```
 
-![merging_join_outer](/static/images/merging_join_outer.png)
+![merging_join_outer](https://static.pypandas.cn/public/static/images/merging_join_outer.png)
 
 The same as above, but with ``how='inner'``.
 
@@ -881,7 +881,7 @@ The same as above, but with ``how='inner'``.
 In [83]: result = left.join(right, how='inner')
 ```
 
-![merging_join_inner](/static/images/merging_join_inner.png)
+![merging_join_inner](https://static.pypandas.cn/public/static/images/merging_join_inner.png)
 
 The data alignment here is on the indexes (row labels). This same behavior can
 be achieved using ``merge`` plus additional arguments instructing it to use the
@@ -891,13 +891,13 @@ indexes:
 In [84]: result = pd.merge(left, right, left_index=True, right_index=True, how='outer')
 ```
 
-![merging_merge_index_outer](/static/images/merging_merge_index_outer.png)
+![merging_merge_index_outer](https://static.pypandas.cn/public/static/images/merging_merge_index_outer.png)
 
 ``` python
 In [85]: result = pd.merge(left, right, left_index=True, right_index=True, how='inner');
 ```
 
-![merging_merge_index_inner](/static/images/merging_merge_index_inner.png)
+![merging_merge_index_inner](https://static.pypandas.cn/public/static/images/merging_merge_index_inner.png)
 
 ### Joining key columns on an index
 
@@ -930,7 +930,7 @@ In [87]: right = pd.DataFrame({'C': ['C0', 'C1'],
 In [88]: result = left.join(right, on='key')
 ```
 
-![merging_join_key_columns](/static/images/merging_join_key_columns.png)
+![merging_join_key_columns](https://static.pypandas.cn/public/static/images/merging_join_key_columns.png)
 
 ``` python
 In [89]: result = pd.merge(left, right, left_on='key', right_index=True,
@@ -938,7 +938,7 @@ In [89]: result = pd.merge(left, right, left_on='key', right_index=True,
    ....:
 ```
 
-![merging_merge_key_columns](/static/images/merging_merge_key_columns.png)
+![merging_merge_key_columns](https://static.pypandas.cn/public/static/images/merging_merge_key_columns.png)
 
 To join on multiple keys, the passed DataFrame must have a ``MultiIndex``:
 
@@ -965,7 +965,7 @@ Now this can be joined by passing the two key column names:
 In [93]: result = left.join(right, on=['key1', 'key2'])
 ```
 
-![merging_join_multikeys](/static/images/merging_join_multikeys.png)
+![merging_join_multikeys](https://static.pypandas.cn/public/static/images/merging_join_multikeys.png)
 
 The default for ``DataFrame.join`` is to perform a left join (essentially a
 “VLOOKUP” operation, for Excel users), which uses only the keys found in the
@@ -976,7 +976,7 @@ easily performed:
 In [94]: result = left.join(right, on=['key1', 'key2'], how='inner')
 ```
 
-![merging_join_multikeys_inner](/static/images/merging_join_multikeys_inner.png)
+![merging_join_multikeys_inner](https://static.pypandas.cn/public/static/images/merging_join_multikeys_inner.png)
 
 As you can see, this drops any rows where there was no match.
 
@@ -1005,7 +1005,7 @@ In [97]: right = pd.DataFrame({'C': ['C0', 'C1', 'C2', 'C3'],
 In [98]: result = left.join(right, how='inner')
 ```
 
-![merging_join_multiindex_inner](/static/images/merging_join_multiindex_inner.png)
+![merging_join_multiindex_inner](https://static.pypandas.cn/public/static/images/merging_join_multiindex_inner.png)
 
 This is equivalent but less verbose and more memory efficient / faster than this.
 
@@ -1015,7 +1015,7 @@ In [99]: result = pd.merge(left.reset_index(), right.reset_index(),
    ....:
 ```
 
-![merging_merge_multiindex_alternative](/static/images/merging_merge_multiindex_alternative.png)
+![merging_merge_multiindex_alternative](https://static.pypandas.cn/public/static/images/merging_merge_multiindex_alternative.png)
 
 ### Joining with two MultiIndexes
 
@@ -1111,7 +1111,7 @@ In [111]: result = pd.merge(left.reset_index(), right.reset_index(),
    .....:
 ```
 
-![merging_merge_two_multiindex](/static/images/merging_merge_two_multiindex.png)
+![merging_merge_two_multiindex](https://static.pypandas.cn/public/static/images/merging_merge_two_multiindex.png)
 
 ### Merging on a combination of columns and index levels
 
@@ -1142,7 +1142,7 @@ In [115]: right = pd.DataFrame({'C': ['C0', 'C1', 'C2', 'C3'],
 In [116]: result = left.merge(right, on=['key1', 'key2'])
 ```
 
-![merge_on_index_and_column](/static/images/merge_on_index_and_column.png)
+![merge_on_index_and_column](https://static.pypandas.cn/public/static/images/merge_on_index_and_column.png)
 
 ::: tip Note
 
@@ -1183,13 +1183,13 @@ In [118]: right = pd.DataFrame({'k': ['K0', 'K0', 'K3'], 'v': [4, 5, 6]})
 In [119]: result = pd.merge(left, right, on='k')
 ```
 
-![merging_merge_overlapped](/static/images/merging_merge_overlapped.png)
+![merging_merge_overlapped](https://static.pypandas.cn/public/static/images/merging_merge_overlapped.png)
 
 ``` python
 In [120]: result = pd.merge(left, right, on='k', suffixes=['_l', '_r'])
 ```
 
-![merging_merge_overlapped_suffix](/static/images/merging_merge_overlapped_suffix.png)
+![merging_merge_overlapped_suffix](https://static.pypandas.cn/public/static/images/merging_merge_overlapped_suffix.png)
 
 [``DataFrame.join()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join) has ``lsuffix`` and ``rsuffix`` arguments which behave
 similarly.
@@ -1202,7 +1202,7 @@ In [122]: right = right.set_index('k')
 In [123]: result = left.join(right, lsuffix='_l', rsuffix='_r')
 ```
 
-![merging_merge_overlapped_multi_suffix](/static/images/merging_merge_overlapped_multi_suffix.png)
+![merging_merge_overlapped_multi_suffix](https://static.pypandas.cn/public/static/images/merging_merge_overlapped_multi_suffix.png)
 
 ### Joining multiple DataFrames
 
@@ -1215,7 +1215,7 @@ In [124]: right2 = pd.DataFrame({'v': [7, 8, 9]}, index=['K1', 'K1', 'K2'])
 In [125]: result = left.join([right, right2])
 ```
 
-![merging_join_multi_df](/static/images/merging_join_multi_df.png)
+![merging_join_multi_df](https://static.pypandas.cn/public/static/images/merging_join_multi_df.png)
 
 ### Merging together values within Series or DataFrame columns
 
@@ -1239,7 +1239,7 @@ For this, use the [``combine_first()``](https://pandas.pydata.org/pandas-docs/st
 In [128]: result = df1.combine_first(df2)
 ```
 
-![merging_combine_first](/static/images/merging_combine_first.png)
+![merging_combine_first](https://static.pypandas.cn/public/static/images/merging_combine_first.png)
 
 Note that this method only takes values from the right ``DataFrame`` if they are
 missing in the left ``DataFrame``. A related method, [``update()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.update.html#pandas.DataFrame.update),
@@ -1249,7 +1249,7 @@ alters non-NA values in place:
 In [129]: df1.update(df2)
 ```
 
-![merging_update](/static/images/merging_update.png)
+![merging_update](https://static.pypandas.cn/public/static/images/merging_update.png)
 
 ## Timeseries friendly merging
 

@@ -1526,7 +1526,7 @@ In [188]: df.boxplot(column='price', by='quartiles')
 Out[188]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f77e6470>
 ```
 
-![quartile_boxplot](/static/images/quartile_boxplot.png)
+![quartile_boxplot](https://static.pypandas.cn/public/static/images/quartile_boxplot.png)
 
 ## Data In/Out
 

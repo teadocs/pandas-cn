@@ -709,7 +709,7 @@ In [78]: (iris.query('SepalLength > 5')
 Out[78]: <matplotlib.axes._subplots.AxesSubplot at 0x7f66075a7978>
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3240514-ff75949572dc8134.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![函数运算](https://static.pypandas.cn/public/static/images/basics_assign.png)
 
 上例用 `assign` 把函数传递给 DataFrame， 并执行函数运算。这是要注意的是，该 DataFrame 是筛选了花萼长度大于 5 以后的数据。首先执行的是筛选操作，再计算比例。这个例子就是对没有事先*筛选* DataFrame 进行的引用。
 

@@ -693,7 +693,7 @@ In [78]: (iris.query('SepalLength > 5')
 Out[78]: <matplotlib.axes._subplots.AxesSubplot at 0x7f2b527b1a58>
 ```
 
-![basics_assign](/static/images/basics_assign.png)
+![basics_assign](https://static.pypandas.cn/public/static/images/basics_assign.png)
 
 Since a function is passed in, the function is computed on the DataFrame being assigned to. Importantly, this is the DataFrame that’s been filtered to those rows with sepal length greater than 5. The filtering happens first, and then the ratio calculations. This is an example where we didn’t have a reference to the *filtered* DataFrame available.
 

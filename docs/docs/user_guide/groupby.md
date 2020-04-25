@@ -1120,7 +1120,7 @@ In [102]: compare.plot()
 Out[102]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f731cba8>
 ```
 
-![groupby_transform_plot](/static/images/groupby_transform_plot.png)
+![groupby_transform_plot](https://static.pypandas.cn/public/static/images/groupby_transform_plot.png)
 
 Transformation functions that have lower dimension outputs are broadcast to
 match the shape of the input array.
@@ -2176,7 +2176,7 @@ B    AxesSubplot(0.536364,0.15;0.363636x0.75)
 dtype: object
 ```
 
-![groupby_boxplot](/static/images/groupby_boxplot.png)
+![groupby_boxplot](https://static.pypandas.cn/public/static/images/groupby_boxplot.png)
 
 The result of calling ``boxplot`` is a dictionary whose keys are the values
 of our grouping column ``g`` (“A” and “B”). The values of the resulting dictionary
