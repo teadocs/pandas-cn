@@ -6,7 +6,7 @@ meta:
     content: pandas documentation, pandas api,pandas Manual, pandas tutorial, pandas download and installation, pandas
   - name: description
     content: Pandas, Python Data Analysis Library.
-heroImage: https://extraimage.net/images/2019/09/23/49c74b414c5244690b0adbd47285400f.png
+heroImage: https://static.pypandas.cn/site/logo.png
 actionText: Get Started →
 actionLink: /guide/
 footer: Attribution-NonCommercial-ShareAlike 3.0 China Mainland (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
