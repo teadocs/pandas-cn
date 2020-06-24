@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: 关于 Pandas
+  - name: description
+    content: Pandas 是一个开放源码、BSD许可的库，为Python编程语言提供高性能、易于使用的数据结构和数据分析工具。
 ---
 
 # 关于 Pandas
@@ -13,7 +18,7 @@ Pandas 是一个开放源码、BSD许可的库，为[Python](http://www.python.o
 
 Pandas 是 [NumFOCUS](http://www.numfocus.org/open-source-projects.html) 赞助的项目。这将有助于确保 Pandas 作为一个世界级的开源项目的成功开发，并有可能为该项目[捐款](https://pandas.pydata.org/donate.html)。
 
-![NumFOCUS Logo](/static/images/SponsoredProjectStamp_300px.png)
+![NumFOCUS Logo](https://static.pypandas.cn/public/static/images/SponsoredProjectStamp_300px.png)
 
 另见：
 

@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: Pandas,扩展数组
+  - name: description
+    content: 在过去的几个版本中，可扩展性是 Pandas 一直在关注的一个主题。这篇文章介绍了 Pandas 扩展数组接口：它背后的动机以及它如何影响作为 Pandas 用户的你。最后，我们来看看扩展数组如何塑造 Pandas 的未来。
 ---
 
 # Pandas 的扩展数组

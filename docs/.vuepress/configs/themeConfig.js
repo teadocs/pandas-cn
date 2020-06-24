@@ -3,7 +3,7 @@ module.exports = {
   logo: {
     text: 'Pandas',
     subText: '中文网',
-    image: 'https://extraimage.net/images/2019/09/23/49c74b414c5244690b0adbd47285400f.png',
+    image: 'https://static.pypandas.cn/site/logo.png@w50h50',
   },
   // 公告/提醒 配置
   alert: [{

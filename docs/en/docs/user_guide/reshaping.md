@@ -2,7 +2,7 @@
 
 ## Reshaping by pivoting DataFrame objects
 
-![reshaping_pivot](/static/images/reshaping_pivot.png)
+![reshaping_pivot](https://static.pypandas.cn/public/static/images/reshaping_pivot.png)
 
 Data is often stored in so-called “stacked” or “record” format:
 
@@ -116,7 +116,7 @@ of pivot that can handle duplicate values for one index/column pair.
 
 ## Reshaping by stacking and unstacking
 
-![reshaping_stack](/static/images/reshaping_stack.png)
+![reshaping_stack](https://static.pypandas.cn/public/static/images/reshaping_stack.png)
 
 Closely related to the [``pivot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#pandas.DataFrame.pivot) method are the related
 [``stack()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.stack.html#pandas.DataFrame.stack) and [``unstack()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.unstack.html#pandas.DataFrame.unstack) methods available on
@@ -130,7 +130,7 @@ labels.
 (possibly hierarchical) row index to the column axis, producing a reshaped
 ``DataFrame`` with a new inner-most level of column labels.
 
-![reshaping_unstack](/static/images/reshaping_unstack.png)
+![reshaping_unstack](https://static.pypandas.cn/public/static/images/reshaping_unstack.png)
 
 The clearest way to explain is by example. Let’s take a prior example data set
 from the hierarchical indexing section:
@@ -217,7 +217,7 @@ two    A -1.039575  0.276232
        B  0.271860 -1.087401
 ```
 
-![reshaping_unstack_1](/static/images/reshaping_unstack_1.png)
+![reshaping_unstack_1](https://static.pypandas.cn/public/static/images/reshaping_unstack_1.png)
 
 If the indexes have names, you can use the level names instead of specifying
 the level numbers:
@@ -233,7 +233,7 @@ baz   A -0.424972  0.276232
       B  0.567020 -1.087401
 ```
 
-![reshaping_unstack_0](/static/images/reshaping_unstack_0.png)
+![reshaping_unstack_0](https://static.pypandas.cn/public/static/images/reshaping_unstack_0.png)
 
 Notice that the ``stack`` and ``unstack`` methods implicitly sort the index
 levels involved. Hence a call to ``stack`` and then ``unstack``, or vice versa,
@@ -469,7 +469,7 @@ qux          NaN -1.226825       NaN  0.769804       NaN -1.281247       NaN -0.
 
 ## Reshaping by Melt
 
-![reshaping_melt](/static/images/reshaping_melt.png)
+![reshaping_melt](https://static.pypandas.cn/public/static/images/reshaping_melt.png)
 
 The top-level [``melt()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.melt.html#pandas.melt) function and the corresponding [``DataFrame.melt()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html#pandas.DataFrame.melt)
 are useful to massage a ``DataFrame`` into a format where one or more columns

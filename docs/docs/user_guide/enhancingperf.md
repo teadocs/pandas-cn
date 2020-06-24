@@ -922,14 +922,14 @@ significant performance benefit.  Here is a plot showing the running time of
 [``pandas.eval()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.eval.html#pandas.eval) as function of the size of the frame involved in the
 computation. The two lines are two different engines.
 
-![eval-perf](/static/images/eval-perf.png)
+![eval-perf](https://static.pypandas.cn/public/static/images/eval-perf.png)
 
 ::: tip Note
 
 Operations with smallish objects (around 15k-20k rows) are faster using
 plain Python:
 
-![eval-perf-small](/static/images/eval-perf-small.png)
+![eval-perf-small](https://static.pypandas.cn/public/static/images/eval-perf-small.png)
 
 :::
 

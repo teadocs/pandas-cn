@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: 语义角色标注
+  - name: description
+    content: 自然语言分析技术大致分为三个层面：词法分析、句法分析和语义分析。语义角色标注是实现浅层语义分析的一种方式。
+---
+
 # 语义角色标注
 
 本教程源代码目录在[book/label_semantic_roles](https://github.com/PaddlePaddle/book/tree/develop/07.label_semantic_roles),初次使用请您参考[Book文档使用说明](https://github.com/PaddlePaddle/book/blob/develop/README.cn.md#运行这本书)。

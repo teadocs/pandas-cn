@@ -9,7 +9,7 @@ sidebar: auto
 
 ``pandas`` is a [NumFOCUS](https://www.numfocus.org/open-source-projects.html) sponsored project. This will help ensure the success of development of pandas as a world-class open-source project, and makes it possible to [donate](https://pandas.pydata.org/donate.html) to the project.
 
-![NumFOCUS Logo](/static/images/SponsoredProjectStamp_300px.png)
+![NumFOCUS Logo](https://static.pypandas.cn/public/static/images/SponsoredProjectStamp_300px.png)
 
 ## v0.25.0 Final (July 18, 2019)
 
@@ -88,11 +88,11 @@ pandas does not implement significant modeling functionality outside of linear a
 ## What do our users have to say?
 
 - **Roni Israelov，Phd**(Portfolio Manager [AQR Capital Management](https://www.aqr.com/)): “pandas allows us to focus more on research and less on programming. We have found pandas easy to learn, easy to use, and easy to maintain. The bottom line is that it has increased our productivity.”
-  - ![AQR Capital Management](/static/images/aqr_capital_management_logo.png)
+  - ![AQR Capital Management](https://static.pypandas.cn/public/static/images/aqr_capital_management_logo.png)
 - **David Himrod**(Director of Optimization & Analytics [AppNexus](https://www.appnexus.com/)): “pandas is the perfect tool for bridging the gap between rapid iterations of ad-hoc analysis and production quality code. If you want one tool to be used across a multi-disciplined organization of engineers, mathematicians and analysts, look no further.”
-  - ![AppNexus Logo](/static/images/appnexus_logo.png)
+  - ![AppNexus Logo](https://static.pypandas.cn/public/static/images/appnexus_logo.png)
 - **Olivier Pomel**(CEO [Datadog](https://www.datadoghq.com/)): “We use pandas to process time series data on our production servers. The simplicity and elegance of its API, and its high level of performance for high-volume datasets, made it a perfect choice for us.”
-  - ![Datadog Logo](/static/images/datadog_logo.png)
+  - ![Datadog Logo](https://static.pypandas.cn/public/static/images/datadog_logo.png)
 
 ## Library Highlights
 

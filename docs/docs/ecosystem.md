@@ -10,45 +10,45 @@
 
 ### [Statsmodels](https://www.statsmodels.org/)
 
-Statsmodels是着名的Python“统计和计量经济学库”，它与Pandas长期有着的特殊关系。Statsmodels提供了超出Pandas能力范围的强大的统计数据功能，包括计量经济学，分析和建模等功能。Statsmodels利用Pandas对象作为计算的底层数据容器。
+Statsmodels是着名的 Python“统计和计量经济学库”，它与Pandas长期有着的特殊关系。Statsmodels提供了超出Pandas能力范围的强大的统计数据功能，包括计量经济学，分析和建模等功能。Statsmodels利用Pandas对象作为计算的底层数据容器。
 
 ### [sklearn-pandas](https://github.com/paulgb/sklearn-pandas)
 
-Use pandas DataFrames in your [scikit-learn](https://scikit-learn.org/) ML pipeline.
+在 [scikit-learn](https://scikit-learn.org/) 机器学习中使用 pandas 的 DataFrames。
 
 ### [Featuretools](https://github.com/featuretools/featuretools/)
 
-Featuretools is a Python library for automated feature engineering built on top of pandas. It excels at transforming temporal and relational datasets into feature matrices for machine learning using reusable feature engineering “primitives”. Users can contribute their own primitives in Python and share them with the rest of the community.
+Featuretools是一个基于 pandas 的自动功能工程的Python库。它擅长使用可重用的特征工程“基元”将时间和关系数据集转换为用于机器学习的特征矩阵。用户可以使用Python贡献自己的原语，并与社区的其他人共享。
 
-## Visualization
+## 可视化
 
 ### [Altair](https://altair-viz.github.io/)
 
-Altair is a declarative statistical visualization library for Python. With Altair, you can spend more time understanding your data and its meaning. Altair’s API is simple, friendly and consistent and built on top of the powerful Vega-Lite JSON specification. This elegant simplicity produces beautiful and effective visualizations with a minimal amount of code. Altair works with Pandas DataFrames.
+Altair是用于Python的声明性统计可视化库。 使用 Altair，您可以花费更多时间来理解数据及其含义。 Altair的API简单，友好且一致，并以强大的Vega-Lite JSON规范为基础。 这种优雅的简单性用最少的代码即可产生美观，有效的可视化效果。 Altair可与Pandas DataFrames配合使用。
 
 ### [Bokeh](https://bokeh.pydata.org/)
 
-Bokeh is a Python interactive visualization library for large datasets that natively uses the latest web technologies. Its goal is to provide elegant, concise construction of novel graphics in the style of Protovis/D3, while delivering high-performance interactivity over large data to thin clients.
+Bokeh是一个Python交互式可视化库，用于大型数据集，其本机使用最新的Web技术。 它的目标是以Protovis / D3的样式提供优雅，简洁的新颖图形构造，同时为瘦客户端提供大数据上的高性能交互性。
 
 ### [seaborn](https://seaborn.pydata.org/)
 
-Seaborn is a Python visualization library based on [matplotlib](https://matplotlib.org/). It provides a high-level, dataset-oriented interface for creating attractive statistical graphics. The plotting functions in seaborn understand pandas objects and leverage pandas grouping operations internally to support concise specification of complex visualizations. Seaborn also goes beyond matplotlib and pandas with the option to perform statistical estimation while plotting, aggregating across observations and visualizing the fit of statistical models to emphasize patterns in a dataset.
+Seaborn 是基于 [matplotlib](https://matplotlib.org/) 的Python可视化库。它提供了一个高级的，面向数据集的界面，用于创建吸引人的统计图形。seaborn中的绘图功能可了解熊猫对象，并在内部利用熊猫分组操作来支持复杂可视化的简洁规范。Seaborn 深圳还超越了matplotlib 和 pandas，可以在绘制图表时进行统计估计，汇总观察结果并可视化统计模型的拟合以强调数据集中的模式。
 
 ### [yhat/ggpy](https://github.com/yhat/ggpy)
 
-Hadley Wickham’s [ggplot2](https://ggplot2.tidyverse.org/) is a foundational exploratory visualization package for the R language. Based on [“The Grammar of Graphics”](https://www.cs.uic.edu/~wilkinson/TheGrammarOfGraphics/GOG.html) it provides a powerful, declarative and extremely general way to generate bespoke plots of any kind of data. It’s really quite incredible. Various implementations to other languages are available, but a faithful implementation for Python users has long been missing. Although still young (as of Jan-2014), the [yhat/ggpy](https://github.com/yhat/ggpy) project has been progressing quickly in that direction.
+Hadley Wickham的 [ggplot2](https://ggplot2.tidyverse.org/) 是R语言的基础探索性可视化包。它以“[图形语法]((https://www.cs.uic.edu/~wilkinson/TheGrammarOfGraphics/GOG.html))”为基础，提供了一种强大的、说明性的、极其通用的方式来生成任何类型数据的定制绘图。这真是太不可思议了。其他语言的各种实现都是可用的，但是对于Python用户来说，一直缺少一个忠实的实现。尽管还很年轻(截至2014年1月)，[yhat/ggpy](https://github.com/yhat/ggpy) 项目在这个方向上进展很快。
 
 ### [IPython Vega](https://github.com/vega/ipyvega)
 
-[IPython Vega](https://github.com/vega/ipyvega) leverages [Vega](https://github.com/trifacta/vega) to create plots within Jupyter Notebook.
+[IPython Vega](https://github.com/vega/ipyvega) 利用 [Vega](https://github.com/trifacta/vega) 在Jupyter Notebook中创建图形。
 
 ### [Plotly](https://plot.ly/python)
 
-[Plotly’s](https://plot.ly/) [Python API](https://plot.ly/python/) enables interactive figures and web shareability. Maps, 2D, 3D, and live-streaming graphs are rendered with WebGL and [D3.js](https://d3js.org/). The library supports plotting directly from a pandas DataFrame and cloud-based collaboration. Users of [matplotlib, ggplot for Python, and Seaborn](https://plot.ly/python/matplotlib-to-plotly-tutorial/) can convert figures into interactive web-based plots. Plots can be drawn in [IPython Notebooks](https://plot.ly/ipython-notebooks/) , edited with R or MATLAB, modified in a GUI, or embedded in apps and dashboards. Plotly is free for unlimited sharing, and has [cloud](https://plot.ly/product/plans/), [offline](https://plot.ly/python/offline/), or [on-premise](https://plot.ly/product/enterprise/) accounts for private use.
+[Plotly’s](https://plot.ly/) 的  [Python API](https://plot.ly/python/) 支持交互式图形和网络共享。地图、2D、3D和实况流图是使用WebGL和D3.js渲染的。该库支持直接从 pandas 的 DataFrame打印和基于云的协作。[matplotlib、Python的gglot和Seborn](https://plot.ly/python/matplotlib-to-plotly-tutorial/) 的用户可以将图形转换为基于Web的交互式绘图。绘图可以在 [IPython Notebooks](https://plot.ly/ipython-notebooks/) 本中绘制，可以使用R或MATLAB编辑，可以在GUI中修改，也可以嵌入到应用程序和仪表板中。Ploly是免费的，可以无限制地共享，并且有[云](https://plot.ly/product/plans/)、[离线](https://plot.ly/python/offline/)或[内部](https://plot.ly/product/enterprise/)帐户供私人使用。
 
 ### [QtPandas](https://github.com/draperjames/qtpandas)
 
-Spun off from the main pandas library, the [qtpandas](https://github.com/draperjames/qtpandas) library enables DataFrame visualization and manipulation in PyQt4 and PySide applications.
+[qtpandas](https://github.com/draperjames/qtpandas) 库是从主Pandas库派生出来的，它支持在PyQt4和PySide应用程序中实现DataFrame可视化和操作。
 
 ## IDE
 

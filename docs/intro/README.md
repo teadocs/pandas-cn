@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: 数据分析库
+  - name: description
+    content: Pandas 是一个开源的，BSD许可的库，为Python编程语言提供高性能，易于使用的数据结构和数据分析工具。
 ---
 
 # 一个Python的数据分析库
@@ -9,7 +14,7 @@ sidebar: auto
 
 ``Pandas``是[NumFOCUS](https://www.numfocus.org/open-source-projects.html)赞助的项目。这将有助于确保Pandas成为世界级开源项目的成功，并有可能[捐赠](https://pandas.pydata.org/donate.html)给该项目。
 
-![NumFOCUS Logo](/static/images/SponsoredProjectStamp_300px.png)
+![NumFOCUS Logo](https://static.pypandas.cn/public/static/images/SponsoredProjectStamp_300px.png)
 
 ## v0.25.0 (发布于：2019年7月18日)
 
@@ -88,11 +93,11 @@ Pandas没有在线性和面板回归之外实现重要的建模功能; 为此，
 ## 我们的用户有什么要说的？
 
 - **Roni Israelov**(博士，[AQR资本管理](https://www.aqr.com/)的组合投资经理)：Pandas让我们更专注于研究而不是编程。我们发现 Pandas 易于学习，易于使用且易于维护。最重要的是，它提高了我们的生产力。
-  - ![AQR资本管理 Logo](/static/images/aqr_capital_management_logo.png)
+  - ![AQR资本管理 Logo](https://static.pypandas.cn/public/static/images/aqr_capital_management_logo.png)
 - **David Himrod**([appNexus](https://www.appnexus.com/)的优化分析总监)：Pandas 是一种完美的工具，可以在快速迭代的特殊分析和产品质量代码之间架起一座桥梁。如果你想在一个由工程师、数学家和分析师组成的多学科组织中使用一种工具，那就别再看了。
-  - ![AppNexus Logo](/static/images/appnexus_logo.png)
+  - ![AppNexus Logo](https://static.pypandas.cn/public/static/images/appnexus_logo.png)
 - **Olivier Pomel**([Datadog](https://www.datadoghq.com/)的CEO)：我们使用Pandas处理生产服务器上的时间序列数据。其API的简单性和优雅性以及高容量数据集的高性能使其成为我们的完美选择。
-  - ![Datadog Logo](/static/images/datadog_logo.png)
+  - ![Datadog Logo](https://static.pypandas.cn/public/static/images/datadog_logo.png)
 
 ## Pandas库的亮点
 

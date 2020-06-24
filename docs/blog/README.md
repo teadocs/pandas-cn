@@ -1,3 +1,13 @@
+---
+sidebarDepth: 3
+sidebar: auto
+meta:
+  - name: keywords
+    content: 熊猫博客,Pandas博客
+  - name: description
+    content: Pandas官方博客的文章翻译
+---
+
 # 熊猫博客
 
 👈点击左边的**目录树**查看博客文章。

@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: Pandas快速入门
+  - name: description
+    content: 这里是Pandas快速入门的中文文档目录结构。
+---
+
 # 快速入门
 
 - [Pandas概览](overview.html)

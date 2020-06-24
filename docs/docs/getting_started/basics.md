@@ -1,3 +1,11 @@
+---
+meta:
+  - name: keywords
+    content: Pandas基础用法
+  - name: description
+    content: 本节介绍 Pandas 数据结构的基础用法。下列代码创建上一节用过的示例数据对象：
+---
+
 # 基础用法
 
 本节介绍 Pandas 数据结构的基础用法。下列代码创建上一节用过的示例数据对象：

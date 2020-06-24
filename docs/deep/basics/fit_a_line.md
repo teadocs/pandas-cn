@@ -1,9 +1,19 @@
+---
+meta:
+  - name: keywords
+    content: 线性回归,Linear Regression
+  - name: description
+    content: 让我们从经典的线性回归（Linear Regression）模型开始这份教程。在这一章里，你将使用真实的数据集建立起一个房价预测模型，并且了解到机器学习中的若干重要概念。
+---
+
 # 线性回归
+
 让我们从经典的线性回归（Linear Regression \[[1](#参考文献)\]）模型开始这份教程。在这一章里，你将使用真实的数据集建立起一个房价预测模型，并且了解到机器学习中的若干重要概念。
 
 本教程源代码目录在[book/fit_a_line](https://github.com/PaddlePaddle/book/tree/develop/01.fit_a_line)， 初次使用请您参考[Book文档使用说明](https://github.com/PaddlePaddle/book/blob/develop/README.cn.md#运行这本书)。
 
 ### 说明：
+
 1.硬件环境要求：
 本文可支持在CPU、GPU下运行
 2. Docker镜像支持的CUDA/cuDNN版本：

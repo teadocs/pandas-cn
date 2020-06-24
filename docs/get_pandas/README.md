@@ -1,6 +1,11 @@
 ---
 sidebarDepth: 3
 sidebar: auto
+meta:
+  - name: keywords
+    content: 获取 Pandas
+  - name: description
+    content: 您可以在PyPI项目页面找到所有官方源代码和二进制文件。Conda版本的包可以从主要渠道和conda-forge渠道取得。
 ---
 
 # 获取 Pandas

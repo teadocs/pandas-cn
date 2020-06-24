@@ -25,11 +25,11 @@ For ``Styler.apply`` your function should take a Series or DataFrame (depending 
 
 Let’s see some examples.
 
-![style02](/static/images/style/user_guide_style_02.png)
+![style02](https://static.pypandas.cn/public/static/images/style/user_guide_style_02.png)
 
 Here’s a boring example of rendering a DataFrame, without any (visible) styles:
 
-![style03](/static/images/style/user_guide_style_03.png)
+![style03](https://static.pypandas.cn/public/static/images/style/user_guide_style_03.png)
 
 *Note*: The ``DataFrame.style`` attribute is a property that returns a ``Styler`` object. ``Styler`` has a ``_repr_html_`` method defined on it so they are rendered automatically. If you want the actual HTML back for further processing or for writing to file call the ``.render()`` method which returns a string.
 
@@ -58,11 +58,11 @@ When writing style functions, you take care of producing the CSS attribute / val
 
 Let’s write a simple style function that will color negative numbers red and positive numbers black.
 
-![style04](/static/images/style/user_guide_style_04.png)
+![style04](https://static.pypandas.cn/public/static/images/style/user_guide_style_04.png)
 
 In this case, the cell’s style depends only on it’s own value. That means we should use the ``Styler.applymap`` method which works elementwise.
 
-![style05](/static/images/style/user_guide_style_05.png)
+![style05](https://static.pypandas.cn/public/static/images/style/user_guide_style_05.png)
 
 Notice the similarity with the standard ``df.applymap``, which operates on DataFrames elementwise. We want you to be able to reuse your existing knowledge of how to interact with DataFrames.
 
@@ -72,13 +72,13 @@ Finally, the input shapes matched. ``Styler.applymap`` calls the function on eac
 
 Now suppose you wanted to highlight the maximum value in each column. We can’t use ``.applymap`` anymore since that operated elementwise. Instead, we’ll turn to ``.apply`` which operates columnwise (or rowwise using the ``axis`` keyword). Later on we’ll see that something like ``highlight_max`` is already defined on ``Styler`` so you wouldn’t need to write this yourself.
 
-![style06](/static/images/style/user_guide_style_06.png)
+![style06](https://static.pypandas.cn/public/static/images/style/user_guide_style_06.png)
 
 In this case the input is a ``Series``, one column at a time. Notice that the output shape of ``highlight_max`` matches the input shape, an array with ``len(s)`` items.
 
 We encourage you to use method chains to build up a style piecewise, before finally rending at the end of the chain.
 
-![style07](/static/images/style/user_guide_style_07.png)
+![style07](https://static.pypandas.cn/public/static/images/style/user_guide_style_07.png)
 
 Above we used ``Styler.apply`` to pass in each column one at a time.
 
@@ -88,11 +88,11 @@ What if you wanted to highlight just the maximum value in the entire table? Use 
 
 We’ll rewrite our ``highlight-max`` to handle either Series (from ``.apply(axis=0 or 1)``) or DataFrames (from ``.apply(axis=None)``). We’ll also allow the color to be adjustable, to demonstrate that ``.apply``, and ``.applymap`` pass along keyword arguments.
 
-![style08](/static/images/style/user_guide_style_08.png)
+![style08](https://static.pypandas.cn/public/static/images/style/user_guide_style_08.png)
 
 When using ``Styler.apply(func, axis=None)``, the function must return a DataFrame with the same index and column labels.
 
-![style09](/static/images/style/user_guide_style_09.png)
+![style09](https://static.pypandas.cn/public/static/images/style/user_guide_style_09.png)
 
 ### Building Styles Summary
 
@@ -117,11 +117,11 @@ The value passed to ``subset`` behaves similar to slicing a DataFrame.
 
 Consider using ``pd.IndexSlice`` to construct the tuple for the last one.
 
-![style10](/static/images/style/user_guide_style_10.png)
+![style10](https://static.pypandas.cn/public/static/images/style/user_guide_style_10.png)
 
 For row and column slicing, any valid indexer to ``.loc`` will work.
 
-![style11](/static/images/style/user_guide_style_11.png)
+![style11](https://static.pypandas.cn/public/static/images/style/user_guide_style_11.png)
 
 Only label-based slicing is supported right now, not positional.
 
@@ -135,21 +135,21 @@ my_func2 = functools.partial(my_func, subset=42)
 
 We distinguish the *display* value from the *actual* value in ``Styler``. To control the display value, the text is printed in each cell, use ``Styler.format``. Cells can be formatted according to a [format spec string](https://docs.python.org/3/library/string.html#format-specification-mini-language) or a callable that takes a single value and returns a string.
 
-![style12](/static/images/style/user_guide_style_12.png)
+![style12](https://static.pypandas.cn/public/static/images/style/user_guide_style_12.png)
 
 Use a dictionary to format specific columns.
 
-![style13](/static/images/style/user_guide_style_13.png)
+![style13](https://static.pypandas.cn/public/static/images/style/user_guide_style_13.png)
 
 Or pass in a callable (or dictionary of callables) for more flexible handling.
 
-![style14](/static/images/style/user_guide_style_14.png)
+![style14](https://static.pypandas.cn/public/static/images/style/user_guide_style_14.png)
 
 ## Builtin styles
 
 Finally, we expect certain styling functions to be common enough that we’ve included a few “built-in” to the ``Styler``, so you don’t have to write them yourself.
 
-![style15](/static/images/style/user_guide_style_15.png)
+![style15](https://static.pypandas.cn/public/static/images/style/user_guide_style_15.png)
 
 You can create “heatmaps” with the ``background_gradient`` method. These require matplotlib, and we’ll use [Seaborn](http://stanford.edu/~mwaskom/software/seaborn/) to get a nice colormap.
 
@@ -165,31 +165,31 @@ s
   xa[xa < 0] = -1
 ```
 
-![style16](/static/images/style/user_guide_style_16.png)
+![style16](https://static.pypandas.cn/public/static/images/style/user_guide_style_16.png)
 
 ``Styler.background_gradient`` takes the keyword arguments ``low`` and ``high``. Roughly speaking these extend the range of your data by ``low`` and ``high`` percent so that when we convert the colors, the colormap’s entire range isn’t used. This is useful so that you can actually read the text still.
 
-![style17](/static/images/style/user_guide_style_17.png)
+![style17](https://static.pypandas.cn/public/static/images/style/user_guide_style_17.png)
 
 There’s also ``.highlight_min`` and ``.highlight_max``.
 
-![style18](/static/images/style/user_guide_style_18.png)
+![style18](https://static.pypandas.cn/public/static/images/style/user_guide_style_18.png)
 
 Use ``Styler.set_properties`` when the style doesn’t actually depend on the values.
 
-![style19](/static/images/style/user_guide_style_19.png)
+![style19](https://static.pypandas.cn/public/static/images/style/user_guide_style_19.png)
 
 ### Bar charts
 
 You can include “bar charts” in your DataFrame.
 
-![style20](/static/images/style/user_guide_style_20.png)
+![style20](https://static.pypandas.cn/public/static/images/style/user_guide_style_20.png)
 
 New in version 0.20.0 is the ability to customize further the bar chart: You can now have the ``df.style.bar`` be centered on zero or midpoint value (in addition to the already existing way of having the min value at the left side of the cell), and you can pass a list of ``[color_negative, color_positive]``.
 
 Here’s how you can change the above with the new ``align='mid'`` option:
 
-![style21](/static/images/style/user_guide_style_21.png)
+![style21](https://static.pypandas.cn/public/static/images/style/user_guide_style_21.png)
 
 The following example aims to give a highlight of the behavior of the new align options:
 
@@ -234,13 +234,13 @@ head+= """
 HTML(head)
 ```
 
-![style22](/static/images/style/user_guide_style_22.png)
+![style22](https://static.pypandas.cn/public/static/images/style/user_guide_style_22.png)
 
 ## Sharing styles
 
 Say you have a lovely style built up for a DataFrame, and now you want to apply the same style to a second DataFrame. Export the style with ``df1.style.export``, and import it on the second DataFrame with ``df1.style.set``
 
-![style23](/static/images/style/user_guide_style_23.png)
+![style23](https://static.pypandas.cn/public/static/images/style/user_guide_style_23.png)
 
 Notice that you’re able share the styles even though they’re data aware. The styles are re-evaluated on the new DataFrame they’ve been ``use``d upon.
 
@@ -264,11 +264,11 @@ The best method to use depends on the context. Use the ``Styler`` constructor wh
 
 You can control the precision of floats using pandas’ regular ``display.precision`` option.
 
-![style24](/static/images/style/user_guide_style_24.png)
+![style24](https://static.pypandas.cn/public/static/images/style/user_guide_style_24.png)
 
 Or through a ``set_precision`` method.
 
-![style25](/static/images/style/user_guide_style_25.png)
+![style25](https://static.pypandas.cn/public/static/images/style/user_guide_style_25.png)
 
 Setting the precision only affects the printed number; the full-precision values are always passed to your style functions. You can always use ``df.round(2).style`` if you’d prefer to round from the start.
 
@@ -276,13 +276,13 @@ Setting the precision only affects the printed number; the full-precision values
 
 Regular table captions can be added in a few ways.
 
-![style26](/static/images/style/user_guide_style_26.png)
+![style26](https://static.pypandas.cn/public/static/images/style/user_guide_style_26.png)
 
 ### Table styles
 
 The next option you have are “table styles”. These are styles that apply to the table as a whole, but don’t look at the data. Certain sytlings, including pseudo-selectors like ``:hover`` can only be used this way.
 
-![style27](/static/images/style/user_guide_style_27.png)
+![style27](https://static.pypandas.cn/public/static/images/style/user_guide_style_27.png)
 
 ``table_styles`` should be a list of dictionaries. Each dictionary should have the ``selector`` and ``props`` keys. The value for ``selector`` should be a valid CSS selector. Recall that all the styles are already attached to an ``id``, unique to each ``Styler``. This selector is in addition to that ``id``. The value for ``props`` should be a list of tuples of ``('attribute', 'value')``.
 
@@ -292,7 +292,7 @@ The next option you have are “table styles”. These are styles that apply to 
 
 The index can be hidden from rendering by calling ``Styler.hide_index``. Columns can be hidden from rendering by calling ``Styler.hide_columns`` and passing in the name of a column, or a slice of columns.
 
-![style28](/static/images/style/user_guide_style_28.png)
+![style28](https://static.pypandas.cn/public/static/images/style/user_guide_style_28.png)
 
 ### CSS classes
 
@@ -338,9 +338,9 @@ Here are a few interesting examples.
 
 ``Styler`` interacts pretty well with widgets. If you’re viewing this online instead of running the notebook yourself, you’re missing out on interactively adjusting the color palette.
 
-![style29](/static/images/style/user_guide_style_29.png)
+![style29](https://static.pypandas.cn/public/static/images/style/user_guide_style_29.png)
 
-![style30](/static/images/style/user_guide_style_30.png)
+![style30](https://static.pypandas.cn/public/static/images/style/user_guide_style_30.png)
 
 ## Export to Excel
 
@@ -374,7 +374,7 @@ df.style.\
 
 A screenshot of the output:
 
-![excel](/static/images/style-excel.png)
+![excel](https://static.pypandas.cn/public/static/images/style-excel.png)
 
 ## Extensibility
 
@@ -422,18 +422,18 @@ Notice that we include the original loader in our environment’s loader. That�
 
 Now we can use that custom styler. It’s ``__init__`` takes a DataFrame.
 
-![style31](/static/images/style/user_guide_style_31.png)
+![style31](https://static.pypandas.cn/public/static/images/style/user_guide_style_31.png)
 
 Our custom template accepts a ``table_title`` keyword. We can provide the value in the ``.render`` method.
 
-![style32](/static/images/style/user_guide_style_32.png)
+![style32](https://static.pypandas.cn/public/static/images/style/user_guide_style_32.png)
 
 For convenience, we provide the ``Styler.from_custom_template`` method that does the same as the custom subclass.
 
-![style33](/static/images/style/user_guide_style_33.png)
+![style33](https://static.pypandas.cn/public/static/images/style/user_guide_style_33.png)
 
 Here’s the template structure:
 
-![style34](/static/images/style/user_guide_style_34.png)
+![style34](https://static.pypandas.cn/public/static/images/style/user_guide_style_34.png)
 
 See the template in the [GitHub repo](https://github.com/pandas-dev/pandas) for more details.
