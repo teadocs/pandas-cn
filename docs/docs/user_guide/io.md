@@ -4145,61 +4145,47 @@ df.to_excel('path_to_file.xlsx', sheet_name='Sheet1')
 
 使用[ XlsxWriter](https://xlsxwriter.readthedocs.io/)引擎提供的多种方法来修改用`to_excel`方法创建的Excel工作表的样式。你能在[ XlsxWriter](https://xlsxwriter.readthedocs.io/)文档里面找到绝佳的例子：[https://xlsxwriter.readthedocs.io/working_with_pandas.html](https://xlsxwriter.readthedocs.io/working_with_pandas.html)
 
-## OpenDocument Spreadsheets
+## OpenDocument 电子表格
 
-*New in version 0.25.* 
+*New in version 0.25.*
 
-The [``read_excel()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html#pandas.read_excel) method can also read OpenDocument spreadsheets
-using the ``odfpy`` module. The semantics and features for reading
-OpenDocument spreadsheets match what can be done for [Excel files](#excel-files) using
-``engine='odf'``.
+[`read_excel`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html#pandas.read_excel "`read_excel`")方法也能使用`odfpy`模块来读取OpenDocument电子表格。读取OpenDocument电子表格的语法和方法同使用`engine='odf'`来操作[Excel files](https://www.pypandas.cn/docs/user_guide/io.html#excel-files "Excel files")的方法类似。
 
-``` python
+```python
 # Returns a DataFrame
 pd.read_excel('path_to_file.ods', engine='odf')
-
 ```
+::: tip 注意
 
-::: tip Note
-
-Currently pandas only supports reading OpenDocument spreadsheets. Writing
-is not implemented.
+目前pandas仅支持读取OpenDocument电子表格，写入是不行的。
 
 :::
+    
+## 剪贴板
 
-## Clipboard
+使用`read_clipboard()`方法是一种便捷的获取数据的方式，通过把剪贴的内容暂存，然后传递给`read_csv`方法。例如，你可以复制以下文本来剪贴（在许多操作系统上是CTRL-C）：
 
-A handy way to grab data is to use the ``read_clipboard()`` method,
-which takes the contents of the clipboard buffer and passes them to the
-``read_csv`` method. For instance, you can copy the following text to the
-clipboard (CTRL-C on many operating systems):
-
-``` 
+```python
   A B C
 x 1 4 p
 y 2 5 q
 z 3 6 r
-
 ```
 
-And then import the data directly to a ``DataFrame`` by calling:
+接着直接使用`DataFrame`来导入数据：
 
-``` python
+```python
 >>> clipdf = pd.read_clipboard()
 >>> clipdf
   A B C
 x 1 4 p
 y 2 5 q
 z 3 6 r
-
 ```
 
-The ``to_clipboard`` method can be used to write the contents of a ``DataFrame`` to
-the clipboard. Following which you can paste the clipboard contents into other
-applications (CTRL-V on many operating systems). Here we illustrate writing a
-``DataFrame`` into clipboard and reading it back.
+`to_clipboard`方法可以把`DataFrame`内容写入到剪贴板。使用下面的方法你可以粘贴剪贴板的内容到其他应用（在许多系统中用的是CTRL-V）。这里我们解释一下如何使用`DataFrame`把内容写入到剪贴板并读回。
 
-``` python
+```python
 >>> df = pd.DataFrame({'A': [1, 2, 3],
 ...                    'B': [4, 5, 6],
 ...                    'C': ['p', 'q', 'r']},
@@ -4215,23 +4201,21 @@ z 3 6 r
 x 1 4 p
 y 2 5 q
 z 3 6 r
-
 ```
 
-We can see that we got the same content back, which we had earlier written to the clipboard.
+我们可以看到返回了同样的内容，那就是我们早先写入剪贴板的内容。
 
-::: tip Note
+::: tip 注意
 
-You may need to install xclip or xsel (with PyQt5, PyQt4 or qtpy) on Linux to use these methods.
+要使用上面的这些方法，你可能需要在Linux上面安装(带有PyQt5, PyQt4 or qtpy)的xclip或者xsel 。
 
 :::
 
-## Pickling
+## 序列化(Pickling)
 
-All pandas objects are equipped with ``to_pickle`` methods which use Python’s
-``cPickle`` module to save data structures to disk using the pickle format.
+所有的pandas对象都具有`to_pickle`方法，该方法使用Python的` cPickle`模块以序列化格式存储数据结构到磁盘上。
 
-``` python
+```python
 In [326]: df
 Out[326]: 
 c1         a   
@@ -4243,13 +4227,11 @@ b    c     3  7
      d     4  8
 
 In [327]: df.to_pickle('foo.pkl')
-
 ```
 
-The ``read_pickle`` function in the ``pandas`` namespace can be used to load
-any pickled pandas object (or any other pickled object) from file:
+在`pandas`中命名的`read_pickle`函数能够从文件中加载任意序列化的pandas对象（或者任何其他的序列化对象）：
 
-``` python
+```python
 In [328]: pd.read_pickle('foo.pkl')
 Out[328]: 
 c1         a   
@@ -4259,37 +4241,30 @@ a    c     1  5
      d     2  6
 b    c     3  7
      d     4  8
-
 ```
 
-::: danger Warning
+::: danger 警告
 
-Loading pickled data received from untrusted sources can be unsafe.
-
-See: [https://docs.python.org/3/library/pickle.html](https://docs.python.org/3/library/pickle.html)
-
-:::
-
-::: danger Warning
-
-[``read_pickle()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_pickle.html#pandas.read_pickle) is only guaranteed backwards compatible back to pandas version 0.20.3
+加载来自不信任来源的序列化数据是不安全的。
+参见：https://docs.python.org/3/library/pickle.html
 
 :::
 
-### Compressed pickle files
+::: danger 警告
 
-*New in version 0.20.0.* 
+[`read_pickle()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_pickle.html#pandas.read_pickle "`read_pickle()`")仅在pandas的0.20.3版本及以下版本兼容。
 
-[``read_pickle()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_pickle.html#pandas.read_pickle), [``DataFrame.to_pickle()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_pickle.html#pandas.DataFrame.to_pickle) and [``Series.to_pickle()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_pickle.html#pandas.Series.to_pickle) can read
-and write compressed pickle files. The compression types of ``gzip``, ``bz2``, ``xz`` are supported for reading and writing.
-The ``zip`` file format only supports reading and must contain only one data file
-to be read.
+:::
 
-The compression type can be an explicit parameter or be inferred from the file extension.
-If ‘infer’, then use ``gzip``, ``bz2``, ``zip``, or ``xz`` if filename ends in ``'.gz'``, ``'.bz2'``, ``'.zip'``, or
-``'.xz'``, respectively.
+### 压缩序列化文件
 
-``` python
+*New in version 0.20.0.*
+
+[`read_pickle()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_pickle.html#pandas.read_pickle "`read_pickle()`")，[`DataFrame.to_pickle()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_pickle.html#pandas.DataFrame.to_pickle)和[`Series.to_pickle()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_pickle.html#pandas.Series.to_pickle)能够读取和写入压缩的序列化文件。读取和写入所支持的压缩文件类型有`gzip`, `bz2`, `xz`。`zip`文件格式仅支持读取，并且必须仅包含一个要读取的数据文件。
+
+压缩类型可以是显式参数，也可以从文件扩展名中推断出来。如果文件名是以`'.gz'`，` '.bz2'`，` '.zip'`， 或者` '.xz'`结尾的，那么可以推断出应分别使用`gzip`， `bz2`，`zip`，或 `xz`压缩类型。
+
+```python
 In [329]: df = pd.DataFrame({
    .....:     'A': np.random.randn(1000),
    .....:     'B': 'foo',
@@ -4312,12 +4287,10 @@ Out[330]:
 999 -1.197988  foo 2013-01-01 00:16:39
 
 [1000 rows x 3 columns]
-
 ```
+使用显式压缩类型：
 
-Using an explicit compression type:
-
-``` python
+```python
 In [331]: df.to_pickle("data.pkl.compress", compression="gzip")
 
 In [332]: rt = pd.read_pickle("data.pkl.compress", compression="gzip")
@@ -4338,12 +4311,10 @@ Out[333]:
 999 -1.197988  foo 2013-01-01 00:16:39
 
 [1000 rows x 3 columns]
-
 ```
+从扩展名推断压缩类型：
 
-Inferring compression type from the extension:
-
-``` python
+```python
 In [334]: df.to_pickle("data.pkl.xz", compression="infer")
 
 In [335]: rt = pd.read_pickle("data.pkl.xz", compression="infer")
@@ -4364,12 +4335,10 @@ Out[336]:
 999 -1.197988  foo 2013-01-01 00:16:39
 
 [1000 rows x 3 columns]
-
 ```
+默认是使用“推断”：
 
-The default is to ‘infer’:
-
-``` python
+```python
 In [337]: df.to_pickle("data.pkl.gz")
 
 In [338]: rt = pd.read_pickle("data.pkl.gz")
@@ -4409,30 +4378,24 @@ Out[342]:
 998    1.361779
 999   -1.197988
 Name: A, Length: 1000, dtype: float64
-
 ```
+## msgpack（一种二进制格式）
 
-## msgpack
+pandas支持`msgpack`格式的对象序列化。他是一种轻量级可移植的二进制格式，同二进制的JSON类似，具有高效的空间利用率以及不错的写入（序列化）和读取（反序列化）性能。
 
-pandas supports the ``msgpack`` format for
-object serialization. This is a lightweight portable binary format, similar
-to binary JSON, that is highly space efficient, and provides good performance
-both on the writing (serialization), and reading (deserialization).
+::: danger 警告
 
-::: danger Warning
-
-The msgpack format is deprecated as of 0.25 and will be removed in a future version.
-It is recommended to use pyarrow for on-the-wire transmission of pandas objects.
+从0.25版本开始，不推荐使用msgpack格式，并且之后的版本也将删除它。推荐使用pyarrow对pandas对象进行在线的转换。
 
 :::
 
-::: danger Warning
+::: danger 警告
 
-[``read_msgpack()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_msgpack.html#pandas.read_msgpack) is only guaranteed backwards compatible back to pandas version 0.20.3
+[`read_msgpack()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_msgpack.html#pandas.read_msgpack "`read_msgpack()`")仅在pandas的0.20.3版本及以下版本兼容。
 
 :::
 
-``` python
+```python
 In [343]: df = pd.DataFrame(np.random.rand(5, 2), columns=list('AB'))
 
 In [344]: df.to_msgpack('foo.msg')
@@ -4447,12 +4410,11 @@ Out[345]:
 4  0.318083  0.604870
 
 In [346]: s = pd.Series(np.random.rand(5), index=pd.date_range('20130101', periods=5))
-
 ```
 
-You can pass a list of objects and you will receive them back on deserialization.
+你可以传递一组对象列表并得到反序列化的结果。
 
-``` python
+```python
 In [347]: pd.to_msgpack('foo.msg', df, 'foo', np.array([1, 2, 3]), s)
 
 In [348]: pd.read_msgpack('foo.msg')
@@ -4468,12 +4430,10 @@ Out[348]:
  2013-01-04    0.092397
  2013-01-05    0.703091
  Freq: D, dtype: float64]
-
 ```
+你能传递`iterator=True`参数来迭代解压后的结果：
 
-You can pass ``iterator=True`` to iterate over the unpacked results:
-
-``` python
+```python
 In [349]: for o in pd.read_msgpack('foo.msg', iterator=True):
    .....:     print(o)
    .....: 
@@ -4491,12 +4451,10 @@ foo
 2013-01-04    0.092397
 2013-01-05    0.703091
 Freq: D, dtype: float64
-
 ```
+你也能传递`append=True`参数，给现有的包添加写入：
 
-You can pass ``append=True`` to the writer to append to an existing pack:
-
-``` python
+```python
 In [350]: df.to_msgpack('foo.msg', append=True)
 
 In [351]: pd.read_msgpack('foo.msg')
@@ -4517,15 +4475,10 @@ Out[351]:
  2  0.608925  0.778891
  3  0.136543  0.029703
  4  0.318083  0.604870]
-
 ```
+不像其他io方法，`to_msgpack`既可以基于每个对象使用`df.to_msgpack()`方法，也可以在混合pandas对象的时候使用顶层`pd.to_msgpack(...)`方法，该方法可以让你打包任意的Python列表、字典、标量的集合。
 
-Unlike other io methods, ``to_msgpack`` is available on both a per-object basis,
-``df.to_msgpack()`` and using the top-level ``pd.to_msgpack(...)`` where you
-can pack arbitrary collections of Python lists, dicts, scalars, while intermixing
-pandas objects.
-
-``` python
+```python
 In [352]: pd.to_msgpack('foo2.msg', {'dict': [{'df': df}, {'string': 'foo'},
    .....:                                     {'scalar': 1.}, {'s': s}]})
    .....: 
@@ -4546,22 +4499,19 @@ Out[353]:
    2013-01-04    0.092397
    2013-01-05    0.703091
    Freq: D, dtype: float64})}
-
 ```
 
-### Read/write API
+### 读/写API
 
-Msgpacks can also be read from and written to strings.
+Msgpacks也能读写字符串。
 
-``` python
+```python
 In [354]: df.to_msgpack()
 Out[354]: b'\x84\xa3typ\xadblock_manager\xa5klass\xa9DataFrame\xa4axes\x92\x86\xa3typ\xa5index\xa5klass\xa5Index\xa4name\xc0\xa5dtype\xa6object\xa4data\x92\xa1A\xa1B\xa8compress\xc0\x86\xa3typ\xabrange_index\xa5klass\xaaRangeIndex\xa4name\xc0\xa5start\x00\xa4stop\x05\xa4step\x01\xa6blocks\x91\x86\xa4locs\x86\xa3typ\xa7ndarray\xa5shape\x91\x02\xa4ndim\x01\xa5dtype\xa5int64\xa4data\xd8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\xa8compress\xc0\xa6values\xc7P\x00\xc84 \x84\xac\xa0\xd1?\x0f\xa4.\xb5\xe6\xf6\xea?\xb9\x85\x9aLO|\xe3?\xac\xf0\xd7\x81>z\xc1?\\\xca\x97\ty[\xd4?\x9c\x9b\x8a:\x11\xca\xd2?\x14zX\xd01+\xc5?4=\x19b\xad\xec\xe8?\xc0!\xe9\xf4\x8ej\x9e?\xa7>_\xac\x17[\xe3?\xa5shape\x92\x02\x05\xa5dtype\xa7float64\xa5klass\xaaFloatBlock\xa8compress\xc0'
-
 ```
+此外你可以连接字符串生成一个原始的对象列表。
 
-Furthermore you can concatenate the strings to produce a list of the original objects.
-
-``` python
+```python
 In [355]: pd.read_msgpack(df.to_msgpack() + s.to_msgpack())
 Out[355]: 
 [          A         B
@@ -4575,37 +4525,28 @@ Out[355]:
  2013-01-04    0.092397
  2013-01-05    0.703091
  Freq: D, dtype: float64]
-
 ```
+## HDF5(PyTables) (一种以.h5结尾的分层数据格式）
 
-## HDF5 (PyTables)
+`HDFStore`是一个能读写pandas的类似字典的对象，它能使用高性能的HDF5格式，该格式是用优秀的[PyTables](https://www.pytables.org/ "PyTables")库写的。一些更高级的用法参考[cookbook](https://www.pypandas.cn/docs/user_guide/cookbook.html#cookbook-hdf "cookbook")。
 
-``HDFStore`` is a dict-like object which reads and writes pandas using
-the high performance HDF5 format using the excellent [PyTables](https://www.pytables.org/) library. See the [cookbook](cookbook.html#cookbook-hdf)
-for some advanced strategies
+::: danger 警告
 
-::: danger Warning
-
-pandas requires ``PyTables`` >= 3.0.0.
-There is a indexing bug in ``PyTables`` < 3.2 which may appear when querying stores using an index.
-If you see a subset of results being returned, upgrade to ``PyTables`` >= 3.2.
-Stores created previously will need to be rewritten using the updated version.
+pandas要求使用的`PyTables`版本要 > = 3.0.0。当使用索引来检索存储的时候，`PyTables`< 3.2的版本会出现索引bug。如果返回一个结果的子集，那么你就需要升级`PyTables` 的版本 >= 3.2才行。先前创建的存储数据将会使用更新后的版本再次写入。
 
 :::
 
-``` python
+```python
 In [356]: store = pd.HDFStore('store.h5')
 
 In [357]: print(store)
 <class 'pandas.io.pytables.HDFStore'>
 File path: store.h5
-
 ```
 
-Objects can be written to the file just like adding key-value pairs to a
-dict:
+对象能够被写入文件就像成对的键-值添加到字典里面一样：
 
-``` python
+```python
 In [358]: index = pd.date_range('1/1/2000', periods=8)
 
 In [359]: s = pd.Series(np.random.randn(5), index=['a', 'b', 'c', 'd', 'e'])
@@ -4623,12 +4564,10 @@ In [363]: store
 Out[363]: 
 <class 'pandas.io.pytables.HDFStore'>
 File path: store.h5
-
 ```
+在当前或者之后的Python会话中，你都能检索存储的对象：
 
-In a current or later Python session, you can retrieve stored objects:
-
-``` python
+```python
 # store.get('df') is an equivalent method
 In [364]: store['df']
 Out[364]: 
@@ -4654,12 +4593,11 @@ Out[365]:
 2000-01-06 -1.170458 -1.211386 -0.852728
 2000-01-07 -0.450781  1.064650  1.014927
 2000-01-08 -0.810399  0.254343 -0.875526
-
 ```
 
-Deletion of the object specified by the key:
+使用键删除指定的对象：
 
-``` python
+```python
 # store.remove('df') is an equivalent method
 In [366]: del store['df']
 
@@ -4667,12 +4605,11 @@ In [367]: store
 Out[367]: 
 <class 'pandas.io.pytables.HDFStore'>
 File path: store.h5
-
 ```
 
-Closing a Store and using a context manager:
+关闭存储对象并使用环境管理器：
 
-``` python
+```python
 In [368]: store.close()
 
 In [369]: store
@@ -4687,15 +4624,13 @@ Out[370]: False
 In [371]: with pd.HDFStore('store.h5') as store:
    .....:     store.keys()
    .....: 
-
 ```
 
-### Read/write API
+### 读/写 API
 
-``HDFStore`` supports an top-level API using  ``read_hdf`` for reading and ``to_hdf`` for writing,
-similar to how ``read_csv`` and ``to_csv`` work.
+`HDFStore `支持顶层的API，用`read_hdf`来读取，和使用`to_hdf`来写入，类似于`read_csv` 和`to_csv`的用法。
 
-``` python
+```python
 In [372]: df_tl = pd.DataFrame({'A': list(range(5)), 'B': list(range(5))})
 
 In [373]: df_tl.to_hdf('store_tl.h5', 'table', append=True)
@@ -4705,12 +4640,10 @@ Out[374]:
    A  B
 3  3  3
 4  4  4
-
 ```
+HDFStore默认不会删除全是缺失值的行，但是通过设置`dropna=True`参数就能改变。
 
-HDFStore will by default not drop rows that are all missing. This behavior can be changed by setting ``dropna=True``.
-
-``` python
+```python
 In [375]: df_with_missing = pd.DataFrame({'col1': [0, np.nan, 2],
    .....:                                 'col2': [1, np.nan, np.nan]})
    .....: 
@@ -4742,45 +4675,30 @@ Out[380]:
    col1  col2
 0   0.0   1.0
 2   2.0   NaN
-
 ```
+### 固定格式
 
-### Fixed format
+上面的例子表明了使用`put`进行存储的情况，该存储将`HDF5`以固定数组格式写入`PyTables`，这就是所谓的`fixed`格式。这些类型的存储一旦被写入后将**不能**再添加数据（虽然你能轻易地删除它们并再次写入），**也不能**查询；必须全部检索它们。它们也不支持没有唯一列名的数据表。`fixed`格式提供了非常快速的写入功能，并且比`table`存储在读取方面更快捷。默认的指定格式是使用`put` 或者`to_hdf` 亦或通过` format='fixed'`或` format='f'`格式。
 
-The examples above show storing using ``put``, which write the HDF5 to ``PyTables`` in a fixed array format, called
-the ``fixed`` format. These types of stores are **not** appendable once written (though you can simply
-remove them and rewrite). Nor are they **queryable**; they must be
-retrieved in their entirety. They also do not support dataframes with non-unique column names.
-The ``fixed`` format stores offer very fast writing and slightly faster reading than ``table`` stores.
-This format is specified by default when using ``put`` or ``to_hdf`` or by ``format='fixed'`` or ``format='f'``.
+::: danger 警告
 
-::: danger Warning
+如果你尝试使用`where`来检索，`fixed`格式将会报错` TypeError`：
 
-A ``fixed`` format will raise a ``TypeError`` if you try to retrieve using a ``where``:
-
-``` python
+```python
 >>> pd.DataFrame(np.random.randn(10, 2)).to_hdf('test_fixed.h5', 'df')
 >>> pd.read_hdf('test_fixed.h5', 'df', where='index>5')
 TypeError: cannot pass a where specification when reading a fixed format.
            this store must be selected in its entirety
-
 ```
-
 :::
 
-### Table format
+### 表格格式
 
-``HDFStore`` supports another ``PyTables`` format on disk, the ``table``
-format. Conceptually a ``table`` is shaped very much like a DataFrame,
-with rows and columns. A ``table`` may be appended to in the same or
-other sessions.  In addition, delete and query type operations are
-supported. This format is specified by ``format='table'`` or ``format='t'``
-to ``append`` or ``put`` or ``to_hdf``.
+`HDFStore `支持在磁盘上使用另一种`PyTables`格式，即`table`格式。从概念上来讲，`table`在外形上同具有行和列的DataFrame极度相似。`table`也能被添加到同样的或其他的会话中。此外，删除和查询操作也是支持的。通过指定格式为`format='table'`或`format='t'`到`append`方法或`put`或者`to_hdf`。
 
-This format can be set as an option as well ``pd.set_option('io.hdf.default_format','table')`` to
-enable ``put/append/to_hdf`` to by default store in the ``table`` format.
+`put/append/to_hdf`方法中使用的格式也可以设置为可选`pd.set_option('io.hdf.default_format','table')`，以默认的`table`格式存储。
 
-``` python
+```python
 In [381]: store = pd.HDFStore('store.h5')
 
 In [382]: df1 = df[0:4]
@@ -4813,25 +4731,18 @@ Out[387]:
 # the type of stored data
 In [388]: store.root.df._v_attrs.pandas_type
 Out[388]: 'frame_table'
-
 ```
+::: tip 注意
 
-::: tip Note
-
-You can also create a ``table`` by passing ``format='table'`` or ``format='t'`` to a ``put`` operation.
+你也可以通过创建`table`来传递`format='table'`或者` format='t`到`put`操作。
 
 :::
 
-### Hierarchical keys
+### 分层键
 
-Keys to a store can be specified as a string. These can be in a
-hierarchical path-name like format (e.g. ``foo/bar/bah``), which will
-generate a hierarchy of sub-stores (or ``Groups`` in PyTables
-parlance). Keys can be specified with out the leading ‘/’ and are **always**
-absolute (e.g. ‘foo’ refers to ‘/foo’). Removal operations can remove
-everything in the sub-store and **below**, so be careful.
+存储的键能够指定为字符串，这些分层的路径名就像这样的格式（例如：`foo/bar/bah`）。它将生成子存储的层次结构（或者在PyTables中叫做`Groups`  ）。键可以不带前面的'/'指定而且**总是**单独的（例如：'foo' 指的就是'/foo'）。删除操作能够删除所有子存储及**之后**的数据，所以要小心该操作。
 
-``` python
+```python
 In [389]: store.put('foo/bar/bah', df)
 
 In [390]: store.append('food/orange', df)
@@ -4854,15 +4765,13 @@ In [395]: store
 Out[395]: 
 <class 'pandas.io.pytables.HDFStore'>
 File path: store.h5
-
 ```
 
-You can walk through the group hierarchy using the ``walk`` method which
-will yield a tuple for each group key along with the relative keys of its contents.
+你能遍历组层次结构使用`walk`方法，该方法将为每个组键及其内容的相对键生成一个元组。
 
-*New in version 0.24.0.* 
+*New in version 0.24.0.*
 
-``` python
+```python
 In [396]: for (path, subgroups, subkeys) in store.walk():
    .....:     for subgroup in subgroups:
    .....:         print('GROUP: {}/{}'.format(path, subgroup))
@@ -4893,14 +4802,12 @@ KEY: /foo/bar/bah
 2000-01-06 -1.170458 -1.211386 -0.852728
 2000-01-07 -0.450781  1.064650  1.014927
 2000-01-08 -0.810399  0.254343 -0.875526
-
 ```
+::: danger 警告
 
-::: danger Warning
+分层键对于存储在根节点下的项目，无法使用如上的方法将其作为点（属性）进行检索。
 
-Hierarchical keys cannot be retrieved as dotted (attribute) access as described above for items stored under the root node.
-
-``` python
+```python
 In [8]: store.foo.bar.bah
 AttributeError: 'HDFStore' object has no attribute 'foo'
 
@@ -4909,12 +4816,11 @@ In [9]: store.root.foo.bar.bah
 Out[9]:
 /foo/bar/bah (Group) ''
   children := ['block0_items' (Array), 'block0_values' (Array), 'axis0' (Array), 'axis1' (Array)]
-
 ```
 
-Instead, use explicit string based keys:
+相反，使用基于显式字符串的键：
 
-``` python
+```python
 In [397]: store['foo/bar/bah']
 Out[397]: 
                    A         B         C
@@ -4926,25 +4832,16 @@ Out[397]:
 2000-01-06 -1.170458 -1.211386 -0.852728
 2000-01-07 -0.450781  1.064650  1.014927
 2000-01-08 -0.810399  0.254343 -0.875526
-
 ```
-
 :::
 
-### Storing types
+### 存储类型
 
-#### Storing mixed types in a table
+#### 在表格中存储混合类型
 
-Storing mixed-dtype data is supported. Strings are stored as a
-fixed-width using the maximum size of the appended column. Subsequent attempts
-at appending longer strings will raise a ``ValueError``.
+支持混合数据类型存储。字符串使用添加列的最大尺寸以固定宽度进行存储。后面尝试添加更长的字符串将会报错``ValueError``。
 
-Passing ``min_itemsize={`values`: size}`` as a parameter to append
-will set a larger minimum for the string columns. Storing ``floats,
-strings, ints, bools, datetime64`` are currently supported. For string
-columns, passing ``nan_rep = 'nan'`` to append will change the default
-nan representation on disk (which converts to/from *np.nan*), this
-defaults to *nan*.
+添加参数``min_itemsize={`values`: size}``将给字符串列设置一个更大的最小值。目前支持的存储类型有 ``floats,strings, ints, bools, datetime64`` 。对于字符串列，添加参数 ``nan_rep = 'nan'``将改变磁盘上默认的nan值（转变为*np.nan*），原本默认是*nan*。
 
 ``` python
 In [398]: df_mixed = pd.DataFrame({'A': np.random.randn(8),
@@ -5007,10 +4904,9 @@ Out[404]:
 
 ```
 
-#### Storing MultiIndex DataFrames
+#### 存储多层索引数据表
 
-Storing MultiIndex ``DataFrames`` as tables is very similar to
-storing/selecting from homogeneous index ``DataFrames``.
+存储多层索引``DataFrames``为表格与从同类索引 ``DataFrames``中存储/选取是非常类似的。
 
 ``` python
 In [405]: index = pd.MultiIndex(levels=[['foo', 'bar', 'baz', 'qux'],
@@ -5066,43 +4962,38 @@ bar one  0.758552  0.384775 -1.133177
 
 ```
 
-### Querying
+### 查询
 
-#### Querying a table
+#### 查询表格
 
-``select`` and ``delete`` operations have an optional criterion that can
-be specified to select/delete only a subset of the data. This allows one
-to have a very large on-disk table and retrieve only a portion of the
-data.
+``select`` 和 ``delete`` 操作有一个可选项即能指定选择/删除仅有数据的子集。 这允许用户拥有一个很大的磁盘表并仅检索一部分数据。
 
-A query is specified using the ``Term`` class under the hood, as a boolean expression.
+在底层里使用``Term`` 类指定查询为布尔表达式。
 
-- ``index`` and ``columns`` are supported indexers of a ``DataFrames``.
-- if ``data_columns`` are specified, these can be used as additional indexers.
+- 支持的 ``DataFrames``索引器有 ``index`` 和 ``columns`` .
+- 如果指定为``data_columns``，这些将作为额外的索引器。 
 
-Valid comparison operators are:
+有效的比较运算符有：
 
 ``=, ==, !=, >, >=, <, <=``
 
-Valid boolean expressions are combined with:
+有效的布尔表达式包含如下几种：
 
-- ``|`` : or
-- ``&`` : and
-- ``(`` and ``)`` : for grouping
+- ``|`` : 选择
+- ``&`` : 并列
+- ``(`` 和 ``)`` : 用来分组
 
-These rules are similar to how boolean expressions are used in pandas for indexing.
+这些规则同在pandas的索引中使用布尔表达式是类似的。
 
-::: tip Note
+::: tip 注意
 
-- ``=`` will be automatically expanded to the comparison operator ``==``
-- ``~`` is the not operator, but can only be used in very limited
-circumstances
-- If a list/tuple of expressions is passed they will be combined via ``&``
+- ``=`` 将自动扩展为比较运算符 ``==``
+- ``~`` 不是运算符，且只在有限的条件下使用
+- 如果传递的表达式时列表/元组，他们将通过 ``&``符号合并
 
 :::
 
-The following are valid expressions:
-
+以下都是有效的表达式：
 - ``'index >= date'``
 - ``"columns = ['A', 'D']"``
 - ``"columns in ['A', 'D']"``
@@ -5114,31 +5005,26 @@ The following are valid expressions:
 - ``"ts >= Timestamp('2012-02-01')"``
 - ``"major_axis>=20130101"``
 
-The ``indexers`` are on the left-hand side of the sub-expression:
+`indexers`在子表达式的左边的有：
+`columns`, `major_axis`, `ts`
 
-``columns``, ``major_axis``, ``ts``
+（在比较运算符后面）子表达式可以是：
+- 能被求值的函数，比如：``Timestamp('2012-02-01')``
+- 字符串，比如： ``"bar"``
+- 类似日期，比如： ``20130101``或者 ``"20130101"``
+- 列表，比如： ``"['A', 'B']"``
+- 以本地命名空间定义的变量，比如：``date``
 
-The right-hand side of the sub-expression (after a comparison operator) can be:
+::: tip 注意
 
-- functions that will be evaluated, e.g. ``Timestamp('2012-02-01')``
-- strings, e.g. ``"bar"``
-- date-like, e.g. ``20130101``, or ``"20130101"``
-- lists, e.g. ``"['A', 'B']"``
-- variables that are defined in the local names space, e.g. ``date``
-
-::: tip Note
-
-Passing a string to a query by interpolating it into the query
-expression is not recommended. Simply assign the string of interest to a
-variable and use that variable in an expression. For example, do this
+在查询表达式中插入字符串进行查询是不推荐的。如果将带有%的字符串分配给变量，然后在表达式中使用该变量。那么，这样做
 
 ``` python
 string = "HolyMoly'"
 store.select('df', 'index == string')
 
 ```
-
-instead of this
+来代替下面这样
 
 ``` python
 string = "HolyMoly'"
@@ -5146,22 +5032,21 @@ store.select('df', 'index == %s' % string)
 
 ```
 
-The latter will **not** work and will raise a ``SyntaxError``.Note that
-there’s a single quote followed by a double quote in the ``string``
-variable.
+因为后者将 **不会** 起作用并引起 ``SyntaxError``。注意  ``string``变量的双引号里面有一个单引号。
 
-If you must interpolate, use the ``'%r'`` format specifier
+
+如果你一定要插入，使用说明符格式 ``'%r'`` 
 
 ``` python
 store.select('df', 'index == %r' % string)
 
 ```
 
-which will quote ``string``.
+它将会引用变量 ``string``.
 
 :::
 
-Here are some examples:
+这儿有一些例子：
 
 ``` python
 In [411]: dfq = pd.DataFrame(np.random.randn(10, 4), columns=list('ABCD'),
@@ -5171,8 +5056,7 @@ In [411]: dfq = pd.DataFrame(np.random.randn(10, 4), columns=list('ABCD'),
 In [412]: store.append('dfq', dfq, format='table', data_columns=True)
 
 ```
-
-Use boolean expressions, with in-line function evaluation.
+使用布尔表达式同内联求值函数。
 
 ``` python
 In [413]: store.select('dfq', "index>pd.Timestamp('20130104') & columns=['A', 'B']")
@@ -5187,7 +5071,7 @@ Out[413]:
 
 ```
 
-Use and inline column reference
+内联列引用
 
 ``` python
 In [414]: store.select('dfq', where="A>0 or C>0")
@@ -5203,10 +5087,7 @@ Out[414]:
 2013-01-10  0.516017 -0.501550  0.138212  0.218366
 
 ```
-
-The ``columns`` keyword can be supplied to select a list of columns to be
-returned, this is equivalent to passing a
-``'columns=list_of_columns_to_filter'``:
+关键词``columns`` 能用来筛选列字段并返回为列表，这等价于传递``'columns=list_of_columns_to_filter'``:
 
 ``` python
 In [415]: store.select('df', "columns=['A', 'B']")
@@ -5223,26 +5104,21 @@ Out[415]:
 
 ```
 
-``start`` and ``stop`` parameters can be specified to limit the total search
-space. These are in terms of the total number of rows in a table.
+``start`` and ``stop`` 参数能指定总的搜索范围。这些是根据表中的总行数得出来的。
 
-::: tip Note
+::: tip 注意
 
-``select`` will raise a ``ValueError`` if the query expression has an unknown
-variable reference. Usually this means that you are trying to select on a column
-that is **not** a data_column.
+如果查询表达式有未知的引用变量，那么``select`` 将会报错 ``ValueError`` 。通常这就意味着你正在尝试选取的一列并**不在**当前数据列中。
 
-``select`` will raise a ``SyntaxError`` if the query expression is not valid.
+如果查询表达式无效，那么``select``将会报错``SyntaxError`` 。
 
 :::
 
-#### Using timedelta64[ns]
+#### timedelta64[ns]的用法
 
-You can store and query using the ``timedelta64[ns]`` type. Terms can be
-specified in the format: ``()``, where float may be signed (and fractional), and unit can be
-``D,s,ms,us,ns`` for the timedelta. Here’s an example:
+你能使用``timedelta64[ns]``进行存储和查询。使用``()``来指定查询的条目，浮点数可以带符号（和小数），timedelta的单位可以是``D,s,ms,us,ns``。看示例：
 
-``` python
+```python
 In [416]: from datetime import timedelta
 
 In [417]: dftd = pd.DataFrame({'A': pd.Timestamp('20130101'),
@@ -5278,26 +5154,19 @@ Out[421]:
 7 2013-01-01 2013-01-08 00:00:10  -8 days +23:59:50
 8 2013-01-01 2013-01-09 00:00:10  -9 days +23:59:50
 9 2013-01-01 2013-01-10 00:00:10 -10 days +23:59:50
-
 ```
 
-#### Indexing
+#### 索引
 
-You can create/modify an index for a table with ``create_table_index``
-after data is already in the table (after and ``append/put``
-operation). Creating a table index is **highly** encouraged. This will
-speed your queries a great deal when you use a ``select`` with the
-indexed dimension as the ``where``.
+你能在表格中已经有数据的情况下（在``append/put``操作之后）使用``create_table_index``创建/修改表格的索引。给表格创建索引是**强**推荐的操作。当你使用带有索引的``select``当作``where``查询条件的时候，这将极大的加快你的查询速度。
 
-::: tip Note
+::: tip 注意
 
-Indexes are automagically created on the indexables
-and any data columns you specify. This behavior can be turned off by passing
-``index=False`` to ``append``.
+索引会自动创建在可索引对象和任意你指定的数据列。你可以传递``index=False`` 到``append``来关闭这个操作。
 
 :::
 
-``` python
+```python
 # we have automagically already created an index (in the first section)
 In [422]: i = store.root.df.table.cols.index.index
 
@@ -5311,12 +5180,11 @@ In [425]: i = store.root.df.table.cols.index.index
 
 In [426]: i.optlevel, i.kind
 Out[426]: (9, 'full')
-
 ```
 
-Oftentimes when appending large amounts of data to a store, it is useful to turn off index creation for each append, then recreate at the end.
+通常当有大量数据添加保存的时候，关闭添加列的索引创建，等结束后再创建是非常有效的。
 
-``` python
+```python
 In [427]: df_1 = pd.DataFrame(np.random.randn(10, 2), columns=list('AB'))
 
 In [428]: df_2 = pd.DataFrame(np.random.randn(10, 2), columns=list('AB'))
@@ -5336,12 +5204,11 @@ Out[432]:
   "B": Float64Col(shape=(), dflt=0.0, pos=2)}
   byteorder := 'little'
   chunkshape := (2730,)
-
 ```
 
-Then create the index when finished appending.
+当完成添加后再创建索引。
 
-``` python
+```python
 In [433]: st.create_table_index('df', columns=['B'], optlevel=9, kind='full')
 
 In [434]: st.get_storer('df').table
@@ -5358,21 +5225,14 @@ Out[434]:
     "B": Index(9, full, shuffle, zlib(1)).is_csi=True}
 
 In [435]: st.close()
-
 ```
+看[这里](https://stackoverflow.com/questions/17893370/ptrepack-sortby-needs-full-index "这里")关于如何在现存的表格中创建完全分类索引（CSI)。
 
-See [here](https://stackoverflow.com/questions/17893370/ptrepack-sortby-needs-full-index) for how to create a completely-sorted-index (CSI) on an existing store.
+#### 通过数据列查询
 
-#### Query via data columns
+你可以指定（并建立索引）某些你希望能够执行查询的列（除了可索引的列，你始终可以查询这些列）。例如，假设你要在磁盘上执行此常规操作，仅返回与该查询匹配的帧。你可以指定``data_columns = True``来强制所有列为``data_columns``。
 
-You can designate (and index) certain columns that you want to be able
-to perform queries (other than the *indexable* columns, which you can
-always query). For instance say you want to perform this common
-operation, on-disk, and return just the frame that matches this
-query. You can specify ``data_columns = True`` to force all columns to
-be ``data_columns``.
-
-``` python
+```python
 In [436]: df_dc = df.copy()
 
 In [437]: df_dc['string'] = 'foo'
@@ -5446,22 +5306,14 @@ Out[447]:
     "C": Index(6, medium, shuffle, zlib(1)).is_csi=False,
     "string": Index(6, medium, shuffle, zlib(1)).is_csi=False,
     "string2": Index(6, medium, shuffle, zlib(1)).is_csi=False}
-
 ```
+把很多列变成*数据列*会存在性能下降的情况，因此它取决于用户。此外，在第一次添加/插入操作后你不能改变数据列（也不能索引）（当然，你能读取数据和创建一个新表！）。
 
-There is some performance degradation by making lots of columns into
-*data columns*, so it is up to the user to designate these. In addition,
-you cannot change data columns (nor indexables) after the first
-append/put operation (Of course you can simply read in the data and
-create a new table!).
+#### 迭代器
 
-#### Iterator
+你能传递``iterator=True``或者``chunksize=number_in_a_chunk``给``select`` 和``select_as_multiple``，然后在结果中返回一个迭代器。默认一个块返回50,000行。
 
-You can pass ``iterator=True`` or ``chunksize=number_in_a_chunk``
-to ``select`` and ``select_as_multiple`` to return an iterator on the results.
-The default is 50,000 rows returned in a chunk.
-
-``` python
+```python
 In [448]: for df in store.select('df', chunksize=3):
    .....:     print(df)
    .....: 
@@ -5476,30 +5328,24 @@ In [448]: for df in store.select('df', chunksize=3):
                    A         B         C
 2000-01-07 -0.450781  1.064650  1.014927
 2000-01-08 -0.810399  0.254343 -0.875526
-
 ```
 
-::: tip Note
+::: tip 注意
 
-You can also use the iterator with ``read_hdf`` which will open, then
-automatically close the store when finished iterating.
+你也能使用``read_hdf`` 打开迭代器，然后迭代结束会自动关闭保存。
 
-``` python
+```python
 for df in pd.read_hdf('store.h5', 'df', chunksize=3):
     print(df)
-
 ```
 
 :::
 
-Note, that the chunksize keyword applies to the **source** rows. So if you
-are doing a query, then the chunksize will subdivide the total rows in the table
-and the query applied, returning an iterator on potentially unequal sized chunks.
+注意，chunksize主要适用于**源**行。因此，如果你正在进行查询，chunksize将细分表中的总行和应用的查询，并在大小可能不相等的块上返回一个迭代器。
 
-Here is a recipe for generating a query and using it to create equal sized return
-chunks.
+这是生成查询并使用它创建大小相等的返回块的方法。
 
-``` python
+```python
 In [449]: dfeq = pd.DataFrame({'number': np.arange(1, 11)})
 
 In [450]: dfeq
@@ -5537,19 +5383,15 @@ In [455]: for c in chunks(coordinates, 2):
 7       8
    number
 9      10
-
 ```
 
-#### Advanced queries
+#### 高级查询
 
-##### Select a single column
+##### 选取单列
 
-To retrieve a single indexable or data column, use the
-method ``select_column``. This will, for example, enable you to get the index
-very quickly. These return a ``Series`` of the result, indexed by the row number.
-These do not currently accept the ``where`` selector.
+使用``select_column``方法可以找到单个可索引列或数据列。例如，这将让你非常快速地得到索引。它会返回一个由行号索引的``Series``结果。目前不接受``where``选择器。
 
-``` python
+```python
 In [456]: store.select_column('df_dc', 'index')
 Out[456]: 
 0   2000-01-01
@@ -5573,16 +5415,13 @@ Out[457]:
 6    foo
 7    bar
 Name: string, dtype: object
-
 ```
 
-##### Selecting coordinates
+##### 选取坐标
 
-Sometimes you want to get the coordinates (a.k.a the index locations) of your query. This returns an
-``Int64Index`` of the resulting locations. These coordinates can also be passed to subsequent
-``where`` operations.
+有时候你想要得到查询的坐标（又叫做 索引的定位），使用``Int64Index``将返回结果的定位。这些坐标也可以传递给之后的``where``操作。
 
-``` python
+```python
 In [458]: df_coord = pd.DataFrame(np.random.randn(1000, 2),
    .....:                         index=pd.date_range('20000101', periods=1000))
    .....: 
@@ -5614,16 +5453,13 @@ Out[462]:
 2002-09-26  1.579717 -1.259530
 
 [268 rows x 2 columns]
-
 ```
 
-##### Selecting using a where mask
+##### 使用位置遮罩选取
 
-Sometime your query can involve creating a list of rows to select. Usually this ``mask`` would
-be a resulting ``index`` from an indexing operation. This example selects the months of
-a datetimeindex which are 5.
+有时你的查询可能涉及到创建要选择的行列表。通常这个``mask``将得到索引操作的``index``结果。下面这个例子显示了选取日期索引的月份等于5的操作。
 
-``` python
+```python
 In [463]: df_mask = pd.DataFrame(np.random.randn(1000, 2),
    .....:                        index=pd.date_range('20000101', periods=1000))
    .....: 
@@ -5650,49 +5486,26 @@ Out[467]:
 2002-05-31 -0.807599  0.420431
 
 [93 rows x 2 columns]
-
 ```
 
-##### Storer object
+##### 存储对象
 
-If you want to inspect the stored object, retrieve via
-``get_storer``. You could use this programmatically to say get the number
-of rows in an object.
+如果你想检查存储对象，可以通过``get_storer``找到。你能使用这种编程方法获得一个对象的行数。
 
-``` python
+```python
 In [468]: store.get_storer('df_dc').nrows
 Out[468]: 8
-
 ```
 
-#### Multiple table queries
+#### 多表查询
 
-The methods ``append_to_multiple`` and
-``select_as_multiple`` can perform appending/selecting from
-multiple tables at once. The idea is to have one table (call it the
-selector table) that you index most/all of the columns, and perform your
-queries. The other table(s) are data tables with an index matching the
-selector table’s index. You can then perform a very fast query
-on the selector table, yet get lots of data back. This method is similar to
-having a very wide table, but enables more efficient queries.
+``append_to_multiple``和``select_as_multiple``方法能一次性执行多表的添加/选取操作。这个方法是让一个表（称为选择器表）索引大多数/所有列，并执行查询。其他表是带索引的数据表，它会匹配选择器表的索引。然后，你能在选择器表执行非常快速的查询并返回大量数据。这个方法类似于有个非常宽的表，但能高效的查询。
 
-The ``append_to_multiple`` method splits a given single DataFrame
-into multiple tables according to ``d``, a dictionary that maps the
-table names to a list of ‘columns’ you want in that table. If *None*
-is used in place of a list, that table will have the remaining
-unspecified columns of the given DataFrame. The argument ``selector``
-defines which table is the selector table (which you can make queries from).
-The argument ``dropna`` will drop rows from the input ``DataFrame`` to ensure
-tables are synchronized.  This means that if a row for one of the tables
-being written to is entirely ``np.NaN``, that row will be dropped from all tables.
+``append_to_multiple``方法根据``d``把单个DataFrame划分为多个表，这里的d指的是字典，即将表名映射到该表中所需的“列”列表。如果使用*None*代替列表，则该表将具有给定DataFrame的其余未指定列。``selector``参数定义了哪张表是选择器表（即你可以从中执行查询的）。``dropna``参数将删除输入``DataFrame ``的行来确保表格是同步的。这意味着如果其中一张表写入的一行全是``np.NaN``，那么将从所有表中删除这行。
 
-If ``dropna`` is False, **THE USER IS RESPONSIBLE FOR SYNCHRONIZING THE TABLES**.
-Remember that entirely ``np.Nan`` rows are not written to the HDFStore, so if
-you choose to call ``dropna=False``, some tables may have more rows than others,
-and therefore ``select_as_multiple`` may not work or it may return unexpected
-results.
+如果``dropna``是False，则**用户负责同步表**。记住全是``np.Nan``的行是不会写入HDFStore，因此如果你选择``dropna=False``，一些表会比其他表具有更多行，而且``select_as_multiple ``将不会有作用或返回意外的结果。
 
-``` python
+```python
 In [469]: df_mt = pd.DataFrame(np.random.randn(8, 6),
    .....:                      index=pd.date_range('1/1/2000', periods=8),
    .....:                      columns=['A', 'B', 'C', 'D', 'E', 'F'])
@@ -5745,23 +5558,13 @@ Out[476]:
                    A         B         C         D         E         F  foo
 2000-01-01  0.475158  0.427905  1.846285 -0.044826  0.074867  0.156213  bar
 2000-01-06  0.187880  1.536245  0.831475 -0.566063  1.130163 -1.004539  bar
-
 ```
 
-### Delete from a table
+### 从表中删除
 
-You can delete from a table selectively by specifying a ``where``. In
-deleting rows, it is important to understand the ``PyTables`` deletes
-rows by erasing the rows, then **moving** the following data. Thus
-deleting can potentially be a very expensive operation depending on the
-orientation of your data. To get optimal performance, it’s
-worthwhile to have the dimension you are deleting be the first of the
-``indexables``.
+你能够通过``where``指定有选择地从表中删除数据。删除行，重点理解``PyTables``删除行是通过先抹去行，接着**删除**后面的数据。因此，根据数据的方向来删除会是非常耗时的操作。所以为了获得最佳性能，首先让要删除的数据维度可索引是很有必要的。
 
-Data is ordered (on the disk) in terms of the ``indexables``. Here’s a
-simple use case. You store panel-type data, with dates in the
-``major_axis`` and ids in the ``minor_axis``. The data is then
-interleaved like this:
+数据根据（在磁盘上）可索引项来排序，这里有个简单的用例。你能存储面板数据（也叫时间序列-截面数据），在``major_axis``中存储日期，而``minor_axis``中存储ids。数据像下面这样交错：
 
 - date_1
   - id_1
@@ -5773,84 +5576,60 @@ interleaved like this:
   - .
   - id_n
 
-It should be clear that a delete operation on the ``major_axis`` will be
-fairly quick, as one chunk is removed, then the following data moved. On
-the other hand a delete operation on the ``minor_axis`` will be very
-expensive. In this case it would almost certainly be faster to rewrite
-the table using a ``where`` that selects all but the missing data.
+应该清楚的是在 ``major_axis`` 上的删除操作将非常快，正如数据块被删除，接着后面的数据也会移动。另一方面，在``minor_axis`` 的操作将非常耗时。在这种情况下，几乎可以肯定使用``where``操作来选取所有除开缺失数据的列重写表格会更快。
 
-::: danger Warning
+::: danger 警告
 
-Please note that HDF5 **DOES NOT RECLAIM SPACE** in the h5 files
-automatically. Thus, repeatedly deleting (or removing nodes) and adding
-again, **WILL TEND TO INCREASE THE FILE SIZE**.
+请注意HDF5**不会自动回收空间**在h5文件中。于是重复地删除（或者移除节点）再添加操作**将会导致文件体积增大**。
 
-To repack and clean the file, use [ptrepack](#io-hdf5-ptrepack).
+要重新打包和清理文件，请使用[ptrepack](https://www.pypandas.cn/docs/user_guide/io.html#io-hdf5-ptrepack "ptrepack")。
 
 :::
 
-### Notes & caveats
+### 注意事项
 
-#### Compression
+#### 压缩
 
-``PyTables`` allows the stored data to be compressed. This applies to
-all kinds of stores, not just tables. Two parameters are used to
-control compression: ``complevel`` and ``complib``.
+``PyTables`` 允许存储地数据被压缩。这适用于所有类型地存储，不仅仅是表格。这两个参数
+ ``complevel``和 ``complib``可用来控制压缩。
 
-``complevel`` specifies if and how hard data is to be compressed.
+``complevel``指定数据会以何种方式压缩。
 
-``complib`` specifies which compression library to use. If nothing is
+``complib`` 指定要使用的压缩库。如果没有指定，那将使用默认的 ``zlib``库。压缩库通常会从压缩率或速度两方面来优化，而结果取决于数据类型。选择哪种压缩类型取决于你的具体需求和数据。下面是支持的压缩库列表：
 
-specified the default library ``zlib`` is used. A
-compression library usually optimizes for either good
-compression rates or speed and the results will depend on
-the type of data. Which type of
-compression to choose depends on your specific needs and
-data. The list of supported compression libraries:
+- [zlib](https://zlib.net/): 默认的压缩库。经典的压缩方式，能获得好的压缩率但是速度有点慢。
+- [lzo](https://www.oberhumer.com/opensource/lzo/):  快速地压缩和解压。
+- [bzip2](http://bzip.org/): 不错的压缩率。
+- [blosc](http://www.blosc.org/): 快速地压缩和解压。
 
-- [zlib](https://zlib.net/): The default compression library. A classic in terms of compression, achieves good compression rates but is somewhat slow.
-- [lzo](https://www.oberhumer.com/opensource/lzo/): Fast compression and decompression.
-- [bzip2](http://bzip.org/): Good compression rates.
-- [blosc](http://www.blosc.org/): Fast compression and decompression.
+*New in version 0.20.2:* 支持另一种blosc压缩机：
 
-*New in version 0.20.2:* Support for alternative blosc compressors:
-
-- [blosc:blosclz](http://www.blosc.org/) This is the
-default compressor for ``blosc``
+- [blosc:blosclz](http://www.blosc.org/) 这是默认地``blosc``压缩机
 - [blosc:lz4](https://fastcompression.blogspot.dk/p/lz4.html):
-A compact, very popular and fast compressor.
+一款紧凑、快速且流行的压缩机。
 - [blosc:lz4hc](https://fastcompression.blogspot.dk/p/lz4.html):
-A tweaked version of LZ4, produces better
-compression ratios at the expense of speed.
+调整后的LZ4版本可产生更好的压缩比，但会牺牲速度。
 - [blosc:snappy](https://google.github.io/snappy/):
-A popular compressor used in many places.
-- [blosc:zlib](https://zlib.net/): A classic;
-somewhat slower than the previous ones, but
-achieving better compression ratios.
-- [blosc:zstd](https://facebook.github.io/zstd/): An
-extremely well balanced codec; it provides the best
-compression ratios among the others above, and at
-reasonably fast speed.
+一款在很多地方使用的流行压缩机。
+- [blosc:zlib](https://zlib.net/): 经典款；虽然比前一款速度慢，但是可实现更好的压缩比。
+- [blosc:zstd](https://facebook.github.io/zstd/): 极其平衡的编解码器；它是以上所有压缩机中提供最佳压缩比的，且速度相当快。
 
-If ``complib`` is defined as something other than the
-listed libraries a ``ValueError`` exception is issued.
+如果 ``complib``定义为其他的，不在上表中的库 ，那么就会出现 ``ValueError``。
 
-::: tip Note
+::: tip 注意
 
-If the library specified with the ``complib`` option is missing on your platform,
-compression defaults to ``zlib`` without further ado.
+如果你的平台上缺失指定的 ``complib`` 库，压缩机会使用默认 ``zlib``库。
 
 :::
 
-Enable compression for all objects within the file:
+文件中所有的对象都可以启用压缩：
 
 ``` python
 store_compressed = pd.HDFStore('store_compressed.h5', complevel=9,
                                complib='blosc:blosclz')
 
 ```
-
-Or on-the-fly compression (this only applies to tables) in stores where compression is not enabled:
+或者在未启用压缩的存储中进行即时压缩（这仅适用于表格）：
 
 ``` python
 store.append('df', df, complib='zlib', complevel=5)
@@ -5859,79 +5638,54 @@ store.append('df', df, complib='zlib', complevel=5)
 
 #### ptrepack
 
-``PyTables`` offers better write performance when tables are compressed after
-they are written, as opposed to turning on compression at the very
-beginning. You can use the supplied ``PyTables`` utility
-``ptrepack``. In addition, ``ptrepack`` can change compression levels
-after the fact.
+``PyTables``不是在一开始的时候开启压缩，而是在表被写入后再压缩，这提供了更好的写入性能。你能使用 ``PyTables`` 提供的实用程序``ptrepack``实现。此外，事实上在``ptrepack`` 之后会改变压缩等级。
 
 ``` 
 ptrepack --chunkshape=auto --propindexes --complevel=9 --complib=blosc in.h5 out.h5
 
 ```
 
-Furthermore ``ptrepack in.h5 out.h5`` will repack the file to allow
-you to reuse previously deleted space. Alternatively, one can simply
-remove the file and write again, or use the ``copy`` method.
+另外， ``ptrepack in.h5 out.h5`` 将重新打包文件让你可以重用之前删除的空间。或者，它能简单的删除文件并再次写入亦或使用 ``copy`` 方法。
 
-#### Caveats
+#### 注意事项
 
-::: danger Warning
+::: danger 警告
 
-``HDFStore`` is **not-threadsafe for writing**. The underlying
-``PyTables`` only supports concurrent reads (via threading or
-processes). If you need reading and writing at the same time, you
-need to serialize these operations in a single thread in a single
-process. You will corrupt your data otherwise. See the ([GH2397](https://github.com/pandas-dev/pandas/issues/2397)) for more information.
+``HDFStore``  **不是一个安全的写入线程**. ``PyTables`` 的底层仅支持（通过线程或进程的）并发读取。如果你要同时读取和写入，那么你需要单个进程的单个线程里序列化这些操作，否则会破坏你的数据。更多信息参见([GH2397](https://github.com/pandas-dev/pandas/issues/2397))。
 
 :::
 
-- If you use locks to manage write access between multiple processes, you
-may want to use [``fsync()``](https://docs.python.org/3/library/os.html#os.fsync) before releasing write locks. For
-convenience you can use ``store.flush(fsync=True)`` to do this for you.
-- Once a ``table`` is created columns (DataFrame)
-are fixed; only exactly the same columns can be appended
-- Be aware that timezones (e.g., ``pytz.timezone('US/Eastern')``)
-are not necessarily equal across timezone versions.  So if data is
-localized to a specific timezone in the HDFStore using one version
-of a timezone library and that data is updated with another version, the data
-will be converted to UTC since these timezones are not considered
-equal.  Either use the same version of timezone library or use ``tz_convert`` with
-the updated timezone definition.
+- 如果你用锁来管理多个进程间的写入， 那么你可能要在释放写锁之前使用[``fsync()``](https://docs.python.org/3/library/os.html#os.fsync) 。方便起见，你能用 ``store.flush(fsync=True)`` 操作。
+- 一旦 ``table``创建的列（DataFrame)固定了; 那只有相同的列才可以添加数据。
+- 注意时区 (例如, ``pytz.timezone('US/Eastern')``)在不同的时区版本间不相等。
+因此，如果使用时区库的一个版本将数据本地化到HDFStore中的特定时区，并且使用另一个版本更新该数据，则由于这些时区不相等，因此数据将转换为UTC。使用相同版本的时区库或在更新的时区定义中使用 ``tz_convert``。
 
-::: danger Warning
+::: danger 警告
 
-``PyTables`` will show a ``NaturalNameWarning`` if a column name
-cannot be used as an attribute selector.
-Natural identifiers contain only letters, numbers, and underscores,
-and may not begin with a number.
-Other identifiers cannot be used in a ``where`` clause
-and are generally a bad idea.
+如果列名没能用作属性选择器，那么``PyTables`` 将显示``NaturalNameWarning`` 。
+自然标识符仅包括字母、数字和下划线，且不能以数字开头。其他标识符不能用``where`` 从句，这通常不是个好主意。
 
 :::
 
-### DataTypes
+### 数据类型
 
-``HDFStore`` will map an object dtype to the ``PyTables`` underlying
-dtype. This means the following types are known to work:
+``HDFStore`` 将对象数据类型映射到 ``PyTables`` 的底层数据类型。这意味着以下的已知类型都有效：
 
 Type | Represents missing values
 ---|---
 floating : float64, float32, float16 | np.nan
-integer : int64, int32, int8, uint64,uint32, uint8 |  
-boolean |  
+integer : int64, int32, int8, uint64,uint32, uint8 |  
+boolean |  
 datetime64[ns] | NaT
 timedelta64[ns] | NaT
-categorical : see the section below |  
+categorical : see the section below |  
 object : strings | np.nan
 
-``unicode`` columns are not supported, and **WILL FAIL**.
+不支持``unicode`` 列，这会出现 **映射失败**.
 
-#### Categorical data
+#### 数据类别
 
-You can write data that contains ``category`` dtypes to a ``HDFStore``.
-Queries work the same as if it was an object array. However, the ``category`` dtyped data is
-stored in a more efficient manner.
+你可以写入含``category`` 类型的数据到 ``HDFStore``。如果它是对象数组，那查询方式是一样的。然而， 含``category``的数据会以更高效的方式存储。
 
 ``` python
 In [477]: dfcat = pd.DataFrame({'A': pd.Series(list('aabbcdba')).astype('category'),
@@ -5978,26 +5732,19 @@ dtype: object
 
 ```
 
-#### String columns
+#### 字符串列
 
 **min_itemsize**
 
-The underlying implementation of ``HDFStore`` uses a fixed column width (itemsize) for string columns.
-A string column itemsize is calculated as the maximum of the
-length of data (for that column) that is passed to the ``HDFStore``, **in the first append**. Subsequent appends,
-may introduce a string for a column **larger** than the column can hold, an Exception will be raised (otherwise you
-could have a silent truncation of these columns, leading to loss of information). In the future we may relax this and
-allow a user-specified truncation to occur.
+对于字符串列， ``HDFStore``的底层使用的固定列宽（列的大小）。字符串列大小的计算方式是： **在第一个添加的时候**，传递给 ``HDFStore``（该列）数据长度的最大值。 随后的添加可能会引入**更大**一列字符串，这超过了该列所能容纳的内容，这将引发异常（不然，你可以悄悄地截断这些列，让信息丢失）。之后将放松这一点，允许用户指定截断。 
 
-Pass ``min_itemsize`` on the first table creation to a-priori specify the minimum length of a particular string column.
-``min_itemsize`` can be an integer, or a dict mapping a column name to an integer. You can pass ``values`` as a key to
-allow all indexables or data_columns to have this min_itemsize.
+在第一个表创建的时候，传递 ``min_itemsize`` 将优先指定特定字符串列的最小长度。``min_itemsize``可以是整数或将列名映射为整数的字典。 你可以将``values``作为键传递，以允许所有可索引对象或data_columns具有此min_itemsize。
 
-Passing a ``min_itemsize`` dict will cause all passed columns to be created as data_columns automatically.
+传递 ``min_itemsize``字典将导致所有可传递列自动创建 data_columns。
 
-::: tip Note
+::: tip 注意
 
-If you are not passing any ``data_columns``, then the ``min_itemsize`` will be the maximum of the length of any string passed
+如果你没有传递任意 ``data_columns``,那么``min_itemsize``将会传递任意字符串的最大长度。
 
 :::
 
@@ -6050,8 +5797,7 @@ Out[490]:
 
 **nan_rep**
 
-String columns will serialize a ``np.nan`` (a missing value) with the ``nan_rep`` string representation. This defaults to the string value ``nan``.
-You could inadvertently turn an actual ``nan`` value into a missing value.
+字符串列将序列化 ``np.nan`` （缺失值）以 ``nan_rep`` 的字符串形式。默认的字符串值为``nan``。你可能会无意中将实际的``nan``值转换为缺失值。
 
 ``` python
 In [491]: dfss = pd.DataFrame({'A': ['foo', 'bar', 'nan']})
@@ -6084,15 +5830,11 @@ Out[496]:
 
 ```
 
-### External compatibility
+### 外部兼容性
 
-``HDFStore`` writes ``table`` format objects in specific formats suitable for
-producing loss-less round trips to pandas objects. For external
-compatibility, ``HDFStore`` can read native ``PyTables`` format
-tables.
+``HDFStore``以特定格式写入``table``对象，这些格式适用于产生无损往返的pandas对象。 对于外部兼容性， ``HDFStore`` 能读取本地的 ``PyTables`` 格式表格。
 
-It is possible to write an ``HDFStore`` object that can easily be imported into ``R`` using the
-``rhdf5`` library ([Package website](https://www.bioconductor.org/packages/release/bioc/html/rhdf5.html)). Create a table format store like this:
+可以编写一个``HDFStore`` 对象，该对象可以使用``rhdf5`` 库 ([Package website](https://www.bioconductor.org/packages/release/bioc/html/rhdf5.html))轻松导入到``R`` 中。创建表格存储可以像这样：
 
 ``` python
 In [497]: df_for_r = pd.DataFrame({"first": np.random.rand(100),
@@ -6120,10 +5862,7 @@ Out[501]:
 File path: export.h5
 
 ```
-
-In R this file can be read into a ``data.frame`` object using the ``rhdf5``
-library. The following example function reads the corresponding column names
-and data values from the values and assembles them into a ``data.frame``:
+在这个R文件中使用``rhdf5``库能读入数据到``data.frame``对象中。下面这个示例函数从值中读取相应的列名和数据值，再组合它们到``data.frame``中:
 
 ``` R
 # Load values and column names for all datasets from corresponding nodes and
@@ -6158,7 +5897,7 @@ return(data)
 
 ```
 
-Now you can import the ``DataFrame`` into R:
+现在你能导入 ``DataFrame`` 到R中:
 
 ``` R
 > data = loadhdf5data("transfer.hdf5")
@@ -6173,36 +5912,19 @@ Now you can import the ``DataFrame`` into R:
 
 ```
 
-::: tip Note
+::: tip 注意
 
-The R function lists the entire HDF5 file’s contents and assembles the
-``data.frame`` object from all matching nodes, so use this only as a
-starting point if you have stored multiple ``DataFrame`` objects to a
-single HDF5 file.
+R函数列出了整个HDF5文件的内容，并从所有匹配的节点组合了``data.frame`` 对象，因此，如果你已将多个``DataFrame``对象存储到单个HDF5文件中，那么只能用它作为起点。
 
 :::
 
-### Performance
+### 性能
 
-- ``tables`` format come with a writing performance penalty as compared to
-``fixed`` stores. The benefit is the ability to append/delete and
-query (potentially very large amounts of data).  Write times are
-generally longer as compared with regular stores. Query times can
-be quite fast, especially on an indexed axis.
-- You can pass ``chunksize=`` to ``append``, specifying the
-write chunksize (default is 50000). This will significantly lower
-your memory usage on writing.
-- You can pass ``expectedrows=`` to the first ``append``,
-to set the TOTAL number of expected rows that ``PyTables`` will
-expected. This will optimize read/write performance.
-- Duplicate rows can be written to tables, but are filtered out in
-selection (with the last items being selected; thus a table is
-unique on major, minor pairs)
-- A ``PerformanceWarning`` will be raised if you are attempting to
-store types that will be pickled by PyTables (rather than stored as
-endemic types). See
-[Here](https://stackoverflow.com/questions/14355151/how-to-make-pandas-hdfstore-put-operation-faster/14370190#14370190)
-for more information and some solutions.
+- 同``fixed``存储相比较，``tables`` 格式会有写入的性能损失。这样的好处就是便于（大量的数据）能添加/删除和查询。与常规存储相比，写入时间通常更长。但是查询的时间就相当快，特别是在有索引的轴上。
+- 你可以传递 ``chunksize=`` 给``append``, 指定写入块的大小（默认是50000）。这将极大地降低写入时地内存使用情况。 
+- 你可以将`` expectedrows =``传递给第一个``append``来设置``PyTables``将预期的总行数。 这将优化读取/写入性能。
+- 重复的行可以写入表格，但是在选取的时候会进行筛选（会选最后一项；然后表在主要、次要对上是唯一的）。
+- 如果你企图存储已经序列化的PyTables类型数据（而不是存储为本地数据），那将引发A ``PerformanceWarning`` 。更多信息和解决办法参见[Here](https://stackoverflow.com/questions/14355151/how-to-make-pandas-hdfstore-put-operation-faster/14370190#14370190)。
 
 ## Feather
 
