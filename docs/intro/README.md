@@ -65,7 +65,7 @@ $ conda install Pandas
 
 在Windows、Linux和MacOS上，[所有受支持的python版本](http://Pandas.pydata.org/Pandas-docs/stable/install.html#python-version-support)都可以使用包。
 
-pands 也被上传到[PyPI](https://pypi.org/project/Pandas/)中，并且可以通过以下方式安装：
+pandas 也被上传到[PyPI](https://pypi.org/project/Pandas/)中，并且可以通过以下方式安装：
 
 ``` bash
 $ pip install Pandas
