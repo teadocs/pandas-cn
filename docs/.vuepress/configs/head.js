@@ -145,9 +145,9 @@ module.exports = [
       }
     });
   }
-  document.addEventListener('readystatechange', function (e) {
-    if (document.readyState == 'complete') {
-      asyncQuerySelector('#valine-vuepress-comment > .vwrap', function (parentNode) {
+  function init() {
+    asyncQuerySelector('#valine-vuepress-comment > .vwrap', function (parentNode) {
+      if (!document.querySelector('.forum-tips')) {
         let newStyle = document.createElement('style');
         newStyle.innerHTML = styleContent;
         parentNode.appendChild(newStyle);
@@ -155,9 +155,26 @@ module.exports = [
         newDiv.className = 'forum-tips';
         newDiv.innerHTML = divContent;
         parentNode.appendChild(newDiv);
-      });
+      }
+    });
+  }
+  document.addEventListener('readystatechange', function (e) {
+    if (document.readyState == 'complete') {
+      init();
     }
   });
+  (function() {
+    var url1 = window.location.href;
+    var url2 = window.location.href;
+    setInterval(function() {
+      if (url1 === url2) {
+        url2 = window.location.href;
+      } else {
+        url1 = url2;
+        init();
+      }
+    }, 200);
+  })();
 })();
 `]
 ];
