@@ -135,16 +135,27 @@ module.exports = [
       评论系统已退役，点击进入<b>Pandas中文社区</b>，体验功能更强大的交流社区。
     </a>
   \`
+  function asyncQuerySelector(selector, callback) {
+    let el = '';
+    let timer = window.setInterval(function() {
+      el = document.querySelector(selector);
+      if (el) {
+        window.clearInterval(timer);
+        callback(el);
+      }
+    });
+  }
   document.addEventListener('readystatechange', function (e) {
     if (document.readyState == 'complete') {
-      let parentNode = document.querySelector('#valine-vuepress-comment > .vwrap');
-      let newStyle = document.createElement('style');
-      newStyle.innerHTML = styleContent;
-      parentNode.appendChild(newStyle);
-      let newDiv = document.createElement('div');
-      newDiv.className = 'forum-tips';
-      newDiv.innerHTML = divContent;
-      parentNode.appendChild(newDiv);
+      asyncQuerySelector('#valine-vuepress-comment > .vwrap', function (parentNode) {
+        let newStyle = document.createElement('style');
+        newStyle.innerHTML = styleContent;
+        parentNode.appendChild(newStyle);
+        let newDiv = document.createElement('div');
+        newDiv.className = 'forum-tips';
+        newDiv.innerHTML = divContent;
+        parentNode.appendChild(newDiv);
+      });
     }
   });
 })();
