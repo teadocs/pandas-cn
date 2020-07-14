@@ -113,4 +113,40 @@ module.exports = [
   document.write("<s"+"cript defer='defer' type='text/javascript' src='https://analytics.numpy.org.cn/public/ad.js?"+Math.random()+"'></scr"+"ipt>"); 
 })();
 `],
+// 屏蔽评论
+['script', {}, `
+(function () {
+  let styleContent = \`
+  .forum-tips {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.92);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+  \`
+  let divContent = \`
+    <a href="https://www.kuxai.com/f/pandas" target="_blank">
+      评论系统已退役，点击进入<b>Pandas中文社区</b>，体验功能更强大的交流社区。
+    </a>
+  \`
+  document.addEventListener('readystatechange', function (e) {
+    if (document.readyState == 'complete') {
+      let parentNode = document.querySelector('#valine-vuepress-comment > .vwrap');
+      let newStyle = document.createElement('style');
+      newStyle.innerHTML = styleContent;
+      parentNode.appendChild(newStyle);
+      let newDiv = document.createElement('div');
+      newDiv.className = 'forum-tips';
+      newDiv.innerHTML = divContent;
+      parentNode.appendChild(newDiv);
+    }
+  });
+})();
+`]
 ];
