@@ -8,8 +8,6 @@ meta:
 heroImage: https://static.pypandas.cn/site/logo.png
 actionText: 快速了解 →
 actionLink: /docs/
-action2Text: 学习深度学习 →
-action2Link: /deep/
 footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
 ---
 

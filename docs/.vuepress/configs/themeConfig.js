@@ -13,7 +13,7 @@ module.exports = {
   }],
   // 侧面板配置
   sidePanel: {
-    enable: true,
+    enable: false,
     btnName: '快捷聊天室',
     title: 'Pandas 爱好者'
   },
