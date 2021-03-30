@@ -14,9 +14,9 @@
     <div class="left-box item">
       <h4>👥兄弟文档</h4>
       <ul>
-        <!-- <li>
-          <a href="https://www.paddlepaddle.org.cn/?from=pandas-cn" target="_blank">PaddlePaddle 中文文档</a>
-        </li> -->
+        <li>
+          <a href="https://megengine.org.cn/doc/stable/zh/getting-started/index.html?from=pandas-cn" target="_blank">MegEngine (๑•̀ㅂ•́)و 中文文档</a>
+        </li>
         <li>
           <a href="https://www.numpy.org.cn/" target="_blank">NumPy 中文网</a>
         </li>
