@@ -8,10 +8,14 @@ module.exports = [
     link: '/about/'
   },
   {
-    text: '深度学习',
-    link: '/deep/',
-    important: true
+    text: 'Pandas 论坛',
+    link: 'https://www.kuxai.com/f/pandas'
   },
+  // {
+  //   text: '深度学习',
+  //   link: '/deep/', 
+  //   important: true
+  // },
   {
     text: '获取与安装',
     link: '/get_pandas/'
