@@ -7,7 +7,7 @@
           <a href="/logo/">Pandas logo 捐赠名单 👍</a>
         </li>
         <li>
-          <a href="http://www.beian.miit.gov.cn/" target="_blank">粤ICP备16025085号-8</a>
+          <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备16025085号-8</a>
         </li>
       </ul>
     </div>
