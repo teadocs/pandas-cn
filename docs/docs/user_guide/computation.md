@@ -410,7 +410,7 @@ In [47]: r.mean().plot(style='k')
 Out[47]: <matplotlib.axes._subplots.AxesSubplot at 0x7f66048bdef0>
 ```
 
-![rolling_mean_ex](https://static.pypandas.cn/public/static/images/rolling_mean_ex.png)
+![rolling_mean_ex](https://static.pypandas.thto.net/public/static/images/rolling_mean_ex.png)
 
 They can also be applied to DataFrame objects. This is really just syntactic
 sugar for applying the moving window operator to all of the DataFrame’s columns:
@@ -432,7 +432,7 @@ array([<matplotlib.axes._subplots.AxesSubplot object at 0x7f66075a7f60>,
       dtype=object)
 ```
 
-![rolling_mean_frame](https://static.pypandas.cn/public/static/images/rolling_mean_frame.png)
+![rolling_mean_frame](https://static.pypandas.thto.net/public/static/images/rolling_mean_frame.png)
 
 ### Method summary
 
@@ -469,7 +469,7 @@ In [52]: s.rolling(window=60).apply(mad, raw=True).plot(style='k')
 Out[52]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f795fac8>
 ```
 
-![rolling_apply_ex](https://static.pypandas.cn/public/static/images/rolling_apply_ex.png)
+![rolling_apply_ex](https://static.pypandas.thto.net/public/static/images/rolling_apply_ex.png)
 
 ### Rolling windows
 
@@ -934,7 +934,7 @@ In [86]: correls.unstack(1)[('A', 'C')].plot()
 Out[86]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f8dc79e8>
 ```
 
-![rolling_corr_pairwise_ex](https://static.pypandas.cn/public/static/images/rolling_corr_pairwise_ex.png)
+![rolling_corr_pairwise_ex](https://static.pypandas.thto.net/public/static/images/rolling_corr_pairwise_ex.png)
 
 ## Aggregation
 
@@ -1284,7 +1284,7 @@ In [108]: s.expanding().mean().plot(style='k')
 Out[108]: <matplotlib.axes._subplots.AxesSubplot at 0x7f6607b14400>
 ```
 
-![expanding_mean_frame](https://static.pypandas.cn/public/static/images/expanding_mean_frame.png)
+![expanding_mean_frame](https://static.pypandas.thto.net/public/static/images/expanding_mean_frame.png)
 
 ## Exponentially weighted windows
 
@@ -1409,7 +1409,7 @@ In [110]: s.ewm(span=20).mean().plot(style='k')
 Out[110]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f7537278>
 ```
 
-![ewma_ex](https://static.pypandas.cn/public/static/images/ewma_ex.png)
+![ewma_ex](https://static.pypandas.thto.net/public/static/images/ewma_ex.png)
 
 EWM has a ``min_periods`` argument, which has the same
 meaning it does for all the ``.expanding`` and ``.rolling`` methods:

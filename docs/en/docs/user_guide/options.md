@@ -644,7 +644,7 @@ Out[93]:
 1  日本    しのぶ
 ```
 
-![option_unicode01](https://static.pypandas.cn/public/static/images/option_unicode01.png)
+![option_unicode01](https://static.pypandas.thto.net/public/static/images/option_unicode01.png)
 
 Enabling ``display.unicode.east_asian_width`` allows pandas to check each character’s “East Asian Width” property.
 These characters can be aligned properly by setting this option to ``True``. However, this will result in longer render
@@ -660,7 +660,7 @@ Out[95]:
 1  日本  しのぶ
 ```
 
-![option_unicode02](https://static.pypandas.cn/public/static/images/option_unicode02.png)
+![option_unicode02](https://static.pypandas.thto.net/public/static/images/option_unicode02.png)
 
 In addition, Unicode characters whose width is “Ambiguous” can either be 1 or 2 characters wide depending on the
 terminal setting or encoding. The option ``display.unicode.ambiguous_as_wide`` can be used to handle the ambiguity.
@@ -677,7 +677,7 @@ Out[97]:
 1   ¡¡   ¡¡
 ```
 
-![option_unicode03](https://static.pypandas.cn/public/static/images/option_unicode03.png)
+![option_unicode03](https://static.pypandas.thto.net/public/static/images/option_unicode03.png)
 
 Enabling ``display.unicode.ambiguous_as_wide`` makes pandas interpret these characters’ widths to be 2.
 (Note that this option will only be effective when ``display.unicode.east_asian_width`` is enabled.)
@@ -694,7 +694,7 @@ Out[99]:
 1  ¡¡  ¡¡
 ```
 
-![option_unicode04](https://static.pypandas.cn/public/static/images/option_unicode04.png)
+![option_unicode04](https://static.pypandas.thto.net/public/static/images/option_unicode04.png)
 
 ## Table schema display
 

@@ -2401,13 +2401,13 @@ Out[263]:
 
 ``DataFrame.query()````numexpr``对于大型帧，使用比Python略快。
 
-![query-perf](https://static.pypandas.cn/public/static/images/query-perf.png)
+![query-perf](https://static.pypandas.thto.net/public/static/images/query-perf.png)
 
 ::: tip 注意
 
 如果您的框架超过大约200,000行，您将只看到使用``numexpr``引擎的性能优势``DataFrame.query()``。
 
-![query-perf-small](https://static.pypandas.cn/public/static/images/query-perf-small.png)
+![query-perf-small](https://static.pypandas.thto.net/public/static/images/query-perf-small.png)
 
 :::
 

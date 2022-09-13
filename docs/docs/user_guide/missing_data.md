@@ -638,7 +638,7 @@ In [63]: ts.plot()
 Out[63]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d8ac0eb8>
 ```
 
-![series_before_interpolate](https://static.pypandas.cn/public/static/images/series_before_interpolate.png)
+![series_before_interpolate](https://static.pypandas.thto.net/public/static/images/series_before_interpolate.png)
 
 ``` python
 In [64]: ts.interpolate()
@@ -663,7 +663,7 @@ In [66]: ts.interpolate().plot()
 Out[66]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d8adfeb8>
 ```
 
-![series_interpolate](https://static.pypandas.cn/public/static/images/series_interpolate.png)
+![series_interpolate](https://static.pypandas.thto.net/public/static/images/series_interpolate.png)
 
 Index aware interpolation is available via the ``method`` keyword:
 
@@ -842,7 +842,7 @@ In [87]: df.plot()
 Out[87]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d8a196a0>
 ```
 
-![compare_interpolations](https://static.pypandas.cn/public/static/images/compare_interpolations.png)
+![compare_interpolations](https://static.pypandas.thto.net/public/static/images/compare_interpolations.png)
 
 Another use case is interpolation at *new* values.
 Suppose you have 100 observations from some distribution. And let’s suppose

@@ -37,7 +37,7 @@ In [5]: ts.plot()
 Out[5]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d8c0ac50>
 ```
 
-![series_plot_basic](https://static.pypandas.cn/public/static/images/series_plot_basic.png)
+![series_plot_basic](https://static.pypandas.thto.net/public/static/images/series_plot_basic.png)
 
 If the index consists of dates, it calls [``gcf().autofmt_xdate()``](https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.autofmt_xdate)
 to try to format the x-axis nicely as per above.
@@ -56,7 +56,7 @@ In [8]: plt.figure();
 In [9]: df.plot();
 ```
 
-![frame_plot_basic](https://static.pypandas.cn/public/static/images/frame_plot_basic.png)
+![frame_plot_basic](https://static.pypandas.thto.net/public/static/images/frame_plot_basic.png)
 
 You can plot one column versus another using the *x* and *y* keywords in
 [``plot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html#pandas.DataFrame.plot):
@@ -70,7 +70,7 @@ In [12]: df3.plot(x='A', y='B')
 Out[12]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d97c1668>
 ```
 
-![df_plot_xy](https://static.pypandas.cn/public/static/images/df_plot_xy.png)
+![df_plot_xy](https://static.pypandas.thto.net/public/static/images/df_plot_xy.png)
 
 ::: tip Note
 
@@ -102,7 +102,7 @@ In [13]: plt.figure();
 In [14]: df.iloc[5].plot(kind='bar');
 ```
 
-![bar_plot_ex](https://static.pypandas.cn/public/static/images/bar_plot_ex.png)
+![bar_plot_ex](https://static.pypandas.thto.net/public/static/images/bar_plot_ex.png)
 
 You can also create these other plots using the methods ``DataFrame.plot.`` instead of providing the ``kind`` keyword argument. This makes it easier to discover plot methods and the specific arguments they use:
 
@@ -145,7 +145,7 @@ Out[18]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da446a90>
 In [19]: plt.axhline(0, color='k');
 ```
 
-![bar_plot_ex](https://static.pypandas.cn/public/static/images/bar_plot_ex.png)
+![bar_plot_ex](https://static.pypandas.thto.net/public/static/images/bar_plot_ex.png)
 
 Calling a DataFrame’s [``plot.bar()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.bar.html#pandas.DataFrame.plot.bar) method produces a multiple
 bar plot:
@@ -156,7 +156,7 @@ In [20]: df2 = pd.DataFrame(np.random.rand(10, 4), columns=['a', 'b', 'c', 'd'])
 In [21]: df2.plot.bar();
 ```
 
-![bar_plot_multi_ex](https://static.pypandas.cn/public/static/images/bar_plot_multi_ex.png)
+![bar_plot_multi_ex](https://static.pypandas.thto.net/public/static/images/bar_plot_multi_ex.png)
 
 To produce a stacked bar plot, pass ``stacked=True``:
 
@@ -164,7 +164,7 @@ To produce a stacked bar plot, pass ``stacked=True``:
 In [22]: df2.plot.bar(stacked=True);
 ```
 
-![bar_plot_stacked_ex](https://static.pypandas.cn/public/static/images/bar_plot_stacked_ex.png)
+![bar_plot_stacked_ex](https://static.pypandas.thto.net/public/static/images/bar_plot_stacked_ex.png)
 
 To get horizontal bar plots, use the ``barh`` method:
 
@@ -172,7 +172,7 @@ To get horizontal bar plots, use the ``barh`` method:
 In [23]: df2.plot.barh(stacked=True);
 ```
 
-![barh_plot_stacked_ex](https://static.pypandas.cn/public/static/images/barh_plot_stacked_ex.png)
+![barh_plot_stacked_ex](https://static.pypandas.thto.net/public/static/images/barh_plot_stacked_ex.png)
 
 ### Histograms
 
@@ -189,7 +189,7 @@ In [26]: df4.plot.hist(alpha=0.5)
 Out[26]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da345e48>
 ```
 
-![hist_new](https://static.pypandas.cn/public/static/images/hist_new.png)
+![hist_new](https://static.pypandas.thto.net/public/static/images/hist_new.png)
 
 A histogram can be stacked using ``stacked=True``. Bin size can be changed
 using the ``bins`` keyword.
@@ -201,7 +201,7 @@ In [28]: df4.plot.hist(stacked=True, bins=20)
 Out[28]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da30b9b0>
 ```
 
-![hist_new_stacked](https://static.pypandas.cn/public/static/images/hist_new_stacked.png)
+![hist_new_stacked](https://static.pypandas.thto.net/public/static/images/hist_new_stacked.png)
 
 You can pass other keywords supported by matplotlib ``hist``. For example,
 horizontal and cumulative histograms can be drawn by
@@ -214,7 +214,7 @@ In [30]: df4['a'].plot.hist(orientation='horizontal', cumulative=True)
 Out[30]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da69fd68>
 ```
 
-![hist_new_kwargs](https://static.pypandas.cn/public/static/images/hist_new_kwargs.png)
+![hist_new_kwargs](https://static.pypandas.thto.net/public/static/images/hist_new_kwargs.png)
 
 See the [``hist``](https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist) method and the
 [matplotlib hist documentation](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.hist) for more.
@@ -228,7 +228,7 @@ In [32]: df['A'].diff().hist()
 Out[32]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65dac9d240>
 ```
 
-![hist_plot_ex](https://static.pypandas.cn/public/static/images/hist_plot_ex.png)
+![hist_plot_ex](https://static.pypandas.thto.net/public/static/images/hist_plot_ex.png)
 
 [``DataFrame.hist()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.hist.html#pandas.DataFrame.hist) plots the histograms of the columns on multiple
 subplots:
@@ -246,7 +246,7 @@ array([[<matplotlib.axes._subplots.AxesSubplot object at 0x7f6601550cc0>,
       dtype=object)
 ```
 
-![frame_hist_ex](https://static.pypandas.cn/public/static/images/frame_hist_ex.png)
+![frame_hist_ex](https://static.pypandas.thto.net/public/static/images/frame_hist_ex.png)
 
 The ``by`` keyword can be specified to plot grouped histograms:
 
@@ -262,7 +262,7 @@ array([[<matplotlib.axes._subplots.AxesSubplot object at 0x7f6601550ef0>,
       dtype=object)
 ```
 
-![grouped_hist](https://static.pypandas.cn/public/static/images/grouped_hist.png)
+![grouped_hist](https://static.pypandas.thto.net/public/static/images/grouped_hist.png)
 
 ### Box plots
 
@@ -279,7 +279,7 @@ In [38]: df.plot.box()
 Out[38]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da17f898>
 ```
 
-![box_plot_new](https://static.pypandas.cn/public/static/images/box_plot_new.png)
+![box_plot_new](https://static.pypandas.thto.net/public/static/images/box_plot_new.png)
 
 Boxplot can be colorized by passing ``color`` keyword. You can pass a ``dict``
 whose keys are ``boxes``, ``whiskers``, ``medians`` and ``caps``.
@@ -303,7 +303,7 @@ In [40]: df.plot.box(color=color, sym='r+')
 Out[40]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da880b00>
 ```
 
-![box_new_colorize](https://static.pypandas.cn/public/static/images/box_new_colorize.png)
+![box_new_colorize](https://static.pypandas.thto.net/public/static/images/box_new_colorize.png)
 
 Also, you can pass other keywords supported by matplotlib ``boxplot``.
 For example, horizontal and custom-positioned boxplot can be drawn by
@@ -314,7 +314,7 @@ In [41]: df.plot.box(vert=False, positions=[1, 4, 5, 6, 8])
 Out[41]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65db18ffd0>
 ```
 
-![box_new_kwargs](https://static.pypandas.cn/public/static/images/box_new_kwargs.png)
+![box_new_kwargs](https://static.pypandas.thto.net/public/static/images/box_new_kwargs.png)
 
 See the [``boxplot``](https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.boxplot.html#matplotlib.axes.Axes.boxplot) method and the
 [matplotlib boxplot documentation](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.boxplot) for more.
@@ -329,7 +329,7 @@ In [43]: plt.figure();
 In [44]: bp = df.boxplot()
 ```
 
-![box_plot_ex](https://static.pypandas.cn/public/static/images/box_plot_ex.png)
+![box_plot_ex](https://static.pypandas.thto.net/public/static/images/box_plot_ex.png)
 
 You can create a stratified boxplot using the ``by`` keyword argument to create
 groupings.  For instance,
@@ -344,7 +344,7 @@ In [47]: plt.figure();
 In [48]: bp = df.boxplot(by='X')
 ```
 
-![box_plot_ex2](https://static.pypandas.cn/public/static/images/box_plot_ex2.png)
+![box_plot_ex2](https://static.pypandas.thto.net/public/static/images/box_plot_ex2.png)
 
 You can also pass a subset of columns to plot, as well as group by multiple
 columns:
@@ -361,7 +361,7 @@ In [52]: plt.figure();
 In [53]: bp = df.boxplot(column=['Col1', 'Col2'], by=['X', 'Y'])
 ```
 
-![box_plot_ex3](https://static.pypandas.cn/public/static/images/box_plot_ex3.png)
+![box_plot_ex3](https://static.pypandas.thto.net/public/static/images/box_plot_ex3.png)
 
 ::: danger Warning
 
@@ -398,7 +398,7 @@ In [57]: df_box.loc[df_box['g'] == 'B', 1] += 3
 In [58]: bp = df_box.boxplot(by='g')
 ```
 
-![boxplot_groupby](https://static.pypandas.cn/public/static/images/boxplot_groupby.png)
+![boxplot_groupby](https://static.pypandas.thto.net/public/static/images/boxplot_groupby.png)
 
 The subplots above are split by the numeric columns first, then the value of
 the ``g`` column. Below the subplots are first split by the value of ``g``,
@@ -408,7 +408,7 @@ then by the numeric columns.
 In [59]: bp = df_box.groupby('g').boxplot()
 ```
 
-![groupby_boxplot_vis](https://static.pypandas.cn/public/static/images/groupby_boxplot_vis.png)
+![groupby_boxplot_vis](https://static.pypandas.thto.net/public/static/images/groupby_boxplot_vis.png)
 
 ### Area plot
 
@@ -423,7 +423,7 @@ In [60]: df = pd.DataFrame(np.random.rand(10, 4), columns=['a', 'b', 'c', 'd'])
 In [61]: df.plot.area();
 ```
 
-![area_plot_stacked](https://static.pypandas.cn/public/static/images/area_plot_stacked.png)
+![area_plot_stacked](https://static.pypandas.thto.net/public/static/images/area_plot_stacked.png)
 
 To produce an unstacked plot, pass ``stacked=False``. Alpha value is set to 0.5 unless otherwise specified:
 
@@ -431,7 +431,7 @@ To produce an unstacked plot, pass ``stacked=False``. Alpha value is set to 0.5 
 In [62]: df.plot.area(stacked=False);
 ```
 
-![area_plot_unstacked](https://static.pypandas.cn/public/static/images/area_plot_unstacked.png)
+![area_plot_unstacked](https://static.pypandas.thto.net/public/static/images/area_plot_unstacked.png)
 
 ### Scatter plot
 
@@ -445,7 +445,7 @@ In [63]: df = pd.DataFrame(np.random.rand(50, 4), columns=['a', 'b', 'c', 'd'])
 In [64]: df.plot.scatter(x='a', y='b');
 ```
 
-![scatter_plot](https://static.pypandas.cn/public/static/images/scatter_plot.png)
+![scatter_plot](https://static.pypandas.thto.net/public/static/images/scatter_plot.png)
 
 To plot multiple column groups in a single axes, repeat ``plot`` method specifying target ``ax``.
 It is recommended to specify ``color`` and ``label`` keywords to distinguish each groups.
@@ -456,7 +456,7 @@ In [65]: ax = df.plot.scatter(x='a', y='b', color='DarkBlue', label='Group 1');
 In [66]: df.plot.scatter(x='c', y='d', color='DarkGreen', label='Group 2', ax=ax);
 ```
 
-![scatter_plot_repeated](https://static.pypandas.cn/public/static/images/scatter_plot_repeated.png)
+![scatter_plot_repeated](https://static.pypandas.thto.net/public/static/images/scatter_plot_repeated.png)
 
 The keyword ``c`` may be given as the name of a column to provide colors for
 each point:
@@ -465,7 +465,7 @@ each point:
 In [67]: df.plot.scatter(x='a', y='b', c='c', s=50);
 ```
 
-![scatter_plot_colored](https://static.pypandas.cn/public/static/images/scatter_plot_colored.png)
+![scatter_plot_colored](https://static.pypandas.thto.net/public/static/images/scatter_plot_colored.png)
 
 You can pass other keywords supported by matplotlib
 [``scatter``](https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.scatter.html#matplotlib.axes.Axes.scatter). The example  below shows a
@@ -475,7 +475,7 @@ bubble chart using a column of the ``DataFrame`` as the bubble size.
 In [68]: df.plot.scatter(x='a', y='b', s=df['c'] * 200);
 ```
 
-![scatter_plot_bubble](https://static.pypandas.cn/public/static/images/scatter_plot_bubble.png)
+![scatter_plot_bubble](https://static.pypandas.thto.net/public/static/images/scatter_plot_bubble.png)
 
 See the [``scatter``](https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.scatter.html#matplotlib.axes.Axes.scatter) method and the
 [matplotlib scatter documentation](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.scatter) for more.
@@ -495,7 +495,7 @@ In [71]: df.plot.hexbin(x='a', y='b', gridsize=25)
 Out[71]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d96e4fd0>
 ```
 
-![hexbin_plot](https://static.pypandas.cn/public/static/images/hexbin_plot.png)
+![hexbin_plot](https://static.pypandas.thto.net/public/static/images/hexbin_plot.png)
 
 A useful keyword argument is ``gridsize``; it controls the number of hexagons
 in the x-direction, and defaults to 100. A larger ``gridsize`` means more, smaller
@@ -520,7 +520,7 @@ In [75]: df.plot.hexbin(x='a', y='b', C='z', reduce_C_function=np.max, gridsize=
 Out[75]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d98ea390>
 ```
 
-![hexbin_plot_agg](https://static.pypandas.cn/public/static/images/hexbin_plot_agg.png)
+![hexbin_plot_agg](https://static.pypandas.thto.net/public/static/images/hexbin_plot_agg.png)
 
 See the [``hexbin``](https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.hexbin.html#matplotlib.axes.Axes.hexbin) method and the
 [matplotlib hexbin documentation](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.hexbin) for more.
@@ -540,7 +540,7 @@ In [77]: series.plot.pie(figsize=(6, 6))
 Out[77]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da5ff278>
 ```
 
-![series_pie_plot](https://static.pypandas.cn/public/static/images/series_pie_plot.png)
+![series_pie_plot](https://static.pypandas.thto.net/public/static/images/series_pie_plot.png)
 
 For pie plots it’s best to use square figures, i.e. a figure aspect ratio 1.
 You can create the figure with equal width and height, or force the aspect ratio
@@ -565,7 +565,7 @@ array([<matplotlib.axes._subplots.AxesSubplot object at 0x7f65d915b0b8>,
       dtype=object)
 ```
 
-![df_pie_plot](https://static.pypandas.cn/public/static/images/df_pie_plot.png)
+![df_pie_plot](https://static.pypandas.thto.net/public/static/images/df_pie_plot.png)
 
 You can use the ``labels`` and ``colors`` keywords to specify the labels and colors of each wedge.
 
@@ -587,7 +587,7 @@ In [80]: series.plot.pie(labels=['AA', 'BB', 'CC', 'DD'], colors=['r', 'g', 'b',
 Out[80]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da0be4a8>
 ```
 
-![series_pie_plot_options](https://static.pypandas.cn/public/static/images/series_pie_plot_options.png)
+![series_pie_plot_options](https://static.pypandas.thto.net/public/static/images/series_pie_plot_options.png)
 
 If you pass values whose sum total is less than 1.0, matplotlib draws a semicircle.
 
@@ -598,7 +598,7 @@ In [82]: series.plot.pie(figsize=(6, 6))
 Out[82]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d92543c8>
 ```
 
-![series_pie_plot_semi](https://static.pypandas.cn/public/static/images/series_pie_plot_semi.png)
+![series_pie_plot_semi](https://static.pypandas.thto.net/public/static/images/series_pie_plot_semi.png)
 
 See the [matplotlib pie documentation](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.pie) for more.
 
@@ -662,7 +662,7 @@ array([[<matplotlib.axes._subplots.AxesSubplot object at 0x7f65dc209da0>,
       dtype=object)
 ```
 
-![scatter_matrix_kde](https://static.pypandas.cn/public/static/images/scatter_matrix_kde.png)
+![scatter_matrix_kde](https://static.pypandas.thto.net/public/static/images/scatter_matrix_kde.png)
 
 ### Density plot
 
@@ -675,7 +675,7 @@ In [87]: ser.plot.kde()
 Out[87]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d909c828>
 ```
 
-![kde_plot](https://static.pypandas.cn/public/static/images/kde_plot.png)
+![kde_plot](https://static.pypandas.thto.net/public/static/images/kde_plot.png)
 
 ### Andrews curves
 
@@ -700,7 +700,7 @@ In [91]: andrews_curves(data, 'Name')
 Out[91]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da6e5518>
 ```
 
-![andrews_curves](https://static.pypandas.cn/public/static/images/andrews_curves.png)
+![andrews_curves](https://static.pypandas.thto.net/public/static/images/andrews_curves.png)
 
 ### Parallel coordinates
 
@@ -724,7 +724,7 @@ In [95]: parallel_coordinates(data, 'Name')
 Out[95]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d96fbc88>
 ```
 
-![parallel_coordinates](https://static.pypandas.cn/public/static/images/parallel_coordinates.png)
+![parallel_coordinates](https://static.pypandas.thto.net/public/static/images/parallel_coordinates.png)
 
 ### Lag plot
 
@@ -748,7 +748,7 @@ In [100]: lag_plot(data)
 Out[100]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65da8b5e10>
 ```
 
-![lag_plot](https://static.pypandas.cn/public/static/images/lag_plot.png)
+![lag_plot](https://static.pypandas.thto.net/public/static/images/lag_plot.png)
 
 ### Autocorrelation plot
 
@@ -776,7 +776,7 @@ In [105]: autocorrelation_plot(data)
 Out[105]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d19556d8>
 ```
 
-![autocorrelation_plot](https://static.pypandas.cn/public/static/images/autocorrelation_plot.png)
+![autocorrelation_plot](https://static.pypandas.thto.net/public/static/images/autocorrelation_plot.png)
 
 ### Bootstrap plot
 
@@ -795,7 +795,7 @@ In [108]: bootstrap_plot(data, size=50, samples=500, color='grey')
 Out[108]: <Figure size 640x480 with 6 Axes>
 ```
 
-![bootstrap_plot](https://static.pypandas.cn/public/static/images/bootstrap_plot.png)
+![bootstrap_plot](https://static.pypandas.thto.net/public/static/images/bootstrap_plot.png)
 
 ### RadViz
 
@@ -826,7 +826,7 @@ In [112]: radviz(data, 'Name')
 Out[112]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f66bd630>
 ```
 
-![radviz](https://static.pypandas.cn/public/static/images/radviz.png)
+![radviz](https://static.pypandas.thto.net/public/static/images/radviz.png)
 
 ## Plot Formatting
 
@@ -852,7 +852,7 @@ In [113]: plt.figure();
 In [114]: ts.plot(style='k--', label='Series');
 ```
 
-![series_plot_basic2](https://static.pypandas.cn/public/static/images/series_plot_basic2.png)
+![series_plot_basic2](https://static.pypandas.thto.net/public/static/images/series_plot_basic2.png)
 
 For each kind of plot (e.g. *line*, *bar*, *scatter*) any additional arguments
 keywords are passed along to the corresponding matplotlib function
@@ -877,7 +877,7 @@ In [117]: df.plot(legend=False)
 Out[117]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65dbdbc0f0>
 ```
 
-![frame_plot_basic_noleg](https://static.pypandas.cn/public/static/images/frame_plot_basic_noleg.png)
+![frame_plot_basic_noleg](https://static.pypandas.thto.net/public/static/images/frame_plot_basic_noleg.png)
 
 ### Scales
 
@@ -894,7 +894,7 @@ In [120]: ts.plot(logy=True)
 Out[120]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65dbefdf98>
 ```
 
-![series_plot_logy](https://static.pypandas.cn/public/static/images/series_plot_logy.png)
+![series_plot_logy](https://static.pypandas.thto.net/public/static/images/series_plot_logy.png)
 
 See also the ``logx`` and ``loglog`` keyword arguments.
 
@@ -910,7 +910,7 @@ In [122]: df.B.plot(secondary_y=True, style='g')
 Out[122]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f6297780>
 ```
 
-![series_plot_secondary_y](https://static.pypandas.cn/public/static/images/series_plot_secondary_y.png)
+![series_plot_secondary_y](https://static.pypandas.thto.net/public/static/images/series_plot_secondary_y.png)
 
 To plot some columns in a ``DataFrame``, give the column names to the ``secondary_y``
 keyword:
@@ -928,7 +928,7 @@ In [126]: ax.right_ax.set_ylabel('AB scale')
 Out[126]: Text(0, 0.5, 'AB scale')
 ```
 
-![frame_plot_secondary_y](https://static.pypandas.cn/public/static/images/frame_plot_secondary_y.png)
+![frame_plot_secondary_y](https://static.pypandas.thto.net/public/static/images/frame_plot_secondary_y.png)
 
 Note that the columns plotted on the secondary y-axis is automatically marked
 with “(right)” in the legend. To turn off the automatic marking, use the
@@ -942,7 +942,7 @@ In [128]: df.plot(secondary_y=['A', 'B'], mark_right=False)
 Out[128]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65f6102390>
 ```
 
-![frame_plot_secondary_y_no_right](https://static.pypandas.cn/public/static/images/frame_plot_secondary_y_no_right.png)
+![frame_plot_secondary_y_no_right](https://static.pypandas.thto.net/public/static/images/frame_plot_secondary_y_no_right.png)
 
 ### Suppressing tick resolution adjustment
 
@@ -961,7 +961,7 @@ In [130]: df.A.plot()
 Out[130]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65dc39f978>
 ```
 
-![ser_plot_suppress](https://static.pypandas.cn/public/static/images/ser_plot_suppress.png)
+![ser_plot_suppress](https://static.pypandas.thto.net/public/static/images/ser_plot_suppress.png)
 
 Using the ``x_compat`` parameter, you can suppress this behavior:
 
@@ -973,7 +973,7 @@ In [132]: df.A.plot(x_compat=True)
 Out[132]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65dc39f1d0>
 ```
 
-![ser_plot_suppress_parm](https://static.pypandas.cn/public/static/images/ser_plot_suppress_parm.png)
+![ser_plot_suppress_parm](https://static.pypandas.thto.net/public/static/images/ser_plot_suppress_parm.png)
 
 If you have more than one plot that needs to be suppressed, the ``use`` method
 in ``pandas.plotting.plot_params`` can be used in a *with statement*:
@@ -989,7 +989,7 @@ In [134]: with pd.plotting.plot_params.use('x_compat', True):
    .....:
 ```
 
-![ser_plot_suppress_context](https://static.pypandas.cn/public/static/images/ser_plot_suppress_context.png)
+![ser_plot_suppress_context](https://static.pypandas.thto.net/public/static/images/ser_plot_suppress_context.png)
 
 ### Automatic date tick adjustment
 
@@ -1011,7 +1011,7 @@ with the ``subplots`` keyword:
 In [135]: df.plot(subplots=True, figsize=(6, 6));
 ```
 
-![frame_plot_subplots](https://static.pypandas.cn/public/static/images/frame_plot_subplots.png)
+![frame_plot_subplots](https://static.pypandas.thto.net/public/static/images/frame_plot_subplots.png)
 
 ### Using layout and targeting multiple axes
 
@@ -1029,7 +1029,7 @@ or columns needed, given the other.
 In [136]: df.plot(subplots=True, layout=(2, 3), figsize=(6, 6), sharex=False);
 ```
 
-![frame_plot_subplots_layout](https://static.pypandas.cn/public/static/images/frame_plot_subplots_layout.png)
+![frame_plot_subplots_layout](https://static.pypandas.thto.net/public/static/images/frame_plot_subplots_layout.png)
 
 The above example is identical to using:
 
@@ -1064,7 +1064,7 @@ In [143]: (-df).plot(subplots=True, ax=target2, legend=False,
    .....:
 ```
 
-![frame_plot_subplots_multi_ax](https://static.pypandas.cn/public/static/images/frame_plot_subplots_multi_ax.png)
+![frame_plot_subplots_multi_ax](https://static.pypandas.thto.net/public/static/images/frame_plot_subplots_multi_ax.png)
 
 Another option is passing an ``ax`` argument to [``Series.plot()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.plot.html#pandas.Series.plot) to plot on a particular axis:
 
@@ -1088,7 +1088,7 @@ In [151]: df['D'].plot(ax=axes[1, 1]);
 In [152]: axes[1, 1].set_title('D');
 ```
 
-![series_plot_multi](https://static.pypandas.cn/public/static/images/series_plot_multi.png)
+![series_plot_multi](https://static.pypandas.thto.net/public/static/images/series_plot_multi.png)
 
 ### Plotting with error bars
 
@@ -1149,7 +1149,7 @@ In [161]: means.plot.bar(yerr=errors, ax=ax, capsize=4)
 Out[161]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d1048400>
 ```
 
-![errorbar_example](https://static.pypandas.cn/public/static/images/errorbar_example.png)
+![errorbar_example](https://static.pypandas.thto.net/public/static/images/errorbar_example.png)
 
 ### Plotting tables
 
@@ -1166,7 +1166,7 @@ In [165]: df.plot(table=True, ax=ax)
 Out[165]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d0ff7550>
 ```
 
-![line_plot_table_true](https://static.pypandas.cn/public/static/images/line_plot_table_true.png)
+![line_plot_table_true](https://static.pypandas.thto.net/public/static/images/line_plot_table_true.png)
 
 Also, you can pass a different [``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) or [``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series) to the
 ``table`` keyword. The data will be drawn as displayed in print method
@@ -1182,7 +1182,7 @@ In [168]: df.plot(table=np.round(df.T, 2), ax=ax)
 Out[168]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d0efdcc0>
 ```
 
-![line_plot_table_data](https://static.pypandas.cn/public/static/images/line_plot_table_data.png)
+![line_plot_table_data](https://static.pypandas.thto.net/public/static/images/line_plot_table_data.png)
 
 There also exists a helper function ``pandas.plotting.table``, which creates a
 table from [``DataFrame``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame) or [``Series``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series), and adds it to an
@@ -1203,7 +1203,7 @@ In [172]: df.plot(ax=ax, ylim=(0, 2), legend=None)
 Out[172]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d0eab358>
 ```
 
-![line_plot_table_describe](https://static.pypandas.cn/public/static/images/line_plot_table_describe.png)
+![line_plot_table_describe](https://static.pypandas.thto.net/public/static/images/line_plot_table_describe.png)
 
 **Note**: You can get table instances on the axes using ``axes.tables`` property for further decorations. See the [matplotlib table documentation](http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes.table) for more.
 
@@ -1235,7 +1235,7 @@ In [176]: df.plot(colormap='cubehelix')
 Out[176]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d0defdd8>
 ```
 
-![cubehelix](https://static.pypandas.cn/public/static/images/cubehelix.png)
+![cubehelix](https://static.pypandas.thto.net/public/static/images/cubehelix.png)
 
 Alternatively, we can pass the colormap itself:
 
@@ -1249,7 +1249,7 @@ In [179]: df.plot(colormap=cm.cubehelix)
 Out[179]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d0c22a90>
 ```
 
-![cubehelix_cm](https://static.pypandas.cn/public/static/images/cubehelix_cm.png)
+![cubehelix_cm](https://static.pypandas.thto.net/public/static/images/cubehelix_cm.png)
 
 Colormaps can also be used other plot types, like bar charts:
 
@@ -1265,7 +1265,7 @@ In [183]: dd.plot.bar(colormap='Greens')
 Out[183]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d0a5de10>
 ```
 
-![greens](https://static.pypandas.cn/public/static/images/greens.png)
+![greens](https://static.pypandas.thto.net/public/static/images/greens.png)
 
 Parallel coordinates charts:
 
@@ -1277,7 +1277,7 @@ In [185]: parallel_coordinates(data, 'Name', colormap='gist_rainbow')
 Out[185]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d08e5eb8>
 ```
 
-![parallel_gist_rainbow](https://static.pypandas.cn/public/static/images/parallel_gist_rainbow.png)
+![parallel_gist_rainbow](https://static.pypandas.thto.net/public/static/images/parallel_gist_rainbow.png)
 
 Andrews curves charts:
 
@@ -1289,7 +1289,7 @@ In [187]: andrews_curves(data, 'Name', colormap='winter')
 Out[187]: <matplotlib.axes._subplots.AxesSubplot at 0x7f65d06b6518>
 ```
 
-![andrews_curve_winter](https://static.pypandas.cn/public/static/images/andrews_curve_winter.png)
+![andrews_curve_winter](https://static.pypandas.thto.net/public/static/images/andrews_curve_winter.png)
 
 ## Plotting directly with matplotlib
 
@@ -1329,7 +1329,7 @@ In [194]: plt.fill_between(mstd.index, ma - 2 * mstd, ma + 2 * mstd,
 Out[194]: <matplotlib.collections.PolyCollection at 0x7f65d9ab9128>
 ```
 
-![bollinger](https://static.pypandas.cn/public/static/images/bollinger.png)
+![bollinger](https://static.pypandas.thto.net/public/static/images/bollinger.png)
 
 ## Trellis plotting interface
 

@@ -9,7 +9,7 @@ sidebar: auto
 
 ``pandas`` is a [NumFOCUS](http://www.numfocus.org/open-source-projects.html) sponsored project. This will help ensure the success of development of pandas as a world-class open-source project, and makes it possible to [donate](https://pandas.pydata.org/donate.html) to the project.
 
-![NumFOCUS Logo](https://static.pypandas.cn/public/static/images/SponsoredProjectStamp_300px.png)
+![NumFOCUS Logo](https://static.pypandas.thto.net/public/static/images/SponsoredProjectStamp_300px.png)
 
 ::: tip See also
 [How you can contribute to the project](http://pandas.pydata.org/pandas-docs/stable/contributing.html)

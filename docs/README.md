@@ -5,7 +5,7 @@ meta:
     content: pandas中文文档,pandas中文api,pandas中文手册,pandas教程,pandas下载安装,pandas
   - name: description
     content: Pandas中文网、Pandas官方中文文档。
-heroImage: https://static.pypandas.cn/site/logo.png
+heroImage: https://static.pypandas.thto.net/site/logo.png
 actionText: 快速了解 →
 actionLink: /docs/
 action2Text: 开始深度学习

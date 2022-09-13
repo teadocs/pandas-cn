@@ -138,7 +138,7 @@
 // 名称
 const name = 'Pandas';
 // 静态文件地址
-const staticDomain = 'https://static.pypandas.cn/';
+const staticDomain = 'https://static.pypandas.thto.net/';
 // qq群号码
 const qqGroupNumber = '325251421';
 // 版本

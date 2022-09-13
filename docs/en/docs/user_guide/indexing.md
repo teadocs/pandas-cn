@@ -2535,7 +2535,7 @@ Out[263]:
 ``DataFrame.query()`` using ``numexpr`` is slightly faster than Python for
 large frames.
 
-![query-perf](https://static.pypandas.cn/public/static/images/query-perf.png)
+![query-perf](https://static.pypandas.thto.net/public/static/images/query-perf.png)
 
 ::: tip Note
 
@@ -2543,7 +2543,7 @@ You will only see the performance benefits of using the ``numexpr`` engine
 with ``DataFrame.query()`` if your frame has more than approximately 200,000
 rows.
 
-![query-perf-small](https://static.pypandas.cn/public/static/images/query-perf-small.png)
+![query-perf-small](https://static.pypandas.thto.net/public/static/images/query-perf-small.png)
 
 :::
 

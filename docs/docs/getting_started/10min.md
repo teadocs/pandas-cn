@@ -1262,7 +1262,7 @@ In [137]: ts.plot()
 Out[137]: <matplotlib.axes._subplots.AxesSubplot at 0x7f2b5771ac88>
 ```
 
-![可视化](https://static.pypandas.cn/public/static/images/series_plot_basic.png)
+![可视化](https://static.pypandas.thto.net/public/static/images/series_plot_basic.png)
 
 DataFrame 的 [plot()](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#visualization) 方法可以快速绘制所有带标签的列：
 
@@ -1283,7 +1283,7 @@ In [142]: plt.legend(loc='best')
 Out[142]: <matplotlib.legend.Legend at 0x7f2b539728d0>
 ```
 
-![可视化2](https://static.pypandas.cn/public/static/images/frame_plot_basic.png)
+![可视化2](https://static.pypandas.thto.net/public/static/images/frame_plot_basic.png)
 
 ## 数据输入 / 输出
 

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-const staticDomain = 'https://static.pypandas.cn/';
+const staticDomain = 'https://static.pypandas.thto.net/';
 
 export default {
   data() {

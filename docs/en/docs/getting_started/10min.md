@@ -1251,7 +1251,7 @@ In [137]: ts.plot()
 Out[137]: <matplotlib.axes._subplots.AxesSubplot at 0x7f2b5771ac88>
 ```
 
-![plotting](https://static.pypandas.cn/public/static/images/series_plot_basic.png)
+![plotting](https://static.pypandas.thto.net/public/static/images/series_plot_basic.png)
 
 On a DataFrame, the [plot()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html#pandas.DataFrame.plot) method is a convenience to plot all of the columns with labels:
 
@@ -1272,7 +1272,7 @@ In [142]: plt.legend(loc='best')
 Out[142]: <matplotlib.legend.Legend at 0x7f2b539728d0>
 ```
 
-![plotting](https://static.pypandas.cn/public/static/images/frame_plot_basic.png)
+![plotting](https://static.pypandas.thto.net/public/static/images/frame_plot_basic.png)
 
 ## Getting Data In/Out
 
