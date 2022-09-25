@@ -6,10 +6,13 @@ meta:
   - name: description
     content: Pandas中文网、Pandas官方中文文档。
 heroImage: https://static.pypandas.thto.net/site/logo.png
-actionText: 快速了解 →
-actionLink: /docs/
-action2Text: 开始深度学习
-action2Link: https://analytics.numpy.org.cn/course.html
+actions:
+  - text: 快速了解 →
+    link: /docs/
+    type: primary
+  - text: 开始深度学习
+    link: https://analytics.numpy.org.cn/course.html
+    type: primary
 footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-SA 3.0 CN) | Copyright © 2019-present Zhi Bing
 ---
 
@@ -28,9 +31,9 @@ footer: 署名-非商业性使用-相同方式共享 3.0 中国大陆 (CC BY-NC-
   </div>
 </div>
 
-### 就像1、2、3 一样简单
+### 就像 1、2、3 一样简单
 
-``` bash
+```bash:no-line-numbers
 # 1、安装包
 $ pip install pandas
 
@@ -39,7 +42,7 @@ $ python -i
 
 # 3、使用Pandas
 >>> import pandas as pd
->>> df = pd.DataFrame() 
+>>> df = pd.DataFrame()
 >>> print(df)
 
 # 4、输出结果

@@ -19,15 +19,18 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-  .upgrade-path
-    margin-top: 2em
-    padding: 2em
-    background: rgba(73, 195, 140, .1)
-    border-radius: 2px
-    > h4
-      margin-top: 0
-    > p:last-child
-      margin-bottom: 0
-      padding-bottom: 0
+<style lang="scss">
+.upgrade-path {
+  margin-top: 2em;
+  padding: 2em;
+  background: rgba(73, 195, 140, 0.1);
+  border-radius: 2px;
+  > h4 {
+    margin-top: 0;
+  }
+  > p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
 </style>

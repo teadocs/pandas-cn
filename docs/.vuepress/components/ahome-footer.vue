@@ -39,41 +39,51 @@
   </div>
 </template>
 
-<style lang="stylus" scoped>
-.home-footer
-  margin-top 30px
-  padding-top 20px
-  padding-bottom 20px
-  border-top 1px solid #f8f8f8
+<style lang="scss" scoped>
+.home-footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid #f8f8f8;
 
-  &:after
-    content ""
-    display block
-    height 0
-    clear both
-    visibility hidden
-  
-  .item
-    width 33.3%
-    ul
-      padding 0px
-      list-style none
-      li
-        line-height 1.5
-        a
-          font-size 14px !important
-          transition color 0.2s
-          &:hover
-            color darken($accentColor, 20%);
+  &:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  .item {
+    width: 33.3%;
+    ul {
+      padding: 0px;
+      list-style: none;
+      li {
+        line-height: 1.5;
+        a {
+          font-size: 14px !important;
+          transition: color 0.2s;
+          &:hover {
+            color: darken(#489dc1, 20%);
+          }
+        }
+      }
+    }
+  }
 
-  .left-box
-    float left
 
-  .right-box
-    float right
-
-@media (max-width: 650px)
-  .home-footer
-    .item
-      width 100%;
+  .left-box {
+    float: left;
+  }
+  .right-box {
+    float: right;
+  }
+}
+@media (max-width: 650px) {
+  .home-footer {
+    .item {
+      width: 100%;
+    }
+  }
+}
 </style>
