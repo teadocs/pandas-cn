@@ -49,7 +49,7 @@ locations), 或者具有 ``read()`` 方法的任何对象 (such as an open file 
 sep : *str, 默认   [``read_csv()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv)分隔符为``','``, [``read_table()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_table.html#pandas.read_table)方法，分隔符为 ``\t``* 
 
 - 分隔符的使用. 如果分隔符为``None``，虽然C不能解析，但python解析引擎可解析，这意味着python将被使用，通过内置的sniffer tool自动检测分隔符,
-[``csv.Sniffer``](https://docs.python.org/3/library/csv.html#csv.Sniffer). 除此之外,字符长度超过１并且不同于 ``'s+'`` 的将被视为正则表达式，并且将强制使用python解析引擎。需要注意的是，正则表达式易于忽略引用数据<font color='red'>（主要注意转义字符的使用）</font> 例如: ``'\\r\\t'``.
+[``csv.Sniffer``](https://docs.python.org/3/library/csv.html#csv.Sniffer). 除此之外,字符长度超过１并且不同于 ``'s+'`` 的将被视为正则表达式，并且将强制使用python解析引擎。需要注意的是，正则表达式易于忽略引用数据<font color='red'>（主要注意转义字符的使用）</font> 例如: ``'＼\r＼\t'``.
 
 delimiter : *str, default ``None``* 
 
@@ -57,7 +57,7 @@ delimiter : *str, default ``None``*
 
 delim_whitespace : *boolean, default False* 
 
-- 指定是否将空格 (e.g. ``' '`` or ``'\t'``)当作delimiter。
+- 指定是否将空格 (e.g. ``' '`` or ``'\t'``)视为delimiter。
 等价于设置 ``sep='\s+'``.
 如果这个选项被设置为 ``True``,就不要给
 ``delimiter`` 传参了.
@@ -147,7 +147,7 @@ engine : *{``'c'``, ``'python'``}*
 
 converters : *dict, default ``None``* 
 
-- Dict of functions for converting values in certain columns. Keys can either be integers or column labels.
+- 函数字典，用于转换某列的值。key可以是整型也可以是列标签。
 
 true_values : *list, default ``None``* 
 
@@ -159,15 +159,13 @@ false_values : *list, default ``None``*
 
 skipinitialspace : *boolean, default ``False``* 
 
-- Skip spaces after delimiter.
+- 跳过分隔符后的空格.
 
 skiprows : *list-like or integer, default ``None``* 
 
-- Line numbers to skip (0-indexed) or number of lines to skip (int) at the start
-of the file.
+- 在读取文件时，跳过第0行，或者指定跳过哪些行。
 
-- If callable, the callable function will be evaluated against the row
-indices, returning True if the row should be skipped and False otherwise:
+- 如果调用函数，函数将根据行索引进行计算，如果应该跳过行则返回True，否则返回False:
 
 ``` python
 In [5]: data = ('col1,col2,col3\n'
@@ -192,26 +190,20 @@ Out[7]:
 
 skipfooter : *int, default ``0``* 
 
-- Number of lines at bottom of file to skip (unsupported with engine=’c’).
+- 需跳过文件底部的行数 (engine=’c’不支持该项).
 
 nrows : *int, default ``None``* 
 
-- Number of rows of file to read. Useful for reading pieces of large files.
+- 需读取的文件行数. 一般在大文件读取时使用.
 
 low_memory : *boolean, default ``True``* 
 
-- Internally process the file in chunks, resulting in lower memory use
-while parsing, but possibly mixed type inference.  To ensure no mixed
-types either set ``False``, or specify the type with the ``dtype`` parameter.
-Note that the entire file is read into a single ``DataFrame`` regardless,
-use the ``chunksize`` or ``iterator`` parameter to return the data in chunks.
-(Only valid with C parser)
+- 以块的形式进行内部文件处理, 这样可以在解析时减少内存的使用, 但可能是混合类型推断。确保未设置任何混合类型``False``，或使用``dtype``参数指定类型。请注意，整个文件都被读入单个文件``DataFrame``，使用``chunksizeor``或者``iterator``参数以块的形式返回数据。（仅对C解析器有效）
+
 
 memory_map : *boolean, default False* 
 
-- If a filepath is provided for ``filepath_or_buffer``, map the file object
-directly onto memory and access the data directly from there. Using this
-option can improve performance because there is no longer any I/O overhead.
+- 如果参数 ``filepath_or_buffer``提供了文件路径, 那么将直接将文件映射进内存，并且直接从内存访问数据. 由于使用该项不会产生任何I/O开销，因此能够提高性能。
 
 #### NA and missing data handling
 
@@ -223,73 +215,58 @@ for a list of the values interpreted as NaN by default.
 
 keep_default_na : *boolean, default ``True``* 
 
-- Whether or not to include the default NaN values when parsing the data.
-Depending on whether *na_values* is passed in, the behavior is as follows:
-  - If *keep_default_na* is ``True``, and *na_values* are specified, *na_values*
-  is appended to the default NaN values used for parsing.
-  - If *keep_default_na* is ``True``, and *na_values* are not specified, only
-  the default NaN values are used for parsing.
-  - If *keep_default_na* is ``False``, and *na_values* are specified, only
-  the NaN values specified *na_values* are used for parsing.
-  - If *keep_default_na* is ``False``, and *na_values* are not specified, no
-  strings will be parsed as NaN.
+- 解析文件时是否包含默认NaN值，根据``na_values``的传入来，具体的解析行为如下:
+  -  *keep_default_na* = ``True``, *na_values*被设置, *na_values*
+  与默认值一起被解析为NaN。
+  - *keep_default_na* = ``True``, *na_values*没有被赋值,那么仅默认值被解析为NaN。
+  - *keep_default_na* = ``False``, *na_values* 被设置,仅仅 *na_values*被解析为NaN。
+  - *keep_default_na* = ``False``,*na_values*没有被设置,所有值正常读取不会有值被认为是NaN。
 
-  Note that if *na_filter* is passed in as ``False``, the *keep_default_na* and *na_values* parameters will be ignored.
+  注意，如果*na_filter*被传入``False``，*keep_default_na*和 *na_values* 参数将会被忽略。
 
 na_filter : *boolean, default ``True``* 
 
-- Detect missing value markers (empty strings and the value of na_values). In data without any NAs, passing ``na_filter=False`` can improve the performance of reading a large file.
+- 检测缺失值 (空字符串和na_values的值)。在确定没有NAs时,设置 ``na_filter=False``有利于提高读取大文件的性能。
 
 verbose : *boolean, default ``False``* 
 
-- Indicate number of NA values placed in non-numeric columns.
+- 指示在非数字列中NA值的数量。
 
 skip_blank_lines : *boolean, default ``True``* 
 
-- If ``True``, skip over blank lines rather than interpreting as NaN values.
+-如果设为``True``,将跳过空白行而不是将空白行解析为``NaN``。
 
-#### Datetime handling
+#### 日期时间处理
 
 parse_dates : *boolean or list of ints or names or list of lists or dict, default ``False``.* 
 
-- If ``True`` -> try parsing the index.
-- If ``[1, 2, 3]`` ->  try parsing columns 1, 2, 3 each as a separate date
-column.
-- If ``[[1, 3]]`` -> combine columns 1 and 3 and parse as a single date
-column.
-- If ``{'foo': [1, 3]}`` -> parse columns 1, 3 as date and call result ‘foo’.
-A fast-path exists for iso8601-formatted dates.
+- ``True`` -> 解析索引.
+- If ``[1, 2, 3]`` ->  解析1，2，3列的值作为独立的日期列.
+- If ``[[1, 3]]`` -> 解析1，3列为一个日期列使用.
+- If ``{'foo': [1, 3]}`` -> 解析1，3列为一个日期列并取名为‘foo’.
+iso8601-formatted dates存储在fast-path.
 
 infer_datetime_format : *boolean, default ``False``* 
 
-- If ``True`` and parse_dates is enabled for a column, attempt to infer the datetime format to speed up the processing.
+- 若设为 ``True`` 且设置了parse_dates，尝试推断日期时间格式以加快处理速度。
 
 keep_date_col : *boolean, default ``False``* 
 
-- If ``True`` and parse_dates specifies combining multiple columns then keep the original columns.
+- 若设为 ``True``且设置 parse_dates来组合多列，那么可保持原始列。
 
 date_parser : *function, default ``None``* 
 
-- Function to use for converting a sequence of string columns to an array of
-datetime instances. The default uses ``dateutil.parser.parser`` to do the
-conversion. pandas will try to call date_parser in three different ways,
-advancing to the next if an exception occurs: 1) Pass one or more arrays (as
-defined by parse_dates) as arguments; 2) concatenate (row-wise) the string
-values from the columns defined by parse_dates into a single array and pass
-that; and 3) call date_parser once for each row using one or more strings
-(corresponding to the columns defined by parse_dates) as arguments.
+- 定义的函数被用来将字符串列转换为时间序列。默认是使用函数 ``dateutil.parser.parser``进行转换。pandas将尝试以以下三种方式调用date_parser指定的函数，如果发生异常则前进到下一个: 1) 将一个或多个数组(由parse_dates定义的)作为参数传递; 2) 将parse_dates定义的列中的字符串值连接（逐行）到一个数组中并传递; and 3) 使用一个或多个字符串（对应于parse_dates定义的列）作为参数，为每一行调用date_parser一次.
 
 dayfirst : *boolean, default ``False``* 
 
-- DD/MM format dates, international and European format.
+- DD/MM 日期格式, 国际和欧洲格式。
 
 cache_dates : *boolean, default True* 
 
-- If True, use a cache of unique, converted dates to apply the datetime
-conversion. May produce significant speed-up when parsing duplicate
-date strings, especially ones with timezone offsets.
+- True, 使用独立的缓存，在解析日期字符串时会显著加速，尤其是具有时区偏移的字符串。
 
-*New in version 0.25.0.* 
+*版本0.25.0中的新功能.* 
 
 #### Iteration
 
@@ -301,27 +278,26 @@ chunksize : *int, default ``None``*
 
 - Return TextFileReader object for iteration. See [iterating and chunking](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-chunking) below.
 
-#### Quoting, compression, and file format
+#### 引用, 压缩, 文件格式
 
 compression : *{``'infer'``, ``'gzip'``, ``'bz2'``, ``'zip'``, ``'xz'``, ``None``}, default ``'infer'``* 
 
-- For on-the-fly decompression of on-disk data. If ‘infer’, then use gzip,
-bz2, zip, or xz if filepath_or_buffer is a string ending in ‘.gz’, ‘.bz2’,
-‘.zip’, or ‘.xz’, respectively, and no decompression otherwise. If using ‘zip’,
-the ZIP file must contain only one data file to be read in.
-Set to ``None`` for no decompression.
+- 用于磁盘数据即时解压缩。 若设为‘infer’则使用 gzip,
+bz2, zip,或 xz。如果filepath_or_buffer是以‘.gz’, ‘.bz2’,
+‘.zip’, 或‘.xz’结尾,否则不进行解压。若设置为 ‘zip’,
+ZIP文件中有且只有一个数据文件。若设置为``None``则不进行解压缩。
 
-*New in version 0.18.1:* support for ‘zip’ and ‘xz’ compression.
+*0.18.1版本:* 支持 ‘zip’ 和 ‘xz’ 压缩。
 
-*Changed in version 0.24.0:* ‘infer’ option added and set to default.
+*0.24.0版本:* 添加了‘infer’选项并设置为默认选项。
 
 thousands : *str, default ``None``* 
 
-- Thousands separator.
+- 千位分隔符。
 
 decimal : *str, default ``'.'``* 
 
-- Character to recognize as decimal point. E.g. use ',' for European data.
+- 要识别为小数点的字符。 E.g. 欧洲数据通常 ','为小数点字符。 
 
 float_precision : *string, default None* 
 
