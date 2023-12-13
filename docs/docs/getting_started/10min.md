@@ -1404,4 +1404,4 @@ ValueError: The truth value of an array is ambiguous. Use a.empty, a.any() or a.
 
 参阅[比较操作](https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-compare)文档，查看错误提示与解决方案。
 
-详见[各种坑](https://pandas.pydata.org/Pandas-docs/stable/gotchas.html#gotchas)文档。
+详见[各种坑](https://pandas.pydata.org/pandas-docs/stable/gotchas.html#gotchas)文档。
